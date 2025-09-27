@@ -51,9 +51,9 @@ paths:
                                             description: Уникальный идентификатор участника разговора, который может быть получен через сервера уведомлений.
                                             example: 123
                                     required:
-                                        - call_session_id
                                         - leg_id
                                         - access_token
+                                        - call_session_id
                             required:
                                 - jsonrpc
                                 - id

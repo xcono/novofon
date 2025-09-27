@@ -12,17 +12,17 @@ paths:
 
                 **Request Parameters:** 3
 
-                - `access_token` (string, required): Ключ сессии аутентификации
-
-                - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове
-                                методов start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
-
                 - `contact_message` (object, required): Определяет параметры сообщения, которое необходимо проиграть вызывающему абоненту.
                                 Вызывающий абонент - это номер, указанный в параметре contact в методах
                                 start.informer_call,
                                 start.vnumber_call,
                                 start.scenario_call,
                                 start.employee_call или абонент позвонивший на виртуальную АТС.
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове
+                                методов start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
             requestBody:
                 required: true
                 content:

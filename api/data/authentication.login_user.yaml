@@ -12,9 +12,9 @@ paths:
 
                 **Request Parameters:** 2
 
-                - `login` (string, required): Логин пользователя
-
                 - `password` (string, required): Пароль пользователя
+
+                - `login` (string, required): Логин пользователя
 
                 **Response Parameters:** 3
 
@@ -94,9 +94,9 @@ paths:
                                                         description: Timestamp когда выданный токен перестанет быть валидным
                                                         example: 123
                                                 required:
+                                                    - expire_at
                                                     - app_id
                                                     - access_token
-                                                    - expire_at
                                             metadata:
                                                 type: object
                                                 description: Response metadata

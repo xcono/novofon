@@ -55,9 +55,9 @@ paths:
                                                 - '*'
                                                 - '#'
                                     required:
-                                        - access_token
                                         - call_session_id
                                         - dtmf_string
+                                        - access_token
                             required:
                                 - jsonrpc
                                 - id

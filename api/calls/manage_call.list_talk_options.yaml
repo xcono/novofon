@@ -77,9 +77,9 @@ paths:
                                                         description: Название опции разговора
                                                         example: example_string
                                                 required:
-                                                    - name
                                                     - button
                                                     - mnemonic
+                                                    - name
                                             metadata:
                                                 type: object
                                                 description: Response metadata
