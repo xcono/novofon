@@ -1,0 +1,136 @@
+openapi: 3.0.0
+info:
+  title: Добавление должности сотрудника
+  version: 1.0.0
+  description: Добавление должности сотрудника
+paths:
+  /create.employee_positions:
+    post:
+      summary: Добавление должности сотрудника
+      description: 'Добавление должности сотрудника
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 3
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `name` (string) (обязательный): Название должности
+
+
+        **Параметры ответа:** 1
+
+
+        - `id` (number): Уникальный идентификатор должности'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    name:
+                      type: string
+                      description: Название должности
+                      example: example_string
+                  required:
+                  - access_token
+                  - name
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                            description: Уникальный идентификатор должности
+                            example: 123
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом create"'
+    href: ../..#_changeErrors

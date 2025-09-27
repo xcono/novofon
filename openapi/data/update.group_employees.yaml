@@ -1,0 +1,180 @@
+openapi: 3.0.0
+info:
+  title: Редактирование группы сотрудников
+  version: 1.0.0
+  description: Редактирование группы сотрудников
+paths:
+  /update.group_employees:
+    put:
+      summary: Редактирование группы сотрудников
+      description: 'Редактирование группы сотрудников
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 8
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `id` (number) (обязательный): Уникальный идентификатор группы
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `name` (string) (обязательный): Название группы
+
+
+        - `members` (array) (опциональный): Список уникальных идентификаторов сотрудников,
+        которые состоят в группе
+
+
+        - `group_phone_number` (string) (опциональный): Внутренний номер группы Зависит
+        от компонента "va"
+
+
+        - `queue_enabled` (boolean) (опциональный): Значение по умолчанию "false".
+        В случае, если все номера, указанные для этой группы сотрудников, заняты,
+        то звонящий абонент встанет в очередь на повторный дозвон до телефонов в списке
+        и будет ждать первый освободившийся номер. Зависит от компонента "va"
+
+
+        - `channels_count` (number) (обязательный): Количество одновременных линий
+        при обзвоне Зависит от компонента "va"'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    id:
+                      type: number
+                      description: Уникальный идентификатор группы
+                      example: 123
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    name:
+                      type: string
+                      description: Название группы
+                      example: example_string
+                    members:
+                      type: array
+                      description: Список уникальных идентификаторов сотрудников,
+                        которые состоят в группе
+                    group_phone_number:
+                      type: string
+                      description: Внутренний номер группы Зависит от компонента "va"
+                      enum:
+                      - 'Максимальная
+
+                        длина 5'
+                      example: 'Максимальная
+
+                        длина 5'
+                    queue_enabled:
+                      type: boolean
+                      description: Значение по умолчанию "false". В случае, если все
+                        номера, указанные для этой группы сотрудников, заняты, то
+                        звонящий абонент встанет в очередь на повторный дозвон до
+                        телефонов в списке и будет ждать первый освободившийся номер.
+                        Зависит от компонента "va"
+                      example: true
+                    channels_count:
+                      type: number
+                      description: Количество одновременных линий при обзвоне Зависит
+                        от компонента "va"
+                      enum:
+                      - От 1 до 199
+                      example: От 1 до 199
+                  required:
+                  - access_token
+                  - id
+                  - name
+                  - channels_count
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом update"'
+    href: ../..#_changeErrors

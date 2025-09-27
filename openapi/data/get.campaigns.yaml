@@ -1,0 +1,621 @@
+openapi: 3.0.0
+info:
+  title: Получение списка рекламных кампаний
+  version: 1.0.0
+  description: Получение списка рекламных кампаний
+paths:
+  /get.campaigns:
+    get:
+      summary: Получение списка рекламных кампаний
+      description: 'Получение списка рекламных кампаний
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 7
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `limit` (number) (опциональный): Количество возвращаемых записей. См. раздел
+        "Постраничный вывод"
+
+
+        - `offset` (number) (опциональный): Сдвиг, определяет с какого номера записи
+        возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+
+
+        - `filter` (object) (опциональный): См. раздел "Критерии фильтрации"
+
+
+        - `fields` (array) (опциональный): См. раздел "Представление возвращаемых
+        данных"
+
+
+        - `sort` (array) (опциональный): См. раздел "Сортировка данных"
+
+
+        **Параметры ответа:** 39
+
+
+        - `id` (number): Уникальный идентификатор рекламной кампании
+
+
+        - `name` (string): Название рекламной кампании
+
+
+        - `description` (string): Описание рекламной кампании
+
+
+        - `status` (enum): Статус рекламной кампании
+
+
+        - `creation_time` (iso8601): Дата и время создания рекламной кампании
+
+
+        - `campaign_conditions` (object): Условия рекламной кампании. Отсутствует,
+        если поле type = integrated | system
+
+
+        - `engine` (enum): Платформа для интегрированной рекламной кампании
+
+
+        - `type` (enum): Условия рекламной кампании в группе условий
+
+
+        - `costs` (number): Расходы на рекламную кампанию
+
+
+        - `cost_ratio` (number): Значение по умолчению 1. Коэфициент, который влияет
+        на значение параметра `costs`
+
+
+        - `cost_ratio_operator` (enum): Значение по умолчанию `wo_changes`. Оператор,
+        который используется при расчете `costs` с учетом `cost_ratio`
+
+
+        - `site_id` (number): Уникальный идентификатор сайта
+
+
+        - `site_domain_name` (string): Адрес сайта в интернете. Без указания протокола
+        - "http://" или "https://"
+
+
+        - `site_blocks` (array): Настройки привязки номера к блоку на сайте
+
+
+        - `site_block_id` (number): Уникальный идентификатор блока номеров
+
+
+        - `site_block_name` (string): Название блока номеров
+
+
+        - `phone_number_type` (enum): Тип виртуального номера (см. метод get.campaign_available_phone_numbers)
+        для параметра phone_number_id: user - пользовательский va - номер ВАТС call_tracking
+        - номер Аналитики
+
+
+        - `phone_number_id` (number): Уникальный идентификатор виртуального номера
+        в зависимости от параметра phone_number_type. Чтобы получить список доступных
+        виртуальных номеров необходимо использовать метод get.campaign_available_phone_numbers
+
+
+        - `phone_number` (string): Номер, который соответствует параметру phone_number_id
+
+
+        - `redirection_phone_number_id` (number): Номер переадресации, который используется
+        в том случае, если тип номера, который указан в параметре phone_number_id
+        имеет значение call_tracking. Чтобы получить список доступных номеров для
+        переадресации необходимо использовать метод get.campaign_available_redirection_phone_numbers
+
+
+        - `redirection_phone_number` (string): Номер, который соответствует параметру
+        redirection_phone_number_id
+
+
+        - `static_utm_source` (string): Статическая utm-метка source. Параметр появится
+        в ответе, только если присутствует в fields запроса
+
+
+        - `static_utm_medium` (string): Статическая utm-метка medium. Параметр появится
+        в ответе, только если присутствует в fields запроса
+
+
+        - `static_utm_campaign` (string): Статическая utm-метка campaign. Параметр
+        появится в ответе, только если присутствует в fields запроса
+
+
+        - `static_utm_term` (string): Статическая utm-метка term. Параметр появится
+        в ответе, только если присутствует в fields запроса
+
+
+        - `static_utm_content` (string): Статическая utm-метка content. Параметр появится
+        в ответе, только если присутствует в fields запроса
+
+
+        - `static_utm_referrer` (string): Статическая utm-метка referrer. Параметр
+        появится в ответе, только если присутствует в fields запроса
+
+
+        - `static_utm_expid` (string): Статическая utm-метка expid. Параметр появится
+        в ответе, только если присутствует в fields запроса
+
+
+        - `dynamic_call_tracking_enabled` (boolean): Динамический коллтрекинг. Может
+        принимать значение "true", если параметр phone_number_type = va | call_tracking
+
+
+        - `dynamic_call_tracking` (object): Настройки динамического коллтрекинга.
+        Звонки на номера из пула динамического коллтрекинга будут обрабатываться по
+        правилам обработки звонков на номер блока рекламной кампании по умолчанию.
+
+
+        - `reservation_time` (enum): Значение по умолчанию "15m". Период, на который
+        номер закрепляется за посетителем сайта. По истечении указанного времени номер
+        закрепляется за новым посетителем (или остается за текущим в случае наличия
+        свободных номеров коллтрекинга).
+
+
+        - `count_virtual_numbers` (number): Количество номеров необходимое для работы
+        динамического коллтрекинга в одном блоке. Указанное количество номеров будет
+        куплено.
+
+
+        - `count_visits` (number): Количество посещений по рекламной кампании в сутки
+
+
+        - `coverage_visitors` (number): Процент посетителей сайта, которые увидят
+        номер динамического коллтрекинга
+
+
+        - `group_conditions` (array): Группа условий рекламной кампании
+
+
+        - `conditions` (array): Условия рекламной кампании в группе условий
+
+
+        - `campaign_parameter` (enum): Список допустимых значений и возможных операторов
+        см. в таблице "Список параметров и их операторов"
+
+
+        - `value` (string): Значение для campaign_parameter. Для некоторых campaign_parameter
+        может быть свой список допустимых значений см. в таблице "Список параметров
+        и их операторов"
+
+
+        - `operator` (enum): Оператор в условии "=" - точно соответствует "sub" -
+        включает "~" - регулярное выражение'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    limit:
+                      type: number
+                      description: Количество возвращаемых записей. См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    offset:
+                      type: number
+                      description: Сдвиг, определяет с какого номера записи возвращать
+                        "limit" записей. По умолчанию "0". См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    filter:
+                      type: object
+                      description: См. раздел "Критерии фильтрации"
+                    fields:
+                      type: array
+                      description: См. раздел "Представление возвращаемых данных"
+                    sort:
+                      type: array
+                      description: См. раздел "Сортировка данных"
+                  required:
+                  - access_token
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                            description: Уникальный идентификатор рекламной кампании
+                            x-filtering: да
+                            example: 123
+                          name:
+                            type: string
+                            description: Название рекламной кампании
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          description:
+                            type: string
+                            description: Описание рекламной кампании
+                            maxLength: 255
+                            example: example_string
+                          status:
+                            type: string
+                            description: Статус рекламной кампании
+                            enum:
+                            - 'active
+
+                              inactive'
+                            example: 'active
+
+                              inactive'
+                            x-filtering: да
+                          creation_time:
+                            type: string
+                            description: Дата и время создания рекламной кампании
+                            enum:
+                            - YYYY-MM-DD hh:mm:ss
+                            example: YYYY-MM-DD hh:mm:ss
+                            x-filtering: да
+                            x-sorting: да
+                          campaign_conditions:
+                            type: object
+                            description: Условия рекламной кампании. Отсутствует,
+                              если поле type = integrated | system
+                            x-filtering: нет
+                          engine:
+                            type: string
+                            description: Платформа для интегрированной рекламной кампании
+                            enum:
+                            - 'yandex.direct
+
+                              google.adwords
+
+                              vk.ads
+
+                              mytarget.ads'
+                            example: 'yandex.direct
+
+                              google.adwords
+
+                              vk.ads
+
+                              mytarget.ads'
+                            x-filtering: да
+                            x-sorting: да
+                          type:
+                            type: string
+                            description: Условия рекламной кампании в группе условий
+                            enum:
+                            - 'include
+
+                              exclude'
+                            example: 'include
+
+                              exclude'
+                          costs:
+                            type: number
+                            description: Расходы на рекламную кампанию
+                            x-filtering: да
+                            x-sorting: да
+                            example: 123
+                          cost_ratio:
+                            type: number
+                            description: Значение по умолчению 1. Коэфициент, который
+                              влияет на значение параметра `costs`
+                            minimum: 1
+                            example: 123
+                          cost_ratio_operator:
+                            type: string
+                            description: Значение по умолчанию `wo_changes`. Оператор,
+                              который используется при расчете `costs` с учетом `cost_ratio`
+                            enum:
+                            - 'wo_changes
+
+                              multiply
+
+                              divide'
+                            example: 'wo_changes
+
+                              multiply
+
+                              divide'
+                          site_id:
+                            type: number
+                            description: Уникальный идентификатор сайта
+                            x-filtering: да
+                            x-sorting: да
+                            example: 123
+                          site_domain_name:
+                            type: string
+                            description: Адрес сайта в интернете. Без указания протокола
+                              - "http://" или "https://"
+                            x-filtering: да
+                            example: example_string
+                          site_blocks:
+                            type: array
+                            description: Настройки привязки номера к блоку на сайте
+                            x-filtering: да
+                          site_block_id:
+                            type: number
+                            description: Уникальный идентификатор блока номеров
+                            example: 123
+                          site_block_name:
+                            type: string
+                            description: Название блока номеров
+                            example: example_string
+                          phone_number_type:
+                            type: string
+                            description: 'Тип виртуального номера (см. метод get.campaign_available_phone_numbers)
+                              для параметра phone_number_id: user - пользовательский
+                              va - номер ВАТС call_tracking - номер Аналитики'
+                            enum:
+                            - 'user
+
+                              va
+
+                              call_tracking'
+                            example: 'user
+
+                              va
+
+                              call_tracking'
+                          phone_number_id:
+                            type: number
+                            description: Уникальный идентификатор виртуального номера
+                              в зависимости от параметра phone_number_type. Чтобы
+                              получить список доступных виртуальных номеров необходимо
+                              использовать метод get.campaign_available_phone_numbers
+                            example: 123
+                          phone_number:
+                            type: string
+                            description: Номер, который соответствует параметру phone_number_id
+                            example: example_string
+                          redirection_phone_number_id:
+                            type: number
+                            description: Номер переадресации, который используется
+                              в том случае, если тип номера, который указан в параметре
+                              phone_number_id имеет значение call_tracking. Чтобы
+                              получить список доступных номеров для переадресации
+                              необходимо использовать метод get.campaign_available_redirection_phone_numbers
+                            example: 123
+                          redirection_phone_number:
+                            type: string
+                            description: Номер, который соответствует параметру redirection_phone_number_id
+                            example: example_string
+                          static_utm_source:
+                            type: string
+                            description: Статическая utm-метка source. Параметр появится
+                              в ответе, только если присутствует в fields запроса
+                            x-filtering: да
+                            example: example_string
+                          static_utm_medium:
+                            type: string
+                            description: Статическая utm-метка medium. Параметр появится
+                              в ответе, только если присутствует в fields запроса
+                            x-filtering: да
+                            example: example_string
+                          static_utm_campaign:
+                            type: string
+                            description: Статическая utm-метка campaign. Параметр
+                              появится в ответе, только если присутствует в fields
+                              запроса
+                            x-filtering: да
+                            example: example_string
+                          static_utm_term:
+                            type: string
+                            description: Статическая utm-метка term. Параметр появится
+                              в ответе, только если присутствует в fields запроса
+                            x-filtering: да
+                            example: example_string
+                          static_utm_content:
+                            type: string
+                            description: Статическая utm-метка content. Параметр появится
+                              в ответе, только если присутствует в fields запроса
+                            x-filtering: да
+                            example: example_string
+                          static_utm_referrer:
+                            type: string
+                            description: Статическая utm-метка referrer. Параметр
+                              появится в ответе, только если присутствует в fields
+                              запроса
+                            x-filtering: да
+                            example: example_string
+                          static_utm_expid:
+                            type: string
+                            description: Статическая utm-метка expid. Параметр появится
+                              в ответе, только если присутствует в fields запроса
+                            x-filtering: да
+                            example: example_string
+                          dynamic_call_tracking_enabled:
+                            type: boolean
+                            description: Динамический коллтрекинг. Может принимать
+                              значение "true", если параметр phone_number_type = va
+                              | call_tracking
+                            enum:
+                            - 'true'
+                            - 'false'
+                            example: 'true'
+                          dynamic_call_tracking:
+                            type: object
+                            description: Настройки динамического коллтрекинга. Звонки
+                              на номера из пула динамического коллтрекинга будут обрабатываться
+                              по правилам обработки звонков на номер блока рекламной
+                              кампании по умолчанию.
+                            x-filtering: да
+                          reservation_time:
+                            type: string
+                            description: Значение по умолчанию "15m". Период, на который
+                              номер закрепляется за посетителем сайта. По истечении
+                              указанного времени номер закрепляется за новым посетителем
+                              (или остается за текущим в случае наличия свободных
+                              номеров коллтрекинга).
+                            enum:
+                            - '5m
+
+                              10m
+
+                              15m
+
+                              20m
+
+                              30m
+
+                              1h
+
+                              2h
+
+                              4h
+
+                              8h
+
+                              1d
+
+                              1w'
+                            example: '5m
+
+                              10m
+
+                              15m
+
+                              20m
+
+                              30m
+
+                              1h
+
+                              2h
+
+                              4h
+
+                              8h
+
+                              1d
+
+                              1w'
+                          count_virtual_numbers:
+                            type: number
+                            description: Количество номеров необходимое для работы
+                              динамического коллтрекинга в одном блоке. Указанное
+                              количество номеров будет куплено.
+                            x-filtering: минимальное значение 1
+                            example: 123
+                          count_visits:
+                            type: number
+                            description: Количество посещений по рекламной кампании
+                              в сутки
+                            x-filtering: минимальное значение 1
+                            example: 123
+                          coverage_visitors:
+                            type: number
+                            description: Процент посетителей сайта, которые увидят
+                              номер динамического коллтрекинга
+                            example: 123
+                          group_conditions:
+                            type: array
+                            description: Группа условий рекламной кампании
+                          conditions:
+                            type: array
+                            description: Условия рекламной кампании в группе условий
+                          campaign_parameter:
+                            type: string
+                            description: Список допустимых значений и возможных операторов
+                              см. в таблице "Список параметров и их операторов"
+                          value:
+                            type: string
+                            description: Значение для campaign_parameter. Для некоторых
+                              campaign_parameter может быть свой список допустимых
+                              значений см. в таблице "Список параметров и их операторов"
+                            example: example_string
+                          operator:
+                            type: string
+                            description: Оператор в условии "=" - точно соответствует
+                              "sub" - включает "~" - регулярное выражение
+                            enum:
+                            - '='
+                            - sub
+                            - '~'
+                            example: '='
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом get"'
+    href: ../..#_getErrors

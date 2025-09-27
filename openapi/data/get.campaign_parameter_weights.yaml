@@ -1,0 +1,287 @@
+openapi: 3.0.0
+info:
+  title: Получение весов параметров рекламных кампаний
+  version: 1.0.0
+  description: Получение весов параметров рекламных кампаний
+paths:
+  /get.campaign_parameter_weights:
+    get:
+      summary: Получение весов параметров рекламных кампаний
+      description: 'Получение весов параметров рекламных кампаний
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 7
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `limit` (number) (опциональный): Количество возвращаемых записей. См. раздел
+        "Постраничный вывод"
+
+
+        - `offset` (number) (опциональный): Сдвиг, определяет с какого номера записи
+        возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+
+
+        - `filter` (object) (опциональный): См. раздел "Критерии фильтрации"
+
+
+        - `fields` (array) (опциональный): См. раздел "Представление возвращаемых
+        данных"
+
+
+        - `sort` (array) (опциональный): См. раздел "Сортировка данных"
+
+
+        **Параметры ответа:** 13
+
+
+        - `site_id` (number): Уникальный идентификатор сайта
+
+
+        - `site_domain_name` (string): Адрес сайта в интернете. Без указания протокола
+        - "http://" или "https://"
+
+
+        - `entrance_page` (number): Значение по умолчанию "10". Страница входа
+
+
+        - `referrer_domain` (number): Значение по умолчанию "20". Домен реферера
+
+
+        - `search_engine` (number): Значение по умолчанию "20". Поисковая система
+
+
+        - `search_query` (number): Значение по умолчанию "40". Поисковый запрос
+
+
+        - `engine` (number): Значение по умолчанию "25". Рекламная система
+
+
+        - `referrer` (number): Значение по умолчанию "30". Реферер
+
+
+        - `channel` (number): Значение по умолчанию "15". Канал
+
+
+        - `location` (number): Значение по умолчанию "5". Значение веса для параметров
+        city, region, country
+
+
+        - `utm_tags` (number): Значение по умолчанию "60". Значение веса для параметров
+        utm_source, utm_medium, utm_campaign, utm_term, utm_content
+
+
+        - `os_tags` (number): Значение по умолчанию "50". Значение веса для параметров
+        openstat_service, openstat_campaign, openstat_source, openstat_ad
+
+
+        - `other_tags` (number): Значение по умолчанию "60". Значение веса для параметров
+        ef_id, yclid, gclid, ymclid'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    limit:
+                      type: number
+                      description: Количество возвращаемых записей. См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    offset:
+                      type: number
+                      description: Сдвиг, определяет с какого номера записи возвращать
+                        "limit" записей. По умолчанию "0". См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    filter:
+                      type: object
+                      description: См. раздел "Критерии фильтрации"
+                    fields:
+                      type: array
+                      description: См. раздел "Представление возвращаемых данных"
+                    sort:
+                      type: array
+                      description: См. раздел "Сортировка данных"
+                  required:
+                  - access_token
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          site_id:
+                            type: number
+                            description: Уникальный идентификатор сайта
+                            x-filtering: да
+                            x-sorting: да
+                            example: 123
+                          site_domain_name:
+                            type: string
+                            description: Адрес сайта в интернете. Без указания протокола
+                              - "http://" или "https://"
+                            x-filtering: да
+                            example: example_string
+                          entrance_page:
+                            type: number
+                            description: Значение по умолчанию "10". Страница входа
+                            enum:
+                            - от 0 до 100
+                            example: от 0 до 100
+                          referrer_domain:
+                            type: number
+                            description: Значение по умолчанию "20". Домен реферера
+                            enum:
+                            - от 0 до 100
+                            example: от 0 до 100
+                          search_engine:
+                            type: number
+                            description: Значение по умолчанию "20". Поисковая система
+                            enum:
+                            - от 0 до 100
+                            example: от 0 до 100
+                          search_query:
+                            type: number
+                            description: Значение по умолчанию "40". Поисковый запрос
+                            enum:
+                            - от 0 до 100
+                            example: от 0 до 100
+                          engine:
+                            type: number
+                            description: Значение по умолчанию "25". Рекламная система
+                            enum:
+                            - от 0 до 100
+                            example: от 0 до 100
+                          referrer:
+                            type: number
+                            description: Значение по умолчанию "30". Реферер
+                            enum:
+                            - от 0 до 100
+                            example: от 0 до 100
+                          channel:
+                            type: number
+                            description: Значение по умолчанию "15". Канал
+                            enum:
+                            - от 0 до 100
+                            example: от 0 до 100
+                          location:
+                            type: number
+                            description: Значение по умолчанию "5". Значение веса
+                              для параметров city, region, country
+                            enum:
+                            - от 0 до 100
+                            example: от 0 до 100
+                          utm_tags:
+                            type: number
+                            description: Значение по умолчанию "60". Значение веса
+                              для параметров utm_source, utm_medium, utm_campaign,
+                              utm_term, utm_content
+                            enum:
+                            - от 0 до 100
+                            example: от 0 до 100
+                          os_tags:
+                            type: number
+                            description: Значение по умолчанию "50". Значение веса
+                              для параметров openstat_service, openstat_campaign,
+                              openstat_source, openstat_ad
+                            enum:
+                            - от 0 до 100
+                            example: от 0 до 100
+                          other_tags:
+                            type: number
+                            description: Значение по умолчанию "60". Значение веса
+                              для параметров ef_id, yclid, gclid, ymclid
+                            enum:
+                            - от 0 до 100
+                            example: от 0 до 100
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом get"'
+    href: ../..#_getErrors

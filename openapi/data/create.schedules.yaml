@@ -1,0 +1,244 @@
+openapi: 3.0.0
+info:
+  title: Создание графика активности
+  version: 1.0.0
+  description: Создание графика активности
+paths:
+  /create.schedules:
+    post:
+      summary: Создание графика активности
+      description: 'Создание графика активности
+
+
+        **Доступ:** Партнёр, Клиент
+
+
+        **Параметры запроса:** 12
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `name` (string) (обязательный): Название графика активности
+
+
+        - `schedules` (array) (обязательный): Расписания работы
+
+
+        - `activity_days` (object) (обязательный): Дни в которые график активен
+
+
+        - `type` (enum) (обязательный): Тип. days_of_week - Календарь по дням недели
+        days_of_month - Календарь по дням месяца business_calendar - Производственный
+        календарь cycle - Циклический календарь
+
+
+        - `days` (array) (обязательный): Дни недели или месяца Пример циклического
+        календаря: [2,2] - в цикле будет два рабочих, а затем два нерабочих дня. В
+        итоге график получается два через два. Пример производственного календаря:
+        [7] - Календарь будет активен по рабочим дням согласно производственного календаря;
+        [8] - Календарь будет активен по выходным дням согласно производственного
+        календаря
+
+
+        - `activity_time` (array) (опциональный): Время активности графика. Если параметр
+        не задан, то график работает без ограничений
+
+
+        - `time_from` (string) (обязательный): Время начала активности графика
+
+
+        - `time_till` (string) (обязательный): Время окончания активности графика.
+        Должно быть обязательно больше чем указано в параметре "time_from"
+
+
+        - `activity_date_from` (string) (опциональный): Дата начала активности графика
+
+
+        - `activity_date_till` (string) (опциональный): Дата окончания активности
+        графика
+
+
+        **Параметры ответа:** 1
+
+
+        - `id` (number): Уникальный идентификатор графика активности'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    name:
+                      type: string
+                      description: Название графика активности
+                      example: example_string
+                    schedules:
+                      type: array
+                      description: Расписания работы
+                    activity_days:
+                      type: object
+                      description: Дни в которые график активен
+                    type:
+                      type: string
+                      description: Тип. days_of_week - Календарь по дням недели days_of_month
+                        - Календарь по дням месяца business_calendar - Производственный
+                        календарь cycle - Циклический календарь
+                      enum:
+                      - days_of_week
+                      - days_of_month
+                      - business_calendar
+                      - cycle
+                      example: days_of_week
+                    days:
+                      type: array
+                      description: 'Дни недели или месяца Пример циклического календаря:
+                        [2,2] - в цикле будет два рабочих, а затем два нерабочих дня.
+                        В итоге график получается два через два. Пример производственного
+                        календаря: [7] - Календарь будет активен по рабочим дням согласно
+                        производственного календаря; [8] - Календарь будет активен
+                        по выходным дням согласно производственного календаря'
+                      enum:
+                      - 1 - понедельник;
+                      - 2 - вторник;
+                      - 3 - среда;
+                      - 4 - четверг;
+                      - 5 - пятница;
+                      - 6 - суббота
+                      - 0 - воскресенье;
+                      - 8 - выходной;
+                      - 7 - рабочий;
+                      example: 1 - понедельник;
+                    activity_time:
+                      type: array
+                      description: Время активности графика. Если параметр не задан,
+                        то график работает без ограничений
+                    time_from:
+                      type: string
+                      description: Время начала активности графика
+                      enum:
+                      - HH:MM
+                      example: HH:MM
+                    time_till:
+                      type: string
+                      description: Время окончания активности графика. Должно быть
+                        обязательно больше чем указано в параметре "time_from"
+                      enum:
+                      - HH:MM
+                      example: HH:MM
+                    activity_date_from:
+                      type: string
+                      description: Дата начала активности графика
+                      enum:
+                      - YYYY-MM-DD
+                      example: YYYY-MM-DD
+                    activity_date_till:
+                      type: string
+                      description: Дата окончания активности графика
+                      enum:
+                      - YYYY-MM-DD
+                      example: YYYY-MM-DD
+                  required:
+                  - access_token
+                  - name
+                  - schedules
+                  - activity_days
+                  - type
+                  - days
+                  - time_from
+                  - time_till
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                            description: Уникальный идентификатор графика активности
+                            example: 123
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Партнёр, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом create"'
+    href: ../..#_changeErrors

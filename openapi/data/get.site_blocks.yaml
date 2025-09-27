@@ -1,0 +1,351 @@
+openapi: 3.0.0
+info:
+  title: Получение списка блоков номеров
+  version: 1.0.0
+  description: Получение списка блоков номеров
+paths:
+  /get.site_blocks:
+    get:
+      summary: Получение списка блоков номеров
+      description: 'Получение списка блоков номеров
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 7
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `limit` (number) (опциональный): Количество возвращаемых записей. См. раздел
+        "Постраничный вывод"
+
+
+        - `offset` (number) (опциональный): Сдвиг, определяет с какого номера записи
+        возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+
+
+        - `filter` (object) (опциональный): См. раздел "Критерии фильтрации"
+
+
+        - `fields` (array) (опциональный): См. раздел "Представление возвращаемых
+        данных"
+
+
+        - `sort` (array) (опциональный): См. раздел "Сортировка данных"
+
+
+        **Параметры ответа:** 17
+
+
+        - `id` (number): Уникальный идентификатор блока
+
+
+        - `name` (string): Название блока.
+
+
+        - `site_id` (number): Уникальный идентификатор сайта
+
+
+        - `site_domain_name` (string): Адрес сайта в интернете. Без указания протокола
+        - "http://" или "https://".
+
+
+        - `templates` (array): Шаблон номеров в блоке
+
+
+        - `template_id` (number): Уникальный идентификатор шаблона виртуального номера.
+
+
+        - `template_type` (enum): Тип шаблона image - В виде картинки; text - В виде
+        текста.
+
+
+        - `element_attribute` (enum): Аттрибут заменяемого элемента на странице сайта
+        id - Идентификатор; class - Класс; name - Название; selector - Селектор; phone_number
+        - Номер на сайте.
+
+
+        - `element_attribute_value` (string): Название, значение заменяемого элемента
+        на странице сайта
+
+
+        - `phone_number_template` (string): Если параметр `template_type` имеет значение
+        "text", то поле имеет значение. Шаблон отображения номера. В шаблоне можно
+        указывать любой текст, а также специальные теги: {country} - код страны, {city}
+        - код города, {phone} - номер телефона
+
+
+        - `phone_number_mask` (string): Если параметр `template_type` имеет значение
+        "text", то поле имеет значение. Поле задаёт формат отображения {phone} (см.
+        параметр `phone_number_template`) Для обозначения цифр используйте символ
+        #. Длина номера может варьироваться от 5 до 7 символов. В случае, если подменяемый
+        номер окажется длиннее/короче указанной маски, все лишние/недостающие символы
+        будут убраны из начала/добавлены в начало. Например, маска ##-##-## для номера
+        123456 будет обозначать, что номер на сайте выводится в формате 12-34-56,
+        номер 1234567 будет выводиться как 123-45-67, а номер 12345 будет выводиться
+        как 1-23-45.
+
+
+        - `phone_numbers` (array): Если, блок настроен в рекламной кампании, то он
+        может содержать список виртуальных номеров связанных с блоком
+
+
+        - `phone_number` (string): Виртуальный номер
+
+
+        - `phone_number_id` (number): Уникальный номер виртуального номера
+
+
+        - `campaign_id` (number): Уникальный идентификатор рекламной кампании в которой
+        блок настроен, т.е у блока настроена подмена номера.
+
+
+        - `campaign_name` (string): Название рекламной кампании в которой блок настроен,
+        т.е у блока настроена подмена номера.
+
+
+        - `image_url` (string): Адрес картинки, если параметр `template_type` = `image`'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    limit:
+                      type: number
+                      description: Количество возвращаемых записей. См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    offset:
+                      type: number
+                      description: Сдвиг, определяет с какого номера записи возвращать
+                        "limit" записей. По умолчанию "0". См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    filter:
+                      type: object
+                      description: См. раздел "Критерии фильтрации"
+                    fields:
+                      type: array
+                      description: См. раздел "Представление возвращаемых данных"
+                    sort:
+                      type: array
+                      description: См. раздел "Сортировка данных"
+                  required:
+                  - access_token
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                            description: Уникальный идентификатор блока
+                            x-filtering: да
+                            example: 123
+                          name:
+                            type: string
+                            description: Название блока.
+                            x-filtering: да
+                            example: example_string
+                          site_id:
+                            type: number
+                            description: Уникальный идентификатор сайта
+                            x-filtering: да
+                            x-sorting: да
+                            example: 123
+                          site_domain_name:
+                            type: string
+                            description: Адрес сайта в интернете. Без указания протокола
+                              - "http://" или "https://".
+                            x-filtering: да
+                            example: example_string
+                          templates:
+                            type: array
+                            description: Шаблон номеров в блоке
+                          template_id:
+                            type: number
+                            description: Уникальный идентификатор шаблона виртуального
+                              номера.
+                            example: 123
+                          template_type:
+                            type: string
+                            description: Тип шаблона image - В виде картинки; text
+                              - В виде текста.
+                            enum:
+                            - 'image
+
+                              text'
+                            example: 'image
+
+                              text'
+                          element_attribute:
+                            type: string
+                            description: Аттрибут заменяемого элемента на странице
+                              сайта id - Идентификатор; class - Класс; name - Название;
+                              selector - Селектор; phone_number - Номер на сайте.
+                            enum:
+                            - 'id
+
+                              class
+
+                              name
+
+                              selector
+
+                              phone_number'
+                            example: 'id
+
+                              class
+
+                              name
+
+                              selector
+
+                              phone_number'
+                          element_attribute_value:
+                            type: string
+                            description: Название, значение заменяемого элемента на
+                              странице сайта
+                            example: example_string
+                          phone_number_template:
+                            type: string
+                            description: 'Если параметр `template_type` имеет значение
+                              "text", то поле имеет значение. Шаблон отображения номера.
+                              В шаблоне можно указывать любой текст, а также специальные
+                              теги: {country} - код страны, {city} - код города, {phone}
+                              - номер телефона'
+                            example: example_string
+                          phone_number_mask:
+                            type: string
+                            description: 'Если параметр `template_type` имеет значение
+                              "text", то поле имеет значение. Поле задаёт формат отображения
+                              {phone} (см. параметр `phone_number_template`) Для обозначения
+                              цифр используйте символ #. Длина номера может варьироваться
+                              от 5 до 7 символов. В случае, если подменяемый номер
+                              окажется длиннее/короче указанной маски, все лишние/недостающие
+                              символы будут убраны из начала/добавлены в начало. Например,
+                              маска ##-##-## для номера 123456 будет обозначать, что
+                              номер на сайте выводится в формате 12-34-56, номер 1234567
+                              будет выводиться как 123-45-67, а номер 12345 будет
+                              выводиться как 1-23-45.'
+                            example: example_string
+                          phone_numbers:
+                            type: array
+                            description: Если, блок настроен в рекламной кампании,
+                              то он может содержать список виртуальных номеров связанных
+                              с блоком
+                            x-filtering: да
+                          phone_number:
+                            type: string
+                            description: Виртуальный номер
+                            example: example_string
+                          phone_number_id:
+                            type: number
+                            description: Уникальный номер виртуального номера
+                            example: 123
+                          campaign_id:
+                            type: number
+                            description: Уникальный идентификатор рекламной кампании
+                              в которой блок настроен, т.е у блока настроена подмена
+                              номера.
+                            example: 123
+                          campaign_name:
+                            type: string
+                            description: Название рекламной кампании в которой блок
+                              настроен, т.е у блока настроена подмена номера.
+                            example: example_string
+                          image_url:
+                            type: string
+                            description: Адрес картинки, если параметр `template_type`
+                              = `image`
+                            example: example_string
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом get"'
+    href: ../..#_getErrors

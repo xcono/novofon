@@ -1,0 +1,140 @@
+openapi: 3.0.0
+info:
+  title: Создание комментария на обращении
+  version: 1.0.0
+  description: Создание комментария на обращении
+paths:
+  /create.communication_comment:
+    post:
+      summary: Создание комментария на обращении
+      description: 'Создание комментария на обращении
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 5
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `communication_id` (number) (опциональный): Уникальный идентификатор обращения
+
+
+        - `communication_type` (enum) (опциональный): Тип обращения. Пока доступен
+        только call
+
+
+        - `comment` (string) (опциональный): Комментарий на обращении'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    communication_id:
+                      type: number
+                      description: Уникальный идентификатор обращения
+                      example: 123
+                    communication_type:
+                      type: string
+                      description: Тип обращения. Пока доступен только call
+                      enum:
+                      - call
+                      example: call
+                    comment:
+                      type: string
+                      description: Комментарий на обращении
+                      example: example_string
+                  required:
+                  - access_token
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом create"'
+    href: ../../..#_changeErrors

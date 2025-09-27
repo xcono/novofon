@@ -1,0 +1,184 @@
+openapi: 3.0.0
+info:
+  title: Проставление тега продажа на обращение
+  version: 1.0.0
+  description: Проставление тега продажа на обращение
+paths:
+  /set.tag_sales:
+    post:
+      summary: Проставление тега продажа на обращение
+      description: 'Проставление тега продажа на обращение
+
+
+        **Доступ:** Партнёр, Клиент
+
+
+        **Параметры запроса:** 7
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `communication_id` (number) (обязательный): Уникальный идентификатор обращения.
+        По данному идентификатору можно получить детализированную информацию используя
+        следующие методы "get.communications_report", "get.chats_report ", "get.goals_report",
+        "get.offline_messages_report ", "get.calls_report"
+
+
+        - `communication_type` (enum) (обязательный): Тип обращения.
+
+
+        - `date_time` (iso8601) (обязательный): Дата и время сделки Не должна быть
+        раньше даты обращения
+
+
+        - `transaction_value` (number) (обязательный): Стоимость сделки
+
+
+        - `comment` (string) (опциональный): Комментарий к сделке
+
+
+        **Параметры ответа:** 1
+
+
+        - `id` (number): Уникальный идентификатор продажи'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    communication_id:
+                      type: number
+                      description: Уникальный идентификатор обращения. По данному
+                        идентификатору можно получить детализированную информацию
+                        используя следующие методы "get.communications_report", "get.chats_report
+                        ", "get.goals_report", "get.offline_messages_report ", "get.calls_report"
+                      example: 123
+                    communication_type:
+                      type: string
+                      description: Тип обращения.
+                      enum:
+                      - chat
+                      - call
+                      - goal
+                      - offline_message
+                      example: chat
+                    date_time:
+                      type: string
+                      description: Дата и время сделки Не должна быть раньше даты
+                        обращения
+                      enum:
+                      - YYYY-MM-DD hh:mm:ss
+                      example: YYYY-MM-DD hh:mm:ss
+                    transaction_value:
+                      type: number
+                      description: Стоимость сделки
+                      example: 123
+                    comment:
+                      type: string
+                      description: Комментарий к сделке
+                      enum:
+                      - Максимальная длина 255 символов
+                      example: Максимальная длина 255 символов
+                  required:
+                  - access_token
+                  - communication_id
+                  - communication_type
+                  - date_time
+                  - transaction_value
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                            description: Уникальный идентификатор продажи
+                            example: 123
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Партнёр, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом set"'
+    href: ../..#_changeErrors

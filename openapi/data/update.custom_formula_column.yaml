@@ -1,0 +1,212 @@
+openapi: 3.0.0
+info:
+  title: Редактирование пользовательского столбца на основе формулы
+  version: 1.0.0
+  description: Редактирование пользовательского столбца на основе формулы
+paths:
+  /update.custom_formula_column:
+    put:
+      summary: Редактирование пользовательского столбца на основе формулы
+      description: 'Редактирование пользовательского столбца на основе формулы
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 9
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос Для получения списка пользователей
+        клиента необходимо использовать метод ["get.customer_users"](../Partners.md#get_customer_user)
+
+
+        - `id` (string) (обязательный): Уникальный идентификатор пользовательского
+        столбца. Для получения списка пользовательских столбцов необходимо использовать
+        метод ["getobj.columns_tree"](../getobj_columns_tree)
+
+
+        - `name` (string) (обязательный): Название столбца
+
+
+        - `description` (string) (опциональный): Описание столбца
+
+
+        - `data_type` (enum) (обязательный): Формат данных
+
+
+        - `formula` (array) (обязательный): Формула для вычисления столбца. Важен
+        порядок
+
+
+        - `element_type` (enum) (обязательный): Тип элементов которые будут использоваться
+        в формуле
+
+
+        - `value` (string) (обязательный): Идентификатор столбца, значение, арифметическая
+        операция, приоритет который будет участвовать в формуле'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос Для получения списка пользователей
+                        клиента необходимо использовать метод ["get.customer_users"](../Partners.md#get_customer_user)
+                      example: 123
+                    id:
+                      type: string
+                      description: Уникальный идентификатор пользовательского столбца.
+                        Для получения списка пользовательских столбцов необходимо
+                        использовать метод ["getobj.columns_tree"](../getobj_columns_tree)
+                      example: example_string
+                    name:
+                      type: string
+                      description: Название столбца
+                      example: example_string
+                    description:
+                      type: string
+                      description: Описание столбца
+                      example: example_string
+                    data_type:
+                      type: string
+                      description: Формат данных
+                      enum:
+                      - integer
+                      - float
+                      - currency
+                      - percentage
+                      - time
+                      example: integer
+                    formula:
+                      type: array
+                      description: Формула для вычисления столбца. Важен порядок
+                    element_type:
+                      type: string
+                      description: Тип элементов которые будут использоваться в формуле
+                      format: "column - Идентификатор столбца, возможно передать только\
+                        \ столбцы с type=metric. Список столбцов можно получить используя\
+                        \ метод  \"getobj.columns_tree\"\nconstant - числовое значение,\
+                        \ формат число с плавающей запятой\noperator - арифметические\
+                        \ операции для вычисляемого выражения. Может принимать значения\
+                        \ value = +,-,\\*,/ \npriority - приоритет вычисляемого выражения.\
+                        \ Может принимать значения value = (,)"
+                      example: example_value
+                    value:
+                      type: string
+                      description: Идентификатор столбца, значение, арифметическая
+                        операция, приоритет который будет участвовать в формуле
+                      enum:
+                      - 'Если element_type = column - возможно передать только идентификаторы
+                        столбцов с type = metric. Список столбцов можно получить используя
+                        метод  "getobj.columns_tree"
+
+                        Если element_type = constant - то можно передать только число
+                        number с плавающей запятой или целое число. Может быть как
+                        положительным'
+                      - 'так и отрицательным
+
+                        Если element_type = operator - можно указать только арифметические
+                        операции для вычисляемого выражения. Может принимать значения
+                        +'
+                      - '-'
+                      - \*
+                      - "/ \nЕсли element_type = priority - можнот указать значения\
+                        \ value = ("
+                      - )
+                      example: 'Если element_type = column - возможно передать только
+                        идентификаторы столбцов с type = metric. Список столбцов можно
+                        получить используя метод  "getobj.columns_tree"
+
+                        Если element_type = constant - то можно передать только число
+                        number с плавающей запятой или целое число. Может быть как
+                        положительным'
+                  required:
+                  - access_token
+                  - id
+                  - name
+                  - data_type
+                  - formula
+                  - element_type
+                  - value
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент

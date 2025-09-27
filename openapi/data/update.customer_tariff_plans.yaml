@@ -1,0 +1,126 @@
+openapi: 3.0.0
+info:
+  title: Смена тарифного плана у клиента агента
+  version: 1.0.0
+  description: Смена тарифного плана у клиента агента
+paths:
+  /update.customer_tariff_plans:
+    put:
+      summary: Смена тарифного плана у клиента агента
+      description: 'Смена тарифного плана у клиента агента
+
+
+        **Доступ:** Партнёр
+
+
+        **Параметры запроса:** 3
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `customer_id` (number) (обязательный): Уникальный идентификатор клиента
+
+
+        - `tariff_plan_id` (number) (обязательный): Уникальный идентификатор тарифного
+        плана. Список доступных тарифных планов можно получить с помощью метода "get.tariff_plans"'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    customer_id:
+                      type: number
+                      description: Уникальный идентификатор клиента
+                      example: 123
+                    tariff_plan_id:
+                      type: number
+                      description: Уникальный идентификатор тарифного плана. Список
+                        доступных тарифных планов можно получить с помощью метода
+                        "get.tariff_plans"
+                      example: 123
+                  required:
+                  - access_token
+                  - customer_id
+                  - tariff_plan_id
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Партнёр
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом update"'
+    href: ../..#_changeErrors

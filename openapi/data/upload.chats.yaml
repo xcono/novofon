@@ -1,0 +1,295 @@
+openapi: 3.0.0
+info:
+  title: Загрузка чатов
+  version: 1.0.0
+  description: Загрузка чатов
+paths:
+  /upload.chats:
+    post:
+      summary: Загрузка чатов
+      description: 'Загрузка чатов
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 19
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `chats` (array) (обязательный): Список чатов. Максимально 500
+
+
+        - `start_date_time` (iso8601) (обязательный): Дата и время создания чата Не
+        может быть в будущем. Должна быть позже чем у переданной сессии посетителя.
+
+
+        - `name` (string) (опциональный): Имя посетителя
+
+
+        - `phone` (string) (опциональный): Телефон посетителя в формате E164
+
+
+        - `email` (string) (опциональный): Email посетителя
+
+
+        - `status` (enum) (обязательный): Статус чата lost (Потерянный); succeed (Состоявшийся);refused
+        (Отклоненный) Если инициатор visitor и нет сообщений message от оператора
+        или визитора, то переданное значение в status игнорируется и ставится значение
+        lost
+
+
+        - `initiator` (enum) (опциональный): Инициатор чата autoinvite (Автоприглашение),
+        visitor (Посетитель), operator(Оператор) Если параметр не передан то будет
+        взят первый источник сообщения ("source")
+
+
+        - `visitor_session_id` (number) (опциональный): Уникальный идентификатор сессии
+        посетителя полученной из CoMagic. Для получения ID необходимо использовать
+        метод JS API Comagic.getSessionId()
+
+
+        - `campaign_id` (number) (опциональный): Уникальный идентификатор рекламной
+        кампании в CoMagic. Для получения campaign_id можно использовать метод Data
+        API "get.campaigns". Нельзя передавать campaign_id = -1.
+
+
+        - `source_id` (number) (опциональный): Уникальный идентификатор источника.
+        Возможно передать только неудаленный источник в разрезе клиента. Если передан
+        visitor_session_id, то определим source_id по параметрам сессии.
+
+
+        - `site_id` (number) (опциональный): Уникальный идентификатор сайта. Обязательно
+        передавать если хотите чтобы чат попал в Рекламную кампанию "Посетители без
+        РК"
+
+
+        - `messages` (array) (обязательный): Список сообщений чата
+
+
+        - `date_time` (iso8601) (обязательный): Дата и время отправки сообщения Не
+        может быть в будущем. Должна быть позже чем start_date_time. Если параметр
+        не передан, то проставится время вызова
+
+
+        - `source` (enum) (обязательный): Источник сообщения system (Автоприглашение),
+        visitor (Посетитель), operator(Оператор)
+
+
+        - `employee_id` (number) (опциональный): Уникальный идентификатор сотрудника,
+        обязательный параметр если source = operator(Оператор)За последним сотрудником,
+        отправившим сообщение, будет закреплен чат
+
+
+        - `message` (string) (обязательный): Сообщение
+
+
+        - `ext_id` (string) (опциональный): Уникальный идентификатор чата в вашей
+        системе'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    chats:
+                      type: array
+                      description: Список чатов. Максимально 500
+                    start_date_time:
+                      type: string
+                      description: Дата и время создания чата Не может быть в будущем.
+                        Должна быть позже чем у переданной сессии посетителя.
+                      enum:
+                      - YYYY-MM-DD hh:mm:ss
+                      example: YYYY-MM-DD hh:mm:ss
+                    name:
+                      type: string
+                      description: Имя посетителя
+                      example: example_string
+                    phone:
+                      type: string
+                      description: Телефон посетителя в формате E164
+                      example: example_string
+                    email:
+                      type: string
+                      description: Email посетителя
+                      example: example_string
+                    status:
+                      type: string
+                      description: Статус чата lost (Потерянный); succeed (Состоявшийся);refused
+                        (Отклоненный) Если инициатор visitor и нет сообщений message
+                        от оператора или визитора, то переданное значение в status
+                        игнорируется и ставится значение lost
+                      enum:
+                      - lost
+                      - succeed
+                      - refused
+                      example: lost
+                    initiator:
+                      type: string
+                      description: Инициатор чата autoinvite (Автоприглашение), visitor
+                        (Посетитель), operator(Оператор) Если параметр не передан
+                        то будет взят первый источник сообщения ("source")
+                      enum:
+                      - operator
+                      - visitor
+                      - autoinvite
+                      example: operator
+                    visitor_session_id:
+                      type: number
+                      description: Уникальный идентификатор сессии посетителя полученной
+                        из CoMagic. Для получения ID необходимо использовать метод
+                        JS API Comagic.getSessionId()
+                      example: 123
+                    campaign_id:
+                      type: number
+                      description: Уникальный идентификатор рекламной кампании в CoMagic.
+                        Для получения campaign_id можно использовать метод Data API
+                        "get.campaigns". Нельзя передавать campaign_id = -1.
+                      example: 123
+                    source_id:
+                      type: number
+                      description: Уникальный идентификатор источника. Возможно передать
+                        только неудаленный источник в разрезе клиента. Если передан
+                        visitor_session_id, то определим source_id по параметрам сессии.
+                      example: 123
+                    site_id:
+                      type: number
+                      description: Уникальный идентификатор сайта. Обязательно передавать
+                        если хотите чтобы чат попал в Рекламную кампанию "Посетители
+                        без РК"
+                      example: 123
+                    messages:
+                      type: array
+                      description: Список сообщений чата
+                    date_time:
+                      type: string
+                      description: Дата и время отправки сообщения Не может быть в
+                        будущем. Должна быть позже чем start_date_time. Если параметр
+                        не передан, то проставится время вызова
+                      enum:
+                      - YYYY-MM-DD hh:mm:ss
+                      example: YYYY-MM-DD hh:mm:ss
+                    source:
+                      type: string
+                      description: Источник сообщения system (Автоприглашение), visitor
+                        (Посетитель), operator(Оператор)
+                      enum:
+                      - operator
+                      - visitor
+                      - system
+                      example: operator
+                    employee_id:
+                      type: number
+                      description: Уникальный идентификатор сотрудника, обязательный
+                        параметр если source = operator(Оператор)За последним сотрудником,
+                        отправившим сообщение, будет закреплен чат
+                      example: 123
+                    message:
+                      type: string
+                      description: Сообщение
+                      example: example_string
+                    ext_id:
+                      type: string
+                      description: Уникальный идентификатор чата в вашей системе
+                      example: example_string
+                  required:
+                  - access_token
+                  - chats
+                  - start_date_time
+                  - status
+                  - messages
+                  - date_time
+                  - source
+                  - message
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом upload"'
+    href: ../..#_changeErrors

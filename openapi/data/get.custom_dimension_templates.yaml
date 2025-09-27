@@ -1,0 +1,179 @@
+openapi: 3.0.0
+info:
+  title: Получение шаблонов для создания пользовательского измерения
+  version: 1.0.0
+  description: Получение списка метрик
+paths:
+  /get.custom_dimension_templates:
+    get:
+      summary: Получение шаблонов для создания пользовательского измерения
+      description: "Получение списка метрик\n\n**Доступ:** Агент, Клиент\n\n**Параметры\
+        \ запроса:** 3\n\n- `access_token` (string) (обязательный): Ключ сессии аутентификации\n\
+        \n- `user_id` (number) (опциональный): Уникальный идентификатор пользователя\
+        \ клиента агента от имени которого делается запрос\n\n- `report_type` (enum)\
+        \ (обязательный): Тип отчета пользователя. Для получения списка отчетов пользователей\
+        \ необходимо использовать метод \"get.reports_list\"\n\n**Параметры ответа:**\
+        \ 11\n\n- `id` (string): Идентификатор шаблона\n\n- `name` (string): Название\
+        \ группы условия. Значение которое присваивается данным, попавшими под условия\
+        \ группы\n\n- `dimension_name` (string): Название измерения в шаблоне\n\n\
+        - `dimension_description` (string): Описание измерения в шаблоне\n\n- `groups`\
+        \ (array): \n\n- `priority` (number): Порядковый номер группы условия. Нужен\
+        \ для понимания приоритета применения групп условий к данным.\n\n- `filter`\
+        \ (object): Условия фильтрации используемые в группе. Для получения списка\
+        \ доступных условий фильтрации см. раздел \"Получение списка возможных условий\
+        \ фильтрации для отчета\"\n\n- `filters` (array): Выражение, может содержать\
+        \ в себе как простые фильтры, так и дерево фильтров\n\n- `field` (string):\
+        \ Поле сущности к которой будет применяться фильтрация (список заранее определён\
+        \ для метода\n\n- `operator` (enum): Оператор фильтрации. Список всех операторов\
+        \ можно получить в разделе \"Возможные операторы\"\n\n- `value` (string):\
+        \ Значение для оператора фильтрации. Необязательное поле, если оно отсутствует,\
+        \ то считается пустота."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    report_type:
+                      type: string
+                      description: Тип отчета пользователя. Для получения списка отчетов
+                        пользователей необходимо использовать метод "get.reports_list"
+                  required:
+                  - access_token
+                  - report_type
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            description: Идентификатор шаблона
+                            example: example_string
+                          name:
+                            type: string
+                            description: Название группы условия. Значение которое
+                              присваивается данным, попавшими под условия группы
+                            example: example_string
+                          dimension_name:
+                            type: string
+                            description: Название измерения в шаблоне
+                            example: example_string
+                          dimension_description:
+                            type: string
+                            description: Описание измерения в шаблоне
+                            example: example_string
+                          groups:
+                            type: array
+                            description: ''
+                          priority:
+                            type: number
+                            description: Порядковый номер группы условия. Нужен для
+                              понимания приоритета применения групп условий к данным.
+                            example: 123
+                          filter:
+                            type: object
+                            description: Условия фильтрации используемые в группе.
+                              Для получения списка доступных условий фильтрации см.
+                              раздел "Получение списка возможных условий фильтрации
+                              для отчета"
+                          filters:
+                            type: array
+                            description: Выражение, может содержать в себе как простые
+                              фильтры, так и дерево фильтров
+                          field:
+                            type: string
+                            description: Поле сущности к которой будет применяться
+                              фильтрация (список заранее определён для метода
+                            example: example_string
+                          operator:
+                            type: string
+                            description: Оператор фильтрации. Список всех операторов
+                              можно получить в разделе "Возможные операторы"
+                          value:
+                            type: string
+                            description: Значение для оператора фильтрации. Необязательное
+                              поле, если оно отсутствует, то считается пустота.
+                            example: example_string
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом get"'
+    href: ../index.md#_getErrors

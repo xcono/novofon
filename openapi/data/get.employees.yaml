@@ -1,0 +1,660 @@
+openapi: 3.0.0
+info:
+  title: Получение списка сотрудников
+  version: 1.0.0
+  description: Получение списка сотрудников
+paths:
+  /get.employees:
+    get:
+      summary: Получение списка сотрудников
+      description: 'Получение списка сотрудников
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 7
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `limit` (number) (опциональный): Количество возвращаемых записей. См. раздел
+        "Постраничный вывод"
+
+
+        - `offset` (number) (опциональный): Сдвиг, определяет с какого номера записи
+        возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+
+
+        - `filter` (object) (опциональный): См. раздел "Критерии фильтрации"
+
+
+        - `fields` (array) (опциональный): См. раздел "Представление возвращаемых
+        данных"
+
+
+        - `sort` (array) (опциональный): См. раздел "Сортировка данных"
+
+
+        **Параметры ответа:** 47
+
+
+        - `id` (number): Уникальный идентификатор сотрудника
+
+
+        - `login` (string): Логин пользователя для доступа в личный кабинет
+
+
+        - `first_name` (string): Имя сотрудника
+
+
+        - `last_name` (string): Фамилия сотрудника
+
+
+        - `patronymic` (string): Отчество сотрудника
+
+
+        - `full_name` (string): Фамилия Имя Отчество
+
+
+        - `status` (enum): Значение по умолчанию "active". Статус номера.
+
+
+        - `status_id` (number): Уникальный идентификатор статуса. Для получения полного
+        списка статусов необходимо использовать метод "get.statuses"
+
+
+        - `calls_available` (boolean): Параметр будет удален в ближайшее время. Используйте
+        вместо него параметры: in_external_allowed_call_directions, in_internal_allowed_call_directions
+        Доступность для звонков
+
+
+        - `allowed_in_call_types` (array): Параметр будет удален в ближайшее время.
+        Используйте вместо него параметры: in_external_allowed_call_directions, in_internal_allowed_call_directions
+        Какие типы входящих звонков разрешены сотруднику internal - внутренние звонки
+        от сотрудников компании external - внешние звонки от клиентов
+
+
+        - `in_external_allowed_call_directions` (array): Какие направления вызовов
+        разрешены сотруднику для входящих внешних звонков in - входящие вызовы out
+        - исходящие вызовы
+
+
+        - `in_internal_allowed_call_directions` (array): Какие направления вызовов
+        разрешены сотруднику для входящих внутренних звонков in - входящие вызовы
+        out - исходящие вызовы
+
+
+        - `allowed_out_call_types` (array): Параметр будет удален в ближайшее время.
+        Используйте вместо него параметры: out_external_allowed_call_directions, out_internal_allowed_call_directions
+        Какие типы исходящих звонков разрешены сотруднику internal - внутренние звонки
+        на сотрудников компании external - звонки за пределы компании
+
+
+        - `out_external_allowed_call_directions` (array): Какие направления вызовов
+        разрешены сотруднику для исходящих внешних звонков in - входящие вызовы out
+        - исходящие вызовы
+
+
+        - `out_internal_allowed_call_directions` (array): Какие направления вызовов
+        разрешены сотруднику для исходящих внутренних звонков in - входящие вызовы
+        out - исходящие вызовы
+
+
+        - `email` (string): Адрес электронной почты сотрудника
+
+
+        - `call_recording` (enum): Статус записи разговоров
+
+
+        - `schedule_id` (number): Уникальный идентификатор графика активности
+
+
+        - `schedule_name` (string): Название графика активности
+
+
+        - `coach` (object): Тренер для сотрудника
+
+
+        - `coach_full_name` (string): Ф.И.О тренера
+
+
+        - `coach_id` (number): Уникальный идентификатор тренера Выбирается из списка
+        сотрудников
+
+
+        - `coach_always_enabled` (boolean): При активации опции все входящие звонки
+        сотрудника будут дублироваться его тренеру.
+
+
+        - `groups` (array): Группы вкоторых состоит сотрудник
+
+
+        - `group_id` (number): Уникальный идентификатор группы
+
+
+        - `group_name` (string): Название группы
+
+
+        - `phone_numbers` (array): Список телефонов сотрудника. Список номеров должен
+        быть отсортирован по приоритету.
+
+
+        - `phone_id` (number): Уникальный идентификатор телефона сотрудника
+
+
+        - `phone_number` (string): Номер телефона сотрудника. Формат номера может
+        быть с донабором, к примеру "74955140578...2345", поэтому у номера не формат
+        E164 Если указан SIP, то не делаем связки, а просто добавляем как номер типа
+        ТФОП, т.е. как обычный номер
+
+
+        - `channels_count` (number): Значение по умолчанию "1". Количество линий на
+        телефоне
+
+
+        - `dial_time` (number): Значение по умолчанию "60". Время дозвона по телефону.
+        Значение в секундах.
+
+
+        - `extension` (object): Внутренний номер и его настройки
+
+
+        - `extension_phone_number` (string): Внутренний номер
+
+
+        - `extension_voice_mail_enabled` (boolean): В случае, если все номера, указанные
+        для этого сотрудника в списке телефонов, заняты, то звонящему абоненту будет
+        предложено оставить голосовое сообщение.
+
+
+        - `extension_queue_enabled` (boolean): В случае, если все номера, указанные
+        для этого сотрудника в списке телефонов, заняты, то звонящий абонент встанет
+        в очередь на повторный дозвон до телефонов в списке и будет ждать первый освободившийся
+        номер.
+
+
+        - `operator` (object): Оператор рабочего места
+
+
+        - `operator_display_name` (string): Имя оператора в чате
+
+
+        - `operator_login` (string): Логин оператора для входа в приложение «Рабочее
+        место оператора»
+
+
+        - `operator_position_id` (number): Уникальный идентификатор должности оператора
+        в подписи
+
+
+        - `operator_position_name` (string): Название должности оператора в подписи
+
+
+        - `operator_offline_message_enabled` (boolean): Разрешено ли обрабатывать
+        заявки
+
+
+        - `operator_invite_to_chat_enabled` (boolean): Разрешено ли приглашать в чат
+
+
+        - `operator_chat_enabled` (boolean): Разрешено ли участвовать в чатах с посетителями
+
+
+        - `operator_chats_available` (boolean): Доступность для чатов
+
+
+        - `operator_sites` (array): Список уникальных идентификаторов и адресов сайтов
+        для которых доступен оператор
+
+
+        - `site_id` (number): Уникальный идентификатор сайта
+
+
+        - `site_domain_name` (string): Адрес сайта в интернете. Без указания протокола
+        - "http://" или "https://".'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    limit:
+                      type: number
+                      description: Количество возвращаемых записей. См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    offset:
+                      type: number
+                      description: Сдвиг, определяет с какого номера записи возвращать
+                        "limit" записей. По умолчанию "0". См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    filter:
+                      type: object
+                      description: См. раздел "Критерии фильтрации"
+                    fields:
+                      type: array
+                      description: См. раздел "Представление возвращаемых данных"
+                    sort:
+                      type: array
+                      description: См. раздел "Сортировка данных"
+                  required:
+                  - access_token
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                            description: Уникальный идентификатор сотрудника
+                            x-filtering: да
+                            example: 123
+                          login:
+                            type: string
+                            description: Логин пользователя для доступа в личный кабинет
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          first_name:
+                            type: string
+                            description: Имя сотрудника
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          last_name:
+                            type: string
+                            description: Фамилия сотрудника
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          patronymic:
+                            type: string
+                            description: Отчество сотрудника
+                            x-sorting: да
+                            example: example_string
+                          full_name:
+                            type: string
+                            description: Фамилия Имя Отчество
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          status:
+                            type: string
+                            description: Значение по умолчанию "active". Статус номера.
+                            enum:
+                            - active
+                            - inactive
+                            example: active
+                          status_id:
+                            type: number
+                            description: Уникальный идентификатор статуса. Для получения
+                              полного списка статусов необходимо использовать метод
+                              "get.statuses"
+                            x-filtering: да
+                            example: 123
+                          calls_available:
+                            type: boolean
+                            description: 'Параметр будет удален в ближайшее время.
+                              Используйте вместо него параметры: in_external_allowed_call_directions,
+                              in_internal_allowed_call_directions Доступность для
+                              звонков'
+                            enum:
+                            - 'true'
+                            - 'false'
+                            example: 'true'
+                            x-filtering: да
+                            x-sorting: да
+                          allowed_in_call_types:
+                            type: array
+                            description: 'Параметр будет удален в ближайшее время.
+                              Используйте вместо него параметры: in_external_allowed_call_directions,
+                              in_internal_allowed_call_directions Какие типы входящих
+                              звонков разрешены сотруднику internal - внутренние звонки
+                              от сотрудников компании external - внешние звонки от
+                              клиентов'
+                            enum:
+                            - 'internal
+
+                              external'
+                            example: 'internal
+
+                              external'
+                            x-filtering: да
+                          in_external_allowed_call_directions:
+                            type: array
+                            description: Какие направления вызовов разрешены сотруднику
+                              для входящих внешних звонков in - входящие вызовы out
+                              - исходящие вызовы
+                            enum:
+                            - 'in
+
+                              out'
+                            example: 'in
+
+                              out'
+                            x-filtering: да
+                          in_internal_allowed_call_directions:
+                            type: array
+                            description: Какие направления вызовов разрешены сотруднику
+                              для входящих внутренних звонков in - входящие вызовы
+                              out - исходящие вызовы
+                            enum:
+                            - 'in
+
+                              out'
+                            example: 'in
+
+                              out'
+                            x-filtering: да
+                          allowed_out_call_types:
+                            type: array
+                            description: 'Параметр будет удален в ближайшее время.
+                              Используйте вместо него параметры: out_external_allowed_call_directions,
+                              out_internal_allowed_call_directions Какие типы исходящих
+                              звонков разрешены сотруднику internal - внутренние звонки
+                              на сотрудников компании external - звонки за пределы
+                              компании'
+                            enum:
+                            - 'internal
+
+                              external'
+                            example: 'internal
+
+                              external'
+                            x-filtering: да
+                          out_external_allowed_call_directions:
+                            type: array
+                            description: Какие направления вызовов разрешены сотруднику
+                              для исходящих внешних звонков in - входящие вызовы out
+                              - исходящие вызовы
+                            enum:
+                            - 'in
+
+                              out'
+                            example: 'in
+
+                              out'
+                            x-filtering: да
+                          out_internal_allowed_call_directions:
+                            type: array
+                            description: Какие направления вызовов разрешены сотруднику
+                              для исходящих внутренних звонков in - входящие вызовы
+                              out - исходящие вызовы
+                            enum:
+                            - 'in
+
+                              out'
+                            example: 'in
+
+                              out'
+                            x-filtering: да
+                          email:
+                            type: string
+                            description: Адрес электронной почты сотрудника
+                            x-filtering: да
+                            example: example_string
+                          call_recording:
+                            type: string
+                            description: Статус записи разговоров
+                            enum:
+                            - 'all - для всех звонков;
+
+                              in - только для входящих;
+
+                              out - только для исходящих;
+
+                              off - отключена'
+                            example: 'all - для всех звонков;
+
+                              in - только для входящих;
+
+                              out - только для исходящих;
+
+                              off - отключена'
+                            x-filtering: да
+                          schedule_id:
+                            type: number
+                            description: Уникальный идентификатор графика активности
+                            x-filtering: да
+                            example: 123
+                          schedule_name:
+                            type: string
+                            description: Название графика активности
+                            x-filtering: да
+                            example: example_string
+                          coach:
+                            type: object
+                            description: Тренер для сотрудника
+                            x-filtering: да
+                          coach_full_name:
+                            type: string
+                            description: Ф.И.О тренера
+                            example: example_string
+                          coach_id:
+                            type: number
+                            description: Уникальный идентификатор тренера Выбирается
+                              из списка сотрудников
+                            example: 123
+                          coach_always_enabled:
+                            type: boolean
+                            description: При активации опции все входящие звонки сотрудника
+                              будут дублироваться его тренеру.
+                            enum:
+                            - 'true'
+                            - 'false'
+                            example: 'true'
+                          groups:
+                            type: array
+                            description: Группы вкоторых состоит сотрудник
+                            x-filtering: да
+                          group_id:
+                            type: number
+                            description: Уникальный идентификатор группы
+                            example: 123
+                          group_name:
+                            type: string
+                            description: Название группы
+                            example: example_string
+                          phone_numbers:
+                            type: array
+                            description: Список телефонов сотрудника. Список номеров
+                              должен быть отсортирован по приоритету.
+                            enum:
+                            - 10 штук
+                            example: 10 штук
+                            x-filtering: да
+                          phone_id:
+                            type: number
+                            description: Уникальный идентификатор телефона сотрудника
+                            example: 123
+                          phone_number:
+                            type: string
+                            description: Номер телефона сотрудника. Формат номера
+                              может быть с донабором, к примеру "74955140578...2345",
+                              поэтому у номера не формат E164 Если указан SIP, то
+                              не делаем связки, а просто добавляем как номер типа
+                              ТФОП, т.е. как обычный номер
+                            example: example_string
+                          channels_count:
+                            type: number
+                            description: Значение по умолчанию "1". Количество линий
+                              на телефоне
+                            enum:
+                            - От 1 до 150
+                            example: От 1 до 150
+                          dial_time:
+                            type: number
+                            description: Значение по умолчанию "60". Время дозвона
+                              по телефону. Значение в секундах.
+                            enum:
+                            - От 1 до 100
+                            example: От 1 до 100
+                          extension:
+                            type: object
+                            description: Внутренний номер и его настройки
+                            x-filtering: да
+                          extension_phone_number:
+                            type: string
+                            description: Внутренний номер
+                            enum:
+                            - 'Максимальная
+
+                              длина 5'
+                            example: 'Максимальная
+
+                              длина 5'
+                          extension_voice_mail_enabled:
+                            type: boolean
+                            description: В случае, если все номера, указанные для
+                              этого сотрудника в списке телефонов, заняты, то звонящему
+                              абоненту будет предложено оставить голосовое сообщение.
+                            example: true
+                          extension_queue_enabled:
+                            type: boolean
+                            description: В случае, если все номера, указанные для
+                              этого сотрудника в списке телефонов, заняты, то звонящий
+                              абонент встанет в очередь на повторный дозвон до телефонов
+                              в списке и будет ждать первый освободившийся номер.
+                            example: true
+                          operator:
+                            type: object
+                            description: Оператор рабочего места
+                          operator_display_name:
+                            type: string
+                            description: Имя оператора в чате
+                            example: example_string
+                          operator_login:
+                            type: string
+                            description: Логин оператора для входа в приложение «Рабочее
+                              место оператора»
+                            example: example_string
+                          operator_position_id:
+                            type: number
+                            description: Уникальный идентификатор должности оператора
+                              в подписи
+                            example: 123
+                          operator_position_name:
+                            type: string
+                            description: Название должности оператора в подписи
+                            example: example_string
+                          operator_offline_message_enabled:
+                            type: boolean
+                            description: Разрешено ли обрабатывать заявки
+                            example: true
+                          operator_invite_to_chat_enabled:
+                            type: boolean
+                            description: Разрешено ли приглашать в чат
+                            example: true
+                          operator_chat_enabled:
+                            type: boolean
+                            description: Разрешено ли участвовать в чатах с посетителями
+                            example: true
+                          operator_chats_available:
+                            type: boolean
+                            description: Доступность для чатов
+                            enum:
+                            - 'true'
+                            - 'false'
+                            example: 'true'
+                          operator_sites:
+                            type: array
+                            description: Список уникальных идентификаторов и адресов
+                              сайтов для которых доступен оператор
+                          site_id:
+                            type: number
+                            description: Уникальный идентификатор сайта
+                            example: 123
+                          site_domain_name:
+                            type: string
+                            description: Адрес сайта в интернете. Без указания протокола
+                              - "http://" или "https://".
+                            example: example_string
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом get"'
+    href: ../..#_getErrors

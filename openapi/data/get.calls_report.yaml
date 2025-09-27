@@ -1,0 +1,1082 @@
+openapi: 3.0.0
+info:
+  title: Получение отчёта по сессиям звонков
+  version: 1.0.0
+  description: Получение отчёта по сессиям звонков
+paths:
+  /get.calls_report:
+    get:
+      summary: Получение отчёта по сессиям звонков
+      description: "Получение отчёта по сессиям звонков\n\n**Доступ:** Партнёр, Клиент\n\
+        \n**Параметры запроса:** 10\n\n- `access_token` (string) (обязательный): Ключ\
+        \ сессии аутентификации\n\n- `user_id` (number) (опциональный): Уникальный\
+        \ идентификатор пользователя клиента агента от имени которого делается запрос\n\
+        \n- `limit` (number) (опциональный): Количество возвращаемых записей. См.\
+        \ раздел \"Постраничный вывод\"\n\n- `offset` (number) (опциональный): Сдвиг,\
+        \ определяет с какого номера записи возвращать \"limit\" записей. По умолчанию\
+        \ \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object) (опциональный):\
+        \ См. раздел \"Критерии фильтрации\"\n\n- `fields` (array) (опциональный):\
+        \ См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array) (опциональный):\
+        \ См. раздел \"Сортировка данных\"\n\n- `date_from` (iso8601) (обязательный):\
+        \ Дата начала выборки\n\n- `date_till` (iso8601) (обязательный): Дата окончания\
+        \ выбокри\n\n- `include_ongoing_calls` (boolean) (опциональный): Включить\
+        \ текущие вызовы\n\n**Параметры ответа:** 123\n\n- `id` (number): \n\n- `start_time`\
+        \ (iso8601): \n\n- `finish_time` (iso8601): да\n\n- `finish_reason` (enum):\
+        \ да\n\n- `direction` (enum): да\n\n- `cpn_region_id` (number): да\n\n- `cpn_region_name`\
+        \ (string): да\n\n- `scenario_operations` (array): нет\n\n- `name` (string):\
+        \ \n\n- `source` (enum): да\n\n- `is_lost` (boolean): да\n\n- `communication_number`\
+        \ (number): \n\n- `communication_page_url` (string): нет\n\n- `contact_phone_number`\
+        \ (string): да\n\n- `communication_id` (number): да\n\n- `communication_type`\
+        \ (enum): да\n\n- `wait_duration` (number): да\n\n- `total_wait_duration`\
+        \ (number): да\n\n- `lost_call_processing_duration` (number): \n\n- `talk_duration`\
+        \ (number): да\n\n- `clean_talk_duration` (number): да\n\n- `total_duration`\
+        \ (number): да\n\n- `postprocess_duration` (number): \n\n- `call_records`\
+        \ (array): да\n\n- `wav_call_records` (array): да\n\n- `full_record_file_link`\
+        \ (string): да\n\n- `voice_mail_records` (array): \n\n- `virtual_phone_number`\
+        \ (string): да\n\n- `ua_client_id` (string): \n\n- `ym_client_id` (string):\
+        \ \n\n- `sale_date` (iso8601): \n\n- `sale_cost` (number): \n\n- `is_transfer`\
+        \ (boolean): \n\n- `search_query` (string): \n\n- `search_engine` (string):\
+        \ \n\n- `referrer_domain` (string): \n\n- `referrer` (string): \n\n- `entrance_page`\
+        \ (string): \n\n- `gclid` (string): \n\n- `yclid` (string): \n\n- `ymclid`\
+        \ (string): \n\n- `ef_id` (string): \n\n- `channel` (enum): \n\n- `recognized_text`\
+        \ (array): нет\n\n- `phrase` (string): \n\n- `is_operator` (boolean): \n\n\
+        - `edited_phrase` (string): \n\n- `tags` (array): \n\n- `tag_name` (string):\
+        \ \n\n- `tag_id` (number): \n\n- `tag_change_time` (iso8601): \n\n- `tag_type`\
+        \ (enum): \n\n- `tag_user_id` (number): \n\n- `tag_user_login` (string): \n\
+        \n- `tag_employee_id` (number): \n\n- `tag_employee_full_name` (string): \n\
+        \n- `employees` (array): \n\n- `employee_id` (number): \n\n- `employee_full_name`\
+        \ (string): \n\n- `is_answered` (boolean): \n\n- `is_talked` (boolean): \n\
+        \n- `last_answered_employee_id` (number): \n\n- `last_answered_employee_full_name`\
+        \ (string): \n\n- `last_answered_employee_rating` (number): \n\n- `first_answered_employee_id`\
+        \ (number): \n\n- `first_answered_employee_full_name` (string): \n\n- `last_talked_employee_id`\
+        \ (number): \n\n- `last_talked_employee_full_name` (string): \n\n- `first_talked_employee_id`\
+        \ (number): \n\n- `first_talked_employee_full_name` (string): \n\n- `operator_phone_number`\
+        \ (string): \n\n- `scenario_name` (string): \n\n- `scenario_id` (number):\
+        \ \n\n- `site_domain_name` (string): \n\n- `site_id` (number): \n\n- `campaign_name`\
+        \ (string): \n\n- `campaign_id` (number): \n\n- `visit_other_campaign` (boolean):\
+        \ \n\n- `auto_call_campaign_name` (string): \n\n- `visitor_id` (number): \n\
+        \n- `person_id` (number): \n\n- `visitor_type` (enum): \n\n- `visitor_session_id`\
+        \ (number): \n\n- `visits_count` (number): \n\n- `visitor_first_campaign_id`\
+        \ (number): \n\n- `visitor_first_campaign_name` (string): \n\n- `visitor_city`\
+        \ (string): \n\n- `visitor_region` (string): \n\n- `visitor_country` (string):\
+        \ \n\n- `visitor_device` (enum): \n\n- `visitor_custom_properties` (array):\
+        \ \n\n- `property_name` (string): \n\n- `property_value` (string): \n\n- `segments`\
+        \ (array): \n\n- `segment_id` (number): \n\n- `segment_name` (string): \n\n\
+        - `call_api_request_id` (number): \n\n- `call_api_external_id` (string): \n\
+        \n- `contact_id` (number): \n\n- `contact_full_name` (string): \n\n- `utm_source`\
+        \ (string): \n\n- `utm_medium` (string): \n\n- `utm_term` (string): \n\n-\
+        \ `utm_content` (string): \n\n- `utm_campaign` (string): \n\n- `openstat_ad`\
+        \ (string): \n\n- `openstat_campaign` (string): \n\n- `openstat_service` (string):\
+        \ \n\n- `openstat_source` (string): \n\n- `attributes` (array): \n\n- `eq_utm_source`\
+        \ (string): \n\n- `eq_utm_medium` (string): \n\n- `eq_utm_term` (string):\
+        \ \n\n- `eq_utm_content` (string): \n\n- `eq_utm_campaign` (string): \n\n\
+        - `eq_utm_referrer` (string): \n\n- `eq_utm_expid` (string): \n\n- `source_id`\
+        \ (number): \n\n- `source_name` (string): \n\n- `source_new` (string): \n\n\
+        - `channel_new` (string): \n\n- `channel_code` (string): \n\n- `ext_id` (string): "
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    limit:
+                      type: number
+                      description: Количество возвращаемых записей. См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    offset:
+                      type: number
+                      description: Сдвиг, определяет с какого номера записи возвращать
+                        "limit" записей. По умолчанию "0". См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    filter:
+                      type: object
+                      description: См. раздел "Критерии фильтрации"
+                    fields:
+                      type: array
+                      description: См. раздел "Представление возвращаемых данных"
+                    sort:
+                      type: array
+                      description: См. раздел "Сортировка данных"
+                    date_from:
+                      type: string
+                      description: Дата начала выборки
+                      enum:
+                      - YYYY-MM-DD hh:mm:ss
+                      example: YYYY-MM-DD hh:mm:ss
+                    date_till:
+                      type: string
+                      description: Дата окончания выбокри
+                      enum:
+                      - YYYY-MM-DD hh:mm:ss
+                      example: YYYY-MM-DD hh:mm:ss
+                    include_ongoing_calls:
+                      type: boolean
+                      description: Включить текущие вызовы
+                      example: true
+                  required:
+                  - access_token
+                  - date_from
+                  - date_till
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                            description: ''
+                            example: 123
+                          start_time:
+                            type: string
+                            description: ''
+                            enum:
+                            - '>YYYY-MM-DD hh:mm:ss'
+                            example: '>YYYY-MM-DD hh:mm:ss'
+                          finish_time:
+                            type: string
+                            description: да
+                            enum:
+                            - YYYY-MM-DD hh:mm:ss
+                            example: YYYY-MM-DD hh:mm:ss
+                          finish_reason:
+                            type: string
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                          direction:
+                            type: string
+                            description: да
+                            enum:
+                            - 'in - Входящая;
+
+                              out - Исходящая'
+                            example: 'in - Входящая;
+
+                              out - Исходящая'
+                            x-filtering: да
+                            x-sorting: да
+                          cpn_region_id:
+                            type: number
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: 123
+                          cpn_region_name:
+                            type: string
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          scenario_operations:
+                            type: array
+                            description: нет
+                            x-filtering: да
+                            x-sorting: нет
+                          name:
+                            type: string
+                            description: ''
+                            example: example_string
+                          source:
+                            type: string
+                            description: да
+                            enum:
+                            - 'callapi - Call API Базовый набор
+
+                              callapi_management_call - Call API Управление вызовами
+
+                              callapi_informer_call - Call API Информационный вызов
+
+                              callapi_scenario_call - Call API Вызов сценария
+
+                              va - Звонок ВАТС
+
+                              call_tracking - Аналитика
+
+                              dynamic_call_tracking - Динамический коллтрекинг
+
+                              callout - Callout
+
+                              callback - Callback
+
+                              faxout - Факс
+
+                              sip - Исходящий с SIP
+
+                              sitephone - Сайтфон
+
+                              lead - Лидогенератор
+
+                              retailcrm - Звонок из retailCRM
+
+                              amocrm - Звонок из amoCRM
+
+                              bitrix - Звонок из Bitrix24
+
+                              auto_back_call_by_lost_call - Автоперезвон по пропущенным
+                              звонкам
+
+                              sip_trunk - Звонок с SIP-транка
+
+                              facebook_ads - Звонки из Social Network Ads
+
+                              auto_back_call_by_offline_message - Автоперезвон по
+                              заявкам
+
+                              private_number - Проверочный звонок для добавления клиентского
+                              номера из ЛК
+
+                              auto_out_calls - Исходящий обзвон
+
+                              ivr_informer - Информирование с IVR
+
+                              upload_calls - Звонок из внешней системы
+
+                              progressive_call - Прогрессивный
+
+                              simple_dt - Простой динамический коллтрекинг
+
+                              preserved_calls - Сохранённая переадресация
+
+                              amocrm_extended_integration - Автоперезвон из CRM
+
+                              zoho - Zoho
+
+                              mytarget_ads - Звонки из myTarget Ads
+
+                              pipedrive - Pipedrive
+
+                              hubspot - HubSpot
+
+                              smartis - Звонки из Смартис
+
+                              partner_integration - Партнёрская интеграция
+
+                              vk_ads - Звонки из VK Ads
+
+                              omni_widget - Омниканальный виджет'
+                            example: 'callapi - Call API Базовый набор
+
+                              callapi_management_call - Call API Управление вызовами
+
+                              callapi_informer_call - Call API Информационный вызов
+
+                              callapi_scenario_call - Call API Вызов сценария
+
+                              va - Звонок ВАТС
+
+                              call_tracking - Аналитика
+
+                              dynamic_call_tracking - Динамический коллтрекинг
+
+                              callout - Callout
+
+                              callback - Callback
+
+                              faxout - Факс
+
+                              sip - Исходящий с SIP
+
+                              sitephone - Сайтфон
+
+                              lead - Лидогенератор
+
+                              retailcrm - Звонок из retailCRM
+
+                              amocrm - Звонок из amoCRM
+
+                              bitrix - Звонок из Bitrix24
+
+                              auto_back_call_by_lost_call - Автоперезвон по пропущенным
+                              звонкам
+
+                              sip_trunk - Звонок с SIP-транка
+
+                              facebook_ads - Звонки из Social Network Ads
+
+                              auto_back_call_by_offline_message - Автоперезвон по
+                              заявкам
+
+                              private_number - Проверочный звонок для добавления клиентского
+                              номера из ЛК
+
+                              auto_out_calls - Исходящий обзвон
+
+                              ivr_informer - Информирование с IVR
+
+                              upload_calls - Звонок из внешней системы
+
+                              progressive_call - Прогрессивный
+
+                              simple_dt - Простой динамический коллтрекинг
+
+                              preserved_calls - Сохранённая переадресация
+
+                              amocrm_extended_integration - Автоперезвон из CRM
+
+                              zoho - Zoho
+
+                              mytarget_ads - Звонки из myTarget Ads
+
+                              pipedrive - Pipedrive
+
+                              hubspot - HubSpot
+
+                              smartis - Звонки из Смартис
+
+                              partner_integration - Партнёрская интеграция
+
+                              vk_ads - Звонки из VK Ads
+
+                              omni_widget - Омниканальный виджет'
+                            x-filtering: да
+                            x-sorting: да
+                          is_lost:
+                            type: boolean
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: true
+                          communication_number:
+                            type: number
+                            description: ''
+                            x-filtering: да
+                            x-sorting: да
+                            example: 123
+                          communication_page_url:
+                            type: string
+                            description: нет
+                            x-filtering: нет
+                            x-sorting: нет
+                            example: example_string
+                          contact_phone_number:
+                            type: string
+                            description: да
+                            x-filtering: да
+                            example: example_string
+                          communication_id:
+                            type: number
+                            description: да
+                            x-filtering: да
+                            example: 123
+                          communication_type:
+                            type: string
+                            description: да
+                            enum:
+                            - call
+                            example: call
+                          wait_duration:
+                            type: number
+                            description: да
+                            x-filtering: да
+                            example: 123
+                          total_wait_duration:
+                            type: number
+                            description: да
+                            x-filtering: да
+                            example: 123
+                          lost_call_processing_duration:
+                            type: number
+                            description: ''
+                            x-filtering: да
+                            x-sorting: да
+                            example: 123
+                          talk_duration:
+                            type: number
+                            description: да
+                            x-filtering: да
+                            example: 123
+                          clean_talk_duration:
+                            type: number
+                            description: да
+                            x-filtering: да
+                            example: 123
+                          total_duration:
+                            type: number
+                            description: да
+                            x-filtering: да
+                            example: 123
+                          postprocess_duration:
+                            type: number
+                            description: ''
+                            x-filtering: да
+                            example: 123
+                          call_records:
+                            type: array
+                            description: да
+                          wav_call_records:
+                            type: array
+                            description: да
+                          full_record_file_link:
+                            type: string
+                            description: да
+                            example: example_string
+                          voice_mail_records:
+                            type: array
+                            description: ''
+                          virtual_phone_number:
+                            type: string
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          ua_client_id:
+                            type: string
+                            description: ''
+                            example: example_string
+                          ym_client_id:
+                            type: string
+                            description: ''
+                            example: example_string
+                          sale_date:
+                            type: string
+                            description: ''
+                            enum:
+                            - YYYY-MM-DD hh:mm:ss
+                            example: YYYY-MM-DD hh:mm:ss
+                            x-filtering: да
+                            x-sorting: да
+                          sale_cost:
+                            type: number
+                            description: ''
+                            x-filtering: да
+                            x-sorting: да
+                            example: 123
+                          is_transfer:
+                            type: boolean
+                            description: ''
+                            enum:
+                            - 'true'
+                            - 'false'
+                            example: 'true'
+                            x-filtering: да
+                            x-sorting: да
+                          search_query:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          search_engine:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          referrer_domain:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          referrer:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          entrance_page:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          gclid:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          yclid:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          ymclid:
+                            type: string
+                            description: ''
+                            example: example_string
+                          ef_id:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          channel:
+                            type: string
+                            description: ''
+                            enum:
+                            - 'display
+
+                              paid
+
+                              affiliate
+
+                              messenger
+
+                              social
+
+                              email
+
+                              organic
+
+                              internal
+
+                              recommendation
+
+                              cashed
+
+                              referral
+
+                              direct'
+                            example: 'display
+
+                              paid
+
+                              affiliate
+
+                              messenger
+
+                              social
+
+                              email
+
+                              organic
+
+                              internal
+
+                              recommendation
+
+                              cashed
+
+                              referral
+
+                              direct'
+                            x-filtering: да
+                          recognized_text:
+                            type: array
+                            description: нет
+                            x-filtering: нет
+                            x-sorting: нет
+                          phrase:
+                            type: string
+                            description: ''
+                            example: example_string
+                          is_operator:
+                            type: boolean
+                            description: ''
+                            example: true
+                          edited_phrase:
+                            type: string
+                            description: ''
+                            example: example_string
+                          tags:
+                            type: array
+                            description: ''
+                            x-filtering: да
+                          tag_name:
+                            type: string
+                            description: ''
+                            example: example_string
+                          tag_id:
+                            type: number
+                            description: ''
+                            example: 123
+                          tag_change_time:
+                            type: string
+                            description: ''
+                            enum:
+                            - YYYY-MM-DD hh:mm:ss
+                            example: YYYY-MM-DD hh:mm:ss
+                          tag_type:
+                            type: string
+                            description: ''
+                            enum:
+                            - auto
+                            - manual
+                            example: auto
+                          tag_user_id:
+                            type: number
+                            description: ''
+                            example: 123
+                          tag_user_login:
+                            type: string
+                            description: ''
+                            example: example_string
+                          tag_employee_id:
+                            type: number
+                            description: ''
+                            example: 123
+                          tag_employee_full_name:
+                            type: string
+                            description: ''
+                            example: example_string
+                          employees:
+                            type: array
+                            description: ''
+                            x-filtering: да
+                          employee_id:
+                            type: number
+                            description: ''
+                            example: 123
+                          employee_full_name:
+                            type: string
+                            description: ''
+                            example: example_string
+                          is_answered:
+                            type: boolean
+                            description: ''
+                            example: true
+                          is_talked:
+                            type: boolean
+                            description: ''
+                            example: true
+                          last_answered_employee_id:
+                            type: number
+                            description: ''
+                            x-filtering: да
+                            example: 123
+                          last_answered_employee_full_name:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          last_answered_employee_rating:
+                            type: number
+                            description: ''
+                            x-filtering: да
+                            example: 123
+                          first_answered_employee_id:
+                            type: number
+                            description: ''
+                            x-filtering: да
+                            example: 123
+                          first_answered_employee_full_name:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          last_talked_employee_id:
+                            type: number
+                            description: ''
+                            x-filtering: да
+                            example: 123
+                          last_talked_employee_full_name:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          first_talked_employee_id:
+                            type: number
+                            description: ''
+                            x-filtering: да
+                            example: 123
+                          first_talked_employee_full_name:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          operator_phone_number:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          scenario_name:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          scenario_id:
+                            type: number
+                            description: ''
+                            x-filtering: да
+                            x-sorting: да
+                            example: 123
+                          site_domain_name:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          site_id:
+                            type: number
+                            description: ''
+                            x-filtering: да
+                            x-sorting: да
+                            example: 123
+                          campaign_name:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          campaign_id:
+                            type: number
+                            description: ''
+                            x-filtering: да
+                            x-sorting: да
+                            example: 123
+                          visit_other_campaign:
+                            type: boolean
+                            description: ''
+                            enum:
+                            - 'true'
+                            - 'false'
+                            example: 'true'
+                          auto_call_campaign_name:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          visitor_id:
+                            type: number
+                            description: ''
+                            x-filtering: да
+                            x-sorting: да
+                            example: 123
+                          person_id:
+                            type: number
+                            description: ''
+                            x-filtering: да
+                            example: 123
+                          visitor_type:
+                            type: string
+                            description: ''
+                            enum:
+                            - Новый
+                            - Вернувшийся
+                            - Не заполнен
+                            example: Новый
+                            x-filtering: да
+                            x-sorting: да
+                          visitor_session_id:
+                            type: number
+                            description: ''
+                            x-filtering: да
+                            example: 123
+                          visits_count:
+                            type: number
+                            description: ''
+                            x-filtering: да
+                            example: 123
+                          visitor_first_campaign_id:
+                            type: number
+                            description: ''
+                            x-filtering: да
+                            example: 123
+                          visitor_first_campaign_name:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          visitor_city:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          visitor_region:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          visitor_country:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          visitor_device:
+                            type: string
+                            description: ''
+                            enum:
+                            - 'desktop
+
+                              mobile
+
+                              tablet
+
+                              other'
+                            example: 'desktop
+
+                              mobile
+
+                              tablet
+
+                              other'
+                            x-filtering: да
+                            x-sorting: да
+                          visitor_custom_properties:
+                            type: array
+                            description: ''
+                            x-filtering: да
+                          property_name:
+                            type: string
+                            description: ''
+                            example: example_string
+                          property_value:
+                            type: string
+                            description: ''
+                            example: example_string
+                          segments:
+                            type: array
+                            description: ''
+                            x-filtering: да
+                          segment_id:
+                            type: number
+                            description: ''
+                            example: 123
+                          segment_name:
+                            type: string
+                            description: ''
+                            example: example_string
+                          call_api_request_id:
+                            type: number
+                            description: ''
+                            x-filtering: да
+                            example: 123
+                          call_api_external_id:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          contact_id:
+                            type: number
+                            description: ''
+                            x-filtering: да
+                            example: 123
+                          contact_full_name:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          utm_source:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          utm_medium:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          utm_term:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          utm_content:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          utm_campaign:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          openstat_ad:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          openstat_campaign:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          openstat_service:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          openstat_source:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          attributes:
+                            type: array
+                            description: ''
+                            enum:
+                            - 'first - Первый качественный
+
+                              through - Сквозной первый качественный
+
+                              primary - Первичное
+
+                              secondary - Вторичное
+
+                              lost - Потерянное
+
+                              target - Целевое
+
+                              off-target - Не целевое
+
+                              quality - Качественное
+
+                              rest - целевые повторные обращения (обращения'
+                            - совершенные в период повторного обращения
+                            - настроенного для сайта в ЛК Novofon).
+                            example: 'first - Первый качественный
+
+                              through - Сквозной первый качественный
+
+                              primary - Первичное
+
+                              secondary - Вторичное
+
+                              lost - Потерянное
+
+                              target - Целевое
+
+                              off-target - Не целевое
+
+                              quality - Качественное
+
+                              rest - целевые повторные обращения (обращения'
+                            x-filtering: да
+                          eq_utm_source:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          eq_utm_medium:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          eq_utm_term:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          eq_utm_content:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          eq_utm_campaign:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          eq_utm_referrer:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          eq_utm_expid:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            example: example_string
+                          source_id:
+                            type: number
+                            description: ''
+                            x-filtering: да
+                            x-sorting: да
+                            example: 123
+                          source_name:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          source_new:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          channel_new:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          channel_code:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          ext_id:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Партнёр, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом get"'
+    href: ../..#_getErrors

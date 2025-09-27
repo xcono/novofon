@@ -1,0 +1,204 @@
+openapi: 3.0.0
+info:
+  title: Получение списка группированных примечаний
+  version: 1.0.0
+  description: Получение списка группированных примечаний
+paths:
+  /get.linechart_note_groups:
+    get:
+      summary: Получение списка группированных примечаний
+      description: "Получение списка группированных примечаний\n\n**Доступ:** Агент,\
+        \ Клиент\n\n**Параметры запроса:** 6\n\n- `access_token` (string) (обязательный):\
+        \ Ключ сессии аутентификации\n\n- `user_id` (number) (опциональный): Уникальный\
+        \ идентификатор пользователя клиента агента от имени которого делается запрос\n\
+        \n- `date_from` (iso8601) (обязательный): Дата начала основной выборки(ограничение\
+        \ 366 дней)\n\n- `date_till` (iso8601) (обязательный): Дата окончания основной\
+        \ выборки\n\n- `datetime_dimension` (enum) (обязательный): Мнемоника измерения.\
+        \ Выбор по какому временному значению буду строиться данные.\n\n- `is_show_weekends_notes`\
+        \ (boolean) (обязательный): Запросить ли список выходных дней для примечаний\
+        \ линейного графика\n\n**Параметры ответа:** 10\n\n- `data` (array): \n\n\
+        - `from` (iso8601): \n\n- `till` (string): \n\n- `type` (enum): да\n\n- `count`\
+        \ (number): да\n\n- `is_system` (boolean): да\n\n- `notes` (array): \n\n-\
+        \ `id` (number): \n\n- `datetime` (iso8601): \n\n- `description` (string): "
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    date_from:
+                      type: string
+                      description: Дата начала основной выборки(ограничение 366 дней)
+                      enum:
+                      - YYYY-MM-DD hh:mm:ss
+                      example: YYYY-MM-DD hh:mm:ss
+                    date_till:
+                      type: string
+                      description: Дата окончания основной выборки
+                      enum:
+                      - YYYY-MM-DD hh:mm:ss
+                      example: YYYY-MM-DD hh:mm:ss
+                    datetime_dimension:
+                      type: string
+                      description: Мнемоника измерения. Выбор по какому временному
+                        значению буду строиться данные.
+                      enum:
+                      - hour
+                      example: hour
+                    is_show_weekends_notes:
+                      type: boolean
+                      description: Запросить ли список выходных дней для примечаний
+                        линейного графика
+                      example: true
+                  required:
+                  - access_token
+                  - date_from
+                  - date_till
+                  - datetime_dimension
+                  - is_show_weekends_notes
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            description: ''
+                            x-filtering: нет
+                            x-sorting: нет
+                          from:
+                            type: string
+                            description: ''
+                            enum:
+                            - YYYY-MM-DD hh:mm:ss
+                            example: YYYY-MM-DD hh:mm:ss
+                          till:
+                            type: string
+                            description: ''
+                            enum:
+                            - YYYY-MM-DD hh:mm:ss
+                            example: YYYY-MM-DD hh:mm:ss
+                          type:
+                            type: string
+                            description: да
+                            enum:
+                            - 'not_working_days
+
+                              custom'
+                            example: 'not_working_days
+
+                              custom'
+                            x-filtering: нет
+                            x-sorting: нет
+                          count:
+                            type: number
+                            description: да
+                            x-filtering: нет
+                            x-sorting: нет
+                            example: 123
+                          is_system:
+                            type: boolean
+                            description: да
+                            x-filtering: нет
+                            x-sorting: нет
+                            example: true
+                          notes:
+                            type: array
+                            description: ''
+                            x-filtering: нет
+                            x-sorting: нет
+                          id:
+                            type: number
+                            description: ''
+                            example: 123
+                          datetime:
+                            type: string
+                            description: ''
+                            enum:
+                            - YYYY-MM-DD
+                            example: YYYY-MM-DD
+                            x-filtering: нет
+                            x-sorting: нет
+                          description:
+                            type: string
+                            description: ''
+                            x-filtering: нет
+                            x-sorting: нет
+                            example: example_string
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент

@@ -1,0 +1,249 @@
+openapi: 3.0.0
+info:
+  title: Создание клиента агента
+  version: 1.0.0
+  description: Создание клиента агента
+paths:
+  /create.customers:
+    post:
+      summary: Создание клиента агента
+      description: 'Создание клиента агента
+
+
+        **Доступ:** Партнёр
+
+
+        **Параметры запроса:** 15
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `name` (string) (обязательный): Название клиента
+
+
+        - `description` (string) (опциональный): Описание к клиенту
+
+
+        - `tariff_plan_id` (number) (обязательный): Уникальный идентификатор тарифного
+        плана. Список доступных тарифных планов можно получить с помощью метода "get.partner_tariffs"
+
+
+        - `email` (string) (обязательный): Адрес электронной почты клиента
+
+
+        - `password` (string) (обязательный): Пароль для клиента
+
+
+        - `monthly_base_limit` (number) (опциональный): Общий месячный лимит. Значение
+        задаётся в деньгах.
+
+
+        - `monthly_base_notify_limit` (number) (опциональный): Пороговое значение
+        общего месячного лимита при достижению которого отправляется уведомление на
+        электронный адрес указанный в параметре "monthly_base_notify_email"
+
+
+        - `monthly_base_notify_emails` (array) (обязательный): Адреса электронной
+        почты для получения уведомлений о достижении общего месячного лимита
+
+
+        - `monthly_calls_limit` (number) (опциональный): Месячный лимит по звонкам.
+        Значение задаётся в количестве звонков.
+
+
+        - `monthly_calls_notify_limit` (number) (опциональный): Пороговое значение
+        месячного лимита по звонкам при достижению которого отправляется уведомление
+        на электронный адрес указанный в параметре "monthly_calls_notify_email"
+
+
+        - `monthly_calls_notify_emails` (array) (обязательный): Адреса электронной
+        почты для получения уведомлений о достижении месячного лимита по звонкам
+
+
+        - `daily_calls_limit` (number) (опциональный): Дневной лимит по звонкам. Значение
+        задаётся в количестве звонков.
+
+
+        - `daily_calls_notify_limit` (number) (опциональный): Пороговое значение дневного
+        лимита по звонкам при достижению которого отправляется уведомление на электронный
+        адрес указанный в параметре "daily_calls_notify_email"
+
+
+        - `daily_calls_notify_emails` (array) (обязательный): Адреса электронной почты
+        для получения уведомлений о достижении дневного лимита по звонкам
+
+
+        **Параметры ответа:** 1
+
+
+        - `id` (number): Уникальный идентификатор клиента'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    name:
+                      type: string
+                      description: Название клиента
+                      example: example_string
+                    description:
+                      type: string
+                      description: Описание к клиенту
+                      example: example_string
+                    tariff_plan_id:
+                      type: number
+                      description: Уникальный идентификатор тарифного плана. Список
+                        доступных тарифных планов можно получить с помощью метода
+                        "get.partner_tariffs"
+                      example: 123
+                    email:
+                      type: string
+                      description: Адрес электронной почты клиента
+                      example: example_string
+                    password:
+                      type: string
+                      description: Пароль для клиента
+                      enum:
+                      - Минимальная длина 8 символов
+                      example: Минимальная длина 8 символов
+                    monthly_base_limit:
+                      type: number
+                      description: Общий месячный лимит. Значение задаётся в деньгах.
+                      example: 123
+                    monthly_base_notify_limit:
+                      type: number
+                      description: Пороговое значение общего месячного лимита при
+                        достижению которого отправляется уведомление на электронный
+                        адрес указанный в параметре "monthly_base_notify_email"
+                      example: 123
+                    monthly_base_notify_emails:
+                      type: array
+                      description: Адреса электронной почты для получения уведомлений
+                        о достижении общего месячного лимита
+                    monthly_calls_limit:
+                      type: number
+                      description: Месячный лимит по звонкам. Значение задаётся в
+                        количестве звонков.
+                      example: 123
+                    monthly_calls_notify_limit:
+                      type: number
+                      description: Пороговое значение месячного лимита по звонкам
+                        при достижению которого отправляется уведомление на электронный
+                        адрес указанный в параметре "monthly_calls_notify_email"
+                      example: 123
+                    monthly_calls_notify_emails:
+                      type: array
+                      description: Адреса электронной почты для получения уведомлений
+                        о достижении месячного лимита по звонкам
+                    daily_calls_limit:
+                      type: number
+                      description: Дневной лимит по звонкам. Значение задаётся в количестве
+                        звонков.
+                      example: 123
+                    daily_calls_notify_limit:
+                      type: number
+                      description: Пороговое значение дневного лимита по звонкам при
+                        достижению которого отправляется уведомление на электронный
+                        адрес указанный в параметре "daily_calls_notify_email"
+                      example: 123
+                    daily_calls_notify_emails:
+                      type: array
+                      description: Адреса электронной почты для получения уведомлений
+                        о достижении дневного лимита по звонкам
+                  required:
+                  - access_token
+                  - name
+                  - tariff_plan_id
+                  - email
+                  - password
+                  - monthly_base_notify_emails
+                  - monthly_calls_notify_emails
+                  - daily_calls_notify_emails
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                            description: Уникальный идентификатор клиента
+                            example: 123
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Партнёр
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом create"'
+    href: ../..#_changeErrors

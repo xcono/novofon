@@ -1,0 +1,229 @@
+openapi: 3.0.0
+info:
+  title: Загрузка электронных писем
+  version: 1.0.0
+  description: Загрузка электронных писем
+paths:
+  /upload.emails:
+    post:
+      summary: Загрузка электронных писем
+      description: 'Загрузка электронных писем
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 15
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `emails` (array) (опциональный): Массив писем
+
+
+        - `site_id` (number) (опциональный): Идентификатор сайта. Метод получение
+        списка существующих сайтов: "get.sites"
+
+
+        - `session_id` (number) (опциональный): Идентификатор сессии
+
+
+        - `source_id` (number) (опциональный): Идентификатор источника. Метод получение
+        списка существующих Источников: "get.get_sources"
+
+
+        - `date_time` (date) (обязательный): Дата и время получения письма на почту
+        в таймзоне клиента
+
+
+        - `sender_name` (string) (опциональный): Имя отправителя
+
+
+        - `subject` (string) (опциональный): Тема письма
+
+
+        - `message` (string) (обязательный): Текст письма.
+
+
+        - `message_html` (string) (обязательный): HTML письма.
+
+
+        - `email_from` (string) (обязательный): Отправитель.
+
+
+        - `email_to` (string) (обязательный): Получатель. Обязательно одно из полей:
+        email_to, email_to_cc, email_to_bcc
+
+
+        - `email_to_cc` (array) (опциональный): Копия.
+
+
+        - `email_to_bcc` (array) (опциональный): Скрытая копия.
+
+
+        **Параметры ответа:** 1
+
+
+        - `id` (number): Уникальные идентификатор загруженного письма'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    emails:
+                      type: array
+                      description: Массив писем
+                    site_id:
+                      type: number
+                      description: 'Идентификатор сайта. Метод получение списка существующих
+                        сайтов: "get.sites"'
+                      example: 123
+                    session_id:
+                      type: number
+                      description: Идентификатор сессии
+                      example: 123
+                    source_id:
+                      type: number
+                      description: 'Идентификатор источника. Метод получение списка
+                        существующих Источников: "get.get_sources"'
+                      example: 123
+                    date_time:
+                      type: string
+                      description: Дата и время получения письма на почту в таймзоне
+                        клиента
+                    sender_name:
+                      type: string
+                      description: Имя отправителя
+                      example: example_string
+                    subject:
+                      type: string
+                      description: Тема письма
+                      example: example_string
+                    message:
+                      type: string
+                      description: Текст письма.
+                      example: example_string
+                    message_html:
+                      type: string
+                      description: HTML письма.
+                      example: example_string
+                    email_from:
+                      type: string
+                      description: Отправитель.
+                      example: example_string
+                    email_to:
+                      type: string
+                      description: 'Получатель. Обязательно одно из полей: email_to,
+                        email_to_cc, email_to_bcc'
+                      example: example_string
+                    email_to_cc:
+                      type: array
+                      description: Копия.
+                    email_to_bcc:
+                      type: array
+                      description: Скрытая копия.
+                  required:
+                  - access_token
+                  - date_time
+                  - message
+                  - message_html
+                  - email_from
+                  - email_to
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                            description: Уникальные идентификатор загруженного письма
+                            x-filtering: да
+                            example: 123
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом get"'
+    href: ../..#_getErrors

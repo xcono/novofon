@@ -1,0 +1,230 @@
+openapi: 3.0.0
+info:
+  title: Обновление весов параметров рекламных кампаний
+  version: 1.0.0
+  description: Обновление весов параметров рекламных кампаний
+paths:
+  /update.campaign_parameter_weights:
+    put:
+      summary: Обновление весов параметров рекламных кампаний
+      description: 'Обновление весов параметров рекламных кампаний
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 14
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `site_id` (number) (обязательный): Уникальный идентификатор сайта
+
+
+        - `entrance_page` (number) (опциональный): Страница входа
+
+
+        - `referrer_domain` (number) (опциональный): Домен реферера
+
+
+        - `search_engine` (number) (опциональный): Поисковая система
+
+
+        - `search_query` (number) (опциональный): Поисковый запрос
+
+
+        - `engine` (number) (опциональный): Рекламная система
+
+
+        - `referrer` (number) (опциональный): Реферер
+
+
+        - `channel` (number) (опциональный): Канал
+
+
+        - `location` (number) (опциональный): Значение веса для параметров city, region,
+        country
+
+
+        - `utm_tags` (number) (опциональный): Значение веса для параметров utm_source,
+        utm_medium, utm_campaign, utm_term, utm_content
+
+
+        - `os_tags` (number) (опциональный): Значение веса для параметров openstat_service,
+        openstat_campaign, openstat_source, openstat_ad
+
+
+        - `other_tags` (number) (опциональный): Значение веса для параметров ef_id,
+        yclid, gclid, ymclid'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    site_id:
+                      type: number
+                      description: Уникальный идентификатор сайта
+                      example: 123
+                    entrance_page:
+                      type: number
+                      description: Страница входа
+                      enum:
+                      - от 0 до 100
+                      example: от 0 до 100
+                    referrer_domain:
+                      type: number
+                      description: Домен реферера
+                      enum:
+                      - от 0 до 100
+                      example: от 0 до 100
+                    search_engine:
+                      type: number
+                      description: Поисковая система
+                      enum:
+                      - от 0 до 100
+                      example: от 0 до 100
+                    search_query:
+                      type: number
+                      description: Поисковый запрос
+                      enum:
+                      - от 0 до 100
+                      example: от 0 до 100
+                    engine:
+                      type: number
+                      description: Рекламная система
+                      enum:
+                      - от 0 до 100
+                      example: от 0 до 100
+                    referrer:
+                      type: number
+                      description: Реферер
+                      enum:
+                      - от 0 до 100
+                      example: от 0 до 100
+                    channel:
+                      type: number
+                      description: Канал
+                      enum:
+                      - от 0 до 100
+                      example: от 0 до 100
+                    location:
+                      type: number
+                      description: Значение веса для параметров city, region, country
+                      enum:
+                      - от 0 до 100
+                      example: от 0 до 100
+                    utm_tags:
+                      type: number
+                      description: Значение веса для параметров utm_source, utm_medium,
+                        utm_campaign, utm_term, utm_content
+                      enum:
+                      - от 0 до 100
+                      example: от 0 до 100
+                    os_tags:
+                      type: number
+                      description: Значение веса для параметров openstat_service,
+                        openstat_campaign, openstat_source, openstat_ad
+                      enum:
+                      - от 0 до 100
+                      example: от 0 до 100
+                    other_tags:
+                      type: number
+                      description: Значение веса для параметров ef_id, yclid, gclid,
+                        ymclid
+                      enum:
+                      - от 0 до 100
+                      example: от 0 до 100
+                  required:
+                  - access_token
+                  - site_id
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом update"'
+    href: ../..#_changeErrors

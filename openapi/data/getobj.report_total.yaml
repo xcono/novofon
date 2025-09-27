@@ -1,0 +1,210 @@
+openapi: 3.0.0
+info:
+  title: Получение результирующих данных в отчёте пользователя
+  version: 1.0.0
+  description: Получение результирующих данных в отчёте пользователя
+paths:
+  /getobj.report_total:
+    post:
+      summary: Получение результирующих данных в отчёте пользователя
+      description: 'Получение результирующих данных в отчёте пользователя
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 10
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `report_type` (enum) (обязательный): Тип отчета пользователя. В данный момент
+        работает только для типа отчетов call_summary_uis. Для получения списка отчетов
+        пользователей необходимо использовать метод "get.reports_list"
+
+
+        - `date_from` (iso8601) (обязательный): Дата начала основной выборки(ограничение
+        366 дней)
+
+
+        - `date_till` (iso8601) (обязательный): Дата окончания основной выборки
+
+
+        - `columns` (array) (обязательный): Список идентификаторов пользовательских
+        столбцов, разделенных запятой. Доступный список столбцов см.раздел "Получение
+        вложенности столбцов" . Порядок влияет на ответ.
+
+
+        - `filters` (array) (обязательный): Выражение, может содержать в себе как
+        простые фильтры, так и дерево фильтров.
+
+
+        - `field` (string) (опциональный): Поле сущности к которой будет применяться
+        фильтрация (список заранее определён для метода
+
+
+        - `operator` (enum) (опциональный): Оператор фильтрации. Список всех операторов
+        можно получить в разделе "Операторы фильтрации"
+
+
+        - `value` (string) (опциональный): Значение для оператора фильтрации. Необязательное
+        поле, если оно отсутствует, то считается пустота.
+
+
+        **Параметры ответа:** 1
+
+
+        - `totals` (array): '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    report_type:
+                      type: string
+                      description: Тип отчета пользователя. В данный момент работает
+                        только для типа отчетов call_summary_uis. Для получения списка
+                        отчетов пользователей необходимо использовать метод "get.reports_list"
+                    date_from:
+                      type: string
+                      description: Дата начала основной выборки(ограничение 366 дней)
+                      enum:
+                      - YYYY-MM-DD hh:mm:ss
+                      example: YYYY-MM-DD hh:mm:ss
+                    date_till:
+                      type: string
+                      description: Дата окончания основной выборки
+                      enum:
+                      - YYYY-MM-DD hh:mm:ss
+                      example: YYYY-MM-DD hh:mm:ss
+                    columns:
+                      type: array
+                      description: Список идентификаторов пользовательских столбцов,
+                        разделенных запятой. Доступный список столбцов см.раздел "Получение
+                        вложенности столбцов" . Порядок влияет на ответ.
+                      enum:
+                      - Если заполнен transfer_dimension_value_id
+                      - то необходимо указать только один столбце по которому произошел
+                        клик для перехода.
+                      example: Если заполнен transfer_dimension_value_id
+                    filters:
+                      type: array
+                      description: Выражение, может содержать в себе как простые фильтры,
+                        так и дерево фильтров.
+                    field:
+                      type: string
+                      description: Поле сущности к которой будет применяться фильтрация
+                        (список заранее определён для метода
+                      example: example_string
+                    operator:
+                      type: string
+                      description: Оператор фильтрации. Список всех операторов можно
+                        получить в разделе "Операторы фильтрации"
+                    value:
+                      type: string
+                      description: Значение для оператора фильтрации. Необязательное
+                        поле, если оно отсутствует, то считается пустота.
+                      example: example_string
+                  required:
+                  - access_token
+                  - report_type
+                  - date_from
+                  - date_till
+                  - columns
+                  - filters
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          totals:
+                            type: array
+                            description: ''
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом getobj"'
+    href: ../../..#_getErrors

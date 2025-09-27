@@ -1,0 +1,194 @@
+openapi: 3.0.0
+info:
+  title: Получение настройки пользовательского измерения
+  version: 1.0.0
+  description: Получение настройки пользовательского измерения
+paths:
+  /getobj.custom_dimension:
+    post:
+      summary: Получение настройки пользовательского измерения
+      description: "Получение настройки пользовательского измерения\n\n**Доступ:**\
+        \ Агент, Клиент\n\n**Параметры запроса:** 3\n\n- `access_token` (string) (обязательный):\
+        \ Ключ сессии аутентификации\n\n- `user_id` (number) (опциональный): Уникальный\
+        \ идентификатор пользователя клиента агента от имени которого делается запрос\n\
+        \n- `id` (string) (обязательный): Уникальный идентификатор пользовательского\
+        \ измерения. Для получения списка измерений необходимо использовать метод\
+        \ \"getobj.dimensions_tree\"\n\n**Параметры ответа:** 12\n\n- `name` (string):\
+        \ Название группы условия. Значение которое присваивается данным, попавшими\
+        \ под условия группы\n\n- `description` (string): Описание измерения\n\n-\
+        \ `is_entity_separated` (boolean): Включен ли расширенный режим настройки\
+        \ пользовательской вложенности\n\n- `groups` (array): \n\n- `priority` (number):\
+        \ Порядковый номер группы условия. Нужен для понимания приоритета применения\
+        \ групп условий к данным.\n\n- `entities` (array): Типы данных и фильтрация\
+        \ примененная к ним. Для получения списка доступных типов данных см. раздел\
+        \ [\"Получение списка доступных типов данных для использования в пользовательских\
+        \ вложенностях\"](../get_report_entities)\n\n- `names` (array): Список типов\
+        \ данных используемых в пользовательской вложенности\n\n- `filter` (object):\
+        \ Условия фильтрации используемые в группе, применяемые к типам данных описанных\
+        \ в names. Для получения списка доступных условий фильтрации см. раздел [\"\
+        Получение списка возможных условий фильтрации для отчета\"](../get_report_filters)\n\
+        \n- `filters` (array): Выражение, может содержать в себе как простые фильтры,\
+        \ так и дерево фильтров\n\n- `field` (string): Поле сущности к которой будет\
+        \ применяться фильтрация (список заранее определён для метода\n\n- `operator`\
+        \ (enum): Оператор фильтрации. Список всех операторов можно получить в разделе\
+        \ [\"Операторы фильтрации\"](../index.md#_filterOperators)\n\n- `value` (string):\
+        \ Значение для оператора фильтрации. Необязательное поле, если оно отсутствует,\
+        \ то считается пустота."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    id:
+                      type: string
+                      description: Уникальный идентификатор пользовательского измерения.
+                        Для получения списка измерений необходимо использовать метод
+                        "getobj.dimensions_tree"
+                      example: example_string
+                  required:
+                  - access_token
+                  - id
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            description: Название группы условия. Значение которое
+                              присваивается данным, попавшими под условия группы
+                            example: example_string
+                          description:
+                            type: string
+                            description: Описание измерения
+                            example: example_string
+                          is_entity_separated:
+                            type: boolean
+                            description: Включен ли расширенный режим настройки пользовательской
+                              вложенности
+                            example: true
+                          groups:
+                            type: array
+                            description: ''
+                          priority:
+                            type: number
+                            description: Порядковый номер группы условия. Нужен для
+                              понимания приоритета применения групп условий к данным.
+                            example: 123
+                          entities:
+                            type: array
+                            description: Типы данных и фильтрация примененная к ним.
+                              Для получения списка доступных типов данных см. раздел
+                              ["Получение списка доступных типов данных для использования
+                              в пользовательских вложенностях"](../get_report_entities)
+                          names:
+                            type: array
+                            description: Список типов данных используемых в пользовательской
+                              вложенности
+                          filter:
+                            type: object
+                            description: Условия фильтрации используемые в группе,
+                              применяемые к типам данных описанных в names. Для получения
+                              списка доступных условий фильтрации см. раздел ["Получение
+                              списка возможных условий фильтрации для отчета"](../get_report_filters)
+                          filters:
+                            type: array
+                            description: Выражение, может содержать в себе как простые
+                              фильтры, так и дерево фильтров
+                          field:
+                            type: string
+                            description: Поле сущности к которой будет применяться
+                              фильтрация (список заранее определён для метода
+                            example: example_string
+                          operator:
+                            type: string
+                            description: Оператор фильтрации. Список всех операторов
+                              можно получить в разделе ["Операторы фильтрации"](../index.md#_filterOperators)
+                          value:
+                            type: string
+                            description: Значение для оператора фильтрации. Необязательное
+                              поле, если оно отсутствует, то считается пустота.
+                            example: example_string
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом getobj"'
+    href: ../index.md#_getErrors

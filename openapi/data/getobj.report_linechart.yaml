@@ -1,0 +1,294 @@
+openapi: 3.0.0
+info:
+  title: Получение данных, агрегированных по времени и дополнительному измерению
+  version: 1.0.0
+  description: Получение данных, агрегированных по времени и дополнительному измерению
+paths:
+  /getobj.report_linechart:
+    post:
+      summary: Получение данных, агрегированных по времени и дополнительному измерению
+      description: "Получение данных, агрегированных по времени и дополнительному\
+        \ измерению\n\n**Доступ:** Агент, Клиент\n\n**Параметры запроса:** 17\n\n\
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации\n\n-\
+        \ `user_id` (number) (опциональный): Уникальный идентификатор пользователя\
+        \ клиента агента от имени которого делается запрос\n\n- `report_type` (enum)\
+        \ (обязательный): Тип отчета пользователя. Для получения списка отчетов пользователей\
+        \ необходимо использовать метод \"get.reports_list\"\n\n- `date_from` (iso8601)\
+        \ (обязательный): Дата начала основной выборки(ограничение 366 дней)\n\n-\
+        \ `date_till` (iso8601) (обязательный): Дата окончания основной выборки\n\n\
+        - `perspective_window` (number) (опциональный): Кол-во дней от сессии до обращения\
+        \ в которых происходит атрибутирование обращения к сессии.Является обязательным\
+        \ для `report_type` = `ad_analytics`\n\n- `datetime_dimension` (enum) (обязательный):\
+        \ Мнемоника измерения. Выбор по какому временному значению буду строиться\
+        \ данные.\n\n- `data_dimensions` (array) (обязательный): Список мнемоник измерений,\
+        \ разделенных запятой. Доступный список измерений см.раздел \"Получение вложенности\
+        \ измерений\" .\n\n- `main_column` (string) (обязательный): Идентификатор\
+        \ столбца. Основой столбец. Обязательное поле. Доступный список столбцов см.раздел\
+        \ \"Получение вложенности столбцов\" .\n\n- `additional_column` (string) (опциональный):\
+        \ Идентификатор столбца. Дополнительный столбец. Доступный список столбцов\
+        \ см.раздел \"Получение вложенности столбцов\" .\n\n- `dimensions_value_ids`\
+        \ (array) (обязательный): Идентификаторы значений измерения. Получить идентификаторы\
+        \ можно в ответе \"Получение данных таблицы в отчете пользователя\" из поля\
+        \ value_id.\n\n- `limit` (number) (обязательный): Количество возвращаемых\
+        \ записей.\n\n- `sort` (array) (обязательный): Сортировка применяемая в отчете.\
+        \ Логика построения аналогична \"Сортировка данных\"\n\n- `filters` (array)\
+        \ (обязательный): Выражение, может содержать в себе как простые фильтры, так\
+        \ и дерево фильтров.\n\n- `field` (string) (опциональный): Поле сущности к\
+        \ которой будет применяться фильтрация (список заранее определён для метода\n\
+        \n- `operator` (enum) (опциональный): Оператор фильтрации. Список всех операторов\
+        \ можно получить в разделе \"Операторы фильтрации\"\n\n- `value` (string)\
+        \ (опциональный): Значение для оператора фильтрации. Необязательное поле,\
+        \ если оно отсутствует, то считается пустота.\n\n**Параметры ответа:** 10\n\
+        \n- `date_from` (iso8601): \n\n- `date_till` (iso8601): \n\n- `items` (array):\
+        \ \n\n- `datetime_dimension_interval` (object): \n\n- `from` (iso8601): \n\
+        \n- `till` (string): \n\n- `data_dimensions` (array): \n\n- `data_dimensions_ids`\
+        \ (array): \n\n- `main_column` (string): \n\n- `additional_column` (string): "
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    report_type:
+                      type: string
+                      description: Тип отчета пользователя. Для получения списка отчетов
+                        пользователей необходимо использовать метод "get.reports_list"
+                    date_from:
+                      type: string
+                      description: Дата начала основной выборки(ограничение 366 дней)
+                      enum:
+                      - YYYY-MM-DD hh:mm:ss
+                      example: YYYY-MM-DD hh:mm:ss
+                    date_till:
+                      type: string
+                      description: Дата окончания основной выборки
+                      enum:
+                      - YYYY-MM-DD hh:mm:ss
+                      example: YYYY-MM-DD hh:mm:ss
+                    perspective_window:
+                      type: number
+                      description: Кол-во дней от сессии до обращения в которых происходит
+                        атрибутирование обращения к сессии.Является обязательным для
+                        `report_type` = `ad_analytics`
+                      enum:
+                      - Можно задать период от 1 до 180 дней от сессии до обращения
+                      example: Можно задать период от 1 до 180 дней от сессии до обращения
+                    datetime_dimension:
+                      type: string
+                      description: Мнемоника измерения. Выбор по какому временному
+                        значению буду строиться данные.
+                      enum:
+                      - day
+                      example: day
+                    data_dimensions:
+                      type: array
+                      description: Список мнемоник измерений, разделенных запятой.
+                        Доступный список измерений см.раздел "Получение вложенности
+                        измерений" .
+                    main_column:
+                      type: string
+                      description: Идентификатор столбца. Основой столбец. Обязательное
+                        поле. Доступный список столбцов см.раздел "Получение вложенности
+                        столбцов" .
+                      example: example_string
+                    additional_column:
+                      type: string
+                      description: Идентификатор столбца. Дополнительный столбец.
+                        Доступный список столбцов см.раздел "Получение вложенности
+                        столбцов" .
+                      example: example_string
+                    dimensions_value_ids:
+                      type: array
+                      description: Идентификаторы значений измерения. Получить идентификаторы
+                        можно в ответе "Получение данных таблицы в отчете пользователя"
+                        из поля value_id.
+                      enum:
+                      - Не указывать если передается limit или sort
+                      example: Не указывать если передается limit или sort
+                    limit:
+                      type: number
+                      description: Количество возвращаемых записей.
+                      enum:
+                      - Не указывать если передается dimensions_value_ids
+                      example: Не указывать если передается dimensions_value_ids
+                    sort:
+                      type: array
+                      description: Сортировка применяемая в отчете. Логика построения
+                        аналогична "Сортировка данных"
+                      enum:
+                      - Не указывать если передается dimensions_value_ids
+                      example: Не указывать если передается dimensions_value_ids
+                    filters:
+                      type: array
+                      description: Выражение, может содержать в себе как простые фильтры,
+                        так и дерево фильтров.
+                    field:
+                      type: string
+                      description: Поле сущности к которой будет применяться фильтрация
+                        (список заранее определён для метода
+                      example: example_string
+                    operator:
+                      type: string
+                      description: Оператор фильтрации. Список всех операторов можно
+                        получить в разделе "Операторы фильтрации"
+                    value:
+                      type: string
+                      description: Значение для оператора фильтрации. Необязательное
+                        поле, если оно отсутствует, то считается пустота.
+                      example: example_string
+                  required:
+                  - access_token
+                  - report_type
+                  - date_from
+                  - date_till
+                  - datetime_dimension
+                  - data_dimensions
+                  - main_column
+                  - dimensions_value_ids
+                  - limit
+                  - sort
+                  - filters
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          date_from:
+                            type: string
+                            description: ''
+                            enum:
+                            - YYYY-MM-DD hh:mm:ss
+                            example: YYYY-MM-DD hh:mm:ss
+                            x-filtering: да
+                            x-sorting: да
+                          date_till:
+                            type: string
+                            description: ''
+                            enum:
+                            - YYYY-MM-DD hh:mm:ss
+                            example: YYYY-MM-DD hh:mm:ss
+                            x-filtering: да
+                            x-sorting: да
+                          items:
+                            type: array
+                            description: ''
+                            x-filtering: да
+                          datetime_dimension_interval:
+                            type: object
+                            description: ''
+                          from:
+                            type: string
+                            description: ''
+                            enum:
+                            - YYYY-MM-DD hh:mm:ss
+                            example: YYYY-MM-DD hh:mm:ss
+                          till:
+                            type: string
+                            description: ''
+                            enum:
+                            - YYYY-MM-DD hh:mm:ss
+                            example: YYYY-MM-DD hh:mm:ss
+                          data_dimensions:
+                            type: array
+                            description: ''
+                            x-filtering: да
+                            x-sorting: да
+                          data_dimensions_ids:
+                            type: array
+                            description: ''
+                            x-filtering: да
+                            x-sorting: да
+                          main_column:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          additional_column:
+                            type: string
+                            description: ''
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом getobj"'
+    href: ../index.md#_getErrors

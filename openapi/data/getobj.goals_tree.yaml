@@ -1,0 +1,174 @@
+openapi: 3.0.0
+info:
+  title: Получение вложенности целей
+  version: 1.0.0
+  description: Получение вложенности целей
+paths:
+  /getobj.goals_tree:
+    post:
+      summary: Получение вложенности целей
+      description: 'Получение вложенности целей
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 2
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        **Параметры ответа:** 7
+
+
+        - `goals_groups` (array): Список групп целей
+
+
+        - `id` (string): Мнемоника цели
+
+
+        - `name` (string): Название цели
+
+
+        - `parent_group_id` (number): Идентификатор группы целей во вложении которой
+        находится данная группа целей
+
+
+        - `sort` (number): Сквозной идентификатор, используемый для сортировки в дереве
+        измерений.
+
+
+        - `goals` (array): Список целей доступных пользователю в отчете
+
+
+        - `group_id` (number): Идентификатор группы целей во вложении которой находится
+        данная цель'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                  required:
+                  - access_token
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          goals_groups:
+                            type: array
+                            description: Список групп целей
+                          id:
+                            type: string
+                            description: Мнемоника цели
+                            example: example_string
+                          name:
+                            type: string
+                            description: Название цели
+                            example: example_string
+                          parent_group_id:
+                            type: number
+                            description: Идентификатор группы целей во вложении которой
+                              находится данная группа целей
+                            example: 123
+                          sort:
+                            type: number
+                            description: Сквозной идентификатор, используемый для
+                              сортировки в дереве измерений.
+                            example: 123
+                          goals:
+                            type: array
+                            description: Список целей доступных пользователю в отчете
+                          group_id:
+                            type: number
+                            description: Идентификатор группы целей во вложении которой
+                              находится данная цель
+                            example: 123
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом getobj"'
+    href: ../index.md#_getErrors

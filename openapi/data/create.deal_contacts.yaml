@@ -1,0 +1,164 @@
+openapi: 3.0.0
+info:
+  title: Создание контакта
+  version: 1.0.0
+  description: Создание контакта
+paths:
+  /create.deal_contacts:
+    post:
+      summary: Создание контакта
+      description: 'Создание контакта
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 8
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `contacts` (array) (обязательный): Список контактов. Лимит 1000 контактов
+
+
+        - `ext_id` (string) (обязательный): Внешний идентификатор контакта
+
+
+        - `name` (string) (обязательный): Имя контакта
+
+
+        - `created_date_time` (iso8601) (опциональный): Дата и время создания контакта
+        в CRM (YYYY-MM-DD hh:mm:ss). Если параметр не передан, будет проставлена дата
+        и время вызова метода
+
+
+        - `phone_numbers` (array) (опциональный): Список номеров контакта в формате
+        E164
+
+
+        - `emails` (array) (опциональный): Адрес электронной почты контакта. E-mail
+        должен быть уникальным в списке.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    contacts:
+                      type: array
+                      description: Список контактов. Лимит 1000 контактов
+                    ext_id:
+                      type: string
+                      description: Внешний идентификатор контакта
+                      example: example_string
+                    name:
+                      type: string
+                      description: Имя контакта
+                      example: example_string
+                    created_date_time:
+                      type: string
+                      description: Дата и время создания контакта в CRM (YYYY-MM-DD
+                        hh:mm:ss). Если параметр не передан, будет проставлена дата
+                        и время вызова метода
+                    phone_numbers:
+                      type: array
+                      description: Список номеров контакта в формате E164
+                    emails:
+                      type: array
+                      description: Адрес электронной почты контакта. E-mail должен
+                        быть уникальным в списке.
+                  required:
+                  - access_token
+                  - contacts
+                  - ext_id
+                  - name
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом create"'
+    href: ../..#_changeErrors

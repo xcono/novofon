@@ -1,0 +1,66 @@
+openapi: 3.0.0
+info:
+  title: Выход и удаление ключа сессии аутентификации
+  version: 1.0.0
+  description: Выход и удаление ключа сессии аутентификации
+paths:
+  /logout.user:
+    post:
+      summary: Выход и удаление ключа сессии аутентификации
+      description: 'Выход и удаление ключа сессии аутентификации
+
+
+        **Доступ:** Партнёр, Клиент'
+      requestBody:
+        required: false
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Партнёр, Клиент

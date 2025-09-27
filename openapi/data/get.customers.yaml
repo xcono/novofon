@@ -1,0 +1,347 @@
+openapi: 3.0.0
+info:
+  title: Получение клиентов агента
+  version: 1.0.0
+  description: Получение клиентов агента
+paths:
+  /get.customers:
+    get:
+      summary: Получение клиентов агента
+      description: 'Получение клиентов агента
+
+
+        **Доступ:** Партнёр
+
+
+        **Параметры запроса:** 6
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `limit` (number) (опциональный): Количество возвращаемых записей. См. раздел
+        "Постраничный вывод"
+
+
+        - `offset` (number) (опциональный): Сдвиг, определяет с какого номера записи
+        возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+
+
+        - `filter` (object) (опциональный): См. раздел "Критерии фильтрации"
+
+
+        - `fields` (array) (опциональный): См. раздел "Представление возвращаемых
+        данных"
+
+
+        - `sort` (array) (опциональный): См. раздел "Сортировка данных"
+
+
+        **Параметры ответа:** 20
+
+
+        - `id` (number): Уникальный идентификатор клиента
+
+
+        - `name` (string): Название клиента
+
+
+        - `description` (string): Описание к клиенту
+
+
+        - `creation_date_time` (iso8601): Дата и время создания клиента
+
+
+        - `status` (enum): Статус клиента
+
+
+        - `status_change_date_time` (iso8601): Дата и время изменения статуса
+
+
+        - `monthly_base_limit` (number): Общий месячный лимит. Значение задаётся в
+        деньгах.
+
+
+        - `monthly_base_notify_limit` (number): Пороговое значение общего месячного
+        лимита при достижению которого отправляется уведомление на электронный адрес
+        указанный в параметре "monthly_base_notify_email"
+
+
+        - `monthly_base_notify_emails` (array): Адреса электронной почты для получения
+        уведомлений о достижении общего месячного лимита
+
+
+        - `monthly_calls_limit` (number): Месячный лимит по звонкам. Значение задаётся
+        в количестве звонков.
+
+
+        - `monthly_calls_notify_limit` (number): Пороговое значение месячного лимита
+        по звонкам при достижению которого отправляется уведомление на электронный
+        адрес указанный в параметре "monthly_calls_notify_email"
+
+
+        - `monthly_calls_notify_emails` (array): Адреса электронной почты для получения
+        уведомлений о достижении месячного лимита по звонкам
+
+
+        - `daily_calls_limit` (number): Дневной лимит по звонкам. Значение задаётся
+        в количестве звонков.
+
+
+        - `daily_calls_notify_limit` (number): Пороговое значение дневного лимита
+        по звонкам при достижению которого отправляется уведомление на электронный
+        адрес указанный в параметре "daily_calls_notify_email"
+
+
+        - `daily_calls_notify_emails` (array): Адреса электронной почты для получения
+        уведомлений о достижении дневного лимита по звонкам
+
+
+        - `sites` (array): Список сайтов клиента
+
+
+        - `site_id` (number): Уникальный индентификатор сайта
+
+
+        - `site_domain_name` (string): Доменное имя сайта
+
+
+        - `tariff_plan_id` (number): Уникальный идентификатор тарифного плана
+
+
+        - `tariff_plan_name` (string): Название тарифного плана'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    limit:
+                      type: number
+                      description: Количество возвращаемых записей. См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    offset:
+                      type: number
+                      description: Сдвиг, определяет с какого номера записи возвращать
+                        "limit" записей. По умолчанию "0". См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    filter:
+                      type: object
+                      description: См. раздел "Критерии фильтрации"
+                    fields:
+                      type: array
+                      description: См. раздел "Представление возвращаемых данных"
+                    sort:
+                      type: array
+                      description: См. раздел "Сортировка данных"
+                  required:
+                  - access_token
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                            description: Уникальный идентификатор клиента
+                            x-filtering: да
+                            example: 123
+                          name:
+                            type: string
+                            description: Название клиента
+                            x-filtering: да
+                            example: example_string
+                          description:
+                            type: string
+                            description: Описание к клиенту
+                            example: example_string
+                          creation_date_time:
+                            type: string
+                            description: Дата и время создания клиента
+                            enum:
+                            - 'YYYY-MM-DD
+
+                              hh:mm:ss'
+                            example: 'YYYY-MM-DD
+
+                              hh:mm:ss'
+                            x-sorting: да
+                          status:
+                            type: string
+                            description: Статус клиента
+                            enum:
+                            - 'waiting
+
+                              active
+
+                              manual_lock
+
+                              limit_lock
+
+                              debt_lock'
+                            example: 'waiting
+
+                              active
+
+                              manual_lock
+
+                              limit_lock
+
+                              debt_lock'
+                            x-filtering: да
+                            x-sorting: да
+                          status_change_date_time:
+                            type: string
+                            description: Дата и время изменения статуса
+                            enum:
+                            - 'YYYY-MM-DD
+
+                              hh:mm:ss'
+                            example: 'YYYY-MM-DD
+
+                              hh:mm:ss'
+                          monthly_base_limit:
+                            type: number
+                            description: Общий месячный лимит. Значение задаётся в
+                              деньгах.
+                            example: 123
+                          monthly_base_notify_limit:
+                            type: number
+                            description: Пороговое значение общего месячного лимита
+                              при достижению которого отправляется уведомление на
+                              электронный адрес указанный в параметре "monthly_base_notify_email"
+                            example: 123
+                          monthly_base_notify_emails:
+                            type: array
+                            description: Адреса электронной почты для получения уведомлений
+                              о достижении общего месячного лимита
+                          monthly_calls_limit:
+                            type: number
+                            description: Месячный лимит по звонкам. Значение задаётся
+                              в количестве звонков.
+                            example: 123
+                          monthly_calls_notify_limit:
+                            type: number
+                            description: Пороговое значение месячного лимита по звонкам
+                              при достижению которого отправляется уведомление на
+                              электронный адрес указанный в параметре "monthly_calls_notify_email"
+                            example: 123
+                          monthly_calls_notify_emails:
+                            type: array
+                            description: Адреса электронной почты для получения уведомлений
+                              о достижении месячного лимита по звонкам
+                          daily_calls_limit:
+                            type: number
+                            description: Дневной лимит по звонкам. Значение задаётся
+                              в количестве звонков.
+                            example: 123
+                          daily_calls_notify_limit:
+                            type: number
+                            description: Пороговое значение дневного лимита по звонкам
+                              при достижению которого отправляется уведомление на
+                              электронный адрес указанный в параметре "daily_calls_notify_email"
+                            example: 123
+                          daily_calls_notify_emails:
+                            type: array
+                            description: Адреса электронной почты для получения уведомлений
+                              о достижении дневного лимита по звонкам
+                          sites:
+                            type: array
+                            description: Список сайтов клиента
+                          site_id:
+                            type: number
+                            description: Уникальный индентификатор сайта
+                            example: 123
+                          site_domain_name:
+                            type: string
+                            description: Доменное имя сайта
+                            example: example_string
+                          tariff_plan_id:
+                            type: number
+                            description: Уникальный идентификатор тарифного плана
+                            x-filtering: да
+                            example: 123
+                          tariff_plan_name:
+                            type: string
+                            description: Название тарифного плана
+                            x-filtering: да
+                            example: example_string
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Партнёр
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом get"'
+    href: ../..#_getErrors

@@ -1,0 +1,253 @@
+openapi: 3.0.0
+info:
+  title: Загрузка сделок
+  version: 1.0.0
+  description: Загрузка сделок
+paths:
+  /upload.deals_history:
+    post:
+      summary: Загрузка сделок
+      description: 'Загрузка сделок
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 19
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `deals` (array) (обязательный): Список сделок. Лимит 1000 сделок
+
+
+        - `ext_id` (string) (обязательный): Внешний идентификатор пользовательского
+        поля сделки
+
+
+        - `name` (string) (обязательный): Имя сделки
+
+
+        - `created_date_time` (iso8601) (обязательный): Дата и время создания сделки
+        (YYYY-MM-DD hh:mm:ss)
+
+
+        - `modified_date_time` (iso8601) (опциональный): Дата и время изменения сделки
+        (YYYY-MM-DD hh:mm:ss) Если параметр не передан, будет проставлена дата и время
+        вызова метода
+
+
+        - `modified_stage_date_time` (iso8601) (обязательный): Дата и время перехода
+        сделки в текущий этап (YYYY-MM-DD hh:mm:ss)
+
+
+        - `closed_date_time` (iso8601) (опциональный): Дата и время закрытия сделки
+        (YYYY-MM-DD hh:mm:ss)
+
+
+        - `contact_ext_ids` (array) (опциональный): Контакт привязанный к сделке.
+        Обязательный если указан main_contact_ext_id.
+
+
+        - `main_contact_ext_id` (string) (опциональный): Главный контакт сделки из
+        списка contact_ext_ids. Обязательный если передается contact_ext_ids.
+
+
+        - `employee_ext_id` (string) (опциональный): Ответственный сотрудник за сделку
+
+
+        - `revenue` (number) (опциональный): Выручка по сделке
+
+
+        - `sales_funnel_ext_id` (string) (обязательный): Идентификатор воронки продаж
+
+
+        - `stage_ext_id` (string) (обязательный): Идентификатор этапа воронки продаж
+
+
+        - `comments` (string) (опциональный): Комментарий к сделке
+
+
+        - `source` (string) (опциональный): Источник сделки
+
+
+        - `user_fields` (array) (опциональный): Пользовательские поля проставленные
+        у сделки. Перед тем как передать, нужно создать пользовательское поле через
+        метод "create.deal_user_field")
+
+
+        - `value` (string) (обязательный): значение пользовательского поля сделки'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    deals:
+                      type: array
+                      description: Список сделок. Лимит 1000 сделок
+                    ext_id:
+                      type: string
+                      description: Внешний идентификатор пользовательского поля сделки
+                      example: example_string
+                    name:
+                      type: string
+                      description: Имя сделки
+                      example: example_string
+                    created_date_time:
+                      type: string
+                      description: Дата и время создания сделки (YYYY-MM-DD hh:mm:ss)
+                    modified_date_time:
+                      type: string
+                      description: Дата и время изменения сделки (YYYY-MM-DD hh:mm:ss)
+                        Если параметр не передан, будет проставлена дата и время вызова
+                        метода
+                    modified_stage_date_time:
+                      type: string
+                      description: Дата и время перехода сделки в текущий этап (YYYY-MM-DD
+                        hh:mm:ss)
+                    closed_date_time:
+                      type: string
+                      description: Дата и время закрытия сделки (YYYY-MM-DD hh:mm:ss)
+                    contact_ext_ids:
+                      type: array
+                      description: Контакт привязанный к сделке. Обязательный если
+                        указан main_contact_ext_id.
+                    main_contact_ext_id:
+                      type: string
+                      description: Главный контакт сделки из списка contact_ext_ids.
+                        Обязательный если передается contact_ext_ids.
+                      example: example_string
+                    employee_ext_id:
+                      type: string
+                      description: Ответственный сотрудник за сделку
+                      example: example_string
+                    revenue:
+                      type: number
+                      description: Выручка по сделке
+                      example: 123
+                    sales_funnel_ext_id:
+                      type: string
+                      description: Идентификатор воронки продаж
+                      example: example_string
+                    stage_ext_id:
+                      type: string
+                      description: Идентификатор этапа воронки продаж
+                      example: example_string
+                    comments:
+                      type: string
+                      description: Комментарий к сделке
+                      example: example_string
+                    source:
+                      type: string
+                      description: Источник сделки
+                      example: example_string
+                    user_fields:
+                      type: array
+                      description: Пользовательские поля проставленные у сделки. Перед
+                        тем как передать, нужно создать пользовательское поле через
+                        метод "create.deal_user_field")
+                    value:
+                      type: string
+                      description: значение пользовательского поля сделки
+                      example: example_string
+                  required:
+                  - access_token
+                  - deals
+                  - ext_id
+                  - name
+                  - created_date_time
+                  - modified_stage_date_time
+                  - sales_funnel_ext_id
+                  - stage_ext_id
+                  - value
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом upload"'
+    href: ../..#_changeErrors
