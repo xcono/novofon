@@ -195,8 +195,10 @@ class NovofonAPIParser:
         """Extract comprehensive request parameters from HTML."""
         parameters = {}
         
-        # Find the "Параметры запроса" section (can be h3 or h4)
-        request_header = soup.find('h3', string='Параметры запроса') or soup.find('h4', string='Параметры запроса')
+        # Find the "Параметры запроса" section (can be h3, h4, or h5)
+        request_header = (soup.find('h3', string='Параметры запроса') or 
+                         soup.find('h4', string='Параметры запроса') or 
+                         soup.find('h5', string='Параметры запроса'))
         if not request_header:
             return parameters
         
@@ -221,8 +223,10 @@ class NovofonAPIParser:
         """Extract comprehensive response parameters from HTML."""
         parameters = {}
         
-        # Find the "Параметры ответа" section (can be h3 or h4)
-        response_header = soup.find('h3', string='Параметры ответа') or soup.find('h4', string='Параметры ответа')
+        # Find the "Параметры ответа" section (can be h3, h4, or h5)
+        response_header = (soup.find('h3', string='Параметры ответа') or 
+                          soup.find('h4', string='Параметры ответа') or 
+                          soup.find('h5', string='Параметры ответа'))
         if not response_header:
             return parameters
         
@@ -586,12 +590,16 @@ class NovofonAPIParser:
                         http_method: {
                             'summary': title,
                             'description': self._generate_endpoint_description(method_info, request_params, response_params),
-                            'requestBody': self._generate_request_body(request_params, method_name),
                             'responses': self._generate_responses(response_params, error_info)
                         }
                     }
                 }
             }
+            
+            # Add requestBody only if it exists (not None)
+            request_body = self._generate_request_body(request_params, method_name)
+            if request_body is not None:
+                spec['paths'][f'/{method_name}'][http_method]['requestBody'] = request_body
             
             # Add custom access field if available
             if method_info.get('access_level'):
