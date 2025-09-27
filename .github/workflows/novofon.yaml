@@ -36,6 +36,7 @@ jobs:
     - name: Install OpenAPI schema validator
       run: |
         npm install -g @seriousme/openapi-schema-validator
+        echo "Validator installed successfully"
         
     - name: Checkout Novofon documentation repository
       run: |
@@ -61,8 +62,10 @@ jobs:
           --api-type calls
           
     - name: Validate OpenAPI specifications
+      timeout-minutes: 10
       run: |
         echo "Validating OpenAPI specifications..."
+        set -e  # Exit on any error
         
         # Validate Data API specs
         echo "Validating Data API specifications..."
@@ -72,7 +75,7 @@ jobs:
           echo "$data_api_files"
           for file in $data_api_files; do
             echo "Validating $file..."
-            npx -p @seriousme/openapi-schema-validator validate-api "$file" || {
+            openapi-schema-validator validate-api "$file" || {
               echo "❌ Validation failed for $file"
               exit 1
             }
@@ -90,7 +93,7 @@ jobs:
           echo "$call_api_files"
           for file in $call_api_files; do
             echo "Validating $file..."
-            npx -p @seriousme/openapi-schema-validator validate-api "$file" || {
+            openapi-schema-validator validate-api "$file" || {
               echo "❌ Validation failed for $file"
               exit 1
             }
@@ -108,7 +111,7 @@ jobs:
         failed_files=""
         
         for file in $all_files; do
-          if npx -p @seriousme/openapi-schema-validator validate-api "$file" >/dev/null 2>&1; then
+          if openapi-schema-validator validate-api "$file" >/dev/null 2>&1; then
             validated_count=$((validated_count + 1))
           else
             failed_files="$failed_files $file"
@@ -127,12 +130,13 @@ jobs:
             echo "  - $file"
             # Show detailed validation errors
             echo "    Detailed errors:"
-            npx -p @seriousme/openapi-schema-validator validate-api "$file" 2>&1 | sed 's/^/      /'
+            openapi-schema-validator validate-api "$file" 2>&1 | sed 's/^/      /'
           done
           exit 1
         fi
         
         echo "🎉 All $total_files OpenAPI specifications passed validation!"
+        echo "✅ OpenAPI validation completed successfully"
           
     - name: Convert HTML to Markdown for Data API
       run: |
