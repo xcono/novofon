@@ -1,0 +1,135 @@
+name: Novofon Documentation Generator
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install beautifulsoup4 pyyaml lxml
+        
+    - name: Checkout Novofon documentation repository
+      run: |
+        git clone https://github.com/novofon/novofon.github.io.git temp-docs
+        # Copy HTML documentation
+        cp -r temp-docs/call_api docs/novofon/
+        cp -r temp-docs/data_api docs/novofon/
+        rm -rf temp-docs
+        
+    - name: Generate OpenAPI specs for Data API
+      run: |
+        python scripts/enhanced_html_parser.py \
+          --input docs/novofon/data_api \
+          --output . \
+          --api-type data
+          
+    - name: Generate OpenAPI specs for Call API
+      run: |
+        python scripts/enhanced_html_parser.py \
+          --input docs/novofon/call_api \
+          --output . \
+          --api-type calls
+          
+    - name: Convert HTML to Markdown for Data API
+      run: |
+        python scripts/html_to_markdown_converter.py \
+          --input docs/novofon/data_api \
+          --output docs \
+          --api-type data
+          
+    - name: Convert HTML to Markdown for Call API
+      run: |
+        python scripts/html_to_markdown_converter.py \
+          --input docs/novofon/call_api \
+          --output docs \
+          --api-type calls
+          
+    - name: Create directory structure
+      run: |
+        mkdir -p docs/spec/data
+        mkdir -p docs/spec/calls
+        
+    - name: Move OpenAPI specs to correct location
+      run: |
+        # Move data API specs
+        if [ -d "openapi_specs" ]; then
+          mv openapi_specs/*.yaml docs/spec/data/ 2>/dev/null || true
+          rmdir openapi_specs 2>/dev/null || true
+        fi
+        
+        # Move call API specs  
+        if [ -d "openapi_specs" ]; then
+          mv openapi_specs/*.yaml docs/spec/calls/ 2>/dev/null || true
+          rmdir openapi_specs 2>/dev/null || true
+        fi
+        
+    - name: Validate generated files
+      run: |
+        echo "Generated files:"
+        find docs -name "*.md" -o -name "*.yaml" | head -20
+        echo "Total files:"
+        find docs -name "*.md" -o -name "*.yaml" | wc -l
+        
+    - name: Check for changes
+      id: verify-changed-files
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then
+          echo "changed=true" >> $GITHUB_OUTPUT
+          echo "Files changed:"
+          git status --porcelain
+        else
+          echo "changed=false" >> $GITHUB_OUTPUT
+          echo "No files changed"
+        fi
+        
+    - name: Commit changes
+      if: steps.verify-changed-files.outputs.changed == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add docs/
+        git commit -m "Auto-generate Novofon API documentation
+        
+        - Generated OpenAPI specs for Data and Call APIs
+        - Converted HTML documentation to Markdown
+        - Updated documentation structure"
+        
+    - name: Push changes
+      if: steps.verify-changed-files.outputs.changed == 'true'
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}
+        
+    - name: Create summary
+      run: |
+        echo "## Documentation Generation Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Generated Files:" >> $GITHUB_STEP_SUMMARY
+        echo "- **OpenAPI Specs:** $(find docs/spec -name "*.yaml" | wc -l) files" >> $GITHUB_STEP_SUMMARY
+        echo "- **Markdown Docs:** $(find docs/novofon -name "*.md" | wc -l) files" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### API Coverage:" >> $GITHUB_STEP_SUMMARY
+        echo "- **Data API:** $(find docs/spec/data -name "*.yaml" | wc -l) endpoints" >> $GITHUB_STEP_SUMMARY
+        echo "- **Call API:** $(find docs/spec/calls -name "*.yaml" | wc -l) endpoints" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### File Structure:" >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+        tree docs -I 'assets|images|javascripts|stylesheets' | head -20 >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
