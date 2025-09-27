@@ -136,12 +136,41 @@ func findHTMLFiles(dir string) ([]string, error) {
 }
 
 func getOutputFileName(htmlFile, outputDir string) string {
-	// Extract relative path from HTML file
-	relPath := strings.TrimPrefix(htmlFile, filepath.Dir(filepath.Dir(htmlFile))+"/")
+	// Extract relative path from HTML file starting from the API type folder
+	// e.g., temp-html/data_api/authentication/login_user/index.html
+	// Should extract: authentication/login_user/index.html
+
+	// Find the API type folder (data_api or call_api)
+	parts := strings.Split(htmlFile, "/")
+	var startIdx int
+	for i, part := range parts {
+		if part == "data_api" || part == "call_api" {
+			startIdx = i + 1
+			break
+		}
+	}
+
+	if startIdx == 0 || startIdx >= len(parts) {
+		// Fallback to original logic if structure doesn't match expected pattern
+		relPath := strings.TrimPrefix(htmlFile, filepath.Dir(filepath.Dir(htmlFile))+"/")
+		fileName := strings.ReplaceAll(relPath, "/", ".")
+		fileName = strings.TrimSuffix(fileName, ".html")
+		fileName = strings.TrimSuffix(fileName, ".index")
+		if !strings.HasSuffix(fileName, ".yaml") {
+			fileName += ".yaml"
+		}
+		return filepath.Join(outputDir, fileName)
+	}
+
+	// Extract the relevant path parts (domain/method/index.html)
+	relevantParts := parts[startIdx:]
 
 	// Convert path separators and remove .html extension
-	fileName := strings.ReplaceAll(relPath, "/", ".")
+	fileName := strings.Join(relevantParts, ".")
 	fileName = strings.TrimSuffix(fileName, ".html")
+
+	// Remove .index suffix if present for cleaner naming
+	fileName = strings.TrimSuffix(fileName, ".index")
 
 	// Ensure it ends with .yaml
 	if !strings.HasSuffix(fileName, ".yaml") {
