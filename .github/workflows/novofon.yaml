@@ -23,6 +23,10 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install beautifulsoup4 pyyaml lxml
+        # Install dependencies from scripts if requirements.txt exists
+        if [ -f scripts/requirements.txt ]; then
+          pip install -r scripts/requirements.txt
+        fi
         
     - name: Checkout Novofon documentation repository
       run: |
@@ -36,29 +40,29 @@ jobs:
     - name: Generate OpenAPI specs for Data API
       run: |
         python scripts/enhanced_html_parser.py \
-          --input temp-html/data_api \
-          --output . \
+          --src temp-html/data_api \
+          --dst openapi/data \
           --api-type data
           
     - name: Generate OpenAPI specs for Call API
       run: |
         python scripts/enhanced_html_parser.py \
-          --input temp-html/call_api \
-          --output . \
+          --src temp-html/call_api \
+          --dst openapi/calls \
           --api-type calls
           
     - name: Convert HTML to Markdown for Data API
       run: |
         python scripts/html_to_markdown_converter.py \
           --input temp-html/data_api \
-          --output . \
+          --output docs/data \
           --api-type data
           
     - name: Convert HTML to Markdown for Call API
       run: |
         python scripts/html_to_markdown_converter.py \
           --input temp-html/call_api \
-          --output . \
+          --output docs/calls \
           --api-type calls
           
     - name: Clean up temporary files
@@ -68,9 +72,16 @@ jobs:
     - name: Validate generated files
       run: |
         echo "Generated files:"
-        find docs openai -name "*.md" -o -name "*.yaml" | head -20
+        find openapi docs -name "*.md" -o -name "*.yaml" | head -20
         echo "Total files:"
-        find docs openai -name "*.md" -o -name "*.yaml" | wc -l
+        find openapi docs -name "*.md" -o -name "*.yaml" | wc -l
+        echo "Directory structure:"
+        ls -la openapi/ || echo "openapi/ directory not found"
+        ls -la docs/ || echo "docs/ directory not found"
+        ls -la openapi/data/ || echo "openapi/data/ directory not found"
+        ls -la openapi/calls/ || echo "openapi/calls/ directory not found"
+        ls -la docs/data/ || echo "docs/data/ directory not found"
+        ls -la docs/calls/ || echo "docs/calls/ directory not found"
         
     - name: Check for changes
       id: verify-changed-files
@@ -89,7 +100,7 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add docs/ openai/
+        git add openapi/ docs/
         git commit -m "Auto-generate Novofon API documentation
         
         - Generated OpenAPI specs for Data and Call APIs
@@ -102,14 +113,18 @@ jobs:
         echo "## Documentation Generation Summary" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### Generated Files:" >> $GITHUB_STEP_SUMMARY
-        echo "- **OpenAPI Specs:** $(find docs -name "*.yaml" | wc -l) files" >> $GITHUB_STEP_SUMMARY
-        echo "- **Markdown Docs:** $(find openai -name "*.md" | wc -l) files" >> $GITHUB_STEP_SUMMARY
+        echo "- **OpenAPI Specs:** $(find openapi -name "*.yaml" 2>/dev/null | wc -l) files" >> $GITHUB_STEP_SUMMARY
+        echo "- **Markdown Docs:** $(find docs -name "*.md" 2>/dev/null | wc -l) files" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### API Coverage:" >> $GITHUB_STEP_SUMMARY
-        echo "- **Data API:** $(find docs/data -name "*.yaml" | wc -l) endpoints" >> $GITHUB_STEP_SUMMARY
-        echo "- **Call API:** $(find docs/calls -name "*.yaml" | wc -l) endpoints" >> $GITHUB_STEP_SUMMARY
+        echo "- **Data API:** $(find openapi/data -name "*.yaml" 2>/dev/null | wc -l) endpoints" >> $GITHUB_STEP_SUMMARY
+        echo "- **Call API:** $(find openapi/calls -name "*.yaml" 2>/dev/null | wc -l) endpoints" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### File Structure:" >> $GITHUB_STEP_SUMMARY
         echo '```' >> $GITHUB_STEP_SUMMARY
-        tree docs openai -I 'assets|images|javascripts|stylesheets' | head -20 >> $GITHUB_STEP_SUMMARY
+        if command -v tree >/dev/null 2>&1; then
+          tree openapi docs -I 'assets|images|javascripts|stylesheets' | head -20 >> $GITHUB_STEP_SUMMARY
+        else
+          find openapi docs -type d | head -20 >> $GITHUB_STEP_SUMMARY
+        fi
         echo '```' >> $GITHUB_STEP_SUMMARY

@@ -1,327 +1,718 @@
 #!/usr/bin/env python3
 """
-Enhanced HTML Parser for Novofon API Documentation
-Parses HTML documentation and generates OpenAPI specs and Markdown files
+Enhanced HTML documentation parser for Novofon Data API.
+Extracts comprehensive parameter information and generates detailed OpenAPI specifications.
 """
 
 import os
 import re
 import json
 import yaml
-from pathlib import Path
-from typing import Dict, List, Optional, Any
-from dataclasses import dataclass, asdict
-from bs4 import BeautifulSoup
-import argparse
 import logging
+import argparse
+from pathlib import Path
+from typing import Dict, List, Any, Optional, Tuple
+from bs4 import BeautifulSoup
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-@dataclass
-class Parameter:
-    name: str
-    type: str
-    required: bool
-    description: str
-    allowed_values: Optional[str] = None
-
-@dataclass
-class APIEndpoint:
-    method: str
-    description: str
-    available_to: str
-    request_params: List[Parameter]
-    response_params: List[Parameter]
-    request_json: Optional[str] = None
-    response_json: Optional[str] = None
-    notes: Optional[str] = None
-
-class NovofonHTMLParser:
-    def __init__(self, base_path: str):
-        self.base_path = Path(base_path)
-        self.endpoints: Dict[str, APIEndpoint] = {}
+class NovofonAPIParser:
+    """Enhanced parser for Novofon API documentation."""
+    
+    def __init__(self):
+        self.supported_types = {
+            'string': 'string',
+            'number': 'number', 
+            'boolean': 'boolean',
+            'object': 'object',
+            'array': 'array',
+            'enum': 'string',
+            'iso8601': 'string',
+            'date': 'string',
+            'datetime': 'string'
+        }
+    
+    def extract_method_info(self, soup: BeautifulSoup) -> Optional[Dict[str, Any]]:
+        """Extract comprehensive method information from HTML."""
+        method_info = {
+            'name': None,
+            'title': None,
+            'description': None,
+            'access_level': None,
+            'http_method': None
+        }
         
-    def parse_html_file(self, html_file: Path) -> Optional[APIEndpoint]:
-        """Parse a single HTML file and extract API endpoint information"""
-        try:
-            with open(html_file, 'r', encoding='utf-8') as f:
-                content = f.read()
-            
-            soup = BeautifulSoup(content, 'html.parser')
-            
-            # Extract method name from title or content
-            method = self._extract_method(soup)
-            if not method:
-                return None
-                
-            # Extract description
-            description = self._extract_description(soup)
-            
-            # Extract availability
-            available_to = self._extract_availability(soup)
-            
-            # Extract request parameters
-            request_params = self._extract_parameters(soup, "request")
-            
-            # Extract response parameters
-            response_params = self._extract_parameters(soup, "response")
-            
-            # Extract JSON examples
-            request_json = self._extract_json_example(soup, "request")
-            response_json = self._extract_json_example(soup, "response")
-            
-            # Extract notes
-            notes = self._extract_notes(soup)
-            
-            return APIEndpoint(
-                method=method,
-                description=description,
-                available_to=available_to,
-                request_params=request_params,
-                response_params=response_params,
-                request_json=request_json,
-                response_json=response_json,
-                notes=notes
-            )
-            
-        except Exception as e:
-            logger.error(f"Error parsing {html_file}: {e}")
+        # Extract method name
+        method_info['name'] = self._extract_method_name(soup)
+        if not method_info['name']:
             return None
+        
+        # Extract title from h1
+        method_info['title'] = self._extract_schema_title(soup)
+        
+        # Extract description
+        method_info['description'] = self._extract_method_description(soup)
+        
+        # Extract access level (Кому доступен)
+        method_info['access_level'] = self._extract_access_level(soup)
+        
+        # Determine HTTP method based on method name
+        method_info['http_method'] = self._determine_http_method(method_info['name'])
+        
+        return method_info
     
-    def _extract_method(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract method name from HTML"""
-        # Look for method in various places
-        method_patterns = [
-            r'<code>([^<]+)</code>',
-            r'"([^"]+)"',
-            r'method["\']?\s*:\s*["\']([^"\']+)["\']'
-        ]
+    def _extract_method_name(self, soup: BeautifulSoup) -> Optional[str]:
+        """Extract method name from HTML."""
+        # Strategy 1: Look for method in table with 'Метод' header
+        method_cell = soup.find('th', string='Метод')
+        if method_cell:
+            parent_row = method_cell.find_parent('tr')
+            if parent_row:
+                next_th = method_cell.find_next_sibling('th')
+                if next_th:
+                    code = next_th.find('code')
+                    if code:
+                        method_text = code.get_text().strip().strip('"\'')
+                        return method_text
         
-        text = soup.get_text()
-        for pattern in method_patterns:
-            matches = re.findall(pattern, text)
-            for match in matches:
-                if '.' in match and len(match) > 3:
-                    return match
-        
-        # Try to extract from title
-        title = soup.find('title')
-        if title:
-            title_text = title.get_text()
-            if 'API' in title_text:
-                # Extract method from title
-                parts = title_text.split(' - ')
-                if len(parts) > 1:
-                    return parts[0].strip()
-        
-        return None
-    
-    def _extract_description(self, soup: BeautifulSoup) -> str:
-        """Extract description from HTML"""
-        # Look for description in table or text
+        # Strategy 2: Look for method in all tables
         tables = soup.find_all('table')
         for table in tables:
             rows = table.find_all('tr')
             for row in rows:
-                cells = row.find_all('td')
-                if len(cells) >= 2:
-                    if 'Описание' in cells[0].get_text():
-                        return cells[1].get_text().strip()
+                cells = row.find_all(['th', 'td'])
+                for cell in cells:
+                    code = cell.find('code')
+                    if code:
+                        method_text = code.get_text().strip().strip('"\'')
+                        if '.' in method_text and len(method_text.split('.')) == 2:
+                            return method_text
         
-        # Look for h1 or main heading
+        return None
+    
+    def _extract_method_description(self, soup: BeautifulSoup) -> Optional[str]:
+        """Extract method description from HTML."""
+        # Strategy 1: Look for description in table with 'Описание' header
+        desc_cell = soup.find('th', string='Описание')
+        if desc_cell:
+            parent_row = desc_cell.find_parent('tr')
+            if parent_row:
+                next_cell = desc_cell.find_next_sibling('td')
+                if next_cell:
+                    return next_cell.get_text().strip()
+        
+        # Strategy 2: Look for nav element with description (find the one with actual description)
+        navs = soup.find_all('nav')
+        for nav in navs:
+            nav_text = nav.get_text().strip()
+            # Clean up nav text - remove extra whitespace and newlines
+            nav_text = re.sub(r'\s+', ' ', nav_text).strip()
+            
+            # Look for nav that contains method description (breadcrumb style)
+            if (nav_text and 
+                nav_text not in ['Аккаунт', 'DATA API', 'Table of contents'] and
+                not nav_text.startswith('DATA API') and
+                not nav_text.startswith('Table of contents') and
+                not nav_text.startswith('Previous') and
+                not nav_text.startswith('Next') and
+                not nav_text.startswith('Параметры метода') and
+                '>' in nav_text and  # Breadcrumb navigation
+                len(nav_text) < 200):  # Description should be reasonably short
+                # Extract the last part after '>' (the actual method description)
+                parts = nav_text.split('>')
+                if len(parts) > 1:
+                    return parts[-1].strip()
+                return nav_text
+        
+        # Strategy 3: Look in title
+        title = soup.find('h1')
+        if title:
+            return title.get_text().strip()
+        
+        return None
+    
+    def _extract_schema_title(self, soup: BeautifulSoup) -> Optional[str]:
+        """Extract schema title from h1 element."""
         h1 = soup.find('h1')
         if h1:
             return h1.get_text().strip()
-        
-        return "API endpoint"
+        return None
     
-    def _extract_availability(self, soup: BeautifulSoup) -> str:
-        """Extract availability information"""
-        text = soup.get_text()
-        if 'Партнёр' in text and 'Клиент' in text:
-            return 'Партнёр, Клиент'
-        elif 'Партнёр' in text:
-            return 'Партнёр'
-        elif 'Клиент' in text:
-            return 'Клиент'
-        return 'Все'
-    
-    def _extract_parameters(self, soup: BeautifulSoup, param_type: str) -> List[Parameter]:
-        """Extract parameters (request or response) from HTML"""
-        parameters = []
-        
-        # Look for parameter tables
-        tables = soup.find_all('table')
-        for table in tables:
-            headers = [th.get_text().strip() for th in table.find_all('th')]
-            
-            # Check if this is a parameter table
-            if any(header in ['Название', 'Тип', 'Обязательный', 'Описание'] for header in headers):
-                rows = table.find_all('tr')[1:]  # Skip header
+    def _extract_access_level(self, soup: BeautifulSoup) -> Optional[str]:
+        """Extract access level information."""
+        # Look for 'Кому доступен' in table (can be in th or td)
+        access_cell = soup.find('th', string='Кому доступен') or soup.find('td', string='Кому доступен')
+        if access_cell:
+            parent_row = access_cell.find_parent('tr')
+            if parent_row:
+                # Find the next cell in the same row
+                if access_cell.name == 'th':
+                    next_cell = access_cell.find_next_sibling('td')
+                else:
+                    next_cell = access_cell.find_next_sibling('td')
                 
-                for row in rows:
-                    cells = row.find_all('td')
-                    if len(cells) >= 4:
-                        name = cells[0].get_text().strip()
-                        param_type_str = cells[1].get_text().strip()
-                        required = cells[2].get_text().strip().lower() in ['да', 'yes', 'true']
-                        description = cells[3].get_text().strip()
-                        allowed_values = cells[4].get_text().strip() if len(cells) > 4 else None
-                        
-                        if name and name != 'Название':  # Skip header row
-                            parameters.append(Parameter(
-                                name=name,
-                                type=param_type_str,
-                                required=required,
-                                description=description,
-                                allowed_values=allowed_values
-                            ))
+                if next_cell:
+                    return next_cell.get_text().strip()
+        return None
+    
+    def _extract_allowed_values_from_cell(self, cell) -> Optional[str]:
+        """Extract allowed values from a table cell, handling ul/li structure."""
+        # Check for ul/li structure first
+        ul = cell.find('ul')
+        if ul:
+            li_items = ul.find_all('li')
+            if li_items:
+                values = [li.get_text().strip() for li in li_items]
+                return ', '.join(values)
+        
+        # Fallback to plain text
+        text = cell.get_text().strip()
+        return text if text else None
+    
+    def _determine_http_method(self, method_name: str) -> str:
+        """Determine HTTP method based on method name."""
+        if method_name.startswith('get.'):
+            return 'get'
+        elif method_name.startswith('create.'):
+            return 'post'
+        elif method_name.startswith('update.'):
+            return 'put'
+        elif method_name.startswith('delete.'):
+            return 'delete'
+        else:
+            return 'post'  # Default for JSON-RPC
+    
+    def extract_request_parameters(self, soup: BeautifulSoup) -> Dict[str, Dict[str, Any]]:
+        """Extract comprehensive request parameters from HTML."""
+        parameters = {}
+        
+        # Find the "Параметры запроса" section (can be h3 or h4)
+        request_header = soup.find('h3', string='Параметры запроса') or soup.find('h4', string='Параметры запроса')
+        if not request_header:
+            return parameters
+        
+        # Find the table after this header
+        table = request_header.find_next('table')
+        if not table:
+            return parameters
+        
+        # Parse table rows
+        rows = table.find_all('tr')[1:]  # Skip header row
+        
+        for row in rows:
+            cells = row.find_all('td')
+            if len(cells) >= 4:
+                param_info = self._parse_parameter_row(cells)
+                if param_info:
+                    parameters[param_info['name']] = param_info
         
         return parameters
     
-    def _extract_json_example(self, soup: BeautifulSoup, example_type: str) -> Optional[str]:
-        """Extract JSON example from HTML"""
-        # Look for code blocks with JSON
-        code_blocks = soup.find_all('pre')
-        for block in code_blocks:
-            code = block.find('code')
-            if code and 'json' in code.get('class', []):
-                return code.get_text().strip()
+    def extract_response_parameters(self, soup: BeautifulSoup) -> Dict[str, Dict[str, Any]]:
+        """Extract comprehensive response parameters from HTML."""
+        parameters = {}
         
-        # Look for JSON in text
-        text = soup.get_text()
-        json_pattern = r'\{[^{}]*"jsonrpc"[^{}]*\}'
-        matches = re.findall(json_pattern, text, re.DOTALL)
-        if matches:
-            return matches[0]
+        # Find the "Параметры ответа" section (can be h3 or h4)
+        response_header = soup.find('h3', string='Параметры ответа') or soup.find('h4', string='Параметры ответа')
+        if not response_header:
+            return parameters
         
-        return None
+        # Find the table after this header
+        table = response_header.find_next('table')
+        if not table:
+            return parameters
+        
+        # Parse table rows
+        rows = table.find_all('tr')[1:]  # Skip header row
+        
+        for row in rows:
+            cells = row.find_all('td')
+            if len(cells) >= 3:  # Response tables may have different structure
+                param_info = self._parse_parameter_row(cells, is_response=True)
+                if param_info:
+                    parameters[param_info['name']] = param_info
+        
+        return parameters
     
-    def _extract_notes(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract notes or additional information"""
-        # Look for blockquote or notes
-        blockquote = soup.find('blockquote')
-        if blockquote:
-            return blockquote.get_text().strip()
+    def _parse_parameter_row(self, cells: List, is_response: bool = False) -> Optional[Dict[str, Any]]:
+        """Parse a single parameter row from table cells."""
+        if len(cells) < 3:
+            return None
         
-        return None
-    
-    def parse_directory(self, directory: Path, api_type: str):
-        """Parse all HTML files in a directory"""
-        logger.info(f"Parsing {api_type} API directory: {directory}")
+        # Extract parameter name from first cell
+        name_cell = cells[0]
+        name_code = name_cell.find('code')
+        if not name_code:
+            return None
         
-        for html_file in directory.rglob('*.html'):
-            if html_file.name == 'index.html' and html_file.parent.name != directory.name:
-                # Skip index.html files in subdirectories
-                continue
+        param_name = name_code.get_text().strip()
+        
+        # Extract type from second cell
+        type_cell = cells[1]
+        param_type = type_cell.get_text().strip()
+        
+        # Extract required status
+        required = False
+        if not is_response and len(cells) >= 3:
+            required_cell = cells[2]
+            required_text = required_cell.get_text().strip().lower()
+            required = required_text == 'да'
+        
+        # Extract description and additional information
+        description = ""
+        additional_info = {}
+        
+        if is_response:
+            # For response parameters, we have more columns
+            if len(cells) >= 6:
+                # Structure: Name, Type, Allowed Values, Filtering, Sorting, Description
+                allowed_values = cells[2].get_text().strip()
+                filtering = cells[3].get_text().strip()
+                sorting = cells[4].get_text().strip()
+                description = cells[5].get_text().strip()
                 
-            endpoint = self.parse_html_file(html_file)
-            if endpoint:
-                # Create a unique key for the endpoint
-                key = f"{api_type}.{endpoint.method}"
-                self.endpoints[key] = endpoint
-                logger.info(f"Parsed endpoint: {key}")
-    
-    def generate_openapi_spec(self, endpoint: APIEndpoint, api_type: str) -> Dict[str, Any]:
-        """Generate OpenAPI specification for an endpoint"""
-        # Extract method and path from endpoint method
-        method_parts = endpoint.method.split('.')
-        if len(method_parts) >= 2:
-            path = f"/{method_parts[0]}/{method_parts[1]}"
+                # Store additional information
+                if allowed_values:
+                    additional_info['allowed_values'] = allowed_values
+                if filtering:
+                    additional_info['filtering'] = filtering
+                if sorting:
+                    additional_info['sorting'] = sorting
+            elif len(cells) >= 4:
+                # Fallback: assume description is in the last cell
+                description = cells[-1].get_text().strip()
         else:
-            path = f"/{endpoint.method}"
+            # For request parameters, check if we have "Допустимые значения" column
+            if len(cells) >= 5:
+                # Structure: Name, Type, Required, Allowed Values, Description
+                allowed_values_cell = cells[3]
+                description = cells[4].get_text().strip()
+                
+                # Extract allowed values - check for ul/li structure first
+                allowed_values = self._extract_allowed_values_from_cell(allowed_values_cell)
+                
+                # Store allowed values if present
+                if allowed_values:
+                    additional_info['allowed_values'] = allowed_values
+            elif len(cells) >= 4:
+                # Fallback: assume description is in the 4th cell
+                description = cells[3].get_text().strip()
         
-        # Build request schema
-        request_schema = {
-            "type": "object",
-            "properties": {
-                "jsonrpc": {"type": "string", "example": "2.0"},
-                "id": {"type": "number"},
-                "method": {"type": "string", "example": endpoint.method},
-                "params": {
-                    "type": "object",
-                    "properties": {},
-                    "required": []
-                }
-            },
-            "required": ["jsonrpc", "id", "method", "params"]
+        # Clean up description
+        description = re.sub(r'\s+', ' ', description).strip()
+        
+        # Remove common unwanted text patterns
+        unwanted_patterns = [
+            r'Для получения списка пользователей клиента необходимо использовать метод "[^"]*"',
+            r'Является обязательным для агента',
+            r'Смотрим раздел "[^"]*"',
+        ]
+        
+        for pattern in unwanted_patterns:
+            description = re.sub(pattern, '', description, flags=re.IGNORECASE)
+        
+        # Clean up again after removing patterns
+        description = re.sub(r'\s+', ' ', description).strip()
+        
+        return {
+            'name': param_name,
+            'type': param_type,
+            'required': required,
+            'description': description,
+            'additional_info': additional_info
+        }
+    
+    def extract_json_examples(self, soup: BeautifulSoup) -> Tuple[Optional[Dict], Optional[Dict]]:
+        """Extract JSON request and response examples from HTML."""
+        request_json = None
+        response_json = None
+        
+        # Find JSON request example
+        request_header = soup.find('h3', string='JSON структура запроса')
+        if request_header:
+            code_block = request_header.find_next('pre')
+            if code_block:
+                code = code_block.find('code')
+                if code:
+                    try:
+                        request_json = json.loads(code.get_text().strip())
+                    except json.JSONDecodeError:
+                        pass
+        
+        # Find JSON response example
+        response_header = soup.find('h3', string='JSON структура ответа')
+        if response_header:
+            code_block = response_header.find_next('pre')
+            if code_block:
+                code = code_block.find('code')
+                if code:
+                    try:
+                        response_json = json.loads(code.get_text().strip())
+                    except json.JSONDecodeError:
+                        pass
+        
+        return request_json, response_json
+    
+    def extract_error_information(self, soup: BeautifulSoup) -> Dict[str, Any]:
+        """Extract error information from HTML."""
+        error_info = {
+            'errors': [],
+            'error_references': []
         }
         
-        # Add parameters to request schema
-        for param in endpoint.request_params:
-            param_schema = {"type": param.type}
-            if param.description:
-                param_schema["description"] = param.description
-            if param.allowed_values:
-                param_schema["enum"] = [v.strip() for v in param.allowed_values.split(',')]
-            
-            request_schema["properties"]["params"]["properties"][param.name] = param_schema
-            if param.required:
-                request_schema["properties"]["params"]["required"].append(param.name)
+        # Look for error sections
+        error_headers = soup.find_all(['h3', 'h4'], string=lambda text: text and 'ошибк' in text.lower())
         
-        # Build response schema
-        response_schema = {
-            "type": "object",
-            "properties": {
-                "jsonrpc": {"type": "string", "example": "2.0"},
-                "id": {"type": "number"},
-                "result": {
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "type": "object",
-                            "properties": {},
-                            "required": []
+        # Also look for error sections with different text patterns
+        error_headers.extend(soup.find_all(['h3', 'h4'], string=lambda text: text and 'возвращаемых ошибок' in text.lower()))
+        
+        for header in error_headers:
+            # Find the next element after the header (could be paragraph, table, list, etc.)
+            next_element = header.find_next(['p', 'table', 'ul', 'ol'])
+            if next_element:
+                if next_element.name == 'table':
+                    # Extract errors from table
+                    rows = next_element.find_all('tr')[1:]  # Skip header
+                    for row in rows:
+                        cells = row.find_all(['td', 'th'])
+                        if len(cells) >= 2:
+                            error_code = cells[0].get_text().strip()
+                            error_description = cells[1].get_text().strip()
+                            if error_code and error_description:
+                                error_info['errors'].append({
+                                    'code': error_code,
+                                    'description': error_description
+                                })
+                elif next_element.name == 'p':
+                    # Extract error references from paragraph
+                    links = next_element.find_all('a')
+                    for link in links:
+                        text = link.get_text().strip()
+                        href = link.get('href', '')
+                        if text and href:
+                            error_info['error_references'].append({
+                                'text': text,
+                                'href': href
+                            })
+                else:
+                    # Extract errors from list
+                    items = next_element.find_all('li')
+                    for item in items:
+                        text = item.get_text().strip()
+                        if text:
+                            error_info['errors'].append({
+                                'description': text
+                            })
+        
+        # Look for error references in links
+        error_links = soup.find_all('a', href=lambda href: href and 'ошибк' in href.lower())
+        for link in error_links:
+            error_info['error_references'].append({
+                'text': link.get_text().strip(),
+                'href': link.get('href', '')
+            })
+        
+        return error_info
+    
+    def _validate_extracted_data(self, method_info: Dict, request_params: Dict, response_params: Dict) -> bool:
+        """Validate extracted data for consistency and completeness."""
+        try:
+            # Validate method info
+            if not method_info.get('name'):
+                logger.error("Method name is missing")
+                return False
+            
+            if not method_info.get('http_method'):
+                logger.error("HTTP method is missing")
+                return False
+            
+            # Validate parameter names and types
+            for param_name, param_info in request_params.items():
+                if not param_name or not isinstance(param_name, str):
+                    logger.error(f"Invalid parameter name: {param_name}")
+                    return False
+                
+                if not param_info.get('type'):
+                    logger.error(f"Parameter type missing for: {param_name}")
+                    return False
+                
+                if not param_info.get('description'):
+                    logger.warning(f"Parameter description missing for: {param_name}")
+            
+            for param_name, param_info in response_params.items():
+                if not param_name or not isinstance(param_name, str):
+                    logger.error(f"Invalid response parameter name: {param_name}")
+                    return False
+                
+                if not param_info.get('type'):
+                    logger.error(f"Response parameter type missing for: {param_name}")
+                    return False
+                
+                if not param_info.get('description'):
+                    logger.warning(f"Response parameter description missing for: {param_name}")
+            
+            return True
+            
+        except Exception as e:
+            logger.error(f"Validation error: {e}")
+            return False
+    
+    def parse_html_file(self, filepath: str) -> Optional[Dict[str, Any]]:
+        """Parse a single HTML file and extract comprehensive API information."""
+        try:
+            logger.info(f"Parsing file: {filepath}")
+            
+            # Validate file exists and is readable
+            if not os.path.exists(filepath):
+                logger.error(f"File not found: {filepath}")
+                return None
+            
+            if not os.access(filepath, os.R_OK):
+                logger.error(f"File not readable: {filepath}")
+                return None
+            
+            with open(filepath, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            if not content.strip():
+                logger.warning(f"Empty file: {filepath}")
+                return None
+            
+            soup = BeautifulSoup(content, 'html.parser')
+            
+            # Extract method information
+            method_info = self.extract_method_info(soup)
+            if not method_info:
+                logger.warning(f"No method information found in: {filepath}")
+                return None
+            
+            # Extract parameters
+            request_params = self.extract_request_parameters(soup)
+            response_params = self.extract_response_parameters(soup)
+            
+            # Extract JSON examples
+            request_json, response_json = self.extract_json_examples(soup)
+            
+            # Extract error information
+            error_info = self.extract_error_information(soup)
+            
+            # Validate extracted data
+            if not self._validate_extracted_data(method_info, request_params, response_params):
+                logger.warning(f"Validation failed for: {filepath}")
+                return None
+            
+            logger.info(f"Successfully parsed: {filepath}")
+            return {
+                'method_info': method_info,
+                'request_params': request_params,
+                'response_params': response_params,
+                'request_json': request_json,
+                'response_json': response_json,
+                'error_info': error_info,
+                'filepath': filepath
+            }
+            
+        except FileNotFoundError:
+            logger.error(f"File not found: {filepath}")
+            return None
+        except PermissionError:
+            logger.error(f"Permission denied: {filepath}")
+            return None
+        except UnicodeDecodeError as e:
+            logger.error(f"Encoding error in {filepath}: {e}")
+            return None
+        except Exception as e:
+            logger.error(f"Unexpected error parsing {filepath}: {e}")
+            return None
+    
+    def generate_openapi_spec(self, api_data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """Generate comprehensive OpenAPI specification from parsed data."""
+        try:
+            logger.info("Generating OpenAPI specification")
+            
+            # Validate input data
+            if not api_data:
+                logger.error("No API data provided")
+                return None
+            
+            method_info = api_data.get('method_info')
+            request_params = api_data.get('request_params', {})
+            response_params = api_data.get('response_params', {})
+            error_info = api_data.get('error_info', {})
+            
+            if not method_info:
+                logger.error("Method information is missing")
+                return None
+            
+            method_name = method_info.get('name')
+            http_method = method_info.get('http_method')
+            
+            if not method_name or not http_method:
+                logger.error("Method name or HTTP method is missing")
+                return None
+            
+            title = method_info.get('title') or f'Novofon Data API - {method_name}'
+            description = method_info.get('description') or f'API endpoint for {method_name}'
+            
+            # Create OpenAPI spec
+            spec = {
+                'openapi': '3.0.0',
+                'info': {
+                    'title': title,
+                    'version': '1.0.0',
+                    'description': description
+                },
+                'paths': {
+                    f'/{method_name}': {
+                        http_method: {
+                            'summary': title,
+                            'description': self._generate_endpoint_description(method_info, request_params, response_params),
+                            'requestBody': self._generate_request_body(request_params),
+                            'responses': self._generate_responses(response_params, error_info)
                         }
                     }
                 }
             }
-        }
-        
-        # Add response parameters
-        for param in endpoint.response_params:
-            param_schema = {"type": param.type}
-            if param.description:
-                param_schema["description"] = param.description
             
-            response_schema["properties"]["result"]["properties"]["data"]["properties"][param.name] = param_schema
-            if param.required:
-                response_schema["properties"]["result"]["properties"]["data"]["required"].append(param.name)
+            # Add custom access field if available
+            if method_info.get('access_level'):
+                spec['x-access'] = method_info['access_level']
+            
+            # Add error information as custom field
+            if error_info and (error_info.get('errors') or error_info.get('error_references')):
+                spec['x-errors'] = error_info
+            
+            logger.info(f"Successfully generated OpenAPI spec for {method_name}")
+            return spec
+            
+        except Exception as e:
+            logger.error(f"Error generating OpenAPI spec: {e}")
+            return None
+    
+    def _generate_endpoint_description(self, method_info: Dict, request_params: Dict, response_params: Dict) -> str:
+        """Generate detailed endpoint description."""
+        description_parts = []
+        
+        if method_info['description']:
+            description_parts.append(method_info['description'])
+        
+        if method_info['access_level']:
+            description_parts.append(f"**Доступ:** {method_info['access_level']}")
+        
+        if request_params:
+            description_parts.append(f"**Параметры запроса:** {len(request_params)}")
+            # Add detailed parameter information
+            for name, param in request_params.items():
+                required_mark = " (обязательный)" if param['required'] else " (опциональный)"
+                description_parts.append(f"- `{name}` ({param['type']}){required_mark}: {param['description']}")
+        
+        if response_params:
+            description_parts.append(f"**Параметры ответа:** {len(response_params)}")
+            # Add detailed parameter information
+            for name, param in response_params.items():
+                description_parts.append(f"- `{name}` ({param['type']}): {param['description']}")
+        
+        return '\n\n'.join(description_parts)
+    
+    def _generate_request_body(self, request_params: Dict) -> Dict[str, Any]:
+        """Generate request body schema."""
+        if not request_params:
+            return {'required': False}
+        
+        properties = {}
+        required_fields = []
+        
+        for param_name, param_info in request_params.items():
+            properties[param_name] = self._generate_parameter_schema(param_info)
+            if param_info['required']:
+                required_fields.append(param_name)
         
         return {
-            "openapi": "3.0.0",
-            "info": {
-                "title": f"Novofon {api_type.title()} API - {endpoint.method}",
-                "description": endpoint.description,
-                "version": "1.0.0"
-            },
-            "servers": [
-                {
-                    "url": "https://api.novofon.com",
-                    "description": "Novofon API Server"
-                }
-            ],
-            "paths": {
-                path: {
-                    "post": {
-                        "summary": f"{endpoint.method} endpoint",
-                        "description": f"JSON-RPC 2.0 endpoint for {endpoint.method}",
-                        "requestBody": {
-                            "required": True,
-                            "content": {
-                                "application/json": {
-                                    "schema": request_schema
-                                }
+            'required': True,
+            'content': {
+                'application/json': {
+                    'schema': {
+                        'type': 'object',
+                        'properties': {
+                            'jsonrpc': {
+                                'type': 'string',
+                                'example': '2.0',
+                                'description': 'JSON-RPC version'
+                            },
+                            'id': {
+                                'type': 'number',
+                                'description': 'Request identifier'
+                            },
+                            'method': {
+                                'type': 'string',
+                                'example': request_params.get('method', ''),
+                                'description': 'Method name'
+                            },
+                            'params': {
+                                'type': 'object',
+                                'properties': properties,
+                                'required': required_fields
                             }
                         },
-                        "responses": {
-                            "200": {
-                                "description": "Successful response",
-                                "content": {
-                                    "application/json": {
-                                        "schema": response_schema
+                        'required': ['jsonrpc', 'id', 'method', 'params']
+                    }
+                }
+            }
+        }
+    
+    def _generate_responses(self, response_params: Dict, error_info: Dict = None) -> Dict[str, Any]:
+        """Generate response schemas."""
+        responses = {
+            '200': {
+                'description': 'Successful response',
+                'content': {
+                    'application/json': {
+                        'schema': {
+                            'type': 'object',
+                            'properties': {
+                                'jsonrpc': {
+                                    'type': 'string',
+                                    'example': '2.0',
+                                    'description': 'JSON-RPC version'
+                                },
+                                'id': {
+                                    'type': 'number',
+                                    'description': 'Request identifier'
+                                },
+                                'result': {
+                                    'type': 'object',
+                                    'properties': {
+                                        'data': self._generate_data_schema(response_params),
+                                        'metadata': {
+                                            'type': 'object',
+                                            'description': 'Response metadata'
+                                        }
+                                    },
+                                    'required': ['data', 'metadata']
+                                }
+                            },
+                            'required': ['jsonrpc', 'id', 'result']
+                        }
+                    }
+                }
+            },
+            '400': {
+                'description': 'Bad Request',
+                'content': {
+                    'application/json': {
+                        'schema': {
+                            'type': 'object',
+                            'properties': {
+                                'jsonrpc': {'type': 'string'},
+                                'id': {'type': 'number'},
+                                'error': {
+                                    'type': 'object',
+                                    'properties': {
+                                        'code': {'type': 'number'},
+                                        'message': {'type': 'string'},
+                                        'data': {'type': 'object'}
                                     }
                                 }
                             }
@@ -330,109 +721,345 @@ class NovofonHTMLParser:
                 }
             }
         }
+        
+        # Add specific error responses if available
+        if error_info and error_info.get('errors'):
+            for error in error_info['errors']:
+                if 'code' in error:
+                    error_code = str(error['code'])
+                    responses[error_code] = {
+                        'description': error.get('description', f'Error {error_code}'),
+                        'content': {
+                            'application/json': {
+                                'schema': {
+                                    'type': 'object',
+                                    'properties': {
+                                        'jsonrpc': {'type': 'string'},
+                                        'id': {'type': 'number'},
+                                        'error': {
+                                            'type': 'object',
+                                            'properties': {
+                                                'code': {'type': 'number', 'example': int(error['code']) if error['code'].isdigit() else None},
+                                                'message': {'type': 'string', 'example': error.get('description', '')},
+                                                'data': {'type': 'object'}
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+        
+        return responses
     
-    def generate_markdown(self, endpoint: APIEndpoint, api_type: str) -> str:
-        """Generate Markdown documentation for an endpoint"""
-        md_content = f"# {endpoint.method}\n\n"
-        md_content += f"**Описание:** {endpoint.description}\n\n"
-        md_content += f"**Доступен для:** {endpoint.available_to}\n\n"
+    def _generate_data_schema(self, response_params: Dict) -> Dict[str, Any]:
+        """Generate data schema for response."""
+        if not response_params:
+            return {'type': 'object'}
         
-        if endpoint.request_params:
-            md_content += "## Параметры запроса\n\n"
-            md_content += "| Название | Тип | Обязательный | Описание |\n"
-            md_content += "|----------|-----|--------------|----------|\n"
-            
-            for param in endpoint.request_params:
-                required = "Да" if param.required else "Нет"
-                md_content += f"| `{param.name}` | {param.type} | {required} | {param.description} |\n"
-            md_content += "\n"
+        properties = {}
+        required_fields = []
         
-        if endpoint.response_params:
-            md_content += "## Параметры ответа\n\n"
-            md_content += "| Название | Тип | Обязательный | Описание |\n"
-            md_content += "|----------|-----|--------------|----------|\n"
-            
-            for param in endpoint.response_params:
-                required = "Да" if param.required else "Нет"
-                md_content += f"| `{param.name}` | {param.type} | {required} | {param.description} |\n"
-            md_content += "\n"
+        for param_name, param_info in response_params.items():
+            properties[param_name] = self._generate_parameter_schema(param_info)
+            if param_info['required']:
+                required_fields.append(param_name)
         
-        if endpoint.request_json:
-            md_content += "## JSON структура запроса\n\n"
-            md_content += "```json\n"
-            md_content += endpoint.request_json
-            md_content += "\n```\n\n"
-        
-        if endpoint.response_json:
-            md_content += "## JSON структура ответа\n\n"
-            md_content += "```json\n"
-            md_content += endpoint.response_json
-            md_content += "\n```\n\n"
-        
-        if endpoint.notes:
-            md_content += "## Примечания\n\n"
-            md_content += f"{endpoint.notes}\n\n"
-        
-        return md_content
+        return {
+            'type': 'object',
+            'properties': properties,
+            'required': required_fields
+        }
     
-    def save_outputs(self, output_dir: Path):
-        """Save generated OpenAPI specs and Markdown files"""
-        # Create output directories according to new structure
-        openapi_dir = output_dir / "docs"  # OpenAPI specs go to docs/
-        markdown_dir = output_dir / "openai"  # Markdown goes to openai/
+    def _generate_parameter_schema(self, param_info: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate parameter schema with comprehensive information."""
+        schema = {
+            'type': self.supported_types.get(param_info['type'], 'string'),
+            'description': param_info['description']
+        }
         
-        openapi_dir.mkdir(parents=True, exist_ok=True)
-        markdown_dir.mkdir(parents=True, exist_ok=True)
+        # Add additional information
+        additional_info = param_info.get('additional_info', {})
         
-        # Save each endpoint
-        for key, endpoint in self.endpoints.items():
-            api_type, method = key.split('.', 1)
+        # Handle allowed values
+        if 'allowed_values' in additional_info:
+            allowed_values = additional_info['allowed_values']
+            if allowed_values and allowed_values.strip():
+                # Check if it's a format specification (like "Формат IANA zoneinfo")
+                if 'формат' in allowed_values.lower() or 'format' in allowed_values.lower():
+                    schema['format'] = allowed_values
+                    schema['example'] = self._generate_example_for_format(allowed_values)
+                # Check if it's a constraint (like "Максимум 255 символов")
+                elif 'максимум' in allowed_values.lower() or 'максимальное' in allowed_values.lower():
+                    # Extract numeric constraint
+                    import re
+                    numbers = re.findall(r'\d+', allowed_values)
+                    if numbers:
+                        if 'символ' in allowed_values.lower():
+                            schema['maxLength'] = int(numbers[0])
+                        elif 'количество' in allowed_values.lower():
+                            schema['maxItems'] = int(numbers[0])
+                # Check if it's a minimum constraint
+                elif 'минимальное' in allowed_values.lower() or 'минимум' in allowed_values.lower():
+                    import re
+                    numbers = re.findall(r'\d+', allowed_values)
+                    if numbers:
+                        schema['minimum'] = int(numbers[0])
+                else:
+                    # Try to parse as enum values
+                    enum_values = [v.strip() for v in allowed_values.split(',') if v.strip()]
+                    if enum_values:
+                        schema['enum'] = enum_values
+                        schema['example'] = enum_values[0]
+        
+        # Add filtering information
+        if 'filtering' in additional_info:
+            filtering = additional_info['filtering']
+            if filtering and filtering.strip():
+                schema['x-filtering'] = filtering
+        
+        # Add sorting information
+        if 'sorting' in additional_info:
+            sorting = additional_info['sorting']
+            if sorting and sorting.strip():
+                schema['x-sorting'] = sorting
+        
+        # Add examples based on type if not already set
+        if 'example' not in schema:
+            if param_info['type'] == 'string':
+                schema['example'] = 'example_string'
+            elif param_info['type'] == 'number':
+                schema['example'] = 123
+            elif param_info['type'] == 'boolean':
+                schema['example'] = True
+        
+        return schema
+    
+    def save_openapi_spec(self, spec: Dict[str, Any], filename: str) -> bool:
+        """Safely save OpenAPI specification to file."""
+        try:
+            if not spec:
+                logger.error("No OpenAPI spec to save")
+                return False
             
-            # Create API-specific directories
-            api_openapi_dir = openapi_dir / api_type
-            api_markdown_dir = markdown_dir / api_type
+            if not filename:
+                logger.error("No filename provided")
+                return False
             
-            api_openapi_dir.mkdir(parents=True, exist_ok=True)
-            api_markdown_dir.mkdir(parents=True, exist_ok=True)
+            # Ensure directory exists
+            os.makedirs(os.path.dirname(filename) if os.path.dirname(filename) else '.', exist_ok=True)
             
-            # Save OpenAPI spec
-            spec = self.generate_openapi_spec(endpoint, api_type)
-            spec_file = api_openapi_dir / f"{method.replace('.', '_')}.yaml"
-            with open(spec_file, 'w', encoding='utf-8') as f:
-                yaml.dump(spec, f, default_flow_style=False, allow_unicode=True)
+            # Write YAML file
+            with open(filename, 'w', encoding='utf-8') as f:
+                yaml.dump(spec, f, default_flow_style=False, allow_unicode=True, sort_keys=False)
             
-            # Save Markdown
-            md_content = self.generate_markdown(endpoint, api_type)
-            md_file = api_markdown_dir / f"{method.replace('.', '_')}.md"
-            with open(md_file, 'w', encoding='utf-8') as f:
-                f.write(md_content)
+            logger.info(f"OpenAPI spec saved to: {filename}")
+            return True
             
-            logger.info(f"Saved: {spec_file} and {md_file}")
+        except PermissionError:
+            logger.error(f"Permission denied writing to: {filename}")
+            return False
+        except OSError as e:
+            logger.error(f"OS error saving to {filename}: {e}")
+            return False
+        except Exception as e:
+            logger.error(f"Error saving OpenAPI spec to {filename}: {e}")
+            return False
+    
+    def _generate_example_for_format(self, format_spec: str) -> str:
+        """Generate example value based on format specification."""
+        format_lower = format_spec.lower()
+        
+        if 'iana' in format_lower and 'zoneinfo' in format_lower:
+            return 'Europe/Moscow'
+        elif 'email' in format_lower:
+            return 'user@example.com'
+        elif 'phone' in format_lower:
+            return '+7 (999) 123-45-67'
+        elif 'url' in format_lower:
+            return 'https://example.com'
+        elif 'date' in format_lower:
+            return '2024-01-01'
+        elif 'time' in format_lower:
+            return '12:00:00'
+        elif 'datetime' in format_lower:
+            return '2024-01-01T12:00:00Z'
+        else:
+            return 'example_value'
+    
+    def process_directory(self, directory: str, output_dir: str = "openapi_specs_enhanced") -> Dict[str, Any]:
+        """Process all HTML files in a directory and generate OpenAPI specs."""
+        results = {
+            'processed': 0,
+            'successful': 0,
+            'failed': 0,
+            'errors': []
+        }
+        
+        try:
+            if not os.path.exists(directory):
+                logger.error(f"Directory not found: {directory}")
+                results['errors'].append(f"Directory not found: {directory}")
+                return results
+            
+            # Create output directory
+            os.makedirs(output_dir, exist_ok=True)
+            
+            # Find all HTML files
+            html_files = []
+            for root, dirs, files in os.walk(directory):
+                for file in files:
+                    if file.endswith('.html') and file == 'index.html':
+                        html_files.append(os.path.join(root, file))
+            
+            logger.info(f"Found {len(html_files)} HTML files to process")
+            
+            for filepath in html_files:
+                results['processed'] += 1
+                logger.info(f"Processing {results['processed']}/{len(html_files)}: {filepath}")
+                
+                try:
+                    # Parse file
+                    api_data = self.parse_html_file(filepath)
+                    
+                    if api_data:
+                        # Generate OpenAPI spec
+                        spec = self.generate_openapi_spec(api_data)
+                        
+                        if spec:
+                            # Save spec
+                            method_name = api_data['method_info']['name']
+                            output_file = os.path.join(output_dir, f"{method_name}.yaml")
+                            
+                            if self.save_openapi_spec(spec, output_file):
+                                results['successful'] += 1
+                                logger.info(f"✓ Successfully processed: {method_name}")
+                            else:
+                                results['failed'] += 1
+                                results['errors'].append(f"Failed to save: {method_name}")
+                        else:
+                            results['failed'] += 1
+                            results['errors'].append(f"Failed to generate spec: {filepath}")
+                    else:
+                        results['failed'] += 1
+                        results['errors'].append(f"Failed to parse: {filepath}")
+                        
+                except Exception as e:
+                    results['failed'] += 1
+                    results['errors'].append(f"Error processing {filepath}: {e}")
+                    logger.error(f"Error processing {filepath}: {e}")
+            
+            logger.info(f"Processing complete: {results['successful']}/{results['processed']} successful")
+            return results
+            
+        except Exception as e:
+            logger.error(f"Error processing directory {directory}: {e}")
+            results['errors'].append(f"Directory processing error: {e}")
+            return results
 
 def main():
-    parser = argparse.ArgumentParser(description='Parse Novofon HTML documentation')
-    parser.add_argument('--input', '-i', required=True, help='Input directory containing HTML files')
-    parser.add_argument('--output', '-o', required=True, help='Output directory for generated files')
-    parser.add_argument('--api-type', '-t', required=True, choices=['data', 'calls'], help='API type to parse')
+    """Main function to run the enhanced parser."""
+    # Parse command line arguments
+    arg_parser = argparse.ArgumentParser(description='Enhanced HTML documentation parser for Novofon APIs')
+    arg_parser.add_argument('--src', required=True, help='Source directory containing HTML documentation')
+    arg_parser.add_argument('--dst', required=True, help='Destination directory for generated OpenAPI specs')
+    arg_parser.add_argument('--api-type', choices=['data', 'calls'], required=True, help='Type of API to process')
+    arg_parser.add_argument('--test', help='Test with a specific file')
     
-    args = parser.parse_args()
+    args = arg_parser.parse_args()
     
-    input_dir = Path(args.input)
-    output_dir = Path(args.output)
+    # Initialize parser
+    parser = NovofonAPIParser()
     
-    if not input_dir.exists():
-        logger.error(f"Input directory does not exist: {input_dir}")
-        return 1
+    # Test mode
+    if args.test:
+        if os.path.exists(args.test):
+            print(f"Testing enhanced parser with: {args.test}")
+            result = parser.parse_html_file(args.test)
+            
+            if result:
+                print("✓ Successfully parsed file")
+                print(f"Method: {result['method_info']['name']}")
+                print(f"Title: {result['method_info']['title']}")
+                print(f"Description: {result['method_info']['description']}")
+                print(f"Access Level: {result['method_info']['access_level']}")
+                print(f"Request Parameters: {len(result['request_params'])}")
+                print(f"Response Parameters: {len(result['response_params'])}")
+                
+                # Show detailed parameter information
+                print("\n=== REQUEST PARAMETERS ===")
+                for name, param in result['request_params'].items():
+                    print(f"  {name}: {param['type']} ({'required' if param['required'] else 'optional'})")
+                    print(f"    Description: {param['description']}")
+                
+                print("\n=== RESPONSE PARAMETERS ===")
+                for name, param in result['response_params'].items():
+                    print(f"  {name}: {param['type']}")
+                    print(f"    Description: {param['description']}")
+                    if param['additional_info']:
+                        print(f"    Additional info: {param['additional_info']}")
+                
+                # Show parameters with additional info
+                print("\n=== PARAMETERS WITH ADDITIONAL INFO ===")
+                for name, param in result['request_params'].items():
+                    if param['additional_info']:
+                        print(f"  {name}: {param['additional_info']}")
+                for name, param in result['response_params'].items():
+                    if param['additional_info']:
+                        print(f"  {name}: {param['additional_info']}")
+                
+                # Show error information
+                if result.get('error_info'):
+                    print("\n=== ERROR INFORMATION ===")
+                    error_info = result['error_info']
+                    if error_info.get('errors'):
+                        print("Errors:")
+                        for error in error_info['errors']:
+                            print(f"  {error}")
+                    if error_info.get('error_references'):
+                        print("Error references:")
+                        for ref in error_info['error_references']:
+                            print(f"  {ref}")
+                
+                # Generate OpenAPI spec
+                openapi_spec = parser.generate_openapi_spec(result)
+                
+                if openapi_spec:
+                    # Save to file
+                    output_file = f"enhanced_openapi_{result['method_info']['name']}.yaml"
+                    if parser.save_openapi_spec(openapi_spec, output_file):
+                        print(f"✓ Generated OpenAPI spec: {output_file}")
+                    else:
+                        print(f"✗ Failed to save OpenAPI spec: {output_file}")
+                else:
+                    print("✗ Failed to generate OpenAPI spec")
+            else:
+                print("✗ Failed to parse file")
+        else:
+            print(f"Test file not found: {args.test}")
+        return
     
-    # Create parser and parse
-    parser_instance = NovofonHTMLParser(input_dir)
-    parser_instance.parse_directory(input_dir, args.api_type)
+    # Process directory
+    api_name = "NOVOFON DATA API" if args.api_type == "data" else "NOVOFON CALLS API"
+    print("\n" + "="*50)
+    print(f"PROCESSING {api_name}")
+    print("="*50)
     
-    # Save outputs
-    parser_instance.save_outputs(output_dir)
+    results = parser.process_directory(args.src, args.dst)
+    print(f"\n{api_name} Results: {results['successful']}/{results['processed']} successful")
+    if results['errors']:
+        print(f"Errors: {len(results['errors'])}")
+        for error in results['errors'][:5]:  # Show first 5 errors
+            print(f"  - {error}")
     
-    logger.info(f"Successfully parsed {len(parser_instance.endpoints)} endpoints")
-    return 0
+    # Summary
+    print("\n" + "="*50)
+    print("SUMMARY")
+    print("="*50)
+    print(f"Total processed: {results['processed']}")
+    print(f"Total successful: {results['successful']}")
+    print(f"Total failed: {results['failed']}")
+    print(f"Success rate: {(results['successful']/results['processed']*100):.1f}%" if results['processed'] > 0 else "N/A")
 
-if __name__ == '__main__':
-    exit(main())
+if __name__ == "__main__":
+    main()

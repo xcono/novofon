@@ -227,9 +227,9 @@ class HTMLToMarkdownConverter:
             
             total_count += 1
             
-            # Create output path according to new structure: openai/{api_type}/
+            # Create output path according to new structure: {api_type}/
             relative_path = html_file.relative_to(input_dir)
-            output_path = output_dir / "openai" / api_type / relative_path.with_suffix('.md')
+            output_path = output_dir / api_type / relative_path.with_suffix('.md')
             
             if self.convert_file(html_file, output_path):
                 converted_count += 1
