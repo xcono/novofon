@@ -8,6 +8,7 @@ import (
 
 	"github.com/xcono/novofon/bin/api/internal/generate"
 	"github.com/xcono/novofon/bin/api/internal/parse"
+	"gopkg.in/yaml.v3"
 )
 
 func main() {
@@ -95,6 +96,12 @@ func main() {
 		fmt.Fprintf(os.Stderr, "No files were successfully processed\n")
 		os.Exit(1)
 	}
+
+	// Bundle individual spec files into unified API specs
+	if err := bundleAPISpecs(outputDir); err != nil {
+		fmt.Fprintf(os.Stderr, "Warning: Failed to bundle API specs: %v\n", err)
+		// Don't fail the entire process for bundling errors
+	}
 }
 
 func findHTMLFiles(dir string) ([]string, error) {
@@ -178,4 +185,175 @@ func getOutputFileName(htmlFile, outputDir string) string {
 	}
 
 	return filepath.Join(outputDir, fileName)
+}
+
+// bundleAPISpecs combines individual OpenAPI spec files into unified specs
+func bundleAPISpecs(outputDir string) error {
+	// Find all yaml files in the output directory
+	yamlFiles, err := findYAMLFiles(outputDir)
+	if err != nil {
+		return fmt.Errorf("failed to find YAML files: %w", err)
+	}
+
+	if len(yamlFiles) == 0 {
+		return fmt.Errorf("no YAML files found to bundle")
+	}
+
+	// Group files by API type (data vs calls)
+	dataFiles := []string{}
+	callFiles := []string{}
+
+	for _, file := range yamlFiles {
+		// Check if file is in a data or calls subdirectory
+		if strings.Contains(file, "/data/") || strings.Contains(file, "\\data\\") {
+			dataFiles = append(dataFiles, file)
+		} else if strings.Contains(file, "/calls/") || strings.Contains(file, "\\calls\\") {
+			callFiles = append(callFiles, file)
+		}
+	}
+
+	// Bundle data API files - place at top level of outputDir parent
+	if len(dataFiles) > 0 {
+		// Place bundled file at the same level as data/ and calls/ directories
+		parentDir := filepath.Dir(outputDir)
+		bundledFile := filepath.Join(parentDir, "data.yaml")
+		if err := createBundledSpec(dataFiles, bundledFile, "Novofon Data API", "Combined Data API specifications"); err != nil {
+			return fmt.Errorf("failed to bundle data API specs: %w", err)
+		}
+		fmt.Printf("Bundled %d Data API specs into: %s\n", len(dataFiles), bundledFile)
+	}
+
+	// Bundle call API files - place at top level of outputDir parent
+	if len(callFiles) > 0 {
+		// Place bundled file at the same level as data/ and calls/ directories
+		parentDir := filepath.Dir(outputDir)
+		bundledFile := filepath.Join(parentDir, "calls.yaml")
+		if err := createBundledSpec(callFiles, bundledFile, "Novofon Call API", "Combined Call API specifications"); err != nil {
+			return fmt.Errorf("failed to bundle call API specs: %w", err)
+		}
+		fmt.Printf("Bundled %d Call API specs into: %s\n", len(callFiles), bundledFile)
+	}
+
+	return nil
+}
+
+// findYAMLFiles finds all YAML files in a directory recursively
+func findYAMLFiles(dir string) ([]string, error) {
+	var yamlFiles []string
+
+	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		if info.IsDir() {
+			return nil
+		}
+
+		if strings.HasSuffix(strings.ToLower(info.Name()), ".yaml") || strings.HasSuffix(strings.ToLower(info.Name()), ".yml") {
+			yamlFiles = append(yamlFiles, path)
+		}
+
+		return nil
+	})
+
+	return yamlFiles, err
+}
+
+// createBundledSpec creates a single OpenAPI spec from multiple individual specs
+func createBundledSpec(inputFiles []string, outputFile, title, description string) error {
+	// Create the base bundled spec structure
+	bundledSpec := map[string]interface{}{
+		"openapi": "3.0.0",
+		"info": map[string]interface{}{
+			"title":       title,
+			"version":     "1.0.0",
+			"description": description,
+		},
+		"paths": make(map[string]interface{}),
+	}
+
+	// Process each input file
+	for _, inputFile := range inputFiles {
+		content, err := os.ReadFile(inputFile)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Warning: Failed to read %s: %v\n", inputFile, err)
+			continue
+		}
+
+		var spec map[string]interface{}
+		if err := yaml.Unmarshal(content, &spec); err != nil {
+			fmt.Fprintf(os.Stderr, "Warning: Failed to parse %s: %v\n", inputFile, err)
+			continue
+		}
+
+		// Merge paths from this spec into the bundled spec
+		if paths, ok := spec["paths"].(map[string]interface{}); ok {
+			bundledPaths := bundledSpec["paths"].(map[string]interface{})
+			for path, pathItem := range paths {
+				if _, exists := bundledPaths[path]; exists {
+					fmt.Fprintf(os.Stderr, "Warning: Path %s already exists, skipping from %s\n", path, inputFile)
+					continue
+				}
+				bundledPaths[path] = pathItem
+			}
+		}
+
+		// Merge components if they exist
+		if components, ok := spec["components"].(map[string]interface{}); ok {
+			if bundledSpec["components"] == nil {
+				bundledSpec["components"] = make(map[string]interface{})
+			}
+			bundledComponents := bundledSpec["components"].(map[string]interface{})
+
+			for componentType, componentData := range components {
+				if bundledComponents[componentType] == nil {
+					bundledComponents[componentType] = make(map[string]interface{})
+				}
+				targetComponents := bundledComponents[componentType].(map[string]interface{})
+
+				if sourceComponents, ok := componentData.(map[string]interface{}); ok {
+					for name, component := range sourceComponents {
+						if _, exists := targetComponents[name]; !exists {
+							targetComponents[name] = component
+						}
+					}
+				}
+			}
+		}
+
+		// Merge x-errors if they exist
+		if xerrors, ok := spec["x-errors"]; ok {
+			if bundledSpec["x-errors"] == nil {
+				bundledSpec["x-errors"] = map[string]interface{}{
+					"errors": []interface{}{},
+				}
+			}
+
+			if bundledErrors, ok := bundledSpec["x-errors"].(map[string]interface{}); ok {
+				if sourceErrors, ok := xerrors.(map[string]interface{}); ok {
+					if sourceErrorList, ok := sourceErrors["errors"].([]interface{}); ok {
+						if bundledErrorList, ok := bundledErrors["errors"].([]interface{}); ok {
+							// Avoid duplicate errors
+							for _, sourceError := range sourceErrorList {
+								bundledErrors["errors"] = append(bundledErrorList, sourceError)
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// Write the bundled spec
+	bundledContent, err := yaml.Marshal(bundledSpec)
+	if err != nil {
+		return fmt.Errorf("failed to marshal bundled spec: %w", err)
+	}
+
+	if err := os.WriteFile(outputFile, bundledContent, 0644); err != nil {
+		return fmt.Errorf("failed to write bundled spec: %w", err)
+	}
+
+	return nil
 }
