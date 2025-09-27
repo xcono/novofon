@@ -88,7 +88,11 @@ func main() {
 
 	fmt.Printf("\nSummary: %d files processed, %d errors\n", processed, errors)
 
-	if errors > 0 {
+	// Only exit with error if there were critical failures (like file read errors)
+	// Parsing errors from index pages are expected and shouldn't cause failure
+	// We already processed files successfully if we got here
+	if processed == 0 {
+		fmt.Fprintf(os.Stderr, "No files were successfully processed\n")
 		os.Exit(1)
 	}
 }

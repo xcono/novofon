@@ -9,6 +9,7 @@ on:
 jobs:
   generate-docs:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     
     steps:
     - name: Checkout repository
@@ -18,26 +19,51 @@ jobs:
       uses: actions/setup-go@v4
       with:
         go-version: '1.21'
+        cache-dependency-path: 'bin/api/go.sum'
         
         
     - name: Checkout Novofon documentation repository
       run: |
+        rm -rf temp-html
         git clone https://github.com/novofon/novofon.github.io.git temp-html
         
     - name: Build converter tool
       run: |
+        echo "Current directory: $(pwd)"
+        echo "Directory contents:"
+        ls -la
+        echo "Checking bin/api directory:"
+        ls -la bin/api/ || echo "bin/api not found"
         cd bin/api
+        echo "Building converter in: $(pwd)"
         make build
+        echo "Build completed, returning to root"
+        cd ../..
+        echo "Back in root: $(pwd)"
+        echo "Checking if converter was built:"
+        ls -la bin/api/converter || echo "converter not found"
         
     - name: Generate OpenAPI specs for Data API
       run: |
+        echo "Current directory: $(pwd)"
+        echo "Checking converter exists:"
+        ls -la bin/api/converter || echo "converter not found"
+        echo "Checking temp-html structure:"
+        ls -la temp-html/ || echo "temp-html not found"
         mkdir -p api/data
+        echo "Running converter for Data API..."
         ./bin/api/converter temp-html/data_api api/data
+        echo "Data API generation completed"
         
     - name: Generate OpenAPI specs for Call API
       run: |
+        echo "Current directory: $(pwd)"
+        echo "Checking converter exists:"
+        ls -la bin/api/converter || echo "converter not found"
         mkdir -p api/calls
+        echo "Running converter for Call API..."
         ./bin/api/converter temp-html/call_api api/calls
+        echo "Call API generation completed"
           
     - name: Validate OpenAPI specifications
       timeout-minutes: 10
@@ -110,15 +136,17 @@ jobs:
     - name: Commit and push changes
       if: steps.verify-changed-files.outputs.changed == 'true'
       run: |
+        echo "Configuring git..."
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
+        echo "Adding files..."
         git add api/
-        git commit -m "Auto-generate Novofon OpenAPI specifications
-        
-        - Generated OpenAPI specs for Data and Call APIs from HTML documentation
-        - Converted HTML documentation to OpenAPI 3.0 format
-        - Organized specs in api/data and api/calls directories"
+        echo "Creating commit..."
+        git commit -m "Auto-generate Novofon OpenAPI specifications"
+        echo "Commit created successfully"
+        echo "Pushing changes..."
         git push
+        echo "Push completed successfully"
         
     - name: Create summary
       run: |
