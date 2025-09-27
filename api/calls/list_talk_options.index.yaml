@@ -1,0 +1,114 @@
+openapi: 3.0.0
+info:
+    title: List talk options
+    version: 1.0.0
+    description: Получение списка опций разговора настроенных в Личном кабинете виртуальной АТС
+paths:
+    /list.talk_options:
+        post:
+            summary: List talk options
+            description: "Получение списка опций разговора настроенных в Личном кабинете виртуальной АТС\n\n**Request Parameters:** 1\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n**Response Parameters:** 4\n\n- `button` (string): Клавиша, которая вызывает опцию разговора\n\n- `mnemonic` (string): Мнемоническое имя опции разговора\n                Возможные значения:\n                \n                    finish_conversation - Завершить разговор\n                    \n                    tag_call - Проставить тег\n                    \n                    record_talk - Диктофон (запись разговора)\n                    \n                    transfer_call - Трансфер\n                    \n                    run_scenario - Выполнить сценарий\n                    \n                    call_coach - Позвонить тренеру\n                    \n                    receive_fax - Принять факс\n                    \n                    save_numa - Сохранить АОН в группу\n\n- `name` (string): Название опции разговора\n\n- `button_value` (object): Некоторые опции могут содержать название тега, название сценария и т.д. Данный объект содержит дополнительную информацию об опции разговора"
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: list.talk_options
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                    required:
+                                        - access_token
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                                properties:
+                                                    button:
+                                                        type: string
+                                                        description: Клавиша, которая вызывает опцию разговора
+                                                        example: example_string
+                                                    button_value:
+                                                        type: object
+                                                        description: Некоторые опции могут содержать название тега, название сценария и т.д. Данный объект содержит дополнительную информацию об опции разговора
+                                                    mnemonic:
+                                                        type: string
+                                                        description: "Мнемоническое имя опции разговора\n                Возможные значения:\n                \n                    finish_conversation - Завершить разговор\n                    \n                    tag_call - Проставить тег\n                    \n                    record_talk - Диктофон (запись разговора)\n                    \n                    transfer_call - Трансфер\n                    \n                    run_scenario - Выполнить сценарий\n                    \n                    call_coach - Позвонить тренеру\n                    \n                    receive_fax - Принять факс\n                    \n                    save_numa - Сохранить АОН в группу"
+                                                        example: example_string
+                                                    name:
+                                                        type: string
+                                                        description: Название опции разговора
+                                                        example: example_string
+                                                required:
+                                                    - button
+                                                    - mnemonic
+                                                    - name
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon
