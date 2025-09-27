@@ -28,6 +28,16 @@ jobs:
           pip install -r scripts/requirements.txt
         fi
         
+    - name: Setup Node.js for OpenAPI validation
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install OpenAPI schema validator
+      run: |
+        npm install -g @seriousme/openapi-schema-validator
+        
     - name: Checkout Novofon documentation repository
       run: |
         git clone https://github.com/novofon/novofon.github.io.git temp-docs
@@ -51,19 +61,97 @@ jobs:
           --dst openapi/calls \
           --api-type calls
           
+    - name: Validate OpenAPI specifications
+      run: |
+        echo "Validating OpenAPI specifications..."
+        
+        # Validate Data API specs
+        echo "Validating Data API specifications..."
+        data_api_files=$(find openapi/data -name "*.yaml" | head -10)
+        if [ -n "$data_api_files" ]; then
+          echo "Found Data API files to validate:"
+          echo "$data_api_files"
+          for file in $data_api_files; do
+            echo "Validating $file..."
+            npx -p @seriousme/openapi-schema-validator validate-api "$file" || {
+              echo "❌ Validation failed for $file"
+              exit 1
+            }
+          done
+          echo "✅ All Data API specifications are valid"
+        else
+          echo "⚠️ No Data API files found to validate"
+        fi
+        
+        # Validate Call API specs
+        echo "Validating Call API specifications..."
+        call_api_files=$(find openapi/calls -name "*.yaml" | head -10)
+        if [ -n "$call_api_files" ]; then
+          echo "Found Call API files to validate:"
+          echo "$call_api_files"
+          for file in $call_api_files; do
+            echo "Validating $file..."
+            npx -p @seriousme/openapi-schema-validator validate-api "$file" || {
+              echo "❌ Validation failed for $file"
+              exit 1
+            }
+          done
+          echo "✅ All Call API specifications are valid"
+        else
+          echo "⚠️ No Call API files found to validate"
+        fi
+        
+        # Validate all remaining files
+        echo "Validating remaining OpenAPI specifications..."
+        all_files=$(find openapi -name "*.yaml")
+        total_files=$(echo "$all_files" | wc -l)
+        validated_count=0
+        failed_files=""
+        
+        for file in $all_files; do
+          if npx -p @seriousme/openapi-schema-validator validate-api "$file" >/dev/null 2>&1; then
+            validated_count=$((validated_count + 1))
+          else
+            failed_files="$failed_files $file"
+            echo "❌ Validation failed for $file"
+          fi
+        done
+        
+        echo "📊 Validation Summary:"
+        echo "  Total files: $total_files"
+        echo "  Validated successfully: $validated_count"
+        echo "  Failed: $((total_files - validated_count))"
+        
+        if [ -n "$failed_files" ]; then
+          echo "❌ The following files failed validation:"
+          for file in $failed_files; do
+            echo "  - $file"
+            # Show detailed validation errors
+            echo "    Detailed errors:"
+            npx -p @seriousme/openapi-schema-validator validate-api "$file" 2>&1 | sed 's/^/      /'
+          done
+          exit 1
+        fi
+        
+        echo "🎉 All $total_files OpenAPI specifications passed validation!"
+          
     - name: Convert HTML to Markdown for Data API
       run: |
+        echo "Converting Data API HTML files to Markdown..."
         python scripts/html_to_markdown_converter.py \
           --input temp-html/data_api \
           --output docs/data \
           --api-type data
+        echo "Data API conversion completed successfully"
           
     - name: Convert HTML to Markdown for Call API
       run: |
+        echo "Converting Call API HTML files to Markdown..."
         python scripts/html_to_markdown_converter.py \
           --input temp-html/call_api \
           --output docs/calls \
           --api-type calls
+        echo "Call API conversion completed successfully"
           
     - name: Clean up temporary files
       run: |
@@ -82,6 +170,51 @@ jobs:
         ls -la openapi/calls/ || echo "openapi/calls/ directory not found"
         ls -la docs/data/ || echo "docs/data/ directory not found"
         ls -la docs/calls/ || echo "docs/calls/ directory not found"
+        
+        echo "Validating markdown file naming structure:"
+        echo "Data API markdown files (should be dot-separated):"
+        ls docs/data/*.md | head -10 || echo "No markdown files found in docs/data/"
+        echo "Call API markdown files (should be dot-separated):"
+        ls docs/calls/*.md | head -10 || echo "No markdown files found in docs/calls/"
+        
+        echo "Checking for correct dot-separated naming:"
+        if ls docs/data/authentication.*.md >/dev/null 2>&1; then
+          echo "✅ Data API authentication files use dot-separated naming"
+        else
+          echo "❌ Data API authentication files not found or incorrectly named"
+        fi
+        
+        if ls docs/calls/create_call.*.md >/dev/null 2>&1; then
+          echo "✅ Call API create_call files use dot-separated naming"
+        else
+          echo "❌ Call API create_call files not found or incorrectly named"
+        fi
+        
+        echo "Validating specific expected files:"
+        if [ -f "docs/calls/create_call.start_simple_call.md" ]; then
+          echo "✅ start_simple_call documentation generated"
+        else
+          echo "❌ start_simple_call documentation missing"
+        fi
+        
+        if [ -f "docs/data/authentication.login_user.md" ]; then
+          echo "✅ Data API login_user documentation generated"
+        else
+          echo "❌ Data API login_user documentation missing"
+        fi
+        
+        if [ -f "docs/calls/authentication.login_user.md" ]; then
+          echo "✅ Call API login_user documentation generated"
+        else
+          echo "❌ Call API login_user documentation missing"
+        fi
+        
+        echo "OpenAPI validation status:"
+        if [ -d "openapi" ] && [ "$(find openapi -name "*.yaml" | wc -l)" -gt 0 ]; then
+          echo "✅ OpenAPI specifications generated and validated"
+        else
+          echo "❌ No OpenAPI specifications found"
+        fi
         
     - name: Check for changes
       id: verify-changed-files
@@ -104,8 +237,8 @@ jobs:
         git commit -m "Auto-generate Novofon API documentation
         
         - Generated OpenAPI specs for Data and Call APIs
-        - Converted HTML documentation to Markdown
-        - Updated documentation structure"
+        - Converted HTML documentation to Markdown with flat dot-separated naming
+        - Updated documentation structure for better organization"
         git push
         
     - name: Create summary
@@ -120,7 +253,18 @@ jobs:
         echo "- **Data API:** $(find openapi/data -name "*.yaml" 2>/dev/null | wc -l) endpoints" >> $GITHUB_STEP_SUMMARY
         echo "- **Call API:** $(find openapi/calls -name "*.yaml" 2>/dev/null | wc -l) endpoints" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### File Structure:" >> $GITHUB_STEP_SUMMARY
+        echo "### Documentation Structure:" >> $GITHUB_STEP_SUMMARY
+        echo "- **OpenAPI specs:** Organized by API type (data/calls) - ✅ All validated" >> $GITHUB_STEP_SUMMARY
+        echo "- **Markdown docs:** Flat structure with dot-separated naming (e.g., \`authentication.login_user.md\`)" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Sample Files:" >> $GITHUB_STEP_SUMMARY
+        echo "**Data API:**" >> $GITHUB_STEP_SUMMARY
+        ls docs/data/*.md | head -5 | sed 's/^/- /' >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Call API:**" >> $GITHUB_STEP_SUMMARY
+        ls docs/calls/*.md | head -5 | sed 's/^/- /' >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Directory Structure:" >> $GITHUB_STEP_SUMMARY
         echo '```' >> $GITHUB_STEP_SUMMARY
         if command -v tree >/dev/null 2>&1; then
           tree openapi docs -I 'assets|images|javascripts|stylesheets' | head -20 >> $GITHUB_STEP_SUMMARY

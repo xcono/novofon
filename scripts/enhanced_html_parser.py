@@ -92,6 +92,13 @@ class NovofonAPIParser:
         
         return None
     
+    def _has_request_parameters_section(self, soup: BeautifulSoup) -> bool:
+        """Check if the HTML contains a request parameters section."""
+        # Look for "Параметры запроса" text in the document
+        # This indicates it's a real API method, not an index/overview page
+        text_content = soup.get_text()
+        return "Параметры запроса" in text_content
+    
     def _extract_method_description(self, soup: BeautifulSoup) -> Optional[str]:
         """Extract method description from HTML."""
         # Strategy 1: Look for description in table with 'Описание' header
@@ -244,10 +251,14 @@ class NovofonAPIParser:
         # Extract parameter name from first cell
         name_cell = cells[0]
         name_code = name_cell.find('code')
-        if not name_code:
-            return None
+        if name_code:
+            param_name = name_code.get_text().strip()
+        else:
+            # If no code tag, use the cell text directly
+            param_name = name_cell.get_text().strip()
         
-        param_name = name_code.get_text().strip()
+        if not param_name:
+            return None
         
         # Extract type from second cell
         type_cell = cells[1]
@@ -482,6 +493,12 @@ class NovofonAPIParser:
             
             soup = BeautifulSoup(content, 'html.parser')
             
+            # Check if this is a real API method (contains "Параметры запроса")
+            # Skip index/overview files that don't contain actual method parameters
+            if not self._has_request_parameters_section(soup):
+                logger.info(f"Skipping overview/index file (no request parameters): {filepath}")
+                return None
+            
             # Extract method information
             method_info = self.extract_method_info(soup)
             if not method_info:
@@ -569,7 +586,7 @@ class NovofonAPIParser:
                         http_method: {
                             'summary': title,
                             'description': self._generate_endpoint_description(method_info, request_params, response_params),
-                            'requestBody': self._generate_request_body(request_params),
+                            'requestBody': self._generate_request_body(request_params, method_name),
                             'responses': self._generate_responses(response_params, error_info)
                         }
                     }
@@ -598,7 +615,7 @@ class NovofonAPIParser:
         if method_info['description']:
             description_parts.append(method_info['description'])
         
-        if method_info['access_level']:
+        if method_info.get('access_level'):
             description_parts.append(f"**Доступ:** {method_info['access_level']}")
         
         if request_params:
@@ -616,10 +633,10 @@ class NovofonAPIParser:
         
         return '\n\n'.join(description_parts)
     
-    def _generate_request_body(self, request_params: Dict) -> Dict[str, Any]:
+    def _generate_request_body(self, request_params: Dict, method_name: str = None) -> Optional[Dict[str, Any]]:
         """Generate request body schema."""
         if not request_params:
-            return {'required': False}
+            return None
         
         properties = {}
         required_fields = []
@@ -647,14 +664,14 @@ class NovofonAPIParser:
                             },
                             'method': {
                                 'type': 'string',
-                                'example': request_params.get('method', ''),
+                                'example': method_name or '',
                                 'description': 'Method name'
                             },
-                            'params': {
+                            'params': (lambda: {
                                 'type': 'object',
                                 'properties': properties,
-                                'required': required_fields
-                            }
+                                **({'required': required_fields} if required_fields else {})
+                            })()
                         },
                         'required': ['jsonrpc', 'id', 'method', 'params']
                     }
@@ -727,28 +744,30 @@ class NovofonAPIParser:
             for error in error_info['errors']:
                 if 'code' in error:
                     error_code = str(error['code'])
-                    responses[error_code] = {
-                        'description': error.get('description', f'Error {error_code}'),
-                        'content': {
-                            'application/json': {
-                                'schema': {
-                                    'type': 'object',
-                                    'properties': {
-                                        'jsonrpc': {'type': 'string'},
-                                        'id': {'type': 'number'},
-                                        'error': {
-                                            'type': 'object',
-                                            'properties': {
-                                                'code': {'type': 'number', 'example': int(error['code']) if error['code'].isdigit() else None},
-                                                'message': {'type': 'string', 'example': error.get('description', '')},
-                                                'data': {'type': 'object'}
+                    # Validate that error code is a valid 3-digit HTTP status code
+                    if self._is_valid_http_status_code(error_code):
+                        responses[error_code] = {
+                            'description': error.get('description', f'Error {error_code}'),
+                            'content': {
+                                'application/json': {
+                                    'schema': {
+                                        'type': 'object',
+                                        'properties': {
+                                            'jsonrpc': {'type': 'string'},
+                                            'id': {'type': 'number'},
+                                            'error': {
+                                                'type': 'object',
+                                                'properties': {
+                                                    'code': {'type': 'number', 'example': int(error['code']) if error['code'].isdigit() else None},
+                                                    'message': {'type': 'string', 'example': error.get('description', '')},
+                                                    'data': {'type': 'object'}
+                                                }
                                             }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
         
         return responses
     
@@ -765,11 +784,16 @@ class NovofonAPIParser:
             if param_info['required']:
                 required_fields.append(param_name)
         
-        return {
+        schema = {
             'type': 'object',
-            'properties': properties,
-            'required': required_fields
+            'properties': properties
         }
+        
+        # Only include required fields if there are any
+        if required_fields:
+            schema['required'] = required_fields
+        
+        return schema
     
     def _generate_parameter_schema(self, param_info: Dict[str, Any]) -> Dict[str, Any]:
         """Generate parameter schema with comprehensive information."""
@@ -864,6 +888,15 @@ class NovofonAPIParser:
             return False
         except Exception as e:
             logger.error(f"Error saving OpenAPI spec to {filename}: {e}")
+            return False
+    
+    def _is_valid_http_status_code(self, status_code: str) -> bool:
+        """Validate that a status code is a valid 3-digit HTTP status code."""
+        try:
+            code = int(status_code)
+            # HTTP status codes range from 100 to 599
+            return 100 <= code <= 599
+        except (ValueError, TypeError):
             return False
     
     def _generate_example_for_format(self, format_spec: str) -> str:

@@ -221,15 +221,25 @@ class HTMLToMarkdownConverter:
         total_count = 0
         
         for html_file in input_dir.rglob('*.html'):
-            if html_file.name == 'index.html' and html_file.parent.name != input_dir.name:
-                # Skip index.html files in subdirectories
-                continue
-            
+            # Process all HTML files including index.html files in subdirectories
             total_count += 1
             
             # Create output path according to new structure: {api_type}/
             relative_path = html_file.relative_to(input_dir)
-            output_path = output_dir / api_type / relative_path.with_suffix('.md')
+            # Convert directory structure to flat dot-separated naming
+            # For files like data_api/index.html -> index.md
+            # For files like data_api/authentication/login_user/index.html -> authentication.login_user.md
+            # For files like data_api/report_new/transfer/get_column_transfer_reports_list/index.html -> report_new.transfer.get_column_transfer_reports_list.md
+            
+            if len(relative_path.parts) == 1:
+                # Single file in root (like index.html, 404.html)
+                output_path = output_dir / relative_path.with_suffix('.md')
+            else:
+                # File in subdirectory, convert path to dot-separated filename
+                # Remove the 'index.html' part and join with dots
+                path_parts = relative_path.parts[:-1]  # Remove 'index.html'
+                filename = '.'.join(path_parts) + '.md'
+                output_path = output_dir / filename
             
             if self.convert_file(html_file, output_path):
                 converted_count += 1
