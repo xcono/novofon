@@ -1,0 +1,250 @@
+info:
+  description: Call API
+  title: Novofon Calls API - login.user
+  version: 1.0.0
+openapi: 3.0.0
+paths:
+  /login/user:
+    post:
+      description: JSON-RPC 2.0 endpoint for login.user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                id:
+                  type: number
+                jsonrpc:
+                  example: '2.0'
+                  type: string
+                method:
+                  example: login.user
+                  type: string
+                params:
+                  properties:
+                    Access token has been blocked:
+                      description: Если постоянный токен заблокирован, то возвращается
+                        указанная ошибка
+                      type: '-32001'
+                    Access token has been expired:
+                      description: Применяется только к постоянному токену. Если время
+                        жизни постоянного токена истекло, то возвращается указанная
+                        ошибка
+                      type: '-32001'
+                    Access token is invalid:
+                      description: Указанная ошибка возвращается, если постоянный/временный
+                        токен не найден или истекло время жизни временного токена
+                      type: '-32001'
+                    Batch operations not supported:
+                      description: Групповые операции не поддерживаются (см. JSON-RPC
+                        2.0)
+                      type: '-32099'
+                    Call session not found:
+                      description: Если передали ID сессии, который неизвестен
+                      type: '-32602'
+                    Component {component_name} has been disabled:
+                      type: '-32008'
+                    Data supplied is of wrong type:
+                      description: К примеру, если ожидаем string а передали int
+                      type: '-32602'
+                    Internal error, contact the support service:
+                      description: В случае возникновения ошибки, необходимо обратиться
+                        в службу технической поддержки, передав запрос, который вызвал
+                        ошибку и время запроса.
+                      type: '-32603'
+                    Invalid JSON was received by the server.:
+                      description: Невалидный JSON
+                      type: '-32700'
+                    Invalid Request The JSON sent is not a valid Request object:
+                      description: Ошибки связанные с валидацией параметров запроса
+                        - id, jsonrpc
+                      type: '-32600'
+                    Invalid parameter value:
+                      description: Возвращается во всех случаях, если было передано
+                        некорректное значение параметра или переданное значение не
+                        соответствует требуемому формату ввода
+                      type: '-32602'
+                    Limit per {limit_type} has been exceeded. Value of current limit per {limit_type} is {limit_max_value}:
+                      description: Превышены установленные лимиты согласно тарифного
+                        правила (см. раздел Лимиты и ограничения)
+                      type: '-32029'
+                    Login or password is wrong:
+                      description: Некорректный логин или пароль
+                      type: '-32001'
+                    Notifications not supported:
+                      description: Уведомления не поддерживаются (см. JSON-RPC 2.0)
+                      type: '-32099'
+                    Permission denied:
+                      description: Нет прав на доступ к методу или API, или запрещено
+                        выполнять какое-либо действие
+                      type: '-32003'
+                    The method does not exist / is not available:
+                      description: Вызывается метод, который отсутствует в спецификации
+                        (см. раздел Список методов)
+                      type: '-32601'
+                    The required parameter has been missed:
+                      description: Обязательный параметр не передали
+                      type: '-32602'
+                    Unexpected method parameter(s):
+                      description: Если в params были переданы параметры, которые
+                        не предусмотрены JSON структурой метода
+                      type: '-32602'
+                    Your IP {ip} is not whitelisted:
+                      description: IP адрес, с которого идет запрос не находится в
+                        белом списке (см. личный кабинет "Аккаунт" -> "Call API" вкладка
+                        "IP адреса"
+                      type: '-32003'
+                    Your account has been disabled, contact the support service:
+                      description: Аккаунт заблокирован В случае возникновения ошибки,
+                        необходимо обратиться в службу технической поддержки, передав
+                        запрос, который вызвал ошибку и время запроса.
+                      type: '-32009'
+                    id:
+                      enum:
+                      - Уникальный идентификатор запроса к API. Не передается в уведомлениях.
+                        Фигурирует только в Статистика и отчеты параметр Идентификатор
+                        запроса
+                      type: string или number
+                    jsonrpc:
+                      description: '2.0'
+                      enum:
+                      - Номер спецификации JSON-RPC
+                      type: string
+                    method:
+                      enum:
+                      - Вызываемый метод (см. Список методов)
+                      type: string
+                    params:
+                      enum:
+                      - Содержит тело запроса к API. В зависимости от вызываемого
+                        метода тело запроса меняется.
+                      type: object
+                  required:
+                  - id
+                  - method
+                  - jsonrpc
+                  - params
+                  type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: number
+                  jsonrpc:
+                    example: '2.0'
+                    type: string
+                  result:
+                    properties:
+                      data:
+                        properties:
+                          Access token has been blocked:
+                            description: Если постоянный токен заблокирован, то возвращается
+                              указанная ошибка
+                            type: '-32001'
+                          Access token has been expired:
+                            description: Применяется только к постоянному токену.
+                              Если время жизни постоянного токена истекло, то возвращается
+                              указанная ошибка
+                            type: '-32001'
+                          Access token is invalid:
+                            description: Указанная ошибка возвращается, если постоянный/временный
+                              токен не найден или истекло время жизни временного токена
+                            type: '-32001'
+                          Batch operations not supported:
+                            description: Групповые операции не поддерживаются (см.
+                              JSON-RPC 2.0)
+                            type: '-32099'
+                          Call session not found:
+                            description: Если передали ID сессии, который неизвестен
+                            type: '-32602'
+                          Component {component_name} has been disabled:
+                            type: '-32008'
+                          Data supplied is of wrong type:
+                            description: К примеру, если ожидаем string а передали
+                              int
+                            type: '-32602'
+                          Internal error, contact the support service:
+                            description: В случае возникновения ошибки, необходимо
+                              обратиться в службу технической поддержки, передав запрос,
+                              который вызвал ошибку и время запроса.
+                            type: '-32603'
+                          Invalid JSON was received by the server.:
+                            description: Невалидный JSON
+                            type: '-32700'
+                          Invalid Request The JSON sent is not a valid Request object:
+                            description: Ошибки связанные с валидацией параметров
+                              запроса - id, jsonrpc
+                            type: '-32600'
+                          Invalid parameter value:
+                            description: Возвращается во всех случаях, если было передано
+                              некорректное значение параметра или переданное значение
+                              не соответствует требуемому формату ввода
+                            type: '-32602'
+                          Limit per {limit_type} has been exceeded. Value of current limit per {limit_type} is {limit_max_value}:
+                            description: Превышены установленные лимиты согласно тарифного
+                              правила (см. раздел Лимиты и ограничения)
+                            type: '-32029'
+                          Login or password is wrong:
+                            description: Некорректный логин или пароль
+                            type: '-32001'
+                          Notifications not supported:
+                            description: Уведомления не поддерживаются (см. JSON-RPC
+                              2.0)
+                            type: '-32099'
+                          Permission denied:
+                            description: Нет прав на доступ к методу или API, или
+                              запрещено выполнять какое-либо действие
+                            type: '-32003'
+                          The method does not exist / is not available:
+                            description: Вызывается метод, который отсутствует в спецификации
+                              (см. раздел Список методов)
+                            type: '-32601'
+                          The required parameter has been missed:
+                            description: Обязательный параметр не передали
+                            type: '-32602'
+                          Unexpected method parameter(s):
+                            description: Если в params были переданы параметры, которые
+                              не предусмотрены JSON структурой метода
+                            type: '-32602'
+                          Your IP {ip} is not whitelisted:
+                            description: IP адрес, с которого идет запрос не находится
+                              в белом списке (см. личный кабинет "Аккаунт" -> "Call
+                              API" вкладка "IP адреса"
+                            type: '-32003'
+                          Your account has been disabled, contact the support service:
+                            description: Аккаунт заблокирован В случае возникновения
+                              ошибки, необходимо обратиться в службу технической поддержки,
+                              передав запрос, который вызвал ошибку и время запроса.
+                            type: '-32009'
+                          id:
+                            type: string или number
+                          jsonrpc:
+                            description: '2.0'
+                            type: string
+                          method:
+                            type: string
+                          params:
+                            type: object
+                        required:
+                        - id
+                        - method
+                        - jsonrpc
+                        - params
+                        type: object
+                    type: object
+                type: object
+          description: Successful response
+      summary: login.user endpoint
+servers:
+- description: Novofon API Server
+  url: https://api.novofon.com
