@@ -1,0 +1,111 @@
+openapi: 3.0.0
+info:
+    title: Unhold call
+    version: 1.0.0
+    description: Снятие вызова с удержания
+paths:
+    /unhold.call:
+        post:
+            summary: Unhold call
+            description: |-
+                Снятие вызова с удержания
+
+                **Request Parameters:** 2
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: unhold.call
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        call_session_id:
+                                            type: number
+                                            description: Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+                                            example: 123
+                                    required:
+                                        - access_token
+                                        - call_session_id
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon
+x-errors:
+    errors:
+        - code: "-32004"
+          mnemonic: invalid_state
+          description: Метод может быть вызван только в состоянии hold (см. Диаграмма состояний звонка)
