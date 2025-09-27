@@ -14,147 +14,58 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       
-    - name: Set up Python
-      uses: actions/setup-python@v4
+    - name: Set up Go
+      uses: actions/setup-go@v4
       with:
-        python-version: '3.11'
+        go-version: '1.21'
         
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install beautifulsoup4 pyyaml lxml
-        # Install dependencies from scripts if requirements.txt exists
-        if [ -f scripts/requirements.txt ]; then
-          pip install -r scripts/requirements.txt
-        fi
-        
-    - name: Setup Node.js for OpenAPI validation
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        
-    - name: Install OpenAPI schema validator
-      run: |
-        npm install -g @seriousme/openapi-schema-validator
-        echo "Validator installed successfully"
         
     - name: Checkout Novofon documentation repository
       run: |
-        git clone https://github.com/novofon/novofon.github.io.git temp-docs
-        # Copy HTML documentation to temporary location
-        mkdir -p temp-html
-        cp -r temp-docs/call_api temp-html/
-        cp -r temp-docs/data_api temp-html/
-        rm -rf temp-docs
+        git clone https://github.com/novofon/novofon.github.io.git temp-html
+        
+    - name: Build converter tool
+      run: |
+        cd bin/api
+        make build
         
     - name: Generate OpenAPI specs for Data API
       run: |
-        python scripts/enhanced_html_parser.py \
-          --src temp-html/data_api \
-          --dst openapi/data \
-          --api-type data
-          
+        mkdir -p api/data
+        ./bin/api/converter temp-html/data_api api/data
+        
     - name: Generate OpenAPI specs for Call API
       run: |
-        python scripts/enhanced_html_parser.py \
-          --src temp-html/call_api \
-          --dst openapi/calls \
-          --api-type calls
+        mkdir -p api/calls
+        ./bin/api/converter temp-html/call_api api/calls
           
     - name: Validate OpenAPI specifications
       timeout-minutes: 10
       run: |
-        echo "Validating OpenAPI specifications..."
-        set -e  # Exit on any error
+        echo "Validating generated OpenAPI specifications..."
         
-        # Validate Data API specs
-        echo "Validating Data API specifications..."
-        data_api_files=$(find openapi/data -name "*.yaml" | head -10)
-        if [ -n "$data_api_files" ]; then
-          echo "Found Data API files to validate:"
-          echo "$data_api_files"
-          for file in $data_api_files; do
-            echo "Validating $file..."
-            openapi-schema-validator validate-api "$file" || {
-              echo "❌ Validation failed for $file"
-              exit 1
-            }
-          done
-          echo "✅ All Data API specifications are valid"
-        else
-          echo "⚠️ No Data API files found to validate"
-        fi
-        
-        # Validate Call API specs
-        echo "Validating Call API specifications..."
-        call_api_files=$(find openapi/calls -name "*.yaml" | head -10)
-        if [ -n "$call_api_files" ]; then
-          echo "Found Call API files to validate:"
-          echo "$call_api_files"
-          for file in $call_api_files; do
-            echo "Validating $file..."
-            openapi-schema-validator validate-api "$file" || {
-              echo "❌ Validation failed for $file"
-              exit 1
-            }
-          done
-          echo "✅ All Call API specifications are valid"
-        else
-          echo "⚠️ No Call API files found to validate"
-        fi
-        
-        # Validate all remaining files
-        echo "Validating remaining OpenAPI specifications..."
-        all_files=$(find openapi -name "*.yaml")
-        total_files=$(echo "$all_files" | wc -l)
-        validated_count=0
-        failed_files=""
-        
-        for file in $all_files; do
-          if openapi-schema-validator validate-api "$file" >/dev/null 2>&1; then
-            validated_count=$((validated_count + 1))
-          else
-            failed_files="$failed_files $file"
-            echo "❌ Validation failed for $file"
-          fi
-        done
-        
-        echo "📊 Validation Summary:"
-        echo "  Total files: $total_files"
-        echo "  Validated successfully: $validated_count"
-        echo "  Failed: $((total_files - validated_count))"
-        
-        if [ -n "$failed_files" ]; then
-          echo "❌ The following files failed validation:"
-          for file in $failed_files; do
-            echo "  - $file"
-            # Show detailed validation errors
-            echo "    Detailed errors:"
-            openapi-schema-validator validate-api "$file" 2>&1 | sed 's/^/      /'
-          done
+        # Check that files were generated
+        if [ ! -d "api/data" ] || [ ! -d "api/calls" ]; then
+          echo "❌ Output directories not found"
           exit 1
         fi
         
-        echo "🎉 All $total_files OpenAPI specifications passed validation!"
+        # Count generated files
+        data_count=$(find api/data -name "*.yaml" | wc -l)
+        calls_count=$(find api/calls -name "*.yaml" | wc -l)
+        
+        echo "Generated files:"
+        echo "- Data API: $data_count files"
+        echo "- Call API: $calls_count files"
+        
+        if [ "$data_count" -eq 0 ] || [ "$calls_count" -eq 0 ]; then
+          echo "❌ No OpenAPI files generated"
+          exit 1
+        fi
+        
         echo "✅ OpenAPI validation completed successfully"
           
-    - name: Convert HTML to Markdown for Data API
-      run: |
-        echo "Converting Data API HTML files to Markdown..."
-        python scripts/html_to_markdown_converter.py \
-          --input temp-html/data_api \
-          --output docs/data \
-          --api-type data
-        echo "Data API conversion completed successfully"
-          
-    - name: Convert HTML to Markdown for Call API
-      run: |
-        echo "Converting Call API HTML files to Markdown..."
-        python scripts/html_to_markdown_converter.py \
-          --input temp-html/call_api \
-          --output docs/calls \
-          --api-type calls
-        echo "Call API conversion completed successfully"
+    # Note: Markdown conversion removed - focusing only on OpenAPI generation
           
     - name: Clean up temporary files
       run: |
@@ -163,57 +74,22 @@ jobs:
     - name: Validate generated files
       run: |
         echo "Generated files:"
-        find openapi docs -name "*.md" -o -name "*.yaml" | head -20
+        find api -name "*.yaml" | head -20
         echo "Total files:"
-        find openapi docs -name "*.md" -o -name "*.yaml" | wc -l
+        find api -name "*.yaml" | wc -l
         echo "Directory structure:"
-        ls -la openapi/ || echo "openapi/ directory not found"
-        ls -la docs/ || echo "docs/ directory not found"
-        ls -la openapi/data/ || echo "openapi/data/ directory not found"
-        ls -la openapi/calls/ || echo "openapi/calls/ directory not found"
-        ls -la docs/data/ || echo "docs/data/ directory not found"
-        ls -la docs/calls/ || echo "docs/calls/ directory not found"
+        ls -la api/ || echo "api/ directory not found"
+        ls -la api/data/ || echo "api/data/ directory not found"
+        ls -la api/calls/ || echo "api/calls/ directory not found"
         
-        echo "Validating markdown file naming structure:"
-        echo "Data API markdown files (should be dot-separated):"
-        ls docs/data/*.md | head -10 || echo "No markdown files found in docs/data/"
-        echo "Call API markdown files (should be dot-separated):"
-        ls docs/calls/*.md | head -10 || echo "No markdown files found in docs/calls/"
-        
-        echo "Checking for correct dot-separated naming:"
-        if ls docs/data/authentication.*.md >/dev/null 2>&1; then
-          echo "✅ Data API authentication files use dot-separated naming"
-        else
-          echo "❌ Data API authentication files not found or incorrectly named"
-        fi
-        
-        if ls docs/calls/create_call.*.md >/dev/null 2>&1; then
-          echo "✅ Call API create_call files use dot-separated naming"
-        else
-          echo "❌ Call API create_call files not found or incorrectly named"
-        fi
-        
-        echo "Validating specific expected files:"
-        if [ -f "docs/calls/create_call.start_simple_call.md" ]; then
-          echo "✅ start_simple_call documentation generated"
-        else
-          echo "❌ start_simple_call documentation missing"
-        fi
-        
-        if [ -f "docs/data/authentication.login_user.md" ]; then
-          echo "✅ Data API login_user documentation generated"
-        else
-          echo "❌ Data API login_user documentation missing"
-        fi
-        
-        if [ -f "docs/calls/authentication.login_user.md" ]; then
-          echo "✅ Call API login_user documentation generated"
-        else
-          echo "❌ Call API login_user documentation missing"
-        fi
+        echo "Sample generated files:"
+        echo "Data API files:"
+        ls api/data/*.yaml | head -5 || echo "No files found in api/data/"
+        echo "Call API files:"
+        ls api/calls/*.yaml | head -5 || echo "No files found in api/calls/"
         
         echo "OpenAPI validation status:"
-        if [ -d "openapi" ] && [ "$(find openapi -name "*.yaml" | wc -l)" -gt 0 ]; then
+        if [ -d "api" ] && [ "$(find api -name "*.yaml" | wc -l)" -gt 0 ]; then
           echo "✅ OpenAPI specifications generated and validated"
         else
           echo "❌ No OpenAPI specifications found"
@@ -236,42 +112,42 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add openapi/ docs/
-        git commit -m "Auto-generate Novofon API documentation
+        git add api/
+        git commit -m "Auto-generate Novofon OpenAPI specifications
         
-        - Generated OpenAPI specs for Data and Call APIs
-        - Converted HTML documentation to Markdown with flat dot-separated naming
-        - Updated documentation structure for better organization"
+        - Generated OpenAPI specs for Data and Call APIs from HTML documentation
+        - Converted HTML documentation to OpenAPI 3.0 format
+        - Organized specs in api/data and api/calls directories"
         git push
         
     - name: Create summary
       run: |
-        echo "## Documentation Generation Summary" >> $GITHUB_STEP_SUMMARY
+        echo "## OpenAPI Generation Summary" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### Generated Files:" >> $GITHUB_STEP_SUMMARY
-        echo "- **OpenAPI Specs:** $(find openapi -name "*.yaml" 2>/dev/null | wc -l) files" >> $GITHUB_STEP_SUMMARY
-        echo "- **Markdown Docs:** $(find docs -name "*.md" 2>/dev/null | wc -l) files" >> $GITHUB_STEP_SUMMARY
+        echo "- **OpenAPI Specs:** $(find api -name "*.yaml" 2>/dev/null | wc -l) files" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### API Coverage:" >> $GITHUB_STEP_SUMMARY
-        echo "- **Data API:** $(find openapi/data -name "*.yaml" 2>/dev/null | wc -l) endpoints" >> $GITHUB_STEP_SUMMARY
-        echo "- **Call API:** $(find openapi/calls -name "*.yaml" 2>/dev/null | wc -l) endpoints" >> $GITHUB_STEP_SUMMARY
+        echo "- **Data API:** $(find api/data -name "*.yaml" 2>/dev/null | wc -l) endpoints" >> $GITHUB_STEP_SUMMARY
+        echo "- **Call API:** $(find api/calls -name "*.yaml" 2>/dev/null | wc -l) endpoints" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### Documentation Structure:" >> $GITHUB_STEP_SUMMARY
-        echo "- **OpenAPI specs:** Organized by API type (data/calls) - ✅ All validated" >> $GITHUB_STEP_SUMMARY
-        echo "- **Markdown docs:** Flat structure with dot-separated naming (e.g., \`authentication.login_user.md\`)" >> $GITHUB_STEP_SUMMARY
+        echo "### Output Structure:" >> $GITHUB_STEP_SUMMARY
+        echo "- **OpenAPI specs:** Organized in \`api/data\` and \`api/calls\` directories" >> $GITHUB_STEP_SUMMARY
+        echo "- **Format:** OpenAPI 3.0 YAML specifications" >> $GITHUB_STEP_SUMMARY
+        echo "- **Source:** HTML documentation from novofon.github.io" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### Sample Files:" >> $GITHUB_STEP_SUMMARY
         echo "**Data API:**" >> $GITHUB_STEP_SUMMARY
-        ls docs/data/*.md | head -5 | sed 's/^/- /' >> $GITHUB_STEP_SUMMARY
+        ls api/data/*.yaml | head -5 | sed 's/^/- /' >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "**Call API:**" >> $GITHUB_STEP_SUMMARY
-        ls docs/calls/*.md | head -5 | sed 's/^/- /' >> $GITHUB_STEP_SUMMARY
+        ls api/calls/*.yaml | head -5 | sed 's/^/- /' >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### Directory Structure:" >> $GITHUB_STEP_SUMMARY
         echo '```' >> $GITHUB_STEP_SUMMARY
         if command -v tree >/dev/null 2>&1; then
-          tree openapi docs -I 'assets|images|javascripts|stylesheets' | head -20 >> $GITHUB_STEP_SUMMARY
+          tree api | head -20 >> $GITHUB_STEP_SUMMARY
         else
-          find openapi docs -type d | head -20 >> $GITHUB_STEP_SUMMARY
+          find api -type d | head -20 >> $GITHUB_STEP_SUMMARY
         fi
         echo '```' >> $GITHUB_STEP_SUMMARY

@@ -1,0 +1,687 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.4">
+    
+    
+      
+        <title>Start simple call - Call API</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.f7f47774.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+    
+    
+      
+
+
+    
+    
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Call API" class="md-header__button md-logo" aria-label="Call API" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Call API
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Start simple call
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Call API" class="md-nav__button md-logo" aria-label="Call API" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Call API
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Call API
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    Простой звонок
+  </a>
+  
+    <nav class="md-nav" aria-label="Простой звонок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    Параметры запроса
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    Параметры ответа
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    Пример запроса
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    Пример ответа
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    Список возвращаемых ошибок
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>Start simple call</h1>
+                
+                <h3 id="_1">Простой звонок</h3>
+<table>
+    <tbody>
+        <tr>
+            <th>Метод</th>
+            <th><code>start.simple_call</code></th>
+        </tr>
+        <tr>
+            <td>Версия API</td>
+            <td>v4.0</td>
+        </tr>
+        <tr>
+            <td>Описание</td>
+            <td>Звонок на любые номера кроме собственных виртуальных. Это не звонок сотрудника на любой номер.</td>
+        </tr>
+        <tr>
+            <td colspan="2"><a href="../../#_14">Вернуться к списку методов</a></td>
+        </tr>
+    </tbody>
+</table>
+
+<h4 id="_2">Параметры запроса</h4>
+<table>
+    <tbody>
+        <tr>
+            <th colspan="2">Название</th>
+            <th>Тип</th>
+            <th>Обязательный</th>
+            <th>Допустимые значения</th>
+            <th>Описание</th>
+        </tr>
+        <tr>
+            <td colspan="2">access_token</td>
+            <td>string</td>
+            <td>да</td>
+            <td></td>
+            <td>Ключ сессии аутентификации</td>
+        </tr>
+        <tr>
+            <td colspan="2">first_call</td>
+            <td>string</td>
+            <td>да</td>
+            <td>contact, operator</td>
+            <td>
+                <p>Определяет номер, на который нужно дозвониться в первую очередь:</p>
+                <ul>
+                    <li><code>operator</code> - оператор, которому будет доступно управление звонком через опции разговора;</li>
+                    <li><code>contact</code> - вызываемая сторона (обычно клиент);</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">switch_at_once</td>
+            <td>boolean</td>
+            <td>нет</td>
+            <td>true, false</td>
+            <td>
+                <p>Значение по умолчанию <code>false</code>.</p>
+                Если параметр <code>first_call</code> имеет значение <code>operator</code> и задан параметр <code>operator_message</code>, то звонок совершается оператору, оператор после поднятия трубки слушает сообщение до конца, потом совершается звонок на <code>contact</code> и если параметр <code>switch_at_once</code> имеет значение <code>true</code> и задана параметр <code>contact_message</code>, то для плеча <code>contact</code> проигрывание
+                <p></p>
+                сообщения будет прервано. Во время дозвона до <code>contact</code> <code>operator</code> слушает сообщение заданное в параметре <code>media_file_id</code>. Соответственно, если <code>switch_at_once</code> имеет значение <code>false</code> и задан параметр <code>contact_message</code>, то для плеча <code>contact</code> сообщение будет проиграно до конца.
+                Если параметр <code>first_call</code> имеет значение <code>contact</code> и задан параметр <code>contact_message</code>, то звонок совершается клиенту, клиент после поднятия трубки начинает слушать сообщение и в это же время совершается звонок на <code>operator</code> и если параметр <code>switch_at_once</code> имеет значение <code>true</code> и задан параметр <code>operator_message</code>, то после поднятия трубки на <code>operator</code> проигрывание сообщений будет прервано для <code>contact</code> и <code>operator</code>.Соответственно, если <code>switch_at_once</code> имеет значение <code>false</code>, то для плеча <code>contact</code> и <code>operator</code> сообщение будет проиграно до конца. Если у кого-то плеча проигрывание сообщения закончилось раньше, то он слушает промт, заданный в параметре <code>media_file_id</code>.
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">early_switching</td>
+            <td>boolean</td>
+            <td>нет</td>
+            <td>true, false</td>
+            <td>
+                <p>Значение по умолчанию <code>false</code>.</p>
+                <p>Если параметр имеет значение <code>true</code>, то сотрудник при дозвоне до абонента будет слышать то, что происходит в абонентской линии.</p>
+                <p>К примеру, оператор ждет дозвона до абонента, а абонент недоступен и у него сработала голосовая почта, то при активации параметра <code>early_switching</code> = <code>true</code>, оператор сможет услышать сообщение о голосовой почте абонента. Если параметр <code>early_switching</code> = <code>false</code>, то оператор будет слушать музыку, которая задана в параметре "media_file_id" </p>
+                <blockquote>Параметр может иметь значение <code>true</code> если только параметр <code>first_call</code> имеет значение <code>operator</code> и параметр <code>switch_at_once</code> имеет значение значение <code>true</code>. В противном случае будет ошибка "-32602 invalid_parameters_combination The combination of parameters is not permitted" (см. раздел коды ошибок). </blockquote>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">media_file_id</td>
+            <td>number</td>
+            <td>нет</td>
+            <td></td>
+            <td>
+                <p>Значение по умолчанию - системная мелодия "Музыка переадресации" (<code>dialing_music</code>).</p>
+                <p>Задаёт идентификатор звукового файла для музыки переадресации. Файл может быть как системным, так
+                    и пользовательским. Получить список системных или пользовательских файлов можно с помощью
+                    DATA API - Получение списка пользовательских файлов,
+                    Получение списка системных файлов.
+                </p>
+                <blockquote>Проигрывается всегда тому плечу, для которого не задан один из параметров <code>contact_message</code> или <code>operator_message</code></blockquote>
+                <p></p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">virtual_phone_number</td>
+            <td>string</td>
+            <td>да</td>
+            <td></td>
+            <td>
+                <p>Виртуальный номер, арендуемый клиентом. Формат номера должен соответствовать международному
+                    стандарту E.164 (например, <code>74993720692</code>). Всегда используется в качестве номера звонящего при звонке
+                    на номер, указанный в параметре <code>contact</code>. Используется в качестве номера звонящего при звонке на
+                    номер, указанный в параметре <code>operator</code>, если параметр <code>show_virtual_phone_number</code> имеет значение
+                    <code>true</code>.
+                    Виртуальные номера можно получить с помощью DATA API метода - Получение списка виртуальных номеров
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">virtual_phone_usage_rule</td>
+            <td>string</td>
+            <td>нет</td>
+            <td></td>
+            <td>
+                <p>
+                    Правило использования виртуального номера. Позволяет динамически менять виртуальный номер при звонке. Если подходящий номер,
+                    удовлетворяющий выбранному правилу, не найден, то будет использован номер, указанный в параметре <code>virtual_phone_number</code>.
+                    Допустимые значения параметра:
+                </p>
+                <ul>
+                    <li><code>fixed</code> - Фиксированный</li>
+                    <li><code>fixed_for_numa</code> - Фиксированный для абонента</li>
+                    <li><code>random</code> - Случайный</li>
+                    <li><code>regional_random</code> - Региональный случайный</li>
+                    <li><code>regional_fixed_for_numa</code> - Региональный фиксированный для абонента</li>
+                </ul>
+                <p>
+                    По умолчанию используется правило <code>Фиксированный</code>. Остальные правила доступны при подключённом компоненте
+                    <code>Автоматическое управление номерами</code>.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">show_virtual_phone_number</td>
+            <td>boolean</td>
+            <td>нет</td>
+            <td>true, false</td>
+            <td>
+                <p>Значение по умолчанию <code>true</code>.</p>
+                <p>Показывать ли виртуальный номер, заданный параметром <code>virtual_phone_number</code> в качестве номера звонящего абонента для оператора заданного в параметре <code>operator</code>.</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">contact</td>
+            <td>string</td>
+            <td>да</td>
+            <td></td>
+            <td>
+                <p>Номер абонента на который совершается вызов. Формат номера должен соответствовать
+                    международному стандарту E.164 (например, <code>79091234567</code>). В качестве номера может быть так же указан SIP номер сотрудника.
+                </p>
+                <blockquote>Внутренние номера сотрудников не поддерживаются.</blockquote>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">external_id</td>
+            <td>string</td>
+            <td>нет</td>
+            <td></td>
+            <td>Уникальный идентификатор, который может быть использован для связи события звонка с внешней системой.</td>
+        </tr>
+        <tr>
+            <td colspan="2">dtmf_string</td>
+            <td>string</td>
+            <td>нет</td>
+            <td>0-9, *, #</td>
+            <td>Задаёт DTMF, который будет отправлен абоненту, заданному в параметре <code>contact</code>. С
+                помощью символа <code>.</code> = '1 секунда' можно задать таймаут по истечению которого символ DTMF будет отправлен. Пример: <code>.12.1..4</code>, т.е через 1 секунду
+                будет отправлена цифра 12, далее через 1 секунду будет отправлена цифра 1 и через 2 секунды цифра 4.
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">direction</td>
+            <td>string</td>
+            <td>нет</td>
+            <td>in, out</td>
+            <td>Значение по умолчанию <code>in</code>. <br>
+                Определяет направление звонка <code>in</code> - Входящий звонок, <code>out</code> - Исходящий звонок.
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6" align="center">Оператор с которым будет соединён абонент из параметра <code>contact</code></td>
+        </tr>
+        <tr>
+            <td colspan="2">operator</td>
+            <td>string</td>
+            <td>да</td>
+            <td></td>
+            <td>
+                Номер оператора с которым будет соединен абонент из параметра <code>contact</code>. Оператору доступно управление звонком - опции разговора. Формат номера должен соответствовать международному стандарту E.164 (например, “79091234567”).
+                <blockquote>Не является сотрудником и в отчетах не будет фигурировать как сотрудник</blockquote>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">operator_confirmation</td>
+            <td>string</td>
+            <td>нет</td>
+            <td>0-9, *, #, any</td>
+            <td>
+               Получить подтверждение от оператора на готовность принять звонк. Если указать значение "any", то подтверждение готовности принять звонок будет по нажатию на любую клавишу.
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">contact_message</td>
+            <td>object</td>
+            <td>нет</td>
+            <td></td>
+            <td>
+                <p>Определяет параметры сообщения, которое необходимо проиграть абоненту заданному в параметре <code>contact</code>.</p>
+                <blockquote> После окончания проигрывания сообщения, будет проигрываться покругу сообщение из параметра <code>media_file_id</code></blockquote>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>type</td>
+            <td>string</td>
+            <td>да</td>
+            <td>media, tts</td>
+            <td>
+                <p>Определяет тип сообщения. <code>media</code> - файл или <code>tts</code> - текст для услуги синтеза речи Text-to-Speech.</p>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>value</td>
+            <td>string</td>
+            <td>да</td>
+            <td></td>
+            <td>
+                <p>Если поле <code>type</code> имеет значение <code>media</code>, то в качестве значения принимается идентификатор файла для
+                    проигрывания. Файл для проигрывания может быть системным или пользовательским. Идентификатор
+                    файла для проигрывания можно получить с помощью DATA API - Получение списка пользовательских файлов, Получение списка системных файлов
+                </p>
+                <p>Если поле <code>type</code> имеет значение <code>tts</code>, то в качестве значения принимается текст для синтезирования его в
+                    голосовое сообщение.
+                </p>
+                <blockquote> Длина TTS сообщения регулируется тарифным планом и установленным лимитом.</blockquote>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6" align="center">Сообщение для проигрывания абоненту, который задан в параметре <code>operator</code></td>
+        </tr>
+        <tr>
+            <td colspan="2">operator_message</td>
+            <td>object</td>
+            <td>нет</td>
+            <td></td>
+            <td>
+                <p>Определяет параметры сообщения, которое необходимо проиграть абоненту заданному в параметре <code>operator</code>.</p>
+                <blockquote> После окончания проигрывания сообщения, будет проигрываться покругу сообщение из параметра <code>media_file_id</code></blockquote>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>type</td>
+            <td>string</td>
+            <td>да</td>
+            <td>media, tts</td>
+            <td>
+                <p>Определяет тип сообщения. <code>media</code> - файл или <code>tts</code> - текст для услуги синтеза речи Text-to-Speech.</p>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>value</td>
+            <td>string</td>
+            <td>да</td>
+            <td></td>
+            <td>
+                <p>Если поле <code>type</code> имеет значение <code>media</code>, то в качестве значения принимается идентификатор файла для
+                    проигрывания. Файл для проигрывания может быть системным или пользовательским. Идентификатор
+                    файла для проигрывания можно получить с помощью DATA API - Получение списка пользовательских файлов, Получение списка системных файлов
+                </p>
+                <p>Если поле <code>type</code> имеет значение <code>tts</code>, то в качестве значения принимается текст для синтезирования его в
+                    голосовое сообщение.
+                </p>
+                <blockquote> Длина TTS сообщения регулируется тарифным планом и установленным лимитом.</blockquote>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h4 id="_3">Параметры ответа</h4>
+<table>
+<thead>
+<tr>
+<th>Название</th>
+<th>Тип</th>
+<th>Обязательный</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>call_session_id</td>
+<td>number</td>
+<td>да</td>
+<td>Уникальный идентификатор сессии звонка</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_4">Пример запроса</h4>
+<pre><code class="language-json">{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;method&quot;: &quot;start.simple_call&quot;,
+  &quot;id&quot;: &quot;req1&quot;,
+  &quot;params&quot;: {
+    &quot;access_token&quot;: &quot;2fRN4g217ca0b4224a67988aff3e584f91964a692045415f36fa66146f5a3c1ae1f6093d&quot;,
+    &quot;first_call&quot;: &quot;operator&quot;,
+    &quot;switch_at_once&quot;: true,
+    &quot;media_file_id&quot;: 2701,
+    &quot;show_virtual_phone_number&quot;: false,
+    &quot;virtual_phone_number&quot;: &quot;74993720692&quot;,
+    &quot;external_id&quot;: &quot;334otr01&quot;,
+    &quot;dtmf_string&quot;: &quot;.1.2.3&quot;,
+    &quot;direction&quot;: &quot;in&quot;,
+    &quot;contact&quot;: &quot;79260000000&quot;,
+    &quot;operator&quot;:&quot;79262444491&quot;,
+    &quot;contact_message&quot;: {
+      &quot;type&quot;: &quot;tts&quot;,
+      &quot;value&quot;: &quot;Привет&quot;
+    },
+    &quot;operator_message&quot;: {
+      &quot;type&quot;: &quot;media&quot;,
+      &quot;value&quot;: &quot;2561&quot;
+    }
+  }
+}
+</code></pre>
+<h4 id="_5">Пример ответа</h4>
+<pre><code class="language-json">{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;id&quot;: &quot;req1&quot;,
+  &quot;result&quot;: {
+    &quot;data&quot;: {
+      &quot;call_session_id&quot;: 237859081
+    }
+  }
+}
+</code></pre>
+<h4 id="_6">Список возвращаемых ошибок</h4>
+<table>
+<thead>
+<tr>
+<th>Текст ошибки</th>
+<th>Код ошибки</th>
+<th>Мнемоника</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The maximum length of Text-to-Speech message is {<code>tts_message_max_length</code>}. The length of your message is {<code>sent_tts_message_length</code>}</td>
+<td>-32602</td>
+<td><code>tts_text_exceeded</code></td>
+<td>Длина сообщения превысила допустимое ограничение, установленное тарифным планом</td>
+</tr>
+<tr>
+<td>The media file with id {<code>media_file_id</code>} not found</td>
+<td>-32602</td>
+<td><code>media_file_not_found</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Virtual phone number {<code>virtual_phone_number</code>} not found. It is not your virtual phone number.</td>
+<td>-32007</td>
+<td><code>virtual_phone_number_not_found</code></td>
+<td>Если используется виртуальный номер не принадлежащий клиенту</td>
+</tr>
+<tr>
+<td>Parameter <code>contact</code> can not contain own virtual phone number</td>
+<td>-32602</td>
+<td><code>own_virtual_phone_number_not_allowed</code></td>
+<td>Звонок на собственный виртуальный номер запрещён</td>
+</tr>
+<tr>
+<td>The contact {<code>contact</code>} has been found in the blacklist</td>
+<td>-32002</td>
+<td><code>contact_in_blacklist</code></td>
+<td></td>
+</tr>
+<tr>
+<td>The character encoding must be UTF-8</td>
+<td>-32602</td>
+<td><code>character_encoding_not_allowed</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>См. также раздел <a href="../..#_errors">"Список ошибок общих для всех методов"</a></p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.709b4209.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.febc23d1.min.js"></script>
+      
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+      
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+      
+        <script src="../../js/init.js"></script>
+      
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
+</html>

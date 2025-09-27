@@ -1,0 +1,241 @@
+# Go Project Rules
+
+# Following Rob Pike and Ken Thompson's philosophy of simplicity and clarity
+
+# Core Principles
+
+1. EXPLORATION OVER CONCLUSION
+
+- Never rush to conclusions
+- Keep exploring until a solution emerges naturally
+- Question every assumption and inference
+- Reference @schema.md for all database operations
+
+2. DEPTH OF REASONING
+
+- Break down complex thoughts into simple steps
+- Embrace uncertainty and revision
+- Express thoughts in natural conversation
+- Consider all system implications
+
+3. THINKING PROCESS
+
+- Show work-in-progress thinking
+- Acknowledge and explore alternatives
+- Frequently reassess and revise
+- Document key decisions
+
+# Code Organization
+
+- Follow standard Go project layout
+- Keep packages focused and cohesive
+- Use meaningful package names
+- Keep files under 500 lines
+- Group related functionality
+
+# Naming Conventions
+
+- Use MixedCaps or mixedCaps rather than underscores
+- Acronyms should be consistently cased (e.g., ServeHTTP, XMLHTTPRequest)
+- Interface names: single method interfaces end in -er (Reader, Writer)
+- Error variables: use Err prefix (ErrNotFound)
+
+# Error Handling
+
+- Always check errors
+- Use custom error types for domain-specific errors
+- Wrap errors with context using fmt.Errorf
+- Return errors rather than panic
+- Document error conditions
+
+# Database Schema (@schema.md)
+
+- Follow schema.md for all database operations
+- Respect field constraints (Unique, Optional, Nillable)
+- Use proper relations as defined in schema
+- Maintain data integrity across relations
+- Follow JSON struct tags for serialization
+
+# Testing
+
+- Write tests for all exported functions
+- Use table-driven tests
+- Test both success and failure cases
+- Keep tests simple and focused
+- Use subtests for complex test cases
+
+# Documentation
+
+- Document all exported types, functions, and methods
+- Use complete sentences in comments
+- Start package comments with "Package xyz"
+- Document error conditions
+- Include examples for complex functions
+
+# Performance
+
+- Use sync.Pool for frequently allocated objects
+- Pre-allocate slices when size is known
+- Use buffered channels when appropriate
+- Profile before optimizing
+- Use pprof for performance analysis
+
+# Concurrency
+
+- Use goroutines for concurrent operations
+- Prefer channels over mutexes
+- Keep goroutines short-lived
+- Use context for cancellation
+- Handle goroutine leaks
+
+# API Design
+
+- Keep interfaces small
+- Accept interfaces, return structs
+- Use functional options pattern
+- Version APIs explicitly
+- Document API changes
+
+# Security
+
+- Validate all input
+- Use prepared statements for SQL
+- Sanitize user input
+- Follow principle of least privilege
+- Use secure defaults
+
+# Logging
+
+- Use structured logging
+- Include context in log messages
+- Use appropriate log levels
+- Don't log sensitive information
+- Use log rotation
+
+# Dependencies
+
+- Minimize external dependencies
+- Pin dependency versions
+- Use go.mod for dependency management
+- Regular dependency updates
+- Audit dependencies for security
+
+# Code Review Guidelines
+
+- Review for correctness first
+- Check error handling
+- Verify test coverage
+- Look for security issues
+- Ensure documentation is complete
+
+# Schema-Specific Rules
+
+- Job: Handle status transitions carefully
+- Payload: Validate URL and path fields
+- Processor: Ensure provider compatibility
+- Project: Maintain unique constraints
+- Provider: Validate provider-specific data
+- Scheme: Follow JSON schema validation
+- Stage: Maintain stage ordering
+- Task: Handle task dependencies
+- TaskGroup: Manage group relationships
+
+# LLM Operation Guidelines
+
+# Core Operating Principles
+
+- Act as a senior Go architect with full task ownership
+- Take initiative in research and implementation
+- Resolve ambiguities through codebase investigation
+- Maintain systematic diagnostic approaches
+- Follow evidence-based problem solving
+
+# Research & Context
+
+- Always reference @schema.md first
+- Use tools to gather comprehensive context
+- Map system structure before making changes
+- Document key findings and decisions
+- Validate assumptions through code analysis
+
+# Implementation Strategy
+
+- Plan changes based on thorough research
+- Consider impact on all system components
+- Follow Go idioms and project patterns
+- Implement with security and performance in mind
+- Validate changes comprehensively
+
+# Problem Resolution
+
+- Use systematic diagnostic approach
+- Gather evidence before making conclusions
+- Consider broader system implications
+- Document root cause analysis
+- Verify fixes thoroughly
+
+# Communication
+
+- Provide clear, concise summaries
+- Document key decisions and rationale
+- Report validation results
+- Highlight potential improvements
+- Maintain professional dialogue
+
+# Best Practices
+
+- Use gofmt for formatting
+- Run golint and go vet
+- Use staticcheck for analysis
+- Follow Go style guide
+- Keep code reviewable
+
+# Remember
+
+- Simplicity is the ultimate sophistication
+- Clear is better than clever
+- Practical is better than perfect
+- Consistency is better than individual preference
+- Readability is paramount
+
+# LLM Guidelines
+
+# Context Awareness
+
+- Always reference @schema.md for database operations
+- Use @cursorrules for code style and best practices
+- Maintain awareness of project structure and dependencies
+- Consider existing patterns in the codebase
+- Respect established naming conventions
+
+# Code Generation
+
+- Generate idiomatic Go code following project standards
+- Include proper error handling and validation
+- Add appropriate comments and documentation
+- Consider performance implications
+- Follow schema constraints and relationships
+
+# Code Review
+
+- Verify schema compliance
+- Check for proper error handling
+- Ensure test coverage
+- Validate security considerations
+- Review documentation completeness
+
+# Best Practices
+
+- Use clear, descriptive variable names
+- Follow Go's error handling patterns
+- Implement proper logging
+- Consider concurrency implications
+- Maintain code readability
+
+# Remember
+
+- Always check schema.md for field constraints
+- Follow established patterns in the codebase
+- Prioritize clarity and maintainability
+- Consider edge cases and error conditions
+- Document design decisions
