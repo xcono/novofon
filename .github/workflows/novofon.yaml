@@ -84,7 +84,7 @@ jobs:
           echo "No files changed"
         fi
         
-    - name: Commit changes
+    - name: Commit and push changes
       if: steps.verify-changed-files.outputs.changed == 'true'
       run: |
         git config --local user.email "action@github.com"
@@ -95,13 +95,7 @@ jobs:
         - Generated OpenAPI specs for Data and Call APIs
         - Converted HTML documentation to Markdown
         - Updated documentation structure"
-        
-    - name: Push changes
-      if: steps.verify-changed-files.outputs.changed == 'true'
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: ${{ github.ref }}
+        git push
         
     - name: Create summary
       run: |
