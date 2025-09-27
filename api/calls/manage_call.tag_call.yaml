@@ -12,11 +12,11 @@ paths:
 
                 **Request Parameters:** 3
 
-                - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
-
                 - `tag_id` (number, required): Уникальный идентификатор тега, который можно получить с помощью DATA API метода - Получение списка тегов
 
                 - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
             requestBody:
                 required: true
                 content:
@@ -51,9 +51,9 @@ paths:
                                             description: Уникальный идентификатор тега, который можно получить с помощью DATA API метода - Получение списка тегов
                                             example: 123
                                     required:
+                                        - tag_id
                                         - access_token
                                         - call_session_id
-                                        - tag_id
                             required:
                                 - jsonrpc
                                 - id

@@ -2,12 +2,12 @@ openapi: 3.0.0
 info:
     title: Изменение  состояния отчета
     version: 1.0.0
-    description: Изменение  состояния отчета
+    description: Изменение состояния отчета
 paths:
     /set.report_state:
         post:
             summary: Изменение  состояния отчета
-            description: Изменение  состояния отчета
+            description: Изменение состояния отчета
             responses:
                 "200":
                     description: Successful response

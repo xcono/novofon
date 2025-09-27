@@ -8601,9 +8601,9 @@ paths:
                                                         example: 123
                                                         type: number
                                                 required:
-                                                    - expire_at
                                                     - app_id
                                                     - access_token
+                                                    - expire_at
                                                 type: object
                                             metadata:
                                                 description: Response metadata
@@ -8699,7 +8699,7 @@ paths:
                 - novofon
     /set.report_state:
         post:
-            description: Изменение  состояния отчета
+            description: Изменение состояния отчета
             responses:
                 "200":
                     content:
