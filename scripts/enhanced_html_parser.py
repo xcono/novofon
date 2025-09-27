@@ -377,9 +377,9 @@ class NovofonHTMLParser:
     
     def save_outputs(self, output_dir: Path):
         """Save generated OpenAPI specs and Markdown files"""
-        # Create output directories
-        openapi_dir = output_dir / "openapi_specs"
-        markdown_dir = output_dir / "docs" / "openapi"
+        # Create output directories according to new structure
+        openapi_dir = output_dir / "docs"  # OpenAPI specs go to docs/
+        markdown_dir = output_dir / "openai"  # Markdown goes to openai/
         
         openapi_dir.mkdir(parents=True, exist_ok=True)
         markdown_dir.mkdir(parents=True, exist_ok=True)
@@ -388,15 +388,22 @@ class NovofonHTMLParser:
         for key, endpoint in self.endpoints.items():
             api_type, method = key.split('.', 1)
             
+            # Create API-specific directories
+            api_openapi_dir = openapi_dir / api_type
+            api_markdown_dir = markdown_dir / api_type
+            
+            api_openapi_dir.mkdir(parents=True, exist_ok=True)
+            api_markdown_dir.mkdir(parents=True, exist_ok=True)
+            
             # Save OpenAPI spec
             spec = self.generate_openapi_spec(endpoint, api_type)
-            spec_file = openapi_dir / f"{method.replace('.', '_')}.yaml"
+            spec_file = api_openapi_dir / f"{method.replace('.', '_')}.yaml"
             with open(spec_file, 'w', encoding='utf-8') as f:
                 yaml.dump(spec, f, default_flow_style=False, allow_unicode=True)
             
             # Save Markdown
             md_content = self.generate_markdown(endpoint, api_type)
-            md_file = markdown_dir / f"{method.replace('.', '_')}.md"
+            md_file = api_markdown_dir / f"{method.replace('.', '_')}.md"
             with open(md_file, 'w', encoding='utf-8') as f:
                 f.write(md_content)
             

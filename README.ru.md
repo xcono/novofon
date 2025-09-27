@@ -16,7 +16,7 @@
 **Использование:**
 ```bash
 python scripts/enhanced_html_parser.py \
-  --input docs/novofon/data_api \
+  --input temp-html/data_api \
   --output . \
   --api-type data
 ```
@@ -33,8 +33,8 @@ python scripts/enhanced_html_parser.py \
 **Использование:**
 ```bash
 python scripts/html_to_markdown_converter.py \
-  --input docs/novofon/data_api \
-  --output docs \
+  --input temp-html/data_api \
+  --output . \
   --api-type data
 ```
 
@@ -51,13 +51,12 @@ Workflow `.github/workflows/novofon.yaml` автоматически:
 ## Структура выходных файлов
 
 ```
+openai/
+├── data/               # Markdown документация Data API
+└── calls/              # Markdown документация Call API
 docs/
-├── novofon/
-│   ├── data/           # Markdown документация Data API
-│   └── calls/          # Markdown документация Call API
-└── spec/
-    ├── data/           # OpenAPI спецификации Data API
-    └── calls/          # OpenAPI спецификации Call API
+├── data/               # OpenAPI спецификации Data API
+└── calls/              # OpenAPI спецификации Call API
 ```
 
 ## Установка зависимостей
@@ -71,14 +70,14 @@ pip install -r scripts/requirements.txt
 ```bash
 # Генерация OpenAPI specs
 python scripts/enhanced_html_parser.py \
-  --input docs/novofon/data_api \
+  --input temp-html/data_api \
   --output . \
   --api-type data
 
 # Конвертация в Markdown
 python scripts/html_to_markdown_converter.py \
-  --input docs/novofon/data_api \
-  --output docs \
+  --input temp-html/data_api \
+  --output . \
   --api-type data
 ```
 
