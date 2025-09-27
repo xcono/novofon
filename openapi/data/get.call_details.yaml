@@ -1,0 +1,321 @@
+openapi: 3.0.0
+info:
+  title: Детализация звонка
+  version: 1.0.0
+  description: Детализация звонка
+paths:
+  /get.call_details:
+    get:
+      summary: Детализация звонка
+      description: "Детализация звонка\n\n**Доступ:** Агент, Клиент\n\n**Параметры\
+        \ запроса:** 13\n\n- `access_token` (string) (обязательный): Ключ сессии аутентификации\n\
+        \n- `user_id` (number) (опциональный): Уникальный идентификатор пользователя\
+        \ клиента агента от имени которого делается запрос\n\n- `limit` (number) (опциональный):\
+        \ Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n-\
+        \ `offset` (number) (опциональный): Сдвиг, определяет с какого номера записи\
+        \ возвращать `\"limit\"` записей. По умолчанию \"0\". См. раздел \"Постраничный\
+        \ вывод\"\n\n- `report_id` (number) (обязательный): Уникальный идентификатор\
+        \ отчета пользователя. Для получения списка отчетов пользователей необходимо\
+        \ использовать метод \"get.reports_list\"\n\n- `entity_ids` (array) (обязательный):\
+        \ Уникальные идентификаторы Звонка\n\n- `date_from` (iso8601) (обязательный):\
+        \ Дата начала основной выборки(ограничение 366 дней)\n\n- `date_till` (iso8601)\
+        \ (обязательный): Дата окончания основной выборки\n\n- `fields` (array) (опциональный):\
+        \ Список идентификаторов пользовательских столбцов, разделенных запятой. Доступный\
+        \ список столбцов см.раздел \"Получение вложенности столбцов\" . Порядок влияет\
+        \ на ответ.\n\n- `filters` (array) (обязательный): Выражение, может содержать\
+        \ в себе как простые фильтры, так и дерево фильтров. Доступный список фильтров\
+        \ для отчета с их возможными значениями см.раздел \"Получение списка возможных\
+        \ условий фильтрации для отчета\" .\n\n- `field` (string) (опциональный):\
+        \ Поле сущности к которой будет применяться фильтрация (список заранее определён\
+        \ для метода)\n\n- `operator` (enum) (опциональный): Оператор фильтрации.\
+        \ Список всех операторов можно получить в разделе \"Операторы фильтрации\"\
+        \n\n- `value` (string) (опциональный): Значение для оператора фильтрации.\
+        \ Необязательное поле, если оно отсутствует, то считается пустота.\n\n**Параметры\
+        \ ответа:** 24\n\n- `communication_id` (number): \n\n- `call_start_date_time`\
+        \ (iso8601): да\n\n- `contact_phone_number` (string): да\n\n- `call_direction`\
+        \ (object): да\n\n- `call_status` (object): да\n\n- `call_type` (object):\
+        \ да\n\n- `virtual_phone_number` (string): да\n\n- `call_scenario` (string):\
+        \ да\n\n- `employees` (array): \n\n- `call_total_duration` (duration): да\n\
+        \n- `call_finish_reason` (object): да\n\n- `call_scenario_actions` (array):\
+        \ да\n\n- `call_records` (array): да\n\n- `communication_comment` (string):\
+        \ да\n\n- `coaches` (array): да\n\n- `prompters` (array): да\n\n- `call_events`\
+        \ (array): да\n\n- `contact_full_name` (string): да\n\n- `redirection_info`\
+        \ (string): да\n\n- `tags` (object): да\n\n- `communication_type` (string):\
+        \ \n\n- `items` (array): \n\n- `id` (number): \n\n- `name` (string): "
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    limit:
+                      type: number
+                      description: Количество возвращаемых записей. См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    offset:
+                      type: number
+                      description: Сдвиг, определяет с какого номера записи возвращать
+                        `"limit"` записей. По умолчанию "0". См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    report_id:
+                      type: number
+                      description: Уникальный идентификатор отчета пользователя. Для
+                        получения списка отчетов пользователей необходимо использовать
+                        метод "get.reports_list"
+                      example: 123
+                    entity_ids:
+                      type: array
+                      description: Уникальные идентификаторы Звонка
+                    date_from:
+                      type: string
+                      description: Дата начала основной выборки(ограничение 366 дней)
+                      enum:
+                      - YYYY-MM-DD hh:mm:ss
+                      example: YYYY-MM-DD hh:mm:ss
+                    date_till:
+                      type: string
+                      description: Дата окончания основной выборки
+                      enum:
+                      - YYYY-MM-DD hh:mm:ss
+                      example: YYYY-MM-DD hh:mm:ss
+                    fields:
+                      type: array
+                      description: Список идентификаторов пользовательских столбцов,
+                        разделенных запятой. Доступный список столбцов см.раздел "Получение
+                        вложенности столбцов" . Порядок влияет на ответ.
+                    filters:
+                      type: array
+                      description: Выражение, может содержать в себе как простые фильтры,
+                        так и дерево фильтров. Доступный список фильтров для отчета
+                        с их возможными значениями см.раздел "Получение списка возможных
+                        условий фильтрации для отчета" .
+                    field:
+                      type: string
+                      description: Поле сущности к которой будет применяться фильтрация
+                        (список заранее определён для метода)
+                      example: example_string
+                    operator:
+                      type: string
+                      description: Оператор фильтрации. Список всех операторов можно
+                        получить в разделе "Операторы фильтрации"
+                    value:
+                      type: string
+                      description: Значение для оператора фильтрации. Необязательное
+                        поле, если оно отсутствует, то считается пустота.
+                      example: example_string
+                  required:
+                  - access_token
+                  - report_id
+                  - entity_ids
+                  - date_from
+                  - date_till
+                  - filters
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          communication_id:
+                            type: number
+                            description: ''
+                            example: 123
+                          call_start_date_time:
+                            type: string
+                            description: да
+                            enum:
+                            - YYYY-MM-DD hh:mm:ss
+                            example: YYYY-MM-DD hh:mm:ss
+                            x-filtering: да
+                            x-sorting: да
+                          contact_phone_number:
+                            type: string
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          call_direction:
+                            type: object
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                          call_status:
+                            type: object
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                          call_type:
+                            type: object
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                          virtual_phone_number:
+                            type: string
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          call_scenario:
+                            type: string
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          employees:
+                            type: array
+                            description: ''
+                            x-filtering: да
+                          call_total_duration:
+                            type: string
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                          call_finish_reason:
+                            type: object
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                          call_scenario_actions:
+                            type: array
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                          call_records:
+                            type: array
+                            description: да
+                            x-filtering: да
+                          communication_comment:
+                            type: string
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          coaches:
+                            type: array
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                          prompters:
+                            type: array
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                          call_events:
+                            type: array
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                          contact_full_name:
+                            type: string
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          redirection_info:
+                            type: string
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          tags:
+                            type: object
+                            description: да
+                            x-filtering: да
+                          communication_type:
+                            type: string
+                            description: ''
+                            example: example_string
+                          items:
+                            type: array
+                            description: ''
+                          id:
+                            type: number
+                            description: ''
+                            example: 123
+                          name:
+                            type: string
+                            description: ''
+                            example: example_string
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом get"'
+    href: ../../..#_getErrors

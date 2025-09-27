@@ -1,0 +1,370 @@
+openapi: 3.0.0
+info:
+  title: Получение списка статусов
+  version: 1.0.0
+  description: Получение списка статусов
+paths:
+  /get.statuses:
+    get:
+      summary: Получение списка статусов
+      description: 'Получение списка статусов
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 8
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `limit` (number) (опциональный): Количество возвращаемых записей. См. раздел
+        "Постраничный вывод"
+
+
+        - `offset` (number) (опциональный): Сдвиг, определяет с какого номера записи
+        возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+
+
+        - `filter` (object) (опциональный): См. раздел "Критерии фильтрации"
+
+
+        - `fields` (array) (опциональный): См. раздел "Представление возвращаемых
+        данных"
+
+
+        - `sort` (array) (опциональный): См. раздел "Сортировка данных"
+
+
+        - `is_deleted` (boolean) (опциональный): Признак удаления статуса. По умолчанию
+        "false"
+
+
+        **Параметры ответа:** 14
+
+
+        - `id` (number): Уникальный идентификатор статуса
+
+
+        - `name` (string): Название статуса
+
+
+        - `mnemonic` (enum): Мнемоника статуса. Заполнен только для стандартных статусов
+
+
+        - `description` (string): Описание статуса
+
+
+        - `color` (string): Цвет иконки и других элементов интерфейса, относящихся
+        к статусу. Значение представляет собой HEX-код цвета
+
+
+        - `is_deleted` (boolean): Признак удаления статуса
+
+
+        - `in_external_allowed_call_directions` (array): Какие направления вызовов
+        разрешены для входящих внешних звонков in - входящие вызовы out - исходящие
+        вызовы
+
+
+        - `in_internal_allowed_call_directions` (array): Какие направления вызовов
+        разрешены для входящих внутренних звонков in - входящие вызовы out - исходящие
+        вызовы
+
+
+        - `out_external_allowed_call_directions` (array): Какие направления вызовов
+        разрешены для исходящих внешних звонков in - входящие вызовы out - исходящие
+        вызовы
+
+
+        - `out_internal_allowed_call_directions` (array): Какие направления вызовов
+        разрешены для исходящих внутренних звонков in - входящие вызовы out - исходящие
+        вызовы
+
+
+        - `allowed_phone_protocols` (array): Типы номеров, разрешенные для звонков
+
+
+        - `is_select_allowed` (boolean): Признак "Возможность выбора статуса"
+
+
+        - `is_worktime` (boolean): Признак "Рабочее время"
+
+
+        - `is_auto_out_calls_ready` (boolean): Признак "Готов к исходящему обзвону"'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    limit:
+                      type: number
+                      description: Количество возвращаемых записей. См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    offset:
+                      type: number
+                      description: Сдвиг, определяет с какого номера записи возвращать
+                        "limit" записей. По умолчанию "0". См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    filter:
+                      type: object
+                      description: См. раздел "Критерии фильтрации"
+                    fields:
+                      type: array
+                      description: См. раздел "Представление возвращаемых данных"
+                    sort:
+                      type: array
+                      description: См. раздел "Сортировка данных"
+                    is_deleted:
+                      type: boolean
+                      description: Признак удаления статуса. По умолчанию "false"
+                      example: true
+                  required:
+                  - access_token
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                            description: Уникальный идентификатор статуса
+                            x-filtering: да
+                            example: 123
+                          name:
+                            type: string
+                            description: Название статуса
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          mnemonic:
+                            type: string
+                            description: Мнемоника статуса. Заполнен только для стандартных
+                              статусов
+                            enum:
+                            - 'available - Доступен
+
+                              break - Перерыв
+
+                              do_not_disturb - Не беспокоить
+
+                              not_at_workplace - Нет на месте
+
+                              not_at_work - Нет на работе
+
+                              auto_out_call - Исходящий обзвон
+
+                              unknown - Неизвестно'
+                            example: 'available - Доступен
+
+                              break - Перерыв
+
+                              do_not_disturb - Не беспокоить
+
+                              not_at_workplace - Нет на месте
+
+                              not_at_work - Нет на работе
+
+                              auto_out_call - Исходящий обзвон
+
+                              unknown - Неизвестно'
+                            x-filtering: да
+                          description:
+                            type: string
+                            description: Описание статуса
+                            x-sorting: да
+                            example: example_string
+                          color:
+                            type: string
+                            description: Цвет иконки и других элементов интерфейса,
+                              относящихся к статусу. Значение представляет собой HEX-код
+                              цвета
+                            example: example_string
+                          is_deleted:
+                            type: boolean
+                            description: Признак удаления статуса
+                            enum:
+                            - 'true'
+                            - 'false'
+                            example: 'true'
+                            x-sorting: да
+                          in_external_allowed_call_directions:
+                            type: array
+                            description: Какие направления вызовов разрешены для входящих
+                              внешних звонков in - входящие вызовы out - исходящие
+                              вызовы
+                            enum:
+                            - 'in
+
+                              out'
+                            example: 'in
+
+                              out'
+                          in_internal_allowed_call_directions:
+                            type: array
+                            description: Какие направления вызовов разрешены для входящих
+                              внутренних звонков in - входящие вызовы out - исходящие
+                              вызовы
+                            enum:
+                            - 'in
+
+                              out'
+                            example: 'in
+
+                              out'
+                          out_external_allowed_call_directions:
+                            type: array
+                            description: Какие направления вызовов разрешены для исходящих
+                              внешних звонков in - входящие вызовы out - исходящие
+                              вызовы
+                            enum:
+                            - 'in
+
+                              out'
+                            example: 'in
+
+                              out'
+                          out_internal_allowed_call_directions:
+                            type: array
+                            description: Какие направления вызовов разрешены для исходящих
+                              внутренних звонков in - входящие вызовы out - исходящие
+                              вызовы
+                            enum:
+                            - 'in
+
+                              out'
+                            example: 'in
+
+                              out'
+                          allowed_phone_protocols:
+                            type: array
+                            description: Типы номеров, разрешенные для звонков
+                            enum:
+                            - 'PSTN
+
+                              SIP
+
+                              SIP_TRUNK
+
+                              FMC'
+                            example: 'PSTN
+
+                              SIP
+
+                              SIP_TRUNK
+
+                              FMC'
+                          is_select_allowed:
+                            type: boolean
+                            description: Признак "Возможность выбора статуса"
+                            enum:
+                            - 'true'
+                            - 'false'
+                            example: 'true'
+                            x-sorting: да
+                          is_worktime:
+                            type: boolean
+                            description: Признак "Рабочее время"
+                            enum:
+                            - 'true'
+                            - 'false'
+                            example: 'true'
+                            x-sorting: да
+                          is_auto_out_calls_ready:
+                            type: boolean
+                            description: Признак "Готов к исходящему обзвону"
+                            enum:
+                            - 'true'
+                            - 'false'
+                            example: 'true'
+                            x-sorting: да
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом get"'
+    href: ../..#_getErrors

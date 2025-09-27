@@ -1,0 +1,280 @@
+openapi: 3.0.0
+info:
+  title: Получение списка групп сотрудников
+  version: 1.0.0
+  description: Получение списка групп сотрудников
+paths:
+  /get.group_employees:
+    get:
+      summary: Получение списка групп сотрудников
+      description: 'Получение списка групп сотрудников
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 7
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `limit` (number) (опциональный): Количество возвращаемых записей. См. раздел
+        "Постраничный вывод"
+
+
+        - `offset` (number) (опциональный): Сдвиг, определяет с какого номера записи
+        возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+
+
+        - `filter` (object) (опциональный): См. раздел "Критерии фильтрации"
+
+
+        - `fields` (array) (опциональный): См. раздел "Представление возвращаемых
+        данных"
+
+
+        - `sort` (array) (опциональный): См. раздел "Сортировка данных"
+
+
+        **Параметры ответа:** 12
+
+
+        - `id` (number): Уникальный идентификатор группы
+
+
+        - `name` (string): Название группы
+
+
+        - `members` (array): Список уникальных идентификаторов сотрудников, которые
+        состоят в группе
+
+
+        - `employee_id` (number): Уникальный идентификатор сотрудника
+
+
+        - `employee_full_name` (string): Ф.И.О. сотрудника
+
+
+        - `phone_numbers` (array): Список городских, мобильных и sip номеров сотрудников,
+        которые входят в группу, с указанием их доступности и приоритетом обзвона.
+        Приоритет обзвона номеров определяется положением номера в списке. Обзвон
+        указанного списка номеров в группе возможен по внутреннему номеру группы (см.
+        параметр "group_phone_number"). Для изменения приоритета и доступности номера
+        в группе см. метод "update.group_employees_numbers"
+
+
+        - `employee_phone_number` (string): Номер телефона сотрудника
+
+
+        - `employee_phone_number_id` (number): Уникальный идентификатор номера сотрудника
+        в группе
+
+
+        - `available` (boolean): Доступность номера в группе
+
+
+        - `group_phone_number` (string): Внутренний номер группы
+
+
+        - `queue_enabled` (boolean): Значение по умолчанию "false". В случае, если
+        все номера, указанные для этой группы сотрудников, заняты, то звонящий абонент
+        встанет в очередь на повторный дозвон до телефонов в списке и будет ждать
+        первый освободившийся номер.
+
+
+        - `channels_count` (number): Количество одновременных линий при обзвоне'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    limit:
+                      type: number
+                      description: Количество возвращаемых записей. См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    offset:
+                      type: number
+                      description: Сдвиг, определяет с какого номера записи возвращать
+                        "limit" записей. По умолчанию "0". См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    filter:
+                      type: object
+                      description: См. раздел "Критерии фильтрации"
+                    fields:
+                      type: array
+                      description: См. раздел "Представление возвращаемых данных"
+                    sort:
+                      type: array
+                      description: См. раздел "Сортировка данных"
+                  required:
+                  - access_token
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                            description: Уникальный идентификатор группы
+                            x-filtering: да
+                            example: 123
+                          name:
+                            type: string
+                            description: Название группы
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          members:
+                            type: array
+                            description: Список уникальных идентификаторов сотрудников,
+                              которые состоят в группе
+                          employee_id:
+                            type: number
+                            description: Уникальный идентификатор сотрудника
+                            example: 123
+                          employee_full_name:
+                            type: string
+                            description: Ф.И.О. сотрудника
+                            example: example_string
+                          phone_numbers:
+                            type: array
+                            description: Список городских, мобильных и sip номеров
+                              сотрудников, которые входят в группу, с указанием их
+                              доступности и приоритетом обзвона. Приоритет обзвона
+                              номеров определяется положением номера в списке. Обзвон
+                              указанного списка номеров в группе возможен по внутреннему
+                              номеру группы (см. параметр "group_phone_number"). Для
+                              изменения приоритета и доступности номера в группе см.
+                              метод "update.group_employees_numbers"
+                            x-filtering: да
+                          employee_phone_number:
+                            type: string
+                            description: Номер телефона сотрудника
+                            example: example_string
+                          employee_phone_number_id:
+                            type: number
+                            description: Уникальный идентификатор номера сотрудника
+                              в группе
+                            example: 123
+                          available:
+                            type: boolean
+                            description: Доступность номера в группе
+                            example: true
+                          group_phone_number:
+                            type: string
+                            description: Внутренний номер группы
+                            enum:
+                            - 'Максимальная
+
+                              длина 5'
+                            example: 'Максимальная
+
+                              длина 5'
+                            x-filtering: да
+                            x-sorting: да
+                          queue_enabled:
+                            type: boolean
+                            description: Значение по умолчанию "false". В случае,
+                              если все номера, указанные для этой группы сотрудников,
+                              заняты, то звонящий абонент встанет в очередь на повторный
+                              дозвон до телефонов в списке и будет ждать первый освободившийся
+                              номер.
+                            x-filtering: да
+                            example: true
+                          channels_count:
+                            type: number
+                            description: Количество одновременных линий при обзвоне
+                            enum:
+                            - От 1 до 199
+                            example: От 1 до 199
+                            x-filtering: да
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом get"'
+    href: ../..#_getErrors

@@ -1,0 +1,212 @@
+openapi: 3.0.0
+info:
+  title: Получение вложенности измерений
+  version: 1.0.0
+  description: Получение вложенности измерений
+paths:
+  /getobj.dimensions_tree:
+    post:
+      summary: Получение вложенности измерений
+      description: 'Получение вложенности измерений
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 3
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `report_type` (enum) (обязательный): Тип отчета пользователя. В данный момент
+        работает только для типа отчетов call_summary_uis. Для получения списка отчетов
+        пользователей необходимо использовать метод "get.reports_list"
+
+
+        **Параметры ответа:** 11
+
+
+        - `dimensions_groups` (array): Список групп измерений
+
+
+        - `id` (enum): Мнемоника измерения
+
+
+        - `name` (string): Название измерения
+
+
+        - `description` (string): Описание измерения. Отображается в подсказке
+
+
+        - `parent_group_id` (number): Идентификатор группы измерений в вложении которой
+        находится данная группа измерений
+
+
+        - `sort` (number): Сквозной идентификатор, используемый для сортировки в дереве
+        измерений.
+
+
+        - `dimensions` (array): Список измерений
+
+
+        - `group_id` (number): Идентификатор группы измерений в вложении которой находится
+        данное измерение
+
+
+        - `data_type` (enum): Формат данных
+
+
+        - `is_custom` (boolean): Является ли измерение пользовательским
+
+
+        - `is_entity_separated` (boolean): Является ли пользовательское измерение
+        расширенным'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    report_type:
+                      type: string
+                      description: Тип отчета пользователя. В данный момент работает
+                        только для типа отчетов call_summary_uis. Для получения списка
+                        отчетов пользователей необходимо использовать метод "get.reports_list"
+                  required:
+                  - access_token
+                  - report_type
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          dimensions_groups:
+                            type: array
+                            description: Список групп измерений
+                          id:
+                            type: string
+                            description: Мнемоника измерения
+                          name:
+                            type: string
+                            description: Название измерения
+                            example: example_string
+                          description:
+                            type: string
+                            description: Описание измерения. Отображается в подсказке
+                            example: example_string
+                          parent_group_id:
+                            type: number
+                            description: Идентификатор группы измерений в вложении
+                              которой находится данная группа измерений
+                            example: 123
+                          sort:
+                            type: number
+                            description: Сквозной идентификатор, используемый для
+                              сортировки в дереве измерений.
+                            example: 123
+                          dimensions:
+                            type: array
+                            description: Список измерений
+                          group_id:
+                            type: number
+                            description: Идентификатор группы измерений в вложении
+                              которой находится данное измерение
+                            example: 123
+                          data_type:
+                            type: string
+                            description: Формат данных
+                          is_custom:
+                            type: boolean
+                            description: Является ли измерение пользовательским
+                            example: true
+                          is_entity_separated:
+                            type: boolean
+                            description: Является ли пользовательское измерение расширенным
+                            example: true
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом getobj"'
+    href: ../../..#_getErrors

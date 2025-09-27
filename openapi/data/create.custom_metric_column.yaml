@@ -1,0 +1,240 @@
+openapi: 3.0.0
+info:
+  title: Создание пользовательского столбца на основе метрики
+  version: 1.0.0
+  description: Создание пользовательского столбца на основе метрики
+paths:
+  /create.custom_metric_column:
+    post:
+      summary: Создание пользовательского столбца на основе метрики
+      description: 'Создание пользовательского столбца на основе метрики
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 15
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос Для получения списка пользователей
+        клиента необходимо использовать метод ["get.customer_users"](../Partners.md#get_customer_user)
+
+
+        - `report_type` (enum) (обязательный): Тип отчета пользователя. Для получения
+        списка отчетов пользователей необходимо использовать метод ["get.reports_list"](../get_reports_list)
+
+
+        - `name` (string) (обязательный): Название столбца
+
+
+        - `description` (string) (опциональный): Описание столбца
+
+
+        - `metric` (object) (опциональный): Метрика используемая в столбце.
+
+
+        - `id` (enum) (обязательный): Уникальная мнемоника метрики. Для получения
+        списка метрик необходимо использовать метод ["get.metrics"](../get_metrics)
+
+
+        - `aggregate` (enum) (обязательный): Используемый агрегат для метрики. Для
+        получения списка доступных агрегатов необходимо использовать метод ["get.metrics"](../get_metrics)
+
+
+        - `has_percentage` (boolean) (опциональный): Используется ли расчет доли.
+        Если не указать, будет подставлено false
+
+
+        - `multichannel_model` (enum) (опциональный): Используемый способ мультиканального
+        анализа. Для получения списка способов мультиканального анализа необходимо
+        использовать метод ["get.metrics"](../get_metrics)
+
+
+        - `filter` (object) (опциональный): Условия фильтрации накладываемые на метрику.
+        Для получения списка доступных условия фильтрации см. раздел ["Получение списка
+        доступных условий фильтрации для метрики"](../get_metric_filters)
+
+
+        - `filters` (array) (обязательный): Выражение, может содержать в себе как
+        простые фильтры, так и дерево фильтров
+
+
+        - `field` (string) (опциональный): Поле сущности к которой будет применяться
+        фильтрация (список заранее определён для метода
+
+
+        - `operator` (enum) (опциональный): Оператор фильтрации. Список всех операторов
+        можно получить в разделе ["Операторы фильтрации"](../index.md#_filterOperators)
+
+
+        - `value` (string) (опциональный): Значение для оператора фильтрации. Необязательное
+        поле, если оно отсутствует, то считается пустота.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос Для получения списка пользователей
+                        клиента необходимо использовать метод ["get.customer_users"](../Partners.md#get_customer_user)
+                      example: 123
+                    report_type:
+                      type: string
+                      description: Тип отчета пользователя. Для получения списка отчетов
+                        пользователей необходимо использовать метод ["get.reports_list"](../get_reports_list)
+                      enum:
+                      - ad_analytics
+                      - deals_analytics
+                      - chats
+                      example: ad_analytics
+                    name:
+                      type: string
+                      description: Название столбца
+                      example: example_string
+                    description:
+                      type: string
+                      description: Описание столбца
+                      example: example_string
+                    metric:
+                      type: object
+                      description: Метрика используемая в столбце.
+                    id:
+                      type: string
+                      description: Уникальная мнемоника метрики. Для получения списка
+                        метрик необходимо использовать метод ["get.metrics"](../get_metrics)
+                    aggregate:
+                      type: string
+                      description: Используемый агрегат для метрики. Для получения
+                        списка доступных агрегатов необходимо использовать метод ["get.metrics"](../get_metrics)
+                    has_percentage:
+                      type: boolean
+                      description: Используется ли расчет доли. Если не указать, будет
+                        подставлено false
+                      example: true
+                    multichannel_model:
+                      type: string
+                      description: Используемый способ мультиканального анализа. Для
+                        получения списка способов мультиканального анализа необходимо
+                        использовать метод ["get.metrics"](../get_metrics)
+                    filter:
+                      type: object
+                      description: Условия фильтрации накладываемые на метрику. Для
+                        получения списка доступных условия фильтрации см. раздел ["Получение
+                        списка доступных условий фильтрации для метрики"](../get_metric_filters)
+                      enum:
+                      - Допустимо использовать не более 2 уровней вложенности. Смотри
+                        примеры ниже
+                      example: Допустимо использовать не более 2 уровней вложенности.
+                        Смотри примеры ниже
+                    filters:
+                      type: array
+                      description: Выражение, может содержать в себе как простые фильтры,
+                        так и дерево фильтров
+                    field:
+                      type: string
+                      description: Поле сущности к которой будет применяться фильтрация
+                        (список заранее определён для метода
+                      example: example_string
+                    operator:
+                      type: string
+                      description: Оператор фильтрации. Список всех операторов можно
+                        получить в разделе ["Операторы фильтрации"](../index.md#_filterOperators)
+                    value:
+                      type: string
+                      description: Значение для оператора фильтрации. Необязательное
+                        поле, если оно отсутствует, то считается пустота.
+                      example: example_string
+                  required:
+                  - access_token
+                  - report_type
+                  - name
+                  - id
+                  - aggregate
+                  - filters
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом create"'
+    href: ../index.md#_changeErrors

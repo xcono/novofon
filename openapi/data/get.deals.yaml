@@ -1,0 +1,449 @@
+openapi: 3.0.0
+info:
+  title: Получение списка всех сделок
+  version: 1.0.0
+  description: Получение списка всех сделок
+paths:
+  /get.deals:
+    get:
+      summary: Получение списка всех сделок
+      description: "Получение списка всех сделок\n\n**Доступ:** Агент, Клиент\n\n\
+        **Параметры запроса:** 12\n\n- `access_token` (string) (обязательный): Ключ\
+        \ сессии аутентификации\n\n- `user_id` (number) (опциональный): Уникальный\
+        \ идентификатор пользователя клиента агента от имени которого делается запрос\n\
+        \n- `limit` (number) (опциональный): Количество возвращаемых записей. См.\
+        \ раздел \"Постраничный вывод\"\n\n- `offset` (number) (опциональный): Сдвиг,\
+        \ определяет с какого номера записи возвращать `\"limit\"` записей. По умолчанию\
+        \ \"0\". См. раздел \"Постраничный вывод\"\n\n- `report_id` (number) (обязательный):\
+        \ Уникальный идентификатор отчета пользователя. Для получения списка отчетов\
+        \ пользователей необходимо использовать метод \"get.reports_list\"\n\n- `date_from`\
+        \ (iso8601) (обязательный): Дата начала основной выборки(ограничение 366 дней)\n\
+        \n- `date_till` (iso8601) (обязательный): Дата окончания основной выборки\n\
+        \n- `fields` (array) (опциональный): Список идентификаторов пользовательских\
+        \ столбцов, разделенных запятой. Доступный список столбцов см.раздел \"Получение\
+        \ вложенности столбцов\" . Порядок влияет на ответ.\n\n- `filters` (array)\
+        \ (обязательный): Выражение, может содержать в себе как простые фильтры, так\
+        \ и дерево фильтров. Доступный список фильтров для отчета с их возможными\
+        \ значениями см.раздел \"Получение списка возможных условий фильтрации для\
+        \ отчета\" .\n\n- `field` (string) (опциональный): Поле сущности к которой\
+        \ будет применяться фильтрация (список заранее определён для метода)\n\n-\
+        \ `operator` (enum) (опциональный): Оператор фильтрации. Список всех операторов\
+        \ можно получить в разделе \"Операторы фильтрации\"\n\n- `value` (string)\
+        \ (опциональный): Значение для оператора фильтрации. Необязательное поле,\
+        \ если оно отсутствует, то считается пустота.\n\n**Параметры ответа:** 43\n\
+        \n- `site_domain_name` (string): да\n\n- `site_name` (string): да\n\n- `deal_date_time`\
+        \ (iso8601): да\n\n- `deal_current_funnel` (string): да\n\n- `deal_current_stage`\
+        \ (string): да\n\n- `stage_before_failure` (string): да\n\n- `deal_finish_date`\
+        \ (iso8601): да\n\n- `campaign_name` (string): да\n\n- `deal_contact` (object):\
+        \ да\n\n- `value` (string): \n\n- `value_url` (string): \n\n- `deal_revenue`\
+        \ (number): да\n\n- `deal_contact_phone_numbers` (array): да\n\n- `deal_contact_emails`\
+        \ (array): да\n\n- `deal_cycle` (number): да\n\n- `deal_name` (object): да\n\
+        \n- `visitor_id` (number): да\n\n- `deal_contact_ext_id` (string): да\n\n\
+        - `deal_comments` (string): да\n\n- `deal_ext_id` (string): да\n\n- `days_before_start_deal`\
+        \ (number): да\n\n- `days_before_finish_deal` (number): да\n\n- `communication_date_time`\
+        \ (iso8601): да\n\n- `communication_type` (object): да\n\n- `value_id` (string):\
+        \ \n\n- `deal_company` (object): \n\n- `deal_employee` (string): да\n\n- `communication_id`\
+        \ (string): да\n\n- `deal_source` (string): да\n\n- `communication` (array):\
+        \ нет\n\n- `id` (number): \n\n- `type` (object): \n\n- `date_time` (number):\
+        \ \n\n- `lead_name` (object): нет\n\n- `lead_contact` (object): нет\n\n- `lead_employee`\
+        \ (string): нет\n\n- `lead_source` (string): нет\n\n- `lead_utm_campaign`\
+        \ (string): нет\n\n- `lead_utm_content` (string): нет\n\n- `lead_utm_medium`\
+        \ (string): нет\n\n- `lead_utm_source` (string): нет\n\n- `lead_utm_term`\
+        \ (string): нет\n\n- `deal_current_stage_date` (iso8601): да"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    limit:
+                      type: number
+                      description: Количество возвращаемых записей. См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    offset:
+                      type: number
+                      description: Сдвиг, определяет с какого номера записи возвращать
+                        `"limit"` записей. По умолчанию "0". См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    report_id:
+                      type: number
+                      description: Уникальный идентификатор отчета пользователя. Для
+                        получения списка отчетов пользователей необходимо использовать
+                        метод "get.reports_list"
+                      example: 123
+                    date_from:
+                      type: string
+                      description: Дата начала основной выборки(ограничение 366 дней)
+                      enum:
+                      - YYYY-MM-DD hh:mm:ss
+                      example: YYYY-MM-DD hh:mm:ss
+                    date_till:
+                      type: string
+                      description: Дата окончания основной выборки
+                      enum:
+                      - YYYY-MM-DD hh:mm:ss
+                      example: YYYY-MM-DD hh:mm:ss
+                    fields:
+                      type: array
+                      description: Список идентификаторов пользовательских столбцов,
+                        разделенных запятой. Доступный список столбцов см.раздел "Получение
+                        вложенности столбцов" . Порядок влияет на ответ.
+                    filters:
+                      type: array
+                      description: Выражение, может содержать в себе как простые фильтры,
+                        так и дерево фильтров. Доступный список фильтров для отчета
+                        с их возможными значениями см.раздел "Получение списка возможных
+                        условий фильтрации для отчета" .
+                    field:
+                      type: string
+                      description: Поле сущности к которой будет применяться фильтрация
+                        (список заранее определён для метода)
+                      example: example_string
+                    operator:
+                      type: string
+                      description: Оператор фильтрации. Список всех операторов можно
+                        получить в разделе "Операторы фильтрации"
+                    value:
+                      type: string
+                      description: Значение для оператора фильтрации. Необязательное
+                        поле, если оно отсутствует, то считается пустота.
+                      example: example_string
+                  required:
+                  - access_token
+                  - report_id
+                  - date_from
+                  - date_till
+                  - filters
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          site_domain_name:
+                            type: string
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          site_name:
+                            type: string
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          deal_date_time:
+                            type: string
+                            description: да
+                            enum:
+                            - YYYY-MM-DD hh:mm:ss
+                            example: YYYY-MM-DD hh:mm:ss
+                            x-filtering: да
+                            x-sorting: да
+                          deal_current_funnel:
+                            type: string
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          deal_current_stage:
+                            type: string
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          stage_before_failure:
+                            type: string
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          deal_finish_date:
+                            type: string
+                            description: да
+                            enum:
+                            - YYYY-MM-DD
+                            example: YYYY-MM-DD
+                            x-filtering: да
+                            x-sorting: да
+                          campaign_name:
+                            type: string
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          deal_contact:
+                            type: object
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                          value:
+                            type: string
+                            description: ''
+                            example: example_string
+                          value_url:
+                            type: string
+                            description: ''
+                            example: example_string
+                          deal_revenue:
+                            type: number
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: 123
+                          deal_contact_phone_numbers:
+                            type: array
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                          deal_contact_emails:
+                            type: array
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                          deal_cycle:
+                            type: number
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: 123
+                          deal_name:
+                            type: object
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                          visitor_id:
+                            type: number
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: 123
+                          deal_contact_ext_id:
+                            type: string
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          deal_comments:
+                            type: string
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          deal_ext_id:
+                            type: string
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          days_before_start_deal:
+                            type: number
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: 123
+                          days_before_finish_deal:
+                            type: number
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: 123
+                          communication_date_time:
+                            type: string
+                            description: да
+                            enum:
+                            - YYYY-MM-DD hh:mm:ss
+                            example: YYYY-MM-DD hh:mm:ss
+                            x-filtering: да
+                            x-sorting: да
+                          communication_type:
+                            type: object
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                          value_id:
+                            type: string
+                            description: ''
+                            example: example_string
+                          deal_company:
+                            type: object
+                            description: ''
+                            x-filtering: да
+                            x-sorting: да
+                          deal_employee:
+                            type: string
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          communication_id:
+                            type: string
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          deal_source:
+                            type: string
+                            description: да
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          communication:
+                            type: array
+                            description: нет
+                            x-filtering: нет
+                            x-sorting: нет
+                          id:
+                            type: number
+                            description: ''
+                            example: 123
+                          type:
+                            type: object
+                            description: ''
+                          date_time:
+                            type: number
+                            description: ''
+                            example: 123
+                          lead_name:
+                            type: object
+                            description: нет
+                            x-filtering: да
+                            x-sorting: да
+                          lead_contact:
+                            type: object
+                            description: нет
+                            x-filtering: да
+                            x-sorting: да
+                          lead_employee:
+                            type: string
+                            description: нет
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          lead_source:
+                            type: string
+                            description: нет
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          lead_utm_campaign:
+                            type: string
+                            description: нет
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          lead_utm_content:
+                            type: string
+                            description: нет
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          lead_utm_medium:
+                            type: string
+                            description: нет
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          lead_utm_source:
+                            type: string
+                            description: нет
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          lead_utm_term:
+                            type: string
+                            description: нет
+                            x-filtering: да
+                            x-sorting: да
+                            example: example_string
+                          deal_current_stage_date:
+                            type: string
+                            description: да
+                            enum:
+                            - YYYY-MM-DD
+                            example: YYYY-MM-DD
+                            x-filtering: да
+                            x-sorting: да
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом get"'
+    href: ../../..#_getErrors

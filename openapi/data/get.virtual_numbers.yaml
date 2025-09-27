@@ -1,0 +1,362 @@
+openapi: 3.0.0
+info:
+  title: Получение списка подключенных виртуальных номеров
+  version: 1.0.0
+  description: Получение списка подключённых виртуальных номеров
+paths:
+  /get.virtual_numbers:
+    get:
+      summary: Получение списка подключенных виртуальных номеров
+      description: 'Получение списка подключённых виртуальных номеров
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 7
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `limit` (number) (опциональный): Количество возвращаемых записей. См. раздел
+        "Постраничный вывод"
+
+
+        - `offset` (number) (опциональный): Сдвиг, определяет с какого номера записи
+        возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+
+
+        - `filter` (object) (опциональный): См. раздел "Критерии фильтрации"
+
+
+        - `fields` (array) (опциональный): См. раздел "Представление возвращаемых
+        данных"
+
+
+        - `sort` (array) (опциональный): См. раздел "Сортировка данных"
+
+
+        **Параметры ответа:** 18
+
+
+        - `id` (number): Уникальный идентификатор виртуального номера
+
+
+        - `virtual_phone_number` (string): Виртуальный номер
+
+
+        - `redirection_phone_number` (string): Связанный номер Часто используется
+        для 800 номеров
+
+
+        - `activation_date` (iso8601): Дата активации номера
+
+
+        - `status` (enum): Статус номера
+
+
+        - `category` (enum): Категория номера
+
+
+        - `type` (enum): Тип номера
+
+
+        - `campaigns` (array): Список рекламных кампаний в которых используется виртуальный
+        номер
+
+
+        - `campaign_id` (number): Уникальный идентификатор рекламной кампании
+
+
+        - `campaign_name` (string): Название рекламной кампании
+
+
+        - `site_id` (number): Уникальный идентификатор сайта с которым связана рекламная
+        кампания
+
+
+        - `site_domain_name` (string): Адрес сайта в интернете с которым связана рекламная
+        кампания. Без указания протокола - "http://" или "https://"
+
+
+        - `site_blocks` (array): Список блоков номеров сайта, в которых используется
+        виртуальный номер номер
+
+
+        - `site_block_id` (number): Уникальный идентификатор блока номеров
+
+
+        - `site_block_name` (string): Название блока номеров
+
+
+        - `scenarios` (array): Список сценариев, которые связанны с виртуальным номером
+
+
+        - `scenario_id` (number): Уникальный идентификатор сценария
+
+
+        - `scenario_name` (string): Название сценария'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    limit:
+                      type: number
+                      description: Количество возвращаемых записей. См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    offset:
+                      type: number
+                      description: Сдвиг, определяет с какого номера записи возвращать
+                        "limit" записей. По умолчанию "0". См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    filter:
+                      type: object
+                      description: См. раздел "Критерии фильтрации"
+                    fields:
+                      type: array
+                      description: См. раздел "Представление возвращаемых данных"
+                    sort:
+                      type: array
+                      description: См. раздел "Сортировка данных"
+                  required:
+                  - access_token
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                            description: Уникальный идентификатор виртуального номера
+                            x-filtering: да
+                            example: 123
+                          virtual_phone_number:
+                            type: string
+                            description: Виртуальный номер
+                            x-filtering: да
+                            example: example_string
+                          redirection_phone_number:
+                            type: string
+                            description: Связанный номер Часто используется для 800
+                              номеров
+                            x-filtering: да
+                            example: example_string
+                          activation_date:
+                            type: string
+                            description: Дата активации номера
+                            enum:
+                            - YYYY-MM-DD hh:mm:ss
+                            example: YYYY-MM-DD hh:mm:ss
+                            x-filtering: да
+                          status:
+                            type: string
+                            description: Статус номера
+                            enum:
+                            - 'active
+
+                              waiting
+
+                              cleaning
+
+                              prereserved
+
+                              reserved
+
+                              manual_lock
+
+                              limit_lock'
+                            example: 'active
+
+                              waiting
+
+                              cleaning
+
+                              prereserved
+
+                              reserved
+
+                              manual_lock
+
+                              limit_lock'
+                            x-filtering: да
+                            x-sorting: да
+                          category:
+                            type: string
+                            description: Категория номера
+                            enum:
+                            - 'usual
+
+                              bronze
+
+                              silver
+
+                              gold
+
+                              platinum'
+                            example: 'usual
+
+                              bronze
+
+                              silver
+
+                              gold
+
+                              platinum'
+                            x-filtering: да
+                            x-sorting: да
+                          type:
+                            type: string
+                            description: Тип номера
+                            enum:
+                            - 'va
+
+                              call_tracking
+
+                              dynamic_call_tracking'
+                            example: 'va
+
+                              call_tracking
+
+                              dynamic_call_tracking'
+                            x-filtering: да
+                            x-sorting: да
+                          campaigns:
+                            type: array
+                            description: Список рекламных кампаний в которых используется
+                              виртуальный номер
+                            x-filtering: да
+                          campaign_id:
+                            type: number
+                            description: Уникальный идентификатор рекламной кампании
+                            example: 123
+                          campaign_name:
+                            type: string
+                            description: Название рекламной кампании
+                            example: example_string
+                          site_id:
+                            type: number
+                            description: Уникальный идентификатор сайта с которым
+                              связана рекламная кампания
+                            example: 123
+                          site_domain_name:
+                            type: string
+                            description: Адрес сайта в интернете с которым связана
+                              рекламная кампания. Без указания протокола - "http://"
+                              или "https://"
+                            example: example_string
+                          site_blocks:
+                            type: array
+                            description: Список блоков номеров сайта, в которых используется
+                              виртуальный номер номер
+                          site_block_id:
+                            type: number
+                            description: Уникальный идентификатор блока номеров
+                            example: 123
+                          site_block_name:
+                            type: string
+                            description: Название блока номеров
+                            example: example_string
+                          scenarios:
+                            type: array
+                            description: Список сценариев, которые связанны с виртуальным
+                              номером
+                            x-filtering: да
+                          scenario_id:
+                            type: number
+                            description: Уникальный идентификатор сценария
+                            example: 123
+                          scenario_name:
+                            type: string
+                            description: Название сценария
+                            example: example_string
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом get"'
+    href: ../..#_getErrors

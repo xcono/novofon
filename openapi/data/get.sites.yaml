@@ -1,0 +1,503 @@
+openapi: 3.0.0
+info:
+  title: Получение списка сайтов
+  version: 1.0.0
+  description: Получение списка сайтов
+paths:
+  /get.sites:
+    get:
+      summary: Получение списка сайтов
+      description: 'Получение списка сайтов
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 7
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `limit` (number) (опциональный): Количество возвращаемых записей. См. раздел
+        "Постраничный вывод"
+
+
+        - `offset` (number) (опциональный): Сдвиг, определяет с какого номера записи
+        возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+
+
+        - `filter` (object) (опциональный): См. раздел "Критерии фильтрации"
+
+
+        - `fields` (array) (опциональный): См. раздел "Представление возвращаемых
+        данных"
+
+
+        - `sort` (array) (опциональный): См. раздел "Сортировка данных"
+
+
+        **Параметры ответа:** 31
+
+
+        - `id` (number): Уникальный идентификатор сайта
+
+
+        - `domain_name` (string): Адрес сайта в интернете. Без указания протокола
+        - "http://" или "https://".
+
+
+        - `name` (string): Имя сайта для отображения в фильтре сайтов ЛК, обзорном
+        отчете и списке сайтов.
+
+
+        - `default_phone_number` (string): Номер телефона по умолчанию, на который
+        будут переадресованы звонки, поступающие через сайтфон, а также на номера
+        аналитики, используемые в рекламных кампаниях.
+
+
+        - `default_scenario` (object): Сценарий по умолчанию, по которому будут обработаны
+        звонки на номера без активных настроек. По умолчанию none.
+
+
+        - `scenario_id` (number): Уникальный идентификатор сценария
+
+
+        - `scenario_name` (string): Название сценария
+
+
+        - `site_key` (string): Ключ кода вставки для сайта Этот параметр необходимо
+        вставить в шаблон вместо параметра `{site_key}` &ltscript type="text/javascript">
+        var __cs = __cs || []; __cs.push(["setCsAccount", "{site_key}"]); </script>
+        &ltscript type="text/javascript" async src="//app.comagic.ru/static/cs.min.js"></script>
+
+
+        - `creation_date` (iso8601): Дата создания сайта
+
+
+        - `target_call_min_duration` (number): По умолчанию "30". Минимальное время
+        звонка после которого он считается целевым. Значение задаётся в секундах.
+
+
+        - `track_subdomains` (boolean): По умолчанию "true". Сбор статистики со всех
+        поддоменов (статистика с соответствующего основному домену сайта поддомена
+        «www» собирается всегда, вне зависимости от проставленного флага).
+
+
+        - `cookie_lifetime` (number): По умолчанию "90". Время жизни "cookie". Время
+        задаётся в днях.
+
+
+        - `campaign_lifetime` (number): По умолчанию "90". Время жизни рекламной компании.
+        Время задаётся в днях.
+
+
+        - `sales_enabled` (boolean): По умолчанию "false". Учитывать ли продажи
+
+
+        - `second_communication_period` (number): По умолчанию "1". Период повторного
+        обращения. Задаётся в днях.
+
+
+        - `services_enabled` (boolean): По умолчанию "true". Возможность деактивировать
+        сервис для одного конкретного сайта. В деактивированном состоянии производится
+        только сбор статистики сайта, все сервисы (колл-трекинг, онлайн-консультант)
+        отключены и не работают.
+
+
+        - `replacement_dynamical_block_enabled` (boolean): Подменять номера в динамически
+        подгружаемых блоках. (По умолчанию False)
+
+
+        - `widget_link` (object): При активации опции, на формах заявок, чата и запроса
+        анкетных данных появится ссылка, по клику на которую посетитель сайта будет
+        перенаправлен на заданный URL.
+
+
+        - `enabled` (boolean): По умолчанию "false". Активируем отображение посетителя
+        на сайте.
+
+
+        - `text` (string): Текст ссылки (Не более 100 символов)
+
+
+        - `url` (string): URL
+
+
+        - `industry_id` (number): Уникальный идентификатор отрасли сайта
+
+
+        - `industry_name` (string): Название отрасли сайта
+
+
+        - `show_visitor_id` (object): Отобразив идентификатор посетителя на сайте
+        и узнав его у посетителя при звонке, вы сможете связать данные о посещении
+        со звонком и тем самым узнать полные данные о звонящих (например, по каким
+        конкретно поисковым запросам приходят посетители, которые вам звонят).
+
+
+        - `element_id_value` (string): Для того чтобы на сайте появился идентификатор
+        посетителя, в этом поле необходимо указать идентификатор (id) HTML-элемента
+        сайта. На месте размещения идентификатора посетителя на страницах сайта необходимо
+        добавить контейнер с данным id (например, &ltdiv id="comagicID"></div>).
+
+
+        - `message` (string): Задаёт текст, который будет выводиться рядом с номером
+        посетителя на сайте.
+
+
+        - `length_visitor_id` (string): По умолчанию 6. Количество цифр идентификатора
+        посетителя.
+
+
+        - `site_blocks` (array): Массив блоков идентификаторов. По умолчанию при создании
+        сайта создаётся один блок.
+
+
+        - `site_block_id` (number): Уникальный идентификатор блока
+
+
+        - `site_block_name` (string): Название блока.
+
+
+        - `connected_integrations` (array): Интеграции подключенные на уровне сайта.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    limit:
+                      type: number
+                      description: Количество возвращаемых записей. См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    offset:
+                      type: number
+                      description: Сдвиг, определяет с какого номера записи возвращать
+                        "limit" записей. По умолчанию "0". См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    filter:
+                      type: object
+                      description: См. раздел "Критерии фильтрации"
+                    fields:
+                      type: array
+                      description: См. раздел "Представление возвращаемых данных"
+                    sort:
+                      type: array
+                      description: См. раздел "Сортировка данных"
+                  required:
+                  - access_token
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                            description: Уникальный идентификатор сайта
+                            x-filtering: да
+                            example: 123
+                          domain_name:
+                            type: string
+                            description: Адрес сайта в интернете. Без указания протокола
+                              - "http://" или "https://".
+                            x-filtering: да
+                            example: example_string
+                          name:
+                            type: string
+                            description: Имя сайта для отображения в фильтре сайтов
+                              ЛК, обзорном отчете и списке сайтов.
+                            x-filtering: да
+                            example: example_string
+                          default_phone_number:
+                            type: string
+                            description: Номер телефона по умолчанию, на который будут
+                              переадресованы звонки, поступающие через сайтфон, а
+                              также на номера аналитики, используемые в рекламных
+                              кампаниях.
+                            format: E164 формат
+                            example: example_value
+                            x-filtering: да
+                          default_scenario:
+                            type: object
+                            description: Сценарий по умолчанию, по которому будут
+                              обработаны звонки на номера без активных настроек. По
+                              умолчанию none.
+                          scenario_id:
+                            type: number
+                            description: Уникальный идентификатор сценария
+                            example: 123
+                          scenario_name:
+                            type: string
+                            description: Название сценария
+                            x-filtering: да
+                            example: example_string
+                          site_key:
+                            type: string
+                            description: Ключ кода вставки для сайта Этот параметр
+                              необходимо вставить в шаблон вместо параметра `{site_key}`
+                              &ltscript type="text/javascript"> var __cs = __cs ||
+                              []; __cs.push(["setCsAccount", "{site_key}"]); </script>
+                              &ltscript type="text/javascript" async src="//app.comagic.ru/static/cs.min.js"></script>
+                            example: example_string
+                          creation_date:
+                            type: string
+                            description: Дата создания сайта
+                            enum:
+                            - YYYY-MM-DD hh:mm:ss
+                            example: YYYY-MM-DD hh:mm:ss
+                            x-filtering: да
+                          target_call_min_duration:
+                            type: number
+                            description: По умолчанию "30". Минимальное время звонка
+                              после которого он считается целевым. Значение задаётся
+                              в секундах.
+                            x-filtering: да
+                            example: 123
+                          track_subdomains:
+                            type: boolean
+                            description: По умолчанию "true". Сбор статистики со всех
+                              поддоменов (статистика с соответствующего основному
+                              домену сайта поддомена «www» собирается всегда, вне
+                              зависимости от проставленного флага).
+                            enum:
+                            - 'false'
+                            - 'true'
+                            example: 'false'
+                            x-filtering: да
+                          cookie_lifetime:
+                            type: number
+                            description: По умолчанию "90". Время жизни "cookie".
+                              Время задаётся в днях.
+                            x-filtering: да
+                            example: 123
+                          campaign_lifetime:
+                            type: number
+                            description: По умолчанию "90". Время жизни рекламной
+                              компании. Время задаётся в днях.
+                            x-filtering: да
+                            example: 123
+                          sales_enabled:
+                            type: boolean
+                            description: По умолчанию "false". Учитывать ли продажи
+                            enum:
+                            - 'false'
+                            - 'true'
+                            example: 'false'
+                            x-filtering: да
+                          second_communication_period:
+                            type: number
+                            description: По умолчанию "1". Период повторного обращения.
+                              Задаётся в днях.
+                            enum:
+                            - '1'
+                            - '3'
+                            - '7'
+                            - '30'
+                            example: '1'
+                            x-filtering: да
+                          services_enabled:
+                            type: boolean
+                            description: По умолчанию "true". Возможность деактивировать
+                              сервис для одного конкретного сайта. В деактивированном
+                              состоянии производится только сбор статистики сайта,
+                              все сервисы (колл-трекинг, онлайн-консультант) отключены
+                              и не работают.
+                            enum:
+                            - 'false'
+                            - 'true'
+                            example: 'false'
+                            x-filtering: да
+                          replacement_dynamical_block_enabled:
+                            type: boolean
+                            description: Подменять номера в динамически подгружаемых
+                              блоках. (По умолчанию False)
+                            x-filtering: false, true
+                            example: true
+                          widget_link:
+                            type: object
+                            description: При активации опции, на формах заявок, чата
+                              и запроса анкетных данных появится ссылка, по клику
+                              на которую посетитель сайта будет перенаправлен на заданный
+                              URL.
+                            enum:
+                            - нет
+                            example: нет
+                          enabled:
+                            type: boolean
+                            description: По умолчанию "false". Активируем отображение
+                              посетителя на сайте.
+                            enum:
+                            - 'false'
+                            - 'true'
+                            example: 'false'
+                          text:
+                            type: string
+                            description: Текст ссылки (Не более 100 символов)
+                            example: example_string
+                          url:
+                            type: string
+                            description: URL
+                            example: example_string
+                          industry_id:
+                            type: number
+                            description: Уникальный идентификатор отрасли сайта
+                            example: 123
+                          industry_name:
+                            type: string
+                            description: Название отрасли сайта
+                            example: example_string
+                          show_visitor_id:
+                            type: object
+                            description: Отобразив идентификатор посетителя на сайте
+                              и узнав его у посетителя при звонке, вы сможете связать
+                              данные о посещении со звонком и тем самым узнать полные
+                              данные о звонящих (например, по каким конкретно поисковым
+                              запросам приходят посетители, которые вам звонят).
+                          element_id_value:
+                            type: string
+                            description: Для того чтобы на сайте появился идентификатор
+                              посетителя, в этом поле необходимо указать идентификатор
+                              (id) HTML-элемента сайта. На месте размещения идентификатора
+                              посетителя на страницах сайта необходимо добавить контейнер
+                              с данным id (например, &ltdiv id="comagicID"></div>).
+                            example: example_string
+                          message:
+                            type: string
+                            description: Задаёт текст, который будет выводиться рядом
+                              с номером посетителя на сайте.
+                            example: example_string
+                          length_visitor_id:
+                            type: string
+                            description: По умолчанию 6. Количество цифр идентификатора
+                              посетителя.
+                            enum:
+                            - от 1 до 20
+                            example: от 1 до 20
+                          site_blocks:
+                            type: array
+                            description: Массив блоков идентификаторов. По умолчанию
+                              при создании сайта создаётся один блок.
+                            x-filtering: да
+                          site_block_id:
+                            type: number
+                            description: Уникальный идентификатор блока
+                            example: 123
+                          site_block_name:
+                            type: string
+                            description: Название блока.
+                            example: example_string
+                          connected_integrations:
+                            type: array
+                            description: Интеграции подключенные на уровне сайта.
+                            enum:
+                            - 'yandex.direct
+
+                              google.adwords
+
+                              yandex.metrika
+
+                              google.analytics
+
+                              vk.ads
+
+                              mytarget.ads'
+                            example: 'yandex.direct
+
+                              google.adwords
+
+                              yandex.metrika
+
+                              google.analytics
+
+                              vk.ads
+
+                              mytarget.ads'
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом get"'
+    href: ../..#_getErrors

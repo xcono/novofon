@@ -1,0 +1,263 @@
+openapi: 3.0.0
+info:
+  title: Изменение  состояния отчета
+  version: 1.0.0
+  description: Изменение состояния
+paths:
+  /set.report_state:
+    post:
+      summary: Изменение  состояния отчета
+      description: 'Изменение состояния
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 18
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `report_id` (number) (обязательный): Уникальный идентификатор отчета пользователя.
+        Для получения списка отчетов пользователей необходимо использовать метод "get.reports_list"
+
+
+        - `state` (object) (обязательный): Параметры передаваемого состояния отчета
+
+
+        - `limit` (number) (обязательный): Количество возвращаемых записей. По умолчанию
+        50.
+
+
+        - `offset` (number) (обязательный): Сдвиг - определяет с какого номера записи
+        возвращать limit записей. По умолчанию 0.
+
+
+        - `date_from` (iso8601) (обязательный): Дата начала основной выборки(ограничение
+        366 дней)
+
+
+        - `date_till` (iso8601) (обязательный): Дата окончания основной выборки
+
+
+        - `compared_date_from` (iso8601) (опциональный): Дата начала сравниваемой
+        выборки(ограничение 366 дней).
+
+
+        - `compared_date_till` (iso8601) (опциональный): Дата окончания сравниваемой
+        выборки. Является обязательным если указан compared_date_from
+
+
+        - `perspective_window` (number) (обязательный): Кол-во дней от сессии до обращения
+        в которых происходит атрибутирование обращения к сессии.
+
+
+        - `dimensions` (array) (опциональный): Список используемых измерений. Доступный
+        список измерений см.раздел "Получение вложенности измерений". Порядок влияет
+        на построение дерева. Является обязательным для `report_type` = `ad_analytics`
+
+
+        - `columns` (array) (обязательный): Список используемых столбцов. Доступный
+        список столбцов см.раздел "Получение списка столбцов" . Порядок влияет на
+        построение отчета
+
+
+        - `filters` (array) (обязательный): Выражение, может содержать в себе как
+        простые фильтры, так и дерево фильтров.
+
+
+        - `field` (object) (обязательный): Мнемоника или идентификатор столбца параметры
+        которого изменены
+
+
+        - `operator` (enum) (опциональный): Оператор фильтрации. Список всех операторов
+        можно получить в разделе "Операторы фильтрации"
+
+
+        - `value` (string) (опциональный): Значение для оператора фильтрации. Необязательное
+        поле, если оно отсутствует, то считается пустота.
+
+
+        - `widths` (number) (обязательный): Ширина столбца. Задается в px.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    report_id:
+                      type: number
+                      description: Уникальный идентификатор отчета пользователя. Для
+                        получения списка отчетов пользователей необходимо использовать
+                        метод "get.reports_list"
+                      example: 123
+                    state:
+                      type: object
+                      description: Параметры передаваемого состояния отчета
+                    limit:
+                      type: number
+                      description: Количество возвращаемых записей. По умолчанию 50.
+                      enum:
+                      - Нельзя запросить более 200 строк.
+                      example: Нельзя запросить более 200 строк.
+                    offset:
+                      type: number
+                      description: Сдвиг - определяет с какого номера записи возвращать
+                        limit записей. По умолчанию 0.
+                      example: 123
+                    date_from:
+                      type: string
+                      description: Дата начала основной выборки(ограничение 366 дней)
+                    date_till:
+                      type: string
+                      description: Дата окончания основной выборки
+                    compared_date_from:
+                      type: string
+                      description: Дата начала сравниваемой выборки(ограничение 366
+                        дней).
+                    compared_date_till:
+                      type: string
+                      description: Дата окончания сравниваемой выборки. Является обязательным
+                        если указан compared_date_from
+                    perspective_window:
+                      type: number
+                      description: Кол-во дней от сессии до обращения в которых происходит
+                        атрибутирование обращения к сессии.
+                      enum:
+                      - Можно задать период от 1 до 180 дней от сессии до обращения
+                      example: Можно задать период от 1 до 180 дней от сессии до обращения
+                    dimensions:
+                      type: array
+                      description: Список используемых измерений. Доступный список
+                        измерений см.раздел "Получение вложенности измерений". Порядок
+                        влияет на построение дерева. Является обязательным для `report_type`
+                        = `ad_analytics`
+                    columns:
+                      type: array
+                      description: Список используемых столбцов. Доступный список
+                        столбцов см.раздел "Получение списка столбцов" . Порядок влияет
+                        на построение отчета
+                    filters:
+                      type: array
+                      description: Выражение, может содержать в себе как простые фильтры,
+                        так и дерево фильтров.
+                    field:
+                      type: object
+                      description: Мнемоника или идентификатор столбца параметры которого
+                        изменены
+                    operator:
+                      type: string
+                      description: Оператор фильтрации. Список всех операторов можно
+                        получить в разделе "Операторы фильтрации"
+                    value:
+                      type: string
+                      description: Значение для оператора фильтрации. Необязательное
+                        поле, если оно отсутствует, то считается пустота.
+                      example: example_string
+                    widths:
+                      type: number
+                      description: Ширина столбца. Задается в px.
+                      example: 123
+                  required:
+                  - access_token
+                  - report_id
+                  - state
+                  - limit
+                  - offset
+                  - date_from
+                  - date_till
+                  - perspective_window
+                  - columns
+                  - filters
+                  - field
+                  - widths
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом set"'
+    href: index.md#_changeErrors

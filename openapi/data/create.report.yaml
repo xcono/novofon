@@ -1,0 +1,179 @@
+openapi: 3.0.0
+info:
+  title: Создание отчета пользователя
+  version: 1.0.0
+  description: Создание отчета пользователя
+paths:
+  /create.report:
+    post:
+      summary: Создание отчета пользователя
+      description: 'Создание отчета пользователя
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 8
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `name` (string) (обязательный): Название отчета
+
+
+        - `description` (string) (опциональный): Описание отчета
+
+
+        - `type` (enum) (обязательный): Тип отчета пользователя
+
+
+        - `group_id` (number) (обязательный): Идентификатор группы отчета
+
+
+        - `report_clone_id` (number) (опциональный): Идентификатор отчета с которого
+        копируются настройки. Настройки отчета можно посмотреть используя метод "getobj.report_state"
+
+
+        - `shared_report_settings_hash` (string) (опциональный): Хеш отчета с которого
+        копируются настройки. Хеш можно получить используя метод "create.shared_report_settings"'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    name:
+                      type: string
+                      description: Название отчета
+                      enum:
+                      - Необязателен если указан shared_report_settings_hash
+                      example: Необязателен если указан shared_report_settings_hash
+                    description:
+                      type: string
+                      description: Описание отчета
+                      example: example_string
+                    type:
+                      type: string
+                      description: Тип отчета пользователя
+                      enum:
+                      - ad_analytics
+                      - deals_analytics
+                      - chats
+                      example: ad_analytics
+                    group_id:
+                      type: number
+                      description: Идентификатор группы отчета
+                      enum:
+                      - Нельзя использовать совместно с shared_report_settings_hash
+                        и report_clone_id
+                      example: Нельзя использовать совместно с shared_report_settings_hash
+                        и report_clone_id
+                    report_clone_id:
+                      type: number
+                      description: Идентификатор отчета с которого копируются настройки.
+                        Настройки отчета можно посмотреть используя метод "getobj.report_state"
+                      enum:
+                      - Нельзя использовать совместно с shared_report_settings_hash
+                      example: Нельзя использовать совместно с shared_report_settings_hash
+                    shared_report_settings_hash:
+                      type: string
+                      description: Хеш отчета с которого копируются настройки. Хеш
+                        можно получить используя метод "create.shared_report_settings"
+                      enum:
+                      - Нельзя использовать совместно с report_clone_id
+                      example: Нельзя использовать совместно с report_clone_id
+                  required:
+                  - access_token
+                  - name
+                  - type
+                  - group_id
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом create"'
+    href: ../index.md#_changeErrors

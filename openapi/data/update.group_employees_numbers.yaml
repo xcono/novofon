@@ -1,0 +1,181 @@
+openapi: 3.0.0
+info:
+  title: Изменение приоритета и доступности номера сотрудника в группе сотрудников
+  version: 1.0.0
+  description: Изменение приоритета и доступности номера сотрудника в группе сотрудников
+paths:
+  /update.group_employees_numbers:
+    put:
+      summary: Изменение приоритета и доступности номера сотрудника в группе сотрудников
+      description: 'Изменение приоритета и доступности номера сотрудника в группе
+        сотрудников
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 6
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `id` (number) (обязательный): Уникальный идентификатор группы
+
+
+        - `user_id` (number) (обязательный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `phone_numbers` (array) (обязательный): Список городских, мобильных и sip
+        номеров сотрудников, которые входят в группу, с указанием их доступности и
+        приоритетом обзвона. Приоритет обзвона номеров определяется положением номера
+        в списке. Обзвон указанного списка номеров в группе возможен по внутреннему
+        номеру группы (см. параметр "group_phone_number"). Нужно передавать все номера
+
+
+        - `employee_phone_number_id` (number) (обязательный): Уникальный идентификатор
+        номера сотрудника в группе
+
+
+        - `available` (boolean) (обязательный): Доступность номера в группе'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    id:
+                      type: number
+                      description: Уникальный идентификатор группы
+                      example: 123
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    phone_numbers:
+                      type: array
+                      description: Список городских, мобильных и sip номеров сотрудников,
+                        которые входят в группу, с указанием их доступности и приоритетом
+                        обзвона. Приоритет обзвона номеров определяется положением
+                        номера в списке. Обзвон указанного списка номеров в группе
+                        возможен по внутреннему номеру группы (см. параметр "group_phone_number").
+                        Нужно передавать все номера
+                    employee_phone_number_id:
+                      type: number
+                      description: Уникальный идентификатор номера сотрудника в группе
+                      example: 123
+                    available:
+                      type: boolean
+                      description: Доступность номера в группе
+                      example: true
+                  required:
+                  - access_token
+                  - id
+                  - user_id
+                  - phone_numbers
+                  - employee_phone_number_id
+                  - available
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+        Invalid parameter value:
+          description: invalid_parameter_value
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                        example: null
+                      message:
+                        type: string
+                        example: invalid_parameter_value
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors:
+  - code: Invalid parameter value
+    description: invalid_parameter_value
+  error_references: []

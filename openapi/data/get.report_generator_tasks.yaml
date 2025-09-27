@@ -1,0 +1,194 @@
+openapi: 3.0.0
+info:
+  title: Получение списка задач на выгрузку отчетов файлом
+  version: 1.0.0
+  description: Получение списка задач на выгрузку отчетов файлом
+paths:
+  /get.report_generator_tasks:
+    get:
+      summary: Получение списка задач на выгрузку отчетов файлом
+      description: "Получение списка задач на выгрузку отчетов файлом\n\n**Доступ:**\
+        \ Агент, Клиент\n\n**Параметры запроса:** 8\n\n- `access_token` (string) (обязательный):\
+        \ Ключ сессии аутентификации\n\n- `user_id` (number) (опциональный): Уникальный\
+        \ идентификатор пользователя клиента агента от имени которого делается запрос\n\
+        \n- `limit` (number) (опциональный): Количество возвращаемых записей. По умолчанию\
+        \ 50.\n\n- `offset` (number) (опциональный): Сдвиг - определяет с какого номера\
+        \ записи возвращать limit записей. По умолчанию 0.\n\n- `filters` (array)\
+        \ (обязательный): Выражение, может содержать в себе как простые фильтры, так\
+        \ и дерево фильтров.\n\n- `field` (string) (опциональный): Поле сущности к\
+        \ которой будет применяться фильтрация. Фильтрация возможна по полям state\
+        \ и id.\n\n- `operator` (enum) (опциональный): Оператор фильтрации. Список\
+        \ всех операторов можно получить в разделе \"Операторы фильтрации\"\n\n- `value`\
+        \ (string) (опциональный): Значение для оператора фильтрации. Необязательное\
+        \ поле, если оно отсутствует, то считается пустота.\n\n**Параметры ответа:**\
+        \ 4\n\n- `task_id` (number): \n\n- `state` (enum): \n\n- `file_name` (string):\
+        \ \n\n- `report_format` (enum): "
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    limit:
+                      type: number
+                      description: Количество возвращаемых записей. По умолчанию 50.
+                      enum:
+                      - Нельзя запросить более 200 строк.
+                      example: Нельзя запросить более 200 строк.
+                    offset:
+                      type: number
+                      description: Сдвиг - определяет с какого номера записи возвращать
+                        limit записей. По умолчанию 0.
+                      example: 123
+                    filters:
+                      type: array
+                      description: Выражение, может содержать в себе как простые фильтры,
+                        так и дерево фильтров.
+                    field:
+                      type: string
+                      description: Поле сущности к которой будет применяться фильтрация.
+                        Фильтрация возможна по полям state и id.
+                      enum:
+                      - '"id"'
+                      - '"state"'
+                      example: '"id"'
+                    operator:
+                      type: string
+                      description: Оператор фильтрации. Список всех операторов можно
+                        получить в разделе "Операторы фильтрации"
+                    value:
+                      type: string
+                      description: Значение для оператора фильтрации. Необязательное
+                        поле, если оно отсутствует, то считается пустота.
+                      example: example_string
+                  required:
+                  - access_token
+                  - filters
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          task_id:
+                            type: number
+                            description: ''
+                            x-filtering: да
+                            x-sorting: да
+                            example: 123
+                          state:
+                            type: string
+                            description: ''
+                            enum:
+                            - '"new"'
+                            - '"in_process"'
+                            - '"file_ready"'
+                            - '"processed"'
+                            - '"error"'
+                            - '"file_expired"'
+                            example: '"new"'
+                            x-filtering: да
+                            x-sorting: да
+                          file_name:
+                            type: string
+                            description: ''
+                            x-filtering: нет
+                            x-sorting: нет
+                            example: example_string
+                          report_format:
+                            type: string
+                            description: ''
+                            enum:
+                            - 'csv
+
+                              xlsx
+
+                              google_sheets'
+                            example: 'csv
+
+                              xlsx
+
+                              google_sheets'
+                            x-filtering: нет
+                            x-sorting: нет
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом getobj"'
+    href: ../../..#_getErrors

@@ -1,0 +1,124 @@
+openapi: 3.0.0
+info:
+  title: Редактирование глобального календаря
+  version: 1.0.0
+  description: Редактирование глобального календаря
+paths:
+  /update.report_global_calendar:
+    put:
+      summary: Редактирование глобального календаря
+      description: 'Редактирование глобального календаря
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 3
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `id` (number) (обязательный): Уникальный идентификатор глобального календаря.
+        Для получения списка источников необходимо использовать метод ["get.report_global_calendars"](../get_report_global_calendars)
+
+
+        - `params` (object) (опциональный): Параметры глобального календаря'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    id:
+                      type: number
+                      description: Уникальный идентификатор глобального календаря.
+                        Для получения списка источников необходимо использовать метод
+                        ["get.report_global_calendars"](../get_report_global_calendars)
+                      example: 123
+                    params:
+                      type: object
+                      description: Параметры глобального календаря
+                  required:
+                  - access_token
+                  - id
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом update"'
+    href: ../../..#_changeErrors

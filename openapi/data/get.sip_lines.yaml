@@ -1,0 +1,306 @@
+openapi: 3.0.0
+info:
+  title: Получение списка SIP-линий
+  version: 1.0.0
+  description: Получение списка SIP-линий
+paths:
+  /get.sip_lines:
+    get:
+      summary: Получение списка SIP-линий
+      description: 'Получение списка SIP-линий
+
+
+        **Доступ:** Партнёр, Клиент
+
+
+        **Параметры запроса:** 7
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `limit` (number) (опциональный): Количество возвращаемых записей. См. раздел
+        "Постраничный вывод"
+
+
+        - `offset` (number) (опциональный): Сдвиг, определяет с какого номера записи
+        возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+
+
+        - `filter` (object) (опциональный): См. раздел "Критерии фильтрации"
+
+
+        - `fields` (array) (опциональный): См. раздел "Представление возвращаемых
+        данных"
+
+
+        - `sort` (array) (опциональный): См. раздел "Сортировка данных"
+
+
+        **Параметры ответа:** 14
+
+
+        - `id` (number): Уникальный идентификатор SIP-линии
+
+
+        - `phone_number` (string): Номер телефона SIP-линии
+
+
+        - `type` (enum): Тип входящей связи доступной для SIP-линии. in - Поддержка
+        только входящей связиin_out - Поддержка входящей и исходящей связи
+
+
+        - `channels_count` (number): Количество доступных линий на SIP-линии
+
+
+        - `dial_time` (number): Значение по умолчанию "60". Время дозвона по номеру
+        в профиле сотрудника. Значение в секундах.
+
+
+        - `billing_state` (enum): Состояние SIP-линии в биллинге. active - SIP-линия
+        активна;manual_lock - SIP-линия заблокирована вручную;limit_lock - SIP-линия
+        заблокирована автоматически.
+
+
+        - `physical_state` (enum): Физическое состояние SIP-линии.
+
+
+        - `virtual_phone_number` (string): Виртуальный номер отображаемый при исходящем
+        вызове Если тип SIP-линии "in", то данное поле будет пустым
+
+
+        - `status` (enum): Статус sip-номера в профиле сотрудника, см. методы "get.employees"
+
+
+        - `employee_id` (number): Уникальный идентификатор сотрудника, см. методы
+        "get.employees"
+
+
+        - `employee_full_name` (string): Фамилия Имя Отчество сотрудника, см. методы
+        "get.employees"
+
+
+        - `ip_addresses` (array): IP-адреса зарегистрированных терминалов. Актуально
+        для SIP-линий, которые имеют значение параметра "physical_state" = "Зарегистрирован"
+
+
+        - `date_time` (iso8601): Дата и время регистрации
+
+
+        - `ip` (string): IP-адрес'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    limit:
+                      type: number
+                      description: Количество возвращаемых записей. См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    offset:
+                      type: number
+                      description: Сдвиг, определяет с какого номера записи возвращать
+                        "limit" записей. По умолчанию "0". См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    filter:
+                      type: object
+                      description: См. раздел "Критерии фильтрации"
+                    fields:
+                      type: array
+                      description: См. раздел "Представление возвращаемых данных"
+                    sort:
+                      type: array
+                      description: См. раздел "Сортировка данных"
+                  required:
+                  - access_token
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                            description: Уникальный идентификатор SIP-линии
+                            x-filtering: да
+                            example: 123
+                          phone_number:
+                            type: string
+                            description: Номер телефона SIP-линии
+                            x-filtering: да
+                            example: example_string
+                          type:
+                            type: string
+                            description: Тип входящей связи доступной для SIP-линии.
+                              in - Поддержка только входящей связиin_out - Поддержка
+                              входящей и исходящей связи
+                            enum:
+                            - inin_out
+                            example: inin_out
+                            x-filtering: да
+                            x-sorting: да
+                          channels_count:
+                            type: number
+                            description: Количество доступных линий на SIP-линии
+                            example: 123
+                          dial_time:
+                            type: number
+                            description: Значение по умолчанию "60". Время дозвона
+                              по номеру в профиле сотрудника. Значение в секундах.
+                            enum:
+                            - от 1 до 100
+                            example: от 1 до 100
+                          billing_state:
+                            type: string
+                            description: Состояние SIP-линии в биллинге. active -
+                              SIP-линия активна;manual_lock - SIP-линия заблокирована
+                              вручную;limit_lock - SIP-линия заблокирована автоматически.
+                            enum:
+                            - activemanual_locklimit_lock
+                            example: activemanual_locklimit_lock
+                            x-filtering: да
+                            x-sorting: да
+                          physical_state:
+                            type: string
+                            description: Физическое состояние SIP-линии.
+                            enum:
+                            - ЗарегистрированНе зарегистрирован
+                            example: ЗарегистрированНе зарегистрирован
+                            x-filtering: да
+                            x-sorting: да
+                          virtual_phone_number:
+                            type: string
+                            description: Виртуальный номер отображаемый при исходящем
+                              вызове Если тип SIP-линии "in", то данное поле будет
+                              пустым
+                            enum:
+                            - E164
+                            example: E164
+                            x-filtering: да
+                            x-sorting: да
+                          status:
+                            type: string
+                            description: Статус sip-номера в профиле сотрудника, см.
+                              методы "get.employees"
+                            enum:
+                            - activeinactive
+                            example: activeinactive
+                            x-filtering: да
+                            x-sorting: да
+                          employee_id:
+                            type: number
+                            description: Уникальный идентификатор сотрудника, см.
+                              методы "get.employees"
+                            x-filtering: да
+                            x-sorting: да
+                            example: 123
+                          employee_full_name:
+                            type: string
+                            description: Фамилия Имя Отчество сотрудника, см. методы
+                              "get.employees"
+                            x-filtering: да
+                            example: example_string
+                          ip_addresses:
+                            type: array
+                            description: IP-адреса зарегистрированных терминалов.
+                              Актуально для SIP-линий, которые имеют значение параметра
+                              "physical_state" = "Зарегистрирован"
+                            x-filtering: да
+                          date_time:
+                            type: string
+                            description: Дата и время регистрации
+                            enum:
+                            - YYYY-MM-DD hh:mm:ss
+                            example: YYYY-MM-DD hh:mm:ss
+                          ip:
+                            type: string
+                            description: IP-адрес
+                            example: example_string
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Партнёр, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом get"'
+    href: ../..#_getErrors

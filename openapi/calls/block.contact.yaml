@@ -1,0 +1,89 @@
+openapi: 3.0.0
+info:
+  title: Block contact
+  version: 1.0.0
+  description: Block contact
+paths:
+  /block.contact:
+    post:
+      summary: Block contact
+      description: Block contact
+      requestBody:
+        required: false
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+        The contact with phone number {contact_phone_number} already exists:
+          description: '-32602'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                        example: null
+                      message:
+                        type: string
+                        example: '-32602'
+                      data:
+                        type: object
+x-errors:
+  errors:
+  - code: The contact with phone number {contact_phone_number} already exists
+    description: '-32602'
+  error_references: []

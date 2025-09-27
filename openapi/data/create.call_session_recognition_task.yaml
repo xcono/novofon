@@ -1,0 +1,126 @@
+openapi: 3.0.0
+info:
+  title: Создание задачи на распознавание сеанса звонка
+  version: 1.0.0
+  description: Создание задачи на распознавание сеанса звонка
+paths:
+  /create.call_session_recognition_task:
+    post:
+      summary: Создание задачи на распознавание сеанса звонка
+      description: 'Создание задачи на распознавание сеанса звонка
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 3
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос Для получения списка пользователей
+        клиента необходимо использовать метод ["get.customer_users"](../Partners.md#get_customer_user)
+
+
+        - `call_session_id` (number) (опциональный): Уникальный идентификатор сессии
+        звонка'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос Для получения списка пользователей
+                        клиента необходимо использовать метод ["get.customer_users"](../Partners.md#get_customer_user)
+                      example: 123
+                    call_session_id:
+                      type: number
+                      description: Уникальный идентификатор сессии звонка
+                      example: 123
+                  required:
+                  - access_token
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом create"'
+    href: ../../..#_changeErrors

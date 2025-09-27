@@ -1,0 +1,256 @@
+openapi: 3.0.0
+info:
+  title: Получение истории сделок
+  version: 1.0.0
+  description: Получение истории сделок
+paths:
+  /get.deals_history:
+    get:
+      summary: Получение истории сделок
+      description: 'Получение истории сделок
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 7
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `limit` (number) (опциональный): Количество возвращаемых записей. См. раздел
+        "Постраничный вывод"
+
+
+        - `offset` (number) (опциональный): Сдвиг, определяет с какого номера записи
+        возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+
+
+        - `filter` (object) (опциональный): См. раздел "Критерии фильтрации"
+
+
+        - `fields` (array) (опциональный): См. раздел "Представление возвращаемых
+        данных"
+
+
+        - `sort` (array) (опциональный): См. раздел "Сортировка данных"
+
+
+        **Параметры ответа:** 14
+
+
+        - `ext_id` (string): Внешний идентификатор сделки
+
+
+        - `name` (string): Имя сделки
+
+
+        - `created_date_time` (iso8601): Дата и время создания сделки
+
+
+        - `closed_date_time` (iso8601): Дата и время закрытия сделки
+
+
+        - `modified_stage_date_time` (iso8601): Дата и время перехода сделки в текущий
+        этап
+
+
+        - `contact_ext_ids` (array): Список контактов привязанный к сделке
+
+
+        - `main_contact_ext_id` (string): Главный контакт сделки
+
+
+        - `employee_ext_id` (string): Ответственный сотрудник за сделку
+
+
+        - `revenue` (number): Выручка по сделке
+
+
+        - `sales_funnel_ext_id` (string): Идентификатор воронки продаж
+
+
+        - `stage_ext_id` (string): Идентификатор этапа воронки продаж
+
+
+        - `comments` (string): Комментарий к сделке
+
+
+        - `source` (string): Источник сделки
+
+
+        - `is_generated` (boolean): Автоматически сгенерированный пропущенный этап
+        сделки'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    limit:
+                      type: number
+                      description: Количество возвращаемых записей. См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    offset:
+                      type: number
+                      description: Сдвиг, определяет с какого номера записи возвращать
+                        "limit" записей. По умолчанию "0". См. раздел "Постраничный
+                        вывод"
+                      example: 123
+                    filter:
+                      type: object
+                      description: См. раздел "Критерии фильтрации"
+                    fields:
+                      type: array
+                      description: См. раздел "Представление возвращаемых данных"
+                    sort:
+                      type: array
+                      description: См. раздел "Сортировка данных"
+                  required:
+                  - access_token
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          ext_id:
+                            type: string
+                            description: Внешний идентификатор сделки
+                            example: example_string
+                          name:
+                            type: string
+                            description: Имя сделки
+                            example: example_string
+                          created_date_time:
+                            type: string
+                            description: Дата и время создания сделки
+                          closed_date_time:
+                            type: string
+                            description: Дата и время закрытия сделки
+                          modified_stage_date_time:
+                            type: string
+                            description: Дата и время перехода сделки в текущий этап
+                          contact_ext_ids:
+                            type: array
+                            description: Список контактов привязанный к сделке
+                          main_contact_ext_id:
+                            type: string
+                            description: Главный контакт сделки
+                            example: example_string
+                          employee_ext_id:
+                            type: string
+                            description: Ответственный сотрудник за сделку
+                            example: example_string
+                          revenue:
+                            type: number
+                            description: Выручка по сделке
+                            example: 123
+                          sales_funnel_ext_id:
+                            type: string
+                            description: Идентификатор воронки продаж
+                            example: example_string
+                          stage_ext_id:
+                            type: string
+                            description: Идентификатор этапа воронки продаж
+                            example: example_string
+                          comments:
+                            type: string
+                            description: Комментарий к сделке
+                            example: example_string
+                          source:
+                            type: string
+                            description: Источник сделки
+                            example: example_string
+                          is_generated:
+                            type: boolean
+                            description: Автоматически сгенерированный пропущенный
+                              этап сделки
+                            example: true
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом get"'
+    href: ../..#_getErrors

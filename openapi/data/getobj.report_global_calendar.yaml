@@ -1,0 +1,153 @@
+openapi: 3.0.0
+info:
+  title: Получение глобальных календарей пользователя
+  version: 1.0.0
+  description: Получение глобальных календарей пользователя
+paths:
+  /getobj.report_global_calendar:
+    post:
+      summary: Получение глобальных календарей пользователя
+      description: 'Получение глобальных календарей пользователя
+
+
+        **Доступ:** Агент, Клиент
+
+
+        **Параметры запроса:** 3
+
+
+        - `access_token` (string) (обязательный): Ключ сессии аутентификации
+
+
+        - `user_id` (number) (опциональный): Уникальный идентификатор пользователя
+        клиента агента от имени которого делается запрос
+
+
+        - `id` (number) (опциональный): Уникальный идентификатор глобального календаря
+
+
+        **Параметры ответа:** 3
+
+
+        - `id` (number): Уникальный идентификатор глобального календаря
+
+
+        - `user_id` (number): Уникальный идентификатор пользователя клиента агента
+        от имени которого делается запрос Для получения списка пользователей клиента
+        необходимо использовать метод ["get.customer_users"](../Partners.md#get_customer_user)
+
+
+        - `params` (object): Параметры глобального календаря'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                  example: '2.0'
+                  description: JSON-RPC version
+                id:
+                  type: number
+                  description: Request identifier
+                method:
+                  type: string
+                  example: ''
+                  description: Method name
+                params:
+                  type: object
+                  properties:
+                    access_token:
+                      type: string
+                      description: Ключ сессии аутентификации
+                      example: example_string
+                    user_id:
+                      type: number
+                      description: Уникальный идентификатор пользователя клиента агента
+                        от имени которого делается запрос
+                      example: 123
+                    id:
+                      type: number
+                      description: Уникальный идентификатор глобального календаря
+                      example: 123
+                  required:
+                  - access_token
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                    example: '2.0'
+                    description: JSON-RPC version
+                  id:
+                    type: number
+                    description: Request identifier
+                  result:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                            description: Уникальный идентификатор глобального календаря
+                            example: 123
+                          user_id:
+                            type: number
+                            description: Уникальный идентификатор пользователя клиента
+                              агента от имени которого делается запрос Для получения
+                              списка пользователей клиента необходимо использовать
+                              метод ["get.customer_users"](../Partners.md#get_customer_user)
+                            example: 123
+                          params:
+                            type: object
+                            description: Параметры глобального календаря
+                        required: []
+                      metadata:
+                        type: object
+                        description: Response metadata
+                    required:
+                    - data
+                    - metadata
+                required:
+                - jsonrpc
+                - id
+                - result
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonrpc:
+                    type: string
+                  id:
+                    type: number
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      message:
+                        type: string
+                      data:
+                        type: object
+x-access: Агент, Клиент
+x-errors:
+  errors: []
+  error_references:
+  - text: '"Список ошибок для методов с глаголом getobj"'
+    href: ../../..#_getErrors
