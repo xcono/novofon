@@ -1,0 +1,520 @@
+info:
+  description: Data API
+  title: Novofon Data API - employee.phone_number
+  version: 1.0.0
+openapi: 3.0.0
+paths:
+  /employee/phone_number:
+    post:
+      description: JSON-RPC 2.0 endpoint for employee.phone_number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                id:
+                  type: number
+                jsonrpc:
+                  example: '2.0'
+                  type: string
+                method:
+                  example: employee.phone_number
+                  type: string
+                params:
+                  properties:
+                    '!=':
+                      description: number, string, null, boolean, iso8601, enum
+                      type: Не равно
+                    <:
+                      description: number, iso8601
+                      type: Меньше чем
+                    <=:
+                      description: number, iso8601
+                      type: Меньше или равно
+                    '=':
+                      description: number, string, null, boolean, iso8601, enum
+                      type: Равно
+                    '>':
+                      description: number, iso8601
+                      type: Больше чем
+                    '>=':
+                      description: number, iso8601
+                      type: Больше или равно
+                    A new data limit has been exceeded:
+                      description: Ошибка возникает в случае, если было достигнуто
+                        максимальное количество данных.
+                      type: '-32602'
+                    Access token has been blocked:
+                      description: Если постоянный токен заблокирован, то возвращается
+                        указанная ошибка
+                      type: '-32001'
+                    Access token has been expired:
+                      description: Применяется только к постоянному токену. Если время
+                        жизни постоянного токена истекло, то возвращается указанная
+                        ошибка
+                      type: '-32001'
+                    Access token is invalid:
+                      description: Указанная ошибка возвращается если постоянный/временный
+                        токен не найден
+                      type: '-32001'
+                    ? Action is not allowed for your tariff plan. You need contact
+                      support service or change your tariff plan settings in your
+                      account
+                    : description: Любые ограничения тарифного плана
+                      type: '-32602'
+                    Batch operations not supported:
+                      description: Групповые операции не поддерживаются
+                      type: '-32099'
+                    Campaign is inactive:
+                      description: Рекламная кампания не активна
+                      type: '-32602'
+                    Data supplied is of wrong type:
+                      description: К примеру, если ожидаем string а передали int
+                      type: '-32602'
+                    Duplicate entity:
+                      description: Если сущность уже существует
+                      type: '-32602'
+                    Entity not found:
+                      description: Если передан уникальный идентификатор сущности,
+                        которая не найдена
+                      type: '-32602'
+                    Filter by parameter is prohibited:
+                      description: Фильтрация по параметру запрещена и невозможна,
+                        так как параметр для фильтрации не находится в списке разрешенных
+                        для фильтрации
+                      type: '-32602'
+                    Internal error, contact the support service:
+                      description: Внутренняя ошибка, необходимо обратиться в службу
+                        технической поддержки
+                      type: '-32603'
+                    Invalid JSON was received by the server.:
+                      description: Ошибка валидации JSON
+                      type: '-32700'
+                    Invalid Request The JSON sent is not a valid Request object:
+                      description: Ошибки связанные с валидацией параметров запроса
+                        - id, jsonrpc
+                      type: '-32600'
+                    Invalid date time:
+                      description: Не валидная дата или время, смотрите описание метода
+                      type: '-32602'
+                    Invalid parameter value:
+                      description: Если в фильтрах было передано некорректное значение
+                        для regexp, jsquery или любых значений не соответствующих
+                        документации
+                      type: '-32602'
+                    Limit per {limit_type} has been exceeded. Value of current limit per {limit_type} is {limit_max_value}:
+                      description: Лимит превышен
+                      type: '-32029'
+                    Login or password is wrong:
+                      description: Неправильный логин или пароль
+                      type: '-32001'
+                    Max value of requested date interval is 3 months:
+                      description: Если в запросе период между указанными датами в
+                        date_from и date_till превышает 3 месяца. В основном ошибка
+                        актуальна только для методов получения отчетов, но не для
+                        всех.
+                      type: '-32602'
+                    Notifications not supported:
+                      description: Был потерян параметр id в запросе. См. раздел Общие
+                        параметры для всех методов"
+                      type: '-32099'
+                    Permission denied:
+                      description: Удалить сущность невозможно так как она системная,
+                        к примеру группа "Черный список" в адресной книге
+                      type: '-32602'
+                    Sort by parameter is prohibited:
+                      description: Сортировка по параметру запрещена и невозможна,
+                        так как параметр для сортировки не находится в списке разрешенных
+                        для сортировки
+                      type: '-32602'
+                    The combination of parameters is not permitted:
+                      description: Если параметры указанные в методе находятся в недопустимой
+                        комбинации или имеют зависмость друг от друга. Нужно смотреть
+                        документацию по методу и его параметрам.
+                      type: '-32602'
+                    The method does not exist / is not available:
+                      description: Вызываемый метод не найден
+                      type: '-32601'
+                    The required parameter has been missed:
+                      description: Обязательный параметр не передали
+                      type: '-32602'
+                    This value is already used by another entity:
+                      description: Значение указанного параметра уже используется
+                        в другой сущности. К примеру, виртуальный номер уже используется
+                        в другой рекламной кампании.
+                      type: '-32602'
+                    Unexpected method parameter(s):
+                      description: Передан ошибочный параметр или параметр, которого
+                        не существует
+                      type: '-32602'
+                    You have interdependet entities:
+                      description: Удаляемая сущность используется в других сущностях.
+                        Чтобы удалить, необходимо убрать удаляемую сущность из всех
+                        возможных мест где она используется
+                      type: '-32602'
+                    'You need at least on of the following components to access this method: {components}':
+                      description: Если не подключен компонент, который требуется
+                        для работы метода
+                      type: '-32008'
+                    'You need at least on of the following components to access this paremeter: {components}':
+                      description: Если не подключен компонент, который нужен для
+                        заполнения параметра и создания сущности
+                      type: '-32008'
+                    Your IP {ip} is not whitelisted:
+                      description: IP адрес с которого делается запрос не находится
+                        в белом списке адресов. Если запрос делается из под агента,
+                        то ваш IP адрес должен быть в списках разрешеных адресов внутри
+                        клиентского аккаунта
+                      type: '-32003'
+                    Your account has been disabled, contact the support service:
+                      description: Аккаунт заблокирован
+                      type: '-32009'
+                    code:
+                      description: Не уникальный код ошибки (см. раздел Группы кодов
+                        ошибок )
+                      type: number
+                    data:
+                      description: Объект с деталями ошибки
+                      type: object
+                    error:
+                      description: Объект с содержимым ошибки
+                      type: object
+                    extended_helper:
+                      description: Ссылка на более подробное описание ошибки и возможные
+                        решения
+                      type: string
+                    field:
+                      description: 'Название параметра, с которым связана ошибка Вложенные
+                        параметры отображаются через разделитель точка "."К примеру:
+                        "employee.phone_number"'
+                      type: string
+                    id:
+                      enum:
+                      - Уникальный идентификатор запроса к API
+                      - который используется для связи запроса с ответом.  Рекомендуется
+                        делать в виде уникального хэша или случайного числа.
+                      type: string или number
+                    in:
+                      description: number, string, enum
+                      type: Массив значений в отношении "or"
+                    jsonrpc:
+                      description: '2.0'
+                      enum:
+                      - Номер спецификации JSON-RPC
+                      type: string
+                    jsquery:
+                      description: object, array
+                      type: PostgreSQL jsquery
+                    like:
+                      description: string
+                      type: Начинается с, Заканчивается на, Содержит Используйте "%"
+                    limit:
+                      description: Размер возвращаемых данных (количество записей)
+                      type: '1000'
+                    message:
+                      description: Cообщение об ошибке
+                      type: string
+                    method:
+                      enum:
+                      - Вызываемый метод
+                      type: string
+                    mnemonic:
+                      description: Уникальный текстовый код ошибки. При обработке
+                        ошибок рекомендуется использовать этот параметр.
+                      type: string
+                    offset:
+                      description: Сдвиг, определяет с какого номера записи возвращать
+                        "limit" записей
+                      type: '0'
+                    params:
+                      enum:
+                      - Содержит тело запроса к API. В зависимости от вызываемого
+                        метода тело запроса меняется.
+                      type: object
+                    regexp:
+                      description: string
+                      type: Posix
+                    value:
+                      description: Содержит то, что передал пользователь без изменений
+                        В некоторых случаях может отсутствовать. К примеру, обязательный
+                        параметр вообще не был заполнен.
+                      type: string
+                    '{error_message}':
+                      description: Динамические ошибки
+                      type: '-32602'
+                  required:
+                  - error
+                  - code
+                  - message
+                  - data
+                  - mnemonic
+                  - '='
+                  - '!='
+                  - like
+                  - regexp
+                  - jsquery
+                  - in
+                  - id
+                  - method
+                  - jsonrpc
+                  - params
+                  type: object
+              required:
+              - jsonrpc
+              - id
+              - method
+              - params
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: number
+                  jsonrpc:
+                    example: '2.0'
+                    type: string
+                  result:
+                    properties:
+                      data:
+                        properties:
+                          '!=':
+                            description: number, string, null, boolean, iso8601, enum
+                            type: Не равно
+                          <:
+                            description: number, iso8601
+                            type: Меньше чем
+                          <=:
+                            description: number, iso8601
+                            type: Меньше или равно
+                          '=':
+                            description: number, string, null, boolean, iso8601, enum
+                            type: Равно
+                          '>':
+                            description: number, iso8601
+                            type: Больше чем
+                          '>=':
+                            description: number, iso8601
+                            type: Больше или равно
+                          A new data limit has been exceeded:
+                            description: Ошибка возникает в случае, если было достигнуто
+                              максимальное количество данных.
+                            type: '-32602'
+                          Access token has been blocked:
+                            description: Если постоянный токен заблокирован, то возвращается
+                              указанная ошибка
+                            type: '-32001'
+                          Access token has been expired:
+                            description: Применяется только к постоянному токену.
+                              Если время жизни постоянного токена истекло, то возвращается
+                              указанная ошибка
+                            type: '-32001'
+                          Access token is invalid:
+                            description: Указанная ошибка возвращается если постоянный/временный
+                              токен не найден
+                            type: '-32001'
+                          ? Action is not allowed for your tariff plan. You need contact
+                            support service or change your tariff plan settings in
+                            your account
+                          : description: Любые ограничения тарифного плана
+                            type: '-32602'
+                          Batch operations not supported:
+                            description: Групповые операции не поддерживаются
+                            type: '-32099'
+                          Campaign is inactive:
+                            description: Рекламная кампания не активна
+                            type: '-32602'
+                          Data supplied is of wrong type:
+                            description: К примеру, если ожидаем string а передали
+                              int
+                            type: '-32602'
+                          Duplicate entity:
+                            description: Если сущность уже существует
+                            type: '-32602'
+                          Entity not found:
+                            description: Если передан уникальный идентификатор сущности,
+                              которая не найдена
+                            type: '-32602'
+                          Filter by parameter is prohibited:
+                            description: Фильтрация по параметру запрещена и невозможна,
+                              так как параметр для фильтрации не находится в списке
+                              разрешенных для фильтрации
+                            type: '-32602'
+                          Internal error, contact the support service:
+                            description: Внутренняя ошибка, необходимо обратиться
+                              в службу технической поддержки
+                            type: '-32603'
+                          Invalid JSON was received by the server.:
+                            description: Ошибка валидации JSON
+                            type: '-32700'
+                          Invalid Request The JSON sent is not a valid Request object:
+                            description: Ошибки связанные с валидацией параметров
+                              запроса - id, jsonrpc
+                            type: '-32600'
+                          Invalid date time:
+                            description: Не валидная дата или время, смотрите описание
+                              метода
+                            type: '-32602'
+                          Invalid parameter value:
+                            description: Если в фильтрах было передано некорректное
+                              значение для regexp, jsquery или любых значений не соответствующих
+                              документации
+                            type: '-32602'
+                          Limit per {limit_type} has been exceeded. Value of current limit per {limit_type} is {limit_max_value}:
+                            description: Лимит превышен
+                            type: '-32029'
+                          Login or password is wrong:
+                            description: Неправильный логин или пароль
+                            type: '-32001'
+                          Max value of requested date interval is 3 months:
+                            description: Если в запросе период между указанными датами
+                              в date_from и date_till превышает 3 месяца. В основном
+                              ошибка актуальна только для методов получения отчетов,
+                              но не для всех.
+                            type: '-32602'
+                          Notifications not supported:
+                            description: Был потерян параметр id в запросе. См. раздел
+                              Общие параметры для всех методов"
+                            type: '-32099'
+                          Permission denied:
+                            description: Удалить сущность невозможно так как она системная,
+                              к примеру группа "Черный список" в адресной книге
+                            type: '-32602'
+                          Sort by parameter is prohibited:
+                            description: Сортировка по параметру запрещена и невозможна,
+                              так как параметр для сортировки не находится в списке
+                              разрешенных для сортировки
+                            type: '-32602'
+                          The combination of parameters is not permitted:
+                            description: Если параметры указанные в методе находятся
+                              в недопустимой комбинации или имеют зависмость друг
+                              от друга. Нужно смотреть документацию по методу и его
+                              параметрам.
+                            type: '-32602'
+                          The method does not exist / is not available:
+                            description: Вызываемый метод не найден
+                            type: '-32601'
+                          The required parameter has been missed:
+                            description: Обязательный параметр не передали
+                            type: '-32602'
+                          This value is already used by another entity:
+                            description: Значение указанного параметра уже используется
+                              в другой сущности. К примеру, виртуальный номер уже
+                              используется в другой рекламной кампании.
+                            type: '-32602'
+                          Unexpected method parameter(s):
+                            description: Передан ошибочный параметр или параметр,
+                              которого не существует
+                            type: '-32602'
+                          You have interdependet entities:
+                            description: Удаляемая сущность используется в других
+                              сущностях. Чтобы удалить, необходимо убрать удаляемую
+                              сущность из всех возможных мест где она используется
+                            type: '-32602'
+                          'You need at least on of the following components to access this method: {components}':
+                            description: Если не подключен компонент, который требуется
+                              для работы метода
+                            type: '-32008'
+                          'You need at least on of the following components to access this paremeter: {components}':
+                            description: Если не подключен компонент, который нужен
+                              для заполнения параметра и создания сущности
+                            type: '-32008'
+                          Your IP {ip} is not whitelisted:
+                            description: IP адрес с которого делается запрос не находится
+                              в белом списке адресов. Если запрос делается из под
+                              агента, то ваш IP адрес должен быть в списках разрешеных
+                              адресов внутри клиентского аккаунта
+                            type: '-32003'
+                          Your account has been disabled, contact the support service:
+                            description: Аккаунт заблокирован
+                            type: '-32009'
+                          code:
+                            description: Не уникальный код ошибки (см. раздел Группы
+                              кодов ошибок )
+                            type: number
+                          data:
+                            description: Объект с деталями ошибки
+                            type: object
+                          error:
+                            description: Объект с содержимым ошибки
+                            type: object
+                          extended_helper:
+                            description: Ссылка на более подробное описание ошибки
+                              и возможные решения
+                            type: string
+                          field:
+                            description: 'Название параметра, с которым связана ошибка
+                              Вложенные параметры отображаются через разделитель точка
+                              "."К примеру: "employee.phone_number"'
+                            type: string
+                          id:
+                            type: string или number
+                          in:
+                            description: number, string, enum
+                            type: Массив значений в отношении "or"
+                          jsonrpc:
+                            description: '2.0'
+                            type: string
+                          jsquery:
+                            description: object, array
+                            type: PostgreSQL jsquery
+                          like:
+                            description: string
+                            type: Начинается с, Заканчивается на, Содержит Используйте
+                              "%"
+                          limit:
+                            description: Размер возвращаемых данных (количество записей)
+                            type: '1000'
+                          message:
+                            description: Cообщение об ошибке
+                            type: string
+                          method:
+                            type: string
+                          mnemonic:
+                            description: Уникальный текстовый код ошибки. При обработке
+                              ошибок рекомендуется использовать этот параметр.
+                            type: string
+                          offset:
+                            description: Сдвиг, определяет с какого номера записи
+                              возвращать "limit" записей
+                            type: '0'
+                          params:
+                            type: object
+                          regexp:
+                            description: string
+                            type: Posix
+                          value:
+                            description: Содержит то, что передал пользователь без
+                              изменений В некоторых случаях может отсутствовать. К
+                              примеру, обязательный параметр вообще не был заполнен.
+                            type: string
+                          '{error_message}':
+                            description: Динамические ошибки
+                            type: '-32602'
+                        required:
+                        - error
+                        - code
+                        - message
+                        - data
+                        - mnemonic
+                        - '='
+                        - '!='
+                        - like
+                        - regexp
+                        - jsquery
+                        - in
+                        - id
+                        - method
+                        - jsonrpc
+                        - params
+                        type: object
+                    type: object
+                type: object
+          description: Successful response
+      summary: employee.phone_number endpoint
+servers:
+- description: Novofon API Server
+  url: https://api.novofon.com
