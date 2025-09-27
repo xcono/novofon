@@ -150,6 +150,22 @@ func (g *OpenAPIGenerator) GenerateSpec(apiData *models.APIData) (*OpenAPISpec, 
 	return spec, nil
 }
 
+// cleanText removes unwanted whitespace and newlines from text content
+func cleanText(text string) string {
+	// Remove all types of newlines and excessive whitespace
+	cleaned := strings.ReplaceAll(text, "\n", " ")
+	cleaned = strings.ReplaceAll(cleaned, "\r", " ")
+	cleaned = strings.ReplaceAll(cleaned, "\t", " ")
+
+	// Replace multiple spaces with single space
+	for strings.Contains(cleaned, "  ") {
+		cleaned = strings.ReplaceAll(cleaned, "  ", " ")
+	}
+
+	// Trim leading and trailing whitespace
+	return strings.TrimSpace(cleaned)
+}
+
 // generateOperation generates an operation from API data
 func (g *OpenAPIGenerator) generateOperation(apiData *models.APIData) *Operation {
 	methodInfo := apiData.MethodInfo
@@ -174,7 +190,7 @@ func (g *OpenAPIGenerator) generateDescription(apiData *models.APIData) string {
 	var parts []string
 
 	if apiData.MethodInfo.Description != "" {
-		parts = append(parts, apiData.MethodInfo.Description)
+		parts = append(parts, cleanText(apiData.MethodInfo.Description))
 	}
 
 	if len(apiData.RequestParams) > 0 {
@@ -184,14 +200,14 @@ func (g *OpenAPIGenerator) generateDescription(apiData *models.APIData) string {
 			if param.Required {
 				required = "required"
 			}
-			parts = append(parts, fmt.Sprintf("- `%s` (%s, %s): %s", name, param.Type, required, param.Description))
+			parts = append(parts, fmt.Sprintf("- `%s` (%s, %s): %s", name, param.Type, required, cleanText(param.Description)))
 		}
 	}
 
 	if len(apiData.ResponseParams) > 0 {
 		parts = append(parts, fmt.Sprintf("**Response Parameters:** %d", len(apiData.ResponseParams)))
 		for name, param := range apiData.ResponseParams {
-			parts = append(parts, fmt.Sprintf("- `%s` (%s): %s", name, param.Type, param.Description))
+			parts = append(parts, fmt.Sprintf("- `%s` (%s): %s", name, param.Type, cleanText(param.Description)))
 		}
 	}
 
@@ -402,7 +418,7 @@ func (g *OpenAPIGenerator) generateErrorResponseSchema() Schema {
 func (g *OpenAPIGenerator) generateParameterSchema(param *models.Parameter) Schema {
 	schema := Schema{
 		Type:        g.supportedTypes[param.Type],
-		Description: param.Description,
+		Description: cleanText(param.Description),
 	}
 
 	// Handle allowed values

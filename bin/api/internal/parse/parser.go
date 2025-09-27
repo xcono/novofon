@@ -107,7 +107,7 @@ func (p *Parser) ExtractMethodInfo() (*models.MethodInfo, error) {
 	if descCell.Length() > 0 {
 		nextCell := descCell.Next()
 		if nextCell.Length() > 0 {
-			methodInfo.Description = strings.TrimSpace(nextCell.Text())
+			methodInfo.Description = p.cleanTextContent(nextCell.Text())
 		}
 	}
 
@@ -303,18 +303,34 @@ func (p *Parser) parseParameterRow(cells *goquery.Selection, isRequest bool) *mo
 		param.AllowedValues = strings.TrimSpace(allowedValuesCell.Text())
 
 		descriptionCell := cells.Eq(4)
-		param.Description = strings.TrimSpace(descriptionCell.Text())
+		param.Description = p.cleanTextContent(descriptionCell.Text())
 	} else if !isRequest && cells.Length() >= 4 {
 		// Response parameters: Name, Type, Required, Description
 		descriptionCell := cells.Eq(3)
-		param.Description = strings.TrimSpace(descriptionCell.Text())
+		param.Description = p.cleanTextContent(descriptionCell.Text())
 	} else if cells.Length() >= 4 {
 		// Fallback: assume description is in the last cell
 		descriptionCell := cells.Eq(cells.Length() - 1)
-		param.Description = strings.TrimSpace(descriptionCell.Text())
+		param.Description = p.cleanTextContent(descriptionCell.Text())
 	}
 
 	return param
+}
+
+// cleanTextContent removes unwanted whitespace and newlines from text content
+func (p *Parser) cleanTextContent(text string) string {
+	// Remove all types of newlines and excessive whitespace
+	cleaned := strings.ReplaceAll(text, "\n", " ")
+	cleaned = strings.ReplaceAll(cleaned, "\r", " ")
+	cleaned = strings.ReplaceAll(cleaned, "\t", " ")
+
+	// Replace multiple spaces with single space
+	for strings.Contains(cleaned, "  ") {
+		cleaned = strings.ReplaceAll(cleaned, "  ", " ")
+	}
+
+	// Trim leading and trailing whitespace
+	return strings.TrimSpace(cleaned)
 }
 
 // determineHTTPMethod determines HTTP method based on method name
