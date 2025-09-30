@@ -7,7 +7,104 @@ paths:
     /get.column_transfer_reports_list:
         get:
             summary: Получение возможного списка отчетов для перехода по столбцу
-            description: Получение возможного списка отчетов для перехода по столбцу
+            description: |-
+                Получение возможного списка отчетов для перехода по столбцу
+
+                **Request Parameters:** 9
+
+                - `fields` (array, optional): См. раздел "Представление возвращаемых данных"
+
+                - `sort` (array, optional): См. раздел "Сортировка данных"
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `report_type` (enum, required): Тип отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод "get.reports_list"
+
+                - `limit` (number, optional): Количество возвращаемых записей. См. раздел "Постраничный вывод"
+
+                - `filter` (object, optional): См. раздел "Критерии фильтрации"
+
+                - `offset` (number, optional): Сдвиг - определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+
+                - `id` (string, required): Мнемоника столбца по которому осуществляется переход.Список доступных столбцов для перехода определяется по параметру is_transition в методе "getobj.columns_tree"
+
+                **Response Parameters:** 6
+
+                - `group_id` (number): да
+
+                - `filter_field` (string): да
+
+                - `id` (number): да
+
+                - `type` (enum): да
+
+                - `name` (string): да
+
+                - `description` (string): да
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: get.column_transfer_reports_list
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        fields:
+                                            type: array
+                                            description: См. раздел "Представление возвращаемых данных"
+                                        filter:
+                                            type: object
+                                            description: См. раздел "Критерии фильтрации"
+                                        id:
+                                            type: string
+                                            description: Мнемоника столбца по которому осуществляется переход.Список доступных столбцов для перехода определяется по параметру is_transition в методе "getobj.columns_tree"
+                                            example: example_string
+                                        limit:
+                                            type: number
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                        offset:
+                                            type: number
+                                            description: Сдвиг - определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                        report_type:
+                                            type: string
+                                            description: Тип отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод "get.reports_list"
+                                        sort:
+                                            type: array
+                                            description: См. раздел "Сортировка данных"
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - id
+                                        - access_token
+                                        - report_type
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response
@@ -28,6 +125,30 @@ paths:
                                         properties:
                                             data:
                                                 type: object
+                                                properties:
+                                                    description:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    filter_field:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    group_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    type:
+                                                        type: string
+                                                        description: да
                                             metadata:
                                                 type: object
                                                 description: Response metadata

@@ -7,7 +7,86 @@ paths:
     /get.deals:
         get:
             summary: Получение списка всех сделок
-            description: Получение списка всех сделок
+            description: "Получение списка всех сделок\n\n**Request Parameters:** 14\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать `\"limit\"` записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `report_id` (number, required): Уникальный идентификатор отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод \"get.reports_list\"\n\n- `filters` (array, required): Выражение, может содержать в себе как простые фильтры, так и дерево фильтров. Доступный список фильтров для отчета с их возможными значениями см.раздел \"Получение списка возможных условий фильтрации для отчета\" .\n\n- `value` (string, optional): Значение для оператора фильтрации. Необязательное поле, если оно отсутствует, то считается пустота.\n\n- `date_from` (iso8601, required): Дата начала основной выборки(ограничение 366 дней)\n\n- `date_till` (iso8601, required): Дата окончания основной выборки\n\n- `fields` (array, optional): Список идентификаторов пользовательских столбцов, разделенных запятой. Доступный список столбцов см.раздел \"Получение вложенности столбцов\" . Порядок влияет на ответ.\n\n- `filter` (object, optional): Фильтры применяемые в отчете. Логика построения аналогична \"Критерии фильтрации\"\n\n- `field` (string, optional): Поле сущности к которой будет применяться фильтрация (список заранее определён для метода)\n\n- `operator` (enum, optional): Оператор фильтрации. Список всех операторов можно получить в разделе \"Операторы фильтрации\"\n\n- `sort` (array, optional): Сортировка применяемая в отчете. Логика построения аналогична \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n**Response Parameters:** 43\n\n- `campaign_name` (string): да\n\n- `deal_name` (object): да\n\n- `deal_current_stage_date` (iso8601): да\n\n- `deal_ext_id` (string): да\n\n- `communication_type` (object): да\n\n- `value_id` (string): \n\n- `deal_source` (string): да\n\n- `date_time` (number): \n\n- `lead_name` (object): да\n\n- `lead_utm_medium` (string): да\n\n- `lead_utm_source` (string): да\n\n- `communication_date_time` (iso8601): да\n\n- `deal_employee` (string): да\n\n- `site_name` (string): да\n\n- `deal_contact_ext_id` (string): да\n\n- `lead_employee` (string): да\n\n- `lead_utm_campaign` (string): да\n\n- `deal_date_time` (iso8601): да\n\n- `value_url` (string): \n\n- `deal_revenue` (number): да\n\n- `deal_cycle` (number): да\n\n- `type` (object): \n\n- `deal_finish_date` (iso8601): да\n\n- `value` (string): \n\n- `deal_comments` (string): да\n\n- `days_before_start_deal` (number): да\n\n- `lead_source` (string): да\n\n- `site_domain_name` (string): да\n\n- `id` (number): \n\n- `lead_utm_content` (string): да\n\n- `days_before_finish_deal` (number): да\n\n- `communication_id` (string): да\n\n- `deal_contact_emails` (array): да\n\n- `deal_current_funnel` (string): да\n\n- `stage_before_failure` (string): да\n\n- `deal_contact` (object): да\n\n- `deal_contact_phone_numbers` (array): да\n\n- `visitor_id` (number): да\n\n- `deal_current_stage` (string): да\n\n- `deal_company` (object): да\n\n- `communication` (array): нет\n\n- `lead_contact` (object): да\n\n- `lead_utm_term` (string): да"
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: get.deals
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        date_from:
+                                            description: Дата начала основной выборки(ограничение 366 дней)
+                                        date_till:
+                                            description: Дата окончания основной выборки
+                                        field:
+                                            type: string
+                                            description: Поле сущности к которой будет применяться фильтрация (список заранее определён для метода)
+                                            example: example_string
+                                        fields:
+                                            type: array
+                                            description: Список идентификаторов пользовательских столбцов, разделенных запятой. Доступный список столбцов см.раздел "Получение вложенности столбцов" . Порядок влияет на ответ.
+                                        filter:
+                                            type: object
+                                            description: Фильтры применяемые в отчете. Логика построения аналогична "Критерии фильтрации"
+                                        filters:
+                                            type: array
+                                            description: Выражение, может содержать в себе как простые фильтры, так и дерево фильтров. Доступный список фильтров для отчета с их возможными значениями см.раздел "Получение списка возможных условий фильтрации для отчета" .
+                                        limit:
+                                            type: number
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                        offset:
+                                            type: number
+                                            description: Сдвиг, определяет с какого номера записи возвращать `"limit"` записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                        operator:
+                                            type: string
+                                            description: Оператор фильтрации. Список всех операторов можно получить в разделе "Операторы фильтрации"
+                                        report_id:
+                                            type: number
+                                            description: Уникальный идентификатор отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод "get.reports_list"
+                                            example: 123
+                                        sort:
+                                            type: array
+                                            description: Сортировка применяемая в отчете. Логика построения аналогична "Сортировка данных"
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                        value:
+                                            type: string
+                                            description: Значение для оператора фильтрации. Необязательное поле, если оно отсутствует, то считается пустота.
+                                            example: example_string
+                                    required:
+                                        - date_till
+                                        - access_token
+                                        - report_id
+                                        - filters
+                                        - date_from
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response
@@ -28,6 +107,155 @@ paths:
                                         properties:
                                             data:
                                                 type: object
+                                                properties:
+                                                    campaign_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    communication:
+                                                        type: array
+                                                        description: нет
+                                                    communication_date_time:
+                                                        description: да
+                                                    communication_id:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    communication_type:
+                                                        type: object
+                                                        description: да
+                                                    date_time:
+                                                        type: number
+                                                        example: 123
+                                                    days_before_finish_deal:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    days_before_start_deal:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    deal_comments:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    deal_company:
+                                                        type: object
+                                                        description: да
+                                                    deal_contact:
+                                                        type: object
+                                                        description: да
+                                                    deal_contact_emails:
+                                                        type: array
+                                                        description: да
+                                                    deal_contact_ext_id:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    deal_contact_phone_numbers:
+                                                        type: array
+                                                        description: да
+                                                    deal_current_funnel:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    deal_current_stage:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    deal_current_stage_date:
+                                                        description: да
+                                                    deal_cycle:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    deal_date_time:
+                                                        description: да
+                                                    deal_employee:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    deal_ext_id:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    deal_finish_date:
+                                                        description: да
+                                                    deal_name:
+                                                        type: object
+                                                        description: да
+                                                    deal_revenue:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    deal_source:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    id:
+                                                        type: number
+                                                        example: 123
+                                                    lead_contact:
+                                                        type: object
+                                                        description: да
+                                                    lead_employee:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    lead_name:
+                                                        type: object
+                                                        description: да
+                                                    lead_source:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    lead_utm_campaign:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    lead_utm_content:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    lead_utm_medium:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    lead_utm_source:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    lead_utm_term:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    site_domain_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    site_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    stage_before_failure:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    type:
+                                                        type: object
+                                                    value:
+                                                        type: string
+                                                        example: example_string
+                                                    value_id:
+                                                        type: string
+                                                        example: example_string
+                                                    value_url:
+                                                        type: string
+                                                        example: example_string
+                                                    visitor_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
                                             metadata:
                                                 type: object
                                                 description: Response metadata

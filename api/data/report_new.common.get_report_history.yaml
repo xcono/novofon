@@ -7,7 +7,48 @@ paths:
     /get.report_history:
         get:
             summary: Получение всех изменений состояния отчета
-            description: Получение всех изменений состояния отчета
+            description: "Получение всех изменений состояния отчета\n\n**Request Parameters:** 3\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `id` (number, required): Уникальный идентификатор отчета пользователя\n\n**Response Parameters:** 5\n\n- `id` (number): да\n\n- `type` (enum): да\n\n- `name` (string): да\n\n- `state` (object): \n\n- `change_date_time` (iso8601): "
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: get.report_history
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        id:
+                                            type: number
+                                            description: Уникальный идентификатор отчета пользователя
+                                            example: 123
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - access_token
+                                        - id
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response
@@ -28,6 +69,21 @@ paths:
                                         properties:
                                             data:
                                                 type: object
+                                                properties:
+                                                    change_date_time: {}
+                                                    id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    state:
+                                                        type: object
+                                                    type:
+                                                        type: string
+                                                        description: да
                                             metadata:
                                                 type: object
                                                 description: Response metadata

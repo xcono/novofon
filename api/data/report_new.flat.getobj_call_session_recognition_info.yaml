@@ -7,7 +7,51 @@ paths:
     /getobj.call_session_recognition_info:
         post:
             summary: Получение информация о распознавании сеанса звонка
-            description: Получение информация о распознавании сеанса звонка
+            description: "Получение информация о распознавании сеанса звонка\n\n**Request Parameters:** 4\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `call_session_id` (number, required): Уникальный идентификатор сессии звонка\n\n- `search_text` (array, optional): Список фраз для поиска\n\n**Response Parameters:** 12\n\n- `edited_phrase` (string): \n\n- `recognition_worker_type` (string): \n\n- `speech_phrases` (array): да\n\n- `phrase` (string): \n\n- `is_operator` (boolean): \n\n- `call_records` (array): \n\n- `call_start_date_time` (iso8601): \n\n- `contact_phone_number` (string): \n\n- `id` (number): \n\n- `ext_id` (number): \n\n- `speech_id` (number): \n\n- `start_time` (iso8601): YYYY-MM-DD hh:mm:ss"
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: getobj.call_session_recognition_info
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        call_session_id:
+                                            type: number
+                                            description: Уникальный идентификатор сессии звонка
+                                            example: 123
+                                        search_text:
+                                            type: array
+                                            description: Список фраз для поиска
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - access_token
+                                        - call_session_id
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response
@@ -28,6 +72,41 @@ paths:
                                         properties:
                                             data:
                                                 type: object
+                                                properties:
+                                                    call_records:
+                                                        type: array
+                                                    call_start_date_time: {}
+                                                    contact_phone_number:
+                                                        type: string
+                                                        example: example_string
+                                                    edited_phrase:
+                                                        type: string
+                                                        example: example_string
+                                                    ext_id:
+                                                        type: number
+                                                        example: 123
+                                                    id:
+                                                        type: number
+                                                        example: 123
+                                                    is_operator:
+                                                        type: boolean
+                                                        example: true
+                                                    phrase:
+                                                        type: string
+                                                        example: example_string
+                                                    recognition_worker_type:
+                                                        type: string
+                                                        example: example_string
+                                                    speech_id:
+                                                        type: number
+                                                        example: 123
+                                                    speech_phrases:
+                                                        type: array
+                                                        description: да
+                                                    start_time:
+                                                        description: YYYY-MM-DD hh:mm:ss
+                                                required:
+                                                    - start_time
                                             metadata:
                                                 type: object
                                                 description: Response metadata

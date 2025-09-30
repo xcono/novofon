@@ -7,7 +7,159 @@ paths:
     /get.person_details:
         get:
             summary: История клиента
-            description: История клиента
+            description: |-
+                История клиента
+
+                **Request Parameters:** 15
+
+                - `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать `"limit"` записей. По умолчанию "0". См. раздел "Постраничный вывод"
+
+                - `fields` (array, optional): Список идентификаторов пользовательских столбцов, разделенных запятой. Доступный список столбцов см.раздел "Получение вложенности столбцов" . Порядок влияет на ответ.
+
+                - `value` (string, optional): Значение для оператора фильтрации. Необязательное поле, если оно отсутствует, то считается пустота.
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `limit` (number, optional): Количество возвращаемых записей. См. раздел "Постраничный вывод"
+
+                - `entity_ids` (array, required): Уникальные идентификаторы Персоны
+
+                - `date_from` (iso8601, required): Дата начала основной выборки(ограничение 366 дней)
+
+                - `sort` (array, optional): Сортировка применяемая в отчете. Логика построения аналогична "Сортировка данных"
+
+                - `date_till` (iso8601, required): Дата окончания основной выборки
+
+                - `filter` (object, optional): Фильтры применяемые в отчете. Логика построения аналогична "Критерии фильтрации"
+
+                - `field` (string, optional): Поле сущности к которой будет применяться фильтрация (список заранее определён для метода)
+
+                - `operator` (enum, optional): Оператор фильтрации. Список всех операторов можно получить в разделе "Операторы фильтрации"
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `report_id` (number, required): Уникальный идентификатор отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод "get.reports_list"
+
+                - `filters` (array, required): Выражение, может содержать в себе как простые фильтры, так и дерево фильтров. Доступный список фильтров для отчета с их возможными значениями см.раздел "Получение списка возможных условий фильтрации для отчета" .
+
+                **Response Parameters:** 17
+
+                - `first_lead_date_time` (iso8601): да
+
+                - `visitor_names` (array): да
+
+                - `visitor_ids` (array): да
+
+                - `first_deal_date_time` (iso8601): да
+
+                - `visitor_phones` (array): да
+
+                - `visits_count` (numeric): да
+
+                - `visitor_emails` (array): да
+
+                - `deals_count` (numeric): да
+
+                - `leads_count` (numeric): да
+
+                - `deal_revenue` (numeric): да
+
+                - `last_visit_date_time` (iso8601): да
+
+                - `first_communication_date_time` (iso8601): да
+
+                - `communicatons_count` (numeric): да
+
+                - `avg_deal_revenue` (numeric): да
+
+                - `person_events` (array): да
+
+                - `person_id` (string): да
+
+                - `first_visit_date_time` (iso8601): да
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: get.person_details
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        date_from:
+                                            description: Дата начала основной выборки(ограничение 366 дней)
+                                        date_till:
+                                            description: Дата окончания основной выборки
+                                        entity_ids:
+                                            type: array
+                                            description: Уникальные идентификаторы Персоны
+                                        field:
+                                            type: string
+                                            description: Поле сущности к которой будет применяться фильтрация (список заранее определён для метода)
+                                            example: example_string
+                                        fields:
+                                            type: array
+                                            description: Список идентификаторов пользовательских столбцов, разделенных запятой. Доступный список столбцов см.раздел "Получение вложенности столбцов" . Порядок влияет на ответ.
+                                        filter:
+                                            type: object
+                                            description: Фильтры применяемые в отчете. Логика построения аналогична "Критерии фильтрации"
+                                        filters:
+                                            type: array
+                                            description: Выражение, может содержать в себе как простые фильтры, так и дерево фильтров. Доступный список фильтров для отчета с их возможными значениями см.раздел "Получение списка возможных условий фильтрации для отчета" .
+                                        limit:
+                                            type: number
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                        offset:
+                                            type: number
+                                            description: Сдвиг, определяет с какого номера записи возвращать `"limit"` записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                        operator:
+                                            type: string
+                                            description: Оператор фильтрации. Список всех операторов можно получить в разделе "Операторы фильтрации"
+                                        report_id:
+                                            type: number
+                                            description: Уникальный идентификатор отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод "get.reports_list"
+                                            example: 123
+                                        sort:
+                                            type: array
+                                            description: Сортировка применяемая в отчете. Логика построения аналогична "Сортировка данных"
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                        value:
+                                            type: string
+                                            description: Значение для оператора фильтрации. Необязательное поле, если оно отсутствует, то считается пустота.
+                                            example: example_string
+                                    required:
+                                        - date_till
+                                        - access_token
+                                        - report_id
+                                        - filters
+                                        - entity_ids
+                                        - date_from
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response
@@ -28,6 +180,48 @@ paths:
                                         properties:
                                             data:
                                                 type: object
+                                                properties:
+                                                    avg_deal_revenue:
+                                                        description: да
+                                                    communicatons_count:
+                                                        description: да
+                                                    deal_revenue:
+                                                        description: да
+                                                    deals_count:
+                                                        description: да
+                                                    first_communication_date_time:
+                                                        description: да
+                                                    first_deal_date_time:
+                                                        description: да
+                                                    first_lead_date_time:
+                                                        description: да
+                                                    first_visit_date_time:
+                                                        description: да
+                                                    last_visit_date_time:
+                                                        description: да
+                                                    leads_count:
+                                                        description: да
+                                                    person_events:
+                                                        type: array
+                                                        description: да
+                                                    person_id:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    visitor_emails:
+                                                        type: array
+                                                        description: да
+                                                    visitor_ids:
+                                                        type: array
+                                                        description: да
+                                                    visitor_names:
+                                                        type: array
+                                                        description: да
+                                                    visitor_phones:
+                                                        type: array
+                                                        description: да
+                                                    visits_count:
+                                                        description: да
                                             metadata:
                                                 type: object
                                                 description: Response metadata

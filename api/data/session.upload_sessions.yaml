@@ -7,7 +7,292 @@ paths:
     /upload.sessions:
         post:
             summary: Загрузка сессий
-            description: Загрузка сессий для сквозной аналитики
+            description: |-
+                Загрузка сессий для сквозной аналитики
+
+                **Request Parameters:** 42
+
+                - `duration` (number, optional): Продолжительность сессии, значение в секундах
+
+                - `visitor_screen` (string, optional): Разрешение монитора посетителя
+
+                - `openstat_ad` (string, optional): Идентификатор рекламного объявления
+
+                - `gclid` (string, optional): Google Click Identifier
+
+                - `visitor_browser_name` (string, optional): Браузер посетителя
+
+                - `is_visitor_new` (boolean, required): Является ли посетитель новым
+
+                - `campaign_id` (number, optional): Уникальный идентификатор рекламной кампании. Если не указано, то попытаемся определить кампанию по переданным параметрам. Если не смогли определить, то сессия присваивается рекламной кампании c campaign_id = -1 Посетители без рекламной капании
+
+                - `ym_client_id` (string, optional): Уникальный идентификатор пользователя Яндекс.Метрики
+
+                - `adv_system` (number, optional): Идентификатор рекламной системы
+
+                - `utm_campaign` (string, optional): UTM-campaign
+
+                - `utm_referrer` (string, optional): Источник перехода на сайт
+
+                - `ext_id` (string, required): Уникальный идентификатор сессии во внешней системе. Дубликаты отбрасываются в момент загрузки сессий в базу данных. Для сопоставления ext_id и внутреннего id сессии используйте метод "get.visitor_sessions_report"
+
+                - `visitor_id` (number, optional): Уникальный идентификатор посетителя
+
+                - `visitor_browser_version` (string, optional): Версия браузера посетителя
+
+                - `visitor_os_version` (string, optional): Версия операционной системы посетителя
+
+                - `search_engine` (string, optional): Поисковая система
+
+                - `search_query` (string, optional): Поисковый запрос
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `utm_medium` (string, optional): UTM-medium
+
+                - `utm_term` (string, optional): UTM-term
+
+                - `utm_content` (string, optional): UTM-content
+
+                - `utm_expid` (string, optional): Идентификатор эксперимента в Google Analytics
+
+                - `ef_id` (string, optional): Используется для разметки ссылок в системе управления контекстной рекламой AdLense
+
+                - `tag_from` (string, optional): Пользовательская метка
+
+                - `entrance_page_url` (string, optional): URL страницы посещения(Страница входа).
+
+                - `site_id` (number, required): Уникальный идентификатор сайта
+
+                - `visitor_ip_address` (string, required): IP-адрес посетителя
+
+                - `visitor_os_name` (string, optional): Название операционной системы посетителя
+
+                - `ua_client_id` (string, optional): Уникальный идентификатор в Universal Analytics
+
+                - `openstat_campaign` (string, optional): Идентификатор рекламной кампании
+
+                - `yclid` (string, optional): Yandex Click Identifier
+
+                - `ymclid` (string, optional): Yandex Market Click Identifier
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `visitor_device` (enum, optional): Устройство посетителя
+
+                - `visitor_language` (string, optional): Локализация устройства посетителя
+
+                - `openstat_service` (string, optional): Идентификатор сервиса, предоставляющего услуги
+
+                - `openstat_source` (string, optional): Идентификатор площадки, раздела, страницы, места на странице, на котором было показано соответствующее рекламное объявление
+
+                - `cm_id` (string, optional): Метка добавляемая в url объявлений внешних рекламных систем при интеграции. Смотрите подробнее компоновку метки cm_id для конкретной рекламной системы.
+
+                - `entrance_page_title` (string, optional): Название страницы посещения. Если не передано будет null в карточке клиента
+
+                - `utm_source` (string, optional): UTM-source
+
+                - `date_time` (iso8601, required): Дата и время сессии.Данные будут скорректированы с учетом указанной таймзоны в личном кабинете. Дата не должна быть больше текущего времени и меньше 2011-01-01 00:00:00
+
+                - `referrer` (string, optional): Источник перехода
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: upload.sessions
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        adv_system:
+                                            type: number
+                                            description: Идентификатор рекламной системы
+                                            example: 123
+                                        campaign_id:
+                                            type: number
+                                            description: Уникальный идентификатор рекламной кампании. Если не указано, то попытаемся определить кампанию по переданным параметрам. Если не смогли определить, то сессия присваивается рекламной кампании c campaign_id = -1 Посетители без рекламной капании
+                                            example: 123
+                                        cm_id:
+                                            type: string
+                                            description: Метка добавляемая в url объявлений внешних рекламных систем при интеграции. Смотрите подробнее компоновку метки cm_id для конкретной рекламной системы.
+                                            example: example_string
+                                        date_time:
+                                            description: Дата и время сессии.Данные будут скорректированы с учетом указанной таймзоны в личном кабинете. Дата не должна быть больше текущего времени и меньше 2011-01-01 00:00:00
+                                        duration:
+                                            type: number
+                                            description: Продолжительность сессии, значение в секундах
+                                            example: 123
+                                        ef_id:
+                                            type: string
+                                            description: Используется для разметки ссылок в системе управления контекстной рекламой AdLense
+                                            example: example_string
+                                        entrance_page_title:
+                                            type: string
+                                            description: Название страницы посещения. Если не передано будет null в карточке клиента
+                                            example: example_string
+                                        entrance_page_url:
+                                            type: string
+                                            description: URL страницы посещения(Страница входа).
+                                            example: example_string
+                                        ext_id:
+                                            type: string
+                                            description: Уникальный идентификатор сессии во внешней системе. Дубликаты отбрасываются в момент загрузки сессий в базу данных. Для сопоставления ext_id и внутреннего id сессии используйте метод "get.visitor_sessions_report"
+                                            example: example_string
+                                        gclid:
+                                            type: string
+                                            description: Google Click Identifier
+                                            example: example_string
+                                        is_visitor_new:
+                                            type: boolean
+                                            description: Является ли посетитель новым
+                                            example: true
+                                        openstat_ad:
+                                            type: string
+                                            description: Идентификатор рекламного объявления
+                                            example: example_string
+                                        openstat_campaign:
+                                            type: string
+                                            description: Идентификатор рекламной кампании
+                                            example: example_string
+                                        openstat_service:
+                                            type: string
+                                            description: Идентификатор сервиса, предоставляющего услуги
+                                            example: example_string
+                                        openstat_source:
+                                            type: string
+                                            description: Идентификатор площадки, раздела, страницы, места на странице, на котором было показано соответствующее рекламное объявление
+                                            example: example_string
+                                        referrer:
+                                            type: string
+                                            description: Источник перехода
+                                            example: example_string
+                                        search_engine:
+                                            type: string
+                                            description: Поисковая система
+                                            example: example_string
+                                        search_query:
+                                            type: string
+                                            description: Поисковый запрос
+                                            example: example_string
+                                        site_id:
+                                            type: number
+                                            description: Уникальный идентификатор сайта
+                                            example: 123
+                                        tag_from:
+                                            type: string
+                                            description: Пользовательская метка
+                                            example: example_string
+                                        ua_client_id:
+                                            type: string
+                                            description: Уникальный идентификатор в Universal Analytics
+                                            example: example_string
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                        utm_campaign:
+                                            type: string
+                                            description: UTM-campaign
+                                            example: example_string
+                                        utm_content:
+                                            type: string
+                                            description: UTM-content
+                                            example: example_string
+                                        utm_expid:
+                                            type: string
+                                            description: Идентификатор эксперимента в Google Analytics
+                                            example: example_string
+                                        utm_medium:
+                                            type: string
+                                            description: UTM-medium
+                                            example: example_string
+                                        utm_referrer:
+                                            type: string
+                                            description: Источник перехода на сайт
+                                            example: example_string
+                                        utm_source:
+                                            type: string
+                                            description: UTM-source
+                                            example: example_string
+                                        utm_term:
+                                            type: string
+                                            description: UTM-term
+                                            example: example_string
+                                        visitor_browser_name:
+                                            type: string
+                                            description: Браузер посетителя
+                                            example: example_string
+                                        visitor_browser_version:
+                                            type: string
+                                            description: Версия браузера посетителя
+                                            example: example_string
+                                        visitor_device:
+                                            type: string
+                                            description: Устройство посетителя
+                                        visitor_id:
+                                            type: number
+                                            description: Уникальный идентификатор посетителя
+                                            example: 123
+                                        visitor_ip_address:
+                                            type: string
+                                            description: IP-адрес посетителя
+                                            example: example_string
+                                        visitor_language:
+                                            type: string
+                                            description: Локализация устройства посетителя
+                                            example: example_string
+                                        visitor_os_name:
+                                            type: string
+                                            description: Название операционной системы посетителя
+                                            example: example_string
+                                        visitor_os_version:
+                                            type: string
+                                            description: Версия операционной системы посетителя
+                                            example: example_string
+                                        visitor_screen:
+                                            type: string
+                                            description: Разрешение монитора посетителя
+                                            example: example_string
+                                        yclid:
+                                            type: string
+                                            description: Yandex Click Identifier
+                                            example: example_string
+                                        ym_client_id:
+                                            type: string
+                                            description: Уникальный идентификатор пользователя Яндекс.Метрики
+                                            example: example_string
+                                        ymclid:
+                                            type: string
+                                            description: Yandex Market Click Identifier
+                                            example: example_string
+                                    required:
+                                        - date_time
+                                        - is_visitor_new
+                                        - ext_id
+                                        - site_id
+                                        - visitor_ip_address
+                                        - access_token
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response

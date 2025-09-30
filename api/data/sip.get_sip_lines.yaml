@@ -7,7 +7,60 @@ paths:
     /get.sip_lines:
         get:
             summary: Получение списка SIP-линий
-            description: Получение списка SIP-линий
+            description: "Получение списка SIP-линий\n\n**Request Parameters:** 7\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n**Response Parameters:** 15\n\n- `physical_state` (enum): да\n\n- `employee_id` (number): да\n\n- `employee_full_name` (string): да\n\n- `ip_addresses` (array): да\n\n- `IP-адреса` (): \n\n- `date_time` (iso8601): \n\n- `id` (number): да\n\n- `channels_count` (number): \n\n- `status` (enum): да\n\n- `ip` (string): \n\n- `phone_number` (string): да\n\n- `type` (enum): да\n\n- `dial_time` (number): \n\n- `billing_state` (enum): да\n\n- `virtual_phone_number` (string): да"
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: get.sip_lines
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        fields:
+                                            type: array
+                                            description: См. раздел "Представление возвращаемых данных"
+                                        filter:
+                                            type: object
+                                            description: См. раздел "Критерии фильтрации"
+                                        limit:
+                                            type: number
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                        offset:
+                                            type: number
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                        sort:
+                                            type: array
+                                            description: См. раздел "Сортировка данных"
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - access_token
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response
@@ -28,6 +81,53 @@ paths:
                                         properties:
                                             data:
                                                 type: object
+                                                properties:
+                                                    IP-адреса: {}
+                                                    billing_state:
+                                                        type: string
+                                                        description: да
+                                                    channels_count:
+                                                        type: number
+                                                        example: 123
+                                                    date_time: {}
+                                                    dial_time:
+                                                        type: number
+                                                        example: 123
+                                                    employee_full_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    employee_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    ip:
+                                                        type: string
+                                                        example: example_string
+                                                    ip_addresses:
+                                                        type: array
+                                                        description: да
+                                                    phone_number:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    physical_state:
+                                                        type: string
+                                                        description: да
+                                                    status:
+                                                        type: string
+                                                        description: да
+                                                    type:
+                                                        type: string
+                                                        description: да
+                                                    virtual_phone_number:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
                                             metadata:
                                                 type: object
                                                 description: Response metadata

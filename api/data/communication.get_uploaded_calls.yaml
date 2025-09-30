@@ -7,7 +7,74 @@ paths:
     /get.uploaded_calls:
         get:
             summary: Получение информации о загрузке звонков.
-            description: Получение информации о загрузке звонков
+            description: |-
+                Получение информации о загрузке звонков
+
+                **Response Parameters:** 32
+
+                - `source_id` (number): да
+
+                - `upload_time` (iso8601): нет
+
+                - `employee_name` (string): нет
+
+                - `ext_request_id` (string): да
+
+                - `talk_duration` (number): да
+
+                - `error_code` (enum): да
+
+                - `employee_id` (number): нет
+
+                - `start_time` (iso8601): да
+
+                - `call_session_id` (number): да
+
+                - `events` (array): нет
+
+                - `tag_id` (number): нет
+
+                - `is_transfer` (boolean): да
+
+                - `campaign_id` (number): да
+
+                - `status` (enum): да
+
+                - `callback` (object): нет
+
+                - `records` (array): нет
+
+                - `employee_channel` (enum): нет
+
+                - `direction` (enum): да
+
+                - `site_id` (number): да
+
+                - `record_type` (enum): да
+
+                - `url` (string): нет
+
+                - `tags` (array): нет
+
+                - `tag_name` (string): нет
+
+                - `record_url` (string): нет
+
+                - `calling_phone_number` (string): да
+
+                - `finish_time` (iso8601): да
+
+                - `called_phone_number` (string): да
+
+                - `wait_duration` (number): да
+
+                - `visitor_session_id` (number): да
+
+                - `comment` (string): да
+
+                - `ext_id` (string): да
+
+                - `is_lost` (boolean): да
             responses:
                 "200":
                     description: Successful response
@@ -28,6 +95,120 @@ paths:
                                         properties:
                                             data:
                                                 type: object
+                                                properties:
+                                                    call_session_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    callback:
+                                                        type: object
+                                                        description: нет
+                                                    called_phone_number:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    calling_phone_number:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    campaign_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    comment:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    direction:
+                                                        type: string
+                                                        description: да
+                                                    employee_channel:
+                                                        type: string
+                                                        description: нет
+                                                    employee_id:
+                                                        type: number
+                                                        description: нет
+                                                        example: 123
+                                                    employee_name:
+                                                        type: string
+                                                        description: нет
+                                                        example: example_string
+                                                    error_code:
+                                                        type: string
+                                                        description: да
+                                                    events:
+                                                        type: array
+                                                        description: нет
+                                                    ext_id:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    ext_request_id:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    finish_time:
+                                                        description: да
+                                                    is_lost:
+                                                        type: boolean
+                                                        description: да
+                                                        example: true
+                                                    is_transfer:
+                                                        type: boolean
+                                                        description: да
+                                                        example: true
+                                                    record_type:
+                                                        type: string
+                                                        description: да
+                                                    record_url:
+                                                        type: string
+                                                        description: нет
+                                                        example: example_string
+                                                    records:
+                                                        type: array
+                                                        description: нет
+                                                    site_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    source_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    start_time:
+                                                        description: да
+                                                    status:
+                                                        type: string
+                                                        description: да
+                                                    tag_id:
+                                                        type: number
+                                                        description: нет
+                                                        example: 123
+                                                    tag_name:
+                                                        type: string
+                                                        description: нет
+                                                        example: example_string
+                                                    tags:
+                                                        type: array
+                                                        description: нет
+                                                    talk_duration:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    upload_time:
+                                                        description: нет
+                                                    url:
+                                                        type: string
+                                                        description: нет
+                                                        example: example_string
+                                                    visitor_session_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    wait_duration:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
                                             metadata:
                                                 type: object
                                                 description: Response metadata

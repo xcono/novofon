@@ -7,7 +7,56 @@ paths:
     /update.report_global_calendar:
         put:
             summary: Редактирование глобального календаря
-            description: Редактирование глобального календаря
+            description: |-
+                Редактирование глобального календаря
+
+                **Request Parameters:** 3
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `id` (number, required): Уникальный идентификатор глобального календаря. Для получения списка источников необходимо использовать метод ["get.report_global_calendars"](../get_report_global_calendars)
+
+                - `params` (object, optional): Параметры глобального календаря
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: update.report_global_calendar
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        id:
+                                            type: number
+                                            description: Уникальный идентификатор глобального календаря. Для получения списка источников необходимо использовать метод ["get.report_global_calendars"](../get_report_global_calendars)
+                                            example: 123
+                                        params:
+                                            type: object
+                                            description: Параметры глобального календаря
+                                    required:
+                                        - id
+                                        - access_token
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response

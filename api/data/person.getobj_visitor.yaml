@@ -7,7 +7,48 @@ paths:
     /getobj.visitor:
         post:
             summary: Получение данных посетителя
-            description: Получение данных посетителя
+            description: "Получение данных посетителя\n\n**Request Parameters:** 3\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `id` (number, required): Уникальный идентификатор посетителя на сайте\n\n**Response Parameters:** 6\n\n- `properties` (array): \n\n- `id` (number): \n\n- `value` (string): \n\n- `name` (string): \n\n- `phone_numbers` (array): \n\n- `emails` (array): "
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: getobj.visitor
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        id:
+                                            type: number
+                                            description: Уникальный идентификатор посетителя на сайте
+                                            example: 123
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - access_token
+                                        - id
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response
@@ -28,6 +69,22 @@ paths:
                                         properties:
                                             data:
                                                 type: object
+                                                properties:
+                                                    emails:
+                                                        type: array
+                                                    id:
+                                                        type: number
+                                                        example: 123
+                                                    name:
+                                                        type: string
+                                                        example: example_string
+                                                    phone_numbers:
+                                                        type: array
+                                                    properties:
+                                                        type: array
+                                                    value:
+                                                        type: string
+                                                        example: example_string
                                             metadata:
                                                 type: object
                                                 description: Response metadata

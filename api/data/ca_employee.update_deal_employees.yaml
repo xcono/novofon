@@ -7,7 +7,63 @@ paths:
     /update.deal_employees:
         put:
             summary: Обновление сотрудника
-            description: Обновление сотрудника
+            description: |-
+                Обновление сотрудника
+
+                **Request Parameters:** 4
+
+                - `ext_id` (string, required): Внешний идентификатор сотрудника
+
+                - `name` (string, optional): Имя сотрудника
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: update.deal_employees
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        ext_id:
+                                            type: string
+                                            description: Внешний идентификатор сотрудника
+                                            example: example_string
+                                        name:
+                                            type: string
+                                            description: Имя сотрудника
+                                            example: example_string
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - access_token
+                                        - ext_id
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response

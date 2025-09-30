@@ -7,7 +7,78 @@ paths:
     /update.group_employees_numbers:
         put:
             summary: Изменение приоритета и доступности номера сотрудника в группе сотрудников
-            description: Изменение приоритета и доступности номера сотрудника в группе сотрудников
+            description: |-
+                Изменение приоритета и доступности номера сотрудника в группе сотрудников
+
+                **Request Parameters:** 6
+
+                - `available` (boolean, required): Доступность номера в группе
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `id` (number, required): Уникальный идентификатор группы
+
+                - `user_id` (number, required): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `phone_numbers` (array, required): Список городских, мобильных и sip номеров сотрудников, которые входят в группу, с указанием их доступности и приоритетом обзвона. Приоритет обзвона номеров определяется положением номера в списке. Обзвон указанного списка номеров в группе возможен по внутреннему номеру группы (см. параметр "group_phone_number"). Нужно передавать все номера
+
+                - `employee_phone_number_id` (number, required): Уникальный идентификатор номера сотрудника в группе
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: update.group_employees_numbers
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        available:
+                                            type: boolean
+                                            description: Доступность номера в группе
+                                            example: true
+                                        employee_phone_number_id:
+                                            type: number
+                                            description: Уникальный идентификатор номера сотрудника в группе
+                                            example: 123
+                                        id:
+                                            type: number
+                                            description: Уникальный идентификатор группы
+                                            example: 123
+                                        phone_numbers:
+                                            type: array
+                                            description: Список городских, мобильных и sip номеров сотрудников, которые входят в группу, с указанием их доступности и приоритетом обзвона. Приоритет обзвона номеров определяется положением номера в списке. Обзвон указанного списка номеров в группе возможен по внутреннему номеру группы (см. параметр "group_phone_number"). Нужно передавать все номера
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - user_id
+                                        - phone_numbers
+                                        - employee_phone_number_id
+                                        - available
+                                        - access_token
+                                        - id
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response
@@ -60,3 +131,8 @@ paths:
                                         type: string
             tags:
                 - novofon
+x-errors:
+    errors:
+        - code: invalid_parameter_value
+          mnemonic: "-32602"
+          description: Если переданы не все номера в массиве phone_numbers

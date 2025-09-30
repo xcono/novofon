@@ -7,7 +7,60 @@ paths:
     /get.employees:
         get:
             summary: Получение списка сотрудников
-            description: Получение списка сотрудников
+            description: "Получение списка сотрудников\n\n**Request Parameters:** 7\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n**Response Parameters:** 47\n\n- `last_name` (string): да\n\n- `out_external_allowed_call_directions` (array): да\n\n- `coach_id` (number): \n\n- `coach_always_enabled` (boolean): \n\n- `extension_voice_mail_enabled` (boolean): \n\n- `operator_position_name` (string): \n\n- `status_id` (number): да\n\n- `in_internal_allowed_call_directions` (array): да\n\n- `coach` (object): да\n\n- `dial_time` (number): \n\n- `extension_phone_number` (string): \n\n- `operator` (object): \n\n- `operator_sites` (array): \n\n- `full_name` (string): да\n\n- `in_external_allowed_call_directions` (array): да\n\n- `schedule_id` (number): да\n\n- `id` (number): да\n\n- `patronymic` (string): \n\n- `status` (enum): \n\n- `out_internal_allowed_call_directions` (array): да\n\n- `phone_numbers` (array): да\n\n- `channels_count` (number): \n\n- `operator_display_name` (string): \n\n- `site_domain_name` (string): \n\n- `first_name` (string): да\n\n- `allowed_in_call_types` (array): да\n\n- `schedule_name` (string): да\n\n- `coach_full_name` (string): \n\n- `extension_queue_enabled` (boolean): \n\n- `operator_offline_message_enabled` (boolean): \n\n- `operator_chat_enabled` (boolean): \n\n- `calls_available` (boolean): да\n\n- `groups` (array): да\n\n- `operator_login` (string): \n\n- `operator_chats_available` (boolean): \n\n- `phone_id` (number): \n\n- `allowed_out_call_types` (array): да\n\n- `email` (string): да\n\n- `call_recording` (enum): да\n\n- `group_id` (number): \n\n- `group_name` (string): \n\n- `phone_number` (string): \n\n- `extension` (object): да\n\n- `login` (string): да\n\n- `operator_position_id` (number): \n\n- `operator_invite_to_chat_enabled` (boolean): \n\n- `site_id` (number): "
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: get.employees
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        fields:
+                                            type: array
+                                            description: См. раздел "Представление возвращаемых данных"
+                                        filter:
+                                            type: object
+                                            description: См. раздел "Критерии фильтрации"
+                                        limit:
+                                            type: number
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                        offset:
+                                            type: number
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                        sort:
+                                            type: array
+                                            description: См. раздел "Сортировка данных"
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - access_token
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response
@@ -28,6 +81,155 @@ paths:
                                         properties:
                                             data:
                                                 type: object
+                                                properties:
+                                                    allowed_in_call_types:
+                                                        type: array
+                                                        description: да
+                                                    allowed_out_call_types:
+                                                        type: array
+                                                        description: да
+                                                    call_recording:
+                                                        type: string
+                                                        description: да
+                                                    calls_available:
+                                                        type: boolean
+                                                        description: да
+                                                        example: true
+                                                    channels_count:
+                                                        type: number
+                                                        example: 123
+                                                    coach:
+                                                        type: object
+                                                        description: да
+                                                    coach_always_enabled:
+                                                        type: boolean
+                                                        example: true
+                                                    coach_full_name:
+                                                        type: string
+                                                        example: example_string
+                                                    coach_id:
+                                                        type: number
+                                                        example: 123
+                                                    dial_time:
+                                                        type: number
+                                                        example: 123
+                                                    email:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    extension:
+                                                        type: object
+                                                        description: да
+                                                    extension_phone_number:
+                                                        type: string
+                                                        example: example_string
+                                                    extension_queue_enabled:
+                                                        type: boolean
+                                                        example: true
+                                                    extension_voice_mail_enabled:
+                                                        type: boolean
+                                                        example: true
+                                                    first_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    full_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    group_id:
+                                                        type: number
+                                                        example: 123
+                                                    group_name:
+                                                        type: string
+                                                        example: example_string
+                                                    groups:
+                                                        type: array
+                                                        description: да
+                                                    id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    in_external_allowed_call_directions:
+                                                        type: array
+                                                        description: да
+                                                    in_internal_allowed_call_directions:
+                                                        type: array
+                                                        description: да
+                                                    last_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    login:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    operator:
+                                                        type: object
+                                                    operator_chat_enabled:
+                                                        type: boolean
+                                                        example: true
+                                                    operator_chats_available:
+                                                        type: boolean
+                                                        example: true
+                                                    operator_display_name:
+                                                        type: string
+                                                        example: example_string
+                                                    operator_invite_to_chat_enabled:
+                                                        type: boolean
+                                                        example: true
+                                                    operator_login:
+                                                        type: string
+                                                        example: example_string
+                                                    operator_offline_message_enabled:
+                                                        type: boolean
+                                                        example: true
+                                                    operator_position_id:
+                                                        type: number
+                                                        example: 123
+                                                    operator_position_name:
+                                                        type: string
+                                                        example: example_string
+                                                    operator_sites:
+                                                        type: array
+                                                    out_external_allowed_call_directions:
+                                                        type: array
+                                                        description: да
+                                                    out_internal_allowed_call_directions:
+                                                        type: array
+                                                        description: да
+                                                    patronymic:
+                                                        type: string
+                                                        example: example_string
+                                                    phone_id:
+                                                        type: number
+                                                        example: 123
+                                                    phone_number:
+                                                        type: string
+                                                        example: example_string
+                                                    phone_numbers:
+                                                        type: array
+                                                        description: да
+                                                    schedule_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    schedule_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    site_domain_name:
+                                                        type: string
+                                                        example: example_string
+                                                    site_id:
+                                                        type: number
+                                                        example: 123
+                                                    status:
+                                                        type: string
+                                                    status_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
                                             metadata:
                                                 type: object
                                                 description: Response metadata

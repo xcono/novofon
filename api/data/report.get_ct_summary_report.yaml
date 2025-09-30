@@ -7,7 +7,103 @@ paths:
     /get.ct_summary_report:
         get:
             summary: Номера колтрекинга по сайтам
-            description: Номера колтрекинга по сайтам
+            description: |-
+                Номера колтрекинга по сайтам
+
+                **Request Parameters:** 9
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `limit` (number, optional): Количество возвращаемых записей. См. раздел "Постраничный вывод"
+
+                - `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+
+                - `date_from` (iso8601, required): Дата начала выборки
+
+                - `date_till` (iso8601, required): Дата окончания выборки
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `filter` (object, optional): См. раздел "Критерии фильтрации"
+
+                - `fields` (array, optional): См. раздел "Представление возвращаемых данных"
+
+                - `sort` (array, optional): См. раздел "Сортировка данных"
+
+                **Response Parameters:** 7
+
+                - `site_id` (number): да
+
+                - `site_domain` (string): да
+
+                - `reserve_numbers_count` (number): да
+
+                - `active_numbers_count` (number): да
+
+                - `dt_ratio` (number): да
+
+                - `non_session_calls_count` (number): да
+
+                - `calls_count` (number): да
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: get.ct_summary_report
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        date_from:
+                                            description: Дата начала выборки
+                                        date_till:
+                                            description: Дата окончания выборки
+                                        fields:
+                                            type: array
+                                            description: См. раздел "Представление возвращаемых данных"
+                                        filter:
+                                            type: object
+                                            description: См. раздел "Критерии фильтрации"
+                                        limit:
+                                            type: number
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                        offset:
+                                            type: number
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                        sort:
+                                            type: array
+                                            description: См. раздел "Сортировка данных"
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - date_from
+                                        - date_till
+                                        - access_token
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response
@@ -28,6 +124,35 @@ paths:
                                         properties:
                                             data:
                                                 type: object
+                                                properties:
+                                                    active_numbers_count:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    calls_count:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    dt_ratio:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    non_session_calls_count:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    reserve_numbers_count:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    site_domain:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    site_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
                                             metadata:
                                                 type: object
                                                 description: Response metadata

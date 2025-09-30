@@ -7,7 +7,51 @@ paths:
     /create.linechart_note:
         post:
             summary: Создание пользовательского примечания на графике
-            description: Создание пользовательского примечания на графике
+            description: "Создание пользовательского примечания на графике\n\n**Request Parameters:** 4\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `datetime` (iso8601, required): Дата и время заметки\n\n- `description` (string, required): Содержимое примечания. Ограничение в 255 символов.\n\n**Response Parameters:** 1\n\n- `id` (number): "
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: create.linechart_note
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        datetime:
+                                            description: Дата и время заметки
+                                        description:
+                                            type: string
+                                            description: Содержимое примечания. Ограничение в 255 символов.
+                                            example: example_string
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - datetime
+                                        - description
+                                        - access_token
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response
@@ -28,6 +72,10 @@ paths:
                                         properties:
                                             data:
                                                 type: object
+                                                properties:
+                                                    id:
+                                                        type: number
+                                                        example: 123
                                             metadata:
                                                 type: object
                                                 description: Response metadata

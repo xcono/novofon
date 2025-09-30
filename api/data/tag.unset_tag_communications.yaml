@@ -7,7 +7,81 @@ paths:
     /unset.tag_communications:
         post:
             summary: Снятие тега с обращения
-            description: Снятие тега с обращения (так же используется для снятия тега продажа)
+            description: |-
+                Снятие тега с обращения (так же используется для снятия тега продажа)
+
+                **Request Parameters:** 6
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `communication_id` (number, optional): Уникальный идентификатор обращения. По данному идентификатору можно получить детализированную информацию используя следующие методы "get.communications_report", "get.chats_report ", "get.goals_report", "get.offline_messages_report ", "get.calls_report" Обязательный если не указан communication_ext_id
+
+                - `communication_ext_id` (string, optional): Уникальный идентификатор обращения. По данному идентификатору можно получить детализированную информацию используя следующие методы "get.chats_report ", "get.offline_messages_report ", "get.calls_report". Обязательный если не указан communication_id. Игнорируется, если заполнен communication_id
+
+                - `communication_type` (enum, required): Тип обращения.
+
+                - `tag_id` (number, required): Уникальный идентификатор тега, см. метод "get.tags"
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: unset.tag_communications
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        communication_ext_id:
+                                            type: string
+                                            description: Уникальный идентификатор обращения. По данному идентификатору можно получить детализированную информацию используя следующие методы "get.chats_report ", "get.offline_messages_report ", "get.calls_report". Обязательный если не указан communication_id. Игнорируется, если заполнен communication_id
+                                            example: example_string
+                                        communication_id:
+                                            type: number
+                                            description: Уникальный идентификатор обращения. По данному идентификатору можно получить детализированную информацию используя следующие методы "get.communications_report", "get.chats_report ", "get.goals_report", "get.offline_messages_report ", "get.calls_report" Обязательный если не указан communication_ext_id
+                                            example: 123
+                                        communication_type:
+                                            type: string
+                                            description: Тип обращения.
+                                            example: chat
+                                            enum:
+                                                - chat
+                                                - call
+                                                - goal
+                                                - offline_message
+                                        tag_id:
+                                            type: number
+                                            description: Уникальный идентификатор тега, см. метод "get.tags"
+                                            example: 123
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - communication_type
+                                        - tag_id
+                                        - access_token
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response

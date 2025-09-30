@@ -7,7 +7,88 @@ paths:
     /update.group_employees:
         put:
             summary: Редактирование группы сотрудников
-            description: Редактирование группы сотрудников
+            description: |-
+                Редактирование группы сотрудников
+
+                **Request Parameters:** 8
+
+                - `queue_enabled` (boolean, optional): Значение по умолчанию "false". В случае, если все номера, указанные для этой группы сотрудников, заняты, то звонящий абонент встанет в очередь на повторный дозвон до телефонов в списке и будет ждать первый освободившийся номер. Зависит от компонента "va"
+
+                - `channels_count` (number, required): Количество одновременных линий при обзвоне Зависит от компонента "va"
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `id` (number, required): Уникальный идентификатор группы
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `name` (string, required): Название группы
+
+                - `members` (array, optional): Список уникальных идентификаторов сотрудников, которые состоят в группе
+
+                - `group_phone_number` (string, optional): Внутренний номер группы Зависит от компонента "va"
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: update.group_employees
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        channels_count:
+                                            type: number
+                                            description: Количество одновременных линий при обзвоне Зависит от компонента "va"
+                                            example: 123
+                                        group_phone_number:
+                                            type: string
+                                            description: Внутренний номер группы Зависит от компонента "va"
+                                            example: example_string
+                                        id:
+                                            type: number
+                                            description: Уникальный идентификатор группы
+                                            example: 123
+                                        members:
+                                            type: array
+                                            description: Список уникальных идентификаторов сотрудников, которые состоят в группе
+                                        name:
+                                            type: string
+                                            description: Название группы
+                                            example: example_string
+                                        queue_enabled:
+                                            type: boolean
+                                            description: Значение по умолчанию "false". В случае, если все номера, указанные для этой группы сотрудников, заняты, то звонящий абонент встанет в очередь на повторный дозвон до телефонов в списке и будет ждать первый освободившийся номер. Зависит от компонента "va"
+                                            example: true
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - channels_count
+                                        - access_token
+                                        - id
+                                        - name
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response

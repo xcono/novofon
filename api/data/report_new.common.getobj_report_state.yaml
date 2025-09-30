@@ -7,7 +7,48 @@ paths:
     /getobj.report_state:
         post:
             summary: Получение текущего состояния
-            description: Получение текущего состояния отчета
+            description: "Получение текущего состояния отчета\n\n**Request Parameters:** 3\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `report_id` (number, required): Уникальный идентификатор отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод \"get.reports_list\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n**Response Parameters:** 18\n\n- `widths` (number): \n\n- `offset` (number): да\n\n- `compared_date_till` (iso8601): \n\n- `columns` (array): \n\n- `filters` (array): \n\n- `column_params` (object): \n\n- `limit` (number): да\n\n- `date_from` (iso8601): \n\n- `date_till` (iso8601): \n\n- `perspective_window` (number): Можно задать период от 1 до 180 дней от сессии до обращения\n\n- `dimensions` (array): \n\n- `compared_date_from` (iso8601): \n\n- `field` (object): \n\n- `rapid_filter` (object): \n\n- `filter` (object): \n\n- `operator` (enum): \n\n- `value` (string): \n\n- `sort` (array): "
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: getobj.report_state
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        report_id:
+                                            type: number
+                                            description: Уникальный идентификатор отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод "get.reports_list"
+                                            example: 123
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - access_token
+                                        - report_id
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response
@@ -28,6 +69,51 @@ paths:
                                         properties:
                                             data:
                                                 type: object
+                                                properties:
+                                                    column_params:
+                                                        type: object
+                                                    columns:
+                                                        type: array
+                                                    compared_date_from: {}
+                                                    compared_date_till: {}
+                                                    date_from: {}
+                                                    date_till: {}
+                                                    dimensions:
+                                                        type: array
+                                                    field:
+                                                        type: object
+                                                    filter:
+                                                        type: object
+                                                    filters:
+                                                        type: array
+                                                    limit:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    offset:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    operator:
+                                                        type: string
+                                                    perspective_window:
+                                                        type: number
+                                                        description: Можно задать период от 1 до 180 дней от сессии до обращения
+                                                        example: 123
+                                                    rapid_filter:
+                                                        type: object
+                                                    sort:
+                                                        type: array
+                                                    value:
+                                                        type: string
+                                                        example: example_string
+                                                    widths:
+                                                        type: number
+                                                        example: 123
+                                                required:
+                                                    - field
+                                                    - widths
+                                                    - perspective_window
                                             metadata:
                                                 type: object
                                                 description: Response metadata

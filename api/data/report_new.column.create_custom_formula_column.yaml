@@ -7,7 +7,115 @@ paths:
     /create.custom_formula_column:
         post:
             summary: Создание пользовательского столбца на основе формулы
-            description: Создание пользовательского столбца на основе формулы
+            description: |-
+                Создание пользовательского столбца на основе формулы
+
+                **Request Parameters:** 9
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `report_type` (enum, required): Тип отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод ["get.reports_list"](../get_reports_list)
+
+                - `name` (string, required): Название столбца
+
+                - `formula` (array, required): Формула для вычисления столбца. Важен порядок
+
+                - `element_type` (enum, required): Тип элементов которые будут использоваться в формуле
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод ["get.customer_users"](../Partners.md#get_customer_user)
+
+                - `description` (string, optional): Описание столбца
+
+                - `data_type` (enum, required): Формат данных
+
+                - `value` (string, required): Идентификатор столбца, значение, арифметическая операция, приоритет который будет участвовать в формуле
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: create.custom_formula_column
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        data_type:
+                                            type: string
+                                            description: Формат данных
+                                            example: integer
+                                            enum:
+                                                - integer
+                                                - float
+                                                - currency
+                                                - percentage
+                                                - time
+                                        description:
+                                            type: string
+                                            description: Описание столбца
+                                            example: example_string
+                                        element_type:
+                                            type: string
+                                            description: Тип элементов которые будут использоваться в формуле
+                                            format: "column - Идентификатор столбца, возможно передать только столбцы с type=metric. Список столбцов можно получить используя метод  \"getobj.columns_tree\"\n        constant - числовое значение, формат число с плавающей запятой\n        operator - арифметические операции для вычисляемого выражения. Может принимать значения value = +,-,\\*,/ \n        priority - приоритет вычисляемого выражения. Может принимать значения value = (,)"
+                                        formula:
+                                            type: array
+                                            description: Формула для вычисления столбца. Важен порядок
+                                        name:
+                                            type: string
+                                            description: Название столбца
+                                            example: example_string
+                                        report_type:
+                                            type: string
+                                            description: Тип отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод ["get.reports_list"](../get_reports_list)
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод ["get.customer_users"](../Partners.md#get_customer_user)
+                                            example: 123
+                                        value:
+                                            type: string
+                                            description: Идентификатор столбца, значение, арифметическая операция, приоритет который будет участвовать в формуле
+                                            example: |-
+                                                Если element_type = column - возможно передать только идентификаторы столбцов с type = metric. Список столбцов можно получить используя метод  "getobj.columns_tree"
+                                                        Если element_type = constant - то можно передать только число number с плавающей запятой или целое число. Может быть как положительным
+                                            enum:
+                                                - |-
+                                                  Если element_type = column - возможно передать только идентификаторы столбцов с type = metric. Список столбцов можно получить используя метод  "getobj.columns_tree"
+                                                          Если element_type = constant - то можно передать только число number с плавающей запятой или целое число. Может быть как положительным
+                                                - |-
+                                                  так и отрицательным
+                                                          Если element_type = operator - можно указать только арифметические операции для вычисляемого выражения. Может принимать значения +
+                                                - '-'
+                                                - \*
+                                                - "/ \n        Если element_type = priority - можнот указать значения value = ("
+                                                - )
+                                    required:
+                                        - data_type
+                                        - value
+                                        - access_token
+                                        - report_type
+                                        - name
+                                        - formula
+                                        - element_type
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response

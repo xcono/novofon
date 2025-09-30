@@ -7,7 +7,91 @@ paths:
     /set.tag_sales:
         post:
             summary: Проставление тега продажа на обращение
-            description: Проставление тега продажа на обращение
+            description: |-
+                Проставление тега продажа на обращение
+
+                **Request Parameters:** 7
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `communication_id` (number, required): Уникальный идентификатор обращения. По данному идентификатору можно получить детализированную информацию используя следующие методы "get.communications_report", "get.chats_report ", "get.goals_report", "get.offline_messages_report ", "get.calls_report"
+
+                - `communication_type` (enum, required): Тип обращения.
+
+                - `date_time` (iso8601, required): Дата и время сделки Не должна быть раньше даты обращения
+
+                - `transaction_value` (number, required): Стоимость сделки
+
+                - `comment` (string, optional): Комментарий к сделке
+
+                **Response Parameters:** 1
+
+                - `id` (number): Уникальный идентификатор продажи
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: set.tag_sales
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        comment:
+                                            type: string
+                                            description: Комментарий к сделке
+                                            example: example_string
+                                        communication_id:
+                                            type: number
+                                            description: Уникальный идентификатор обращения. По данному идентификатору можно получить детализированную информацию используя следующие методы "get.communications_report", "get.chats_report ", "get.goals_report", "get.offline_messages_report ", "get.calls_report"
+                                            example: 123
+                                        communication_type:
+                                            type: string
+                                            description: Тип обращения.
+                                            example: chat
+                                            enum:
+                                                - chat
+                                                - call
+                                                - goal
+                                                - offline_message
+                                        date_time:
+                                            description: Дата и время сделки Не должна быть раньше даты обращения
+                                        transaction_value:
+                                            type: number
+                                            description: Стоимость сделки
+                                            example: 123
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - communication_type
+                                        - date_time
+                                        - transaction_value
+                                        - access_token
+                                        - communication_id
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response
@@ -28,6 +112,13 @@ paths:
                                         properties:
                                             data:
                                                 type: object
+                                                properties:
+                                                    id:
+                                                        type: number
+                                                        description: Уникальный идентификатор продажи
+                                                        example: 123
+                                                required:
+                                                    - id
                                             metadata:
                                                 type: object
                                                 description: Response metadata

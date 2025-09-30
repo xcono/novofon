@@ -7,7 +7,70 @@ paths:
     /get.calls_report:
         get:
             summary: Получение отчёта по сессиям звонков
-            description: Получение отчёта по сессиям звонков
+            description: "Получение отчёта по сессиям звонков\n\n**Request Parameters:** 10\n\n- `include_ongoing_calls` (boolean, optional): Включить текущие вызовы\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `date_from` (iso8601, required): Дата начала выборки\n\n- `date_till` (iso8601, required): Дата окончания выбокри\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n**Response Parameters:** 123\n\n- `visitor_id` (number): да\n\n- `contact_full_name` (string): да\n\n- `scenario_id` (number): да\n\n- `utm_source` (string): да\n\n- `source_id` (number): да\n\n- `tag_employee_full_name` (string): \n\n- `visitor_custom_properties` (array): да\n\n- `segments` (array): да\n\n- `utm_campaign` (string): да\n\n- `source_new` (string): да\n\n- `finish_time` (iso8601): \n\n- `wav_call_records` (array): \n\n- `referrer_domain` (string): да\n\n- `entrance_page` (string): да\n\n- `segment_name` (string): \n\n- `wait_duration` (number): да\n\n- `lost_call_processing_duration` (number): да\n\n- `operator_phone_number` (string): да\n\n- `visitor_city` (string): да\n\n- `name` (string): \n\n- `ua_client_id` (string): \n\n- `yclid` (string): да\n\n- `tag_name` (string): \n\n- `last_answered_employee_id` (number): да\n\n- `campaign_name` (string): да\n\n- `visitor_session_id` (number): да\n\n- `utm_term` (string): да\n\n- `tag_id` (number): \n\n- `tag_employee_id` (number): \n\n- `is_talked` (boolean): \n\n- `eq_utm_expid` (string): да\n\n- `gclid` (string): да\n\n- `postprocess_duration` (number): да\n\n- `property_name` (string): \n\n- `ef_id` (string): да\n\n- `call_api_external_id` (string): да\n\n- `utm_content` (string): да\n\n- `source` (enum): да\n\n- `total_wait_duration` (number): да\n\n- `referrer` (string): да\n\n- `last_talked_employee_full_name` (string): да\n\n- `site_domain_name` (string): да\n\n- `eq_utm_term` (string): да\n\n- `full_record_file_link` (string): \n\n- `tag_type` (enum): \n\n- `visitor_first_campaign_name` (string): да\n\n- `call_api_request_id` (number): да\n\n- `channel_code` (string): да\n\n- `ym_client_id` (string): \n\n- `property_value` (string): \n\n- `utm_medium` (string): да\n\n- `openstat_ad` (string): да\n\n- `eq_utm_medium` (string): да\n\n- `id` (number): \n\n- `last_answered_employee_rating` (number): да\n\n- `is_lost` (boolean): да\n\n- `virtual_phone_number` (string): да\n\n- `phrase` (string): \n\n- `tags` (array): да\n\n- `campaign_id` (number): да\n\n- `auto_call_campaign_name` (string): да\n\n- `channel_new` (string): да\n\n- `scenario_operations` (array): да\n\n- `ymclid` (string): \n\n- `cpn_region_name` (string): да\n\n- `tag_change_time` (iso8601): \n\n- `segment_id` (number): \n\n- `eq_utm_campaign` (string): да\n\n- `source_name` (string): да\n\n- `cpn_region_id` (number): да\n\n- `is_transfer` (boolean): да\n\n- `contact_phone_number` (string): да\n\n- `communication_type` (enum): \n\n- `sale_date` (iso8601): да\n\n- `last_talked_employee_id` (number): да\n\n- `first_talked_employee_id` (number): да\n\n- `scenario_name` (string): да\n\n- `direction` (enum): да\n\n- `talk_duration` (number): да\n\n- `search_query` (string): да\n\n- `is_operator` (boolean): \n\n- `total_duration` (number): да\n\n- `channel` (enum): да\n\n- `first_answered_employee_id` (number): да\n\n- `first_talked_employee_full_name` (string): да\n\n- `visitor_region` (string): да\n\n- `sale_cost` (number): да\n\n- `employees` (array): да\n\n- `employee_full_name` (string): \n\n- `eq_utm_content` (string): да\n\n- `ext_id` (string): да\n\n- `finish_reason` (enum): да\n\n- `start_time` (iso8601): \n\n- `call_records` (array): \n\n- `visit_other_campaign` (boolean): \n\n- `tag_user_login` (string): \n\n- `person_id` (number): да\n\n- `visitor_type` (enum): да\n\n- `openstat_campaign` (string): да\n\n- `openstat_service` (string): да\n\n- `eq_utm_source` (string): да\n\n- `openstat_source` (string): да\n\n- `eq_utm_referrer` (string): да\n\n- `communication_number` (number): да\n\n- `tag_user_id` (number): \n\n- `first_answered_employee_full_name` (string): да\n\n- `communication_id` (number): да\n\n- `clean_talk_duration` (number): да\n\n- `contact_id` (number): да\n\n- `communication_page_url` (string): нет\n\n- `voice_mail_records` (array): \n\n- `recognized_text` (array): нет\n\n- `last_answered_employee_full_name` (string): да\n\n- `visitor_country` (string): да\n\n- `site_id` (number): да\n\n- `visitor_first_campaign_id` (number): да\n\n- `visitor_device` (enum): да\n\n- `attributes` (array): да\n\n- `search_engine` (string): да\n\n- `employee_id` (number): \n\n- `is_answered` (boolean): \n\n- `visits_count` (number): да\n\n- `edited_phrase` (string): "
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: get.calls_report
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        date_from:
+                                            description: Дата начала выборки
+                                        date_till:
+                                            description: Дата окончания выбокри
+                                        fields:
+                                            type: array
+                                            description: См. раздел "Представление возвращаемых данных"
+                                        filter:
+                                            type: object
+                                            description: См. раздел "Критерии фильтрации"
+                                        include_ongoing_calls:
+                                            type: boolean
+                                            description: Включить текущие вызовы
+                                            example: true
+                                        limit:
+                                            type: number
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                        offset:
+                                            type: number
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                        sort:
+                                            type: array
+                                            description: См. раздел "Сортировка данных"
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - date_from
+                                        - date_till
+                                        - access_token
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response
@@ -28,6 +91,441 @@ paths:
                                         properties:
                                             data:
                                                 type: object
+                                                properties:
+                                                    attributes:
+                                                        type: array
+                                                        description: да
+                                                    auto_call_campaign_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    call_api_external_id:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    call_api_request_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    call_records:
+                                                        type: array
+                                                    campaign_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    campaign_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    channel:
+                                                        type: string
+                                                        description: да
+                                                    channel_code:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    channel_new:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    clean_talk_duration:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    communication_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    communication_number:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    communication_page_url:
+                                                        type: string
+                                                        description: нет
+                                                        example: example_string
+                                                    communication_type:
+                                                        type: string
+                                                    contact_full_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    contact_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    contact_phone_number:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    cpn_region_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    cpn_region_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    direction:
+                                                        type: string
+                                                        description: да
+                                                    edited_phrase:
+                                                        type: string
+                                                        example: example_string
+                                                    ef_id:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    employee_full_name:
+                                                        type: string
+                                                        example: example_string
+                                                    employee_id:
+                                                        type: number
+                                                        example: 123
+                                                    employees:
+                                                        type: array
+                                                        description: да
+                                                    entrance_page:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    eq_utm_campaign:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    eq_utm_content:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    eq_utm_expid:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    eq_utm_medium:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    eq_utm_referrer:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    eq_utm_source:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    eq_utm_term:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    ext_id:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    finish_reason:
+                                                        type: string
+                                                        description: да
+                                                    finish_time: {}
+                                                    first_answered_employee_full_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    first_answered_employee_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    first_talked_employee_full_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    first_talked_employee_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    full_record_file_link:
+                                                        type: string
+                                                        example: example_string
+                                                    gclid:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    id:
+                                                        type: number
+                                                        example: 123
+                                                    is_answered:
+                                                        type: boolean
+                                                        example: true
+                                                    is_lost:
+                                                        type: boolean
+                                                        description: да
+                                                        example: true
+                                                    is_operator:
+                                                        type: boolean
+                                                        example: true
+                                                    is_talked:
+                                                        type: boolean
+                                                        example: true
+                                                    is_transfer:
+                                                        type: boolean
+                                                        description: да
+                                                        example: true
+                                                    last_answered_employee_full_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    last_answered_employee_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    last_answered_employee_rating:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    last_talked_employee_full_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    last_talked_employee_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    lost_call_processing_duration:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    name:
+                                                        type: string
+                                                        example: example_string
+                                                    openstat_ad:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    openstat_campaign:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    openstat_service:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    openstat_source:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    operator_phone_number:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    person_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    phrase:
+                                                        type: string
+                                                        example: example_string
+                                                    postprocess_duration:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    property_name:
+                                                        type: string
+                                                        example: example_string
+                                                    property_value:
+                                                        type: string
+                                                        example: example_string
+                                                    recognized_text:
+                                                        type: array
+                                                        description: нет
+                                                    referrer:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    referrer_domain:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    sale_cost:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    sale_date:
+                                                        description: да
+                                                    scenario_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    scenario_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    scenario_operations:
+                                                        type: array
+                                                        description: да
+                                                    search_engine:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    search_query:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    segment_id:
+                                                        type: number
+                                                        example: 123
+                                                    segment_name:
+                                                        type: string
+                                                        example: example_string
+                                                    segments:
+                                                        type: array
+                                                        description: да
+                                                    site_domain_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    site_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    source:
+                                                        type: string
+                                                        description: да
+                                                    source_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    source_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    source_new:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    start_time: {}
+                                                    tag_change_time: {}
+                                                    tag_employee_full_name:
+                                                        type: string
+                                                        example: example_string
+                                                    tag_employee_id:
+                                                        type: number
+                                                        example: 123
+                                                    tag_id:
+                                                        type: number
+                                                        example: 123
+                                                    tag_name:
+                                                        type: string
+                                                        example: example_string
+                                                    tag_type:
+                                                        type: string
+                                                    tag_user_id:
+                                                        type: number
+                                                        example: 123
+                                                    tag_user_login:
+                                                        type: string
+                                                        example: example_string
+                                                    tags:
+                                                        type: array
+                                                        description: да
+                                                    talk_duration:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    total_duration:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    total_wait_duration:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    ua_client_id:
+                                                        type: string
+                                                        example: example_string
+                                                    utm_campaign:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    utm_content:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    utm_medium:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    utm_source:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    utm_term:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    virtual_phone_number:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    visit_other_campaign:
+                                                        type: boolean
+                                                        example: true
+                                                    visitor_city:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    visitor_country:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    visitor_custom_properties:
+                                                        type: array
+                                                        description: да
+                                                    visitor_device:
+                                                        type: string
+                                                        description: да
+                                                    visitor_first_campaign_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    visitor_first_campaign_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    visitor_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    visitor_region:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    visitor_session_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    visitor_type:
+                                                        type: string
+                                                        description: да
+                                                    visits_count:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    voice_mail_records:
+                                                        type: array
+                                                    wait_duration:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    wav_call_records:
+                                                        type: array
+                                                    yclid:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    ym_client_id:
+                                                        type: string
+                                                        example: example_string
+                                                    ymclid:
+                                                        type: string
+                                                        example: example_string
                                             metadata:
                                                 type: object
                                                 description: Response metadata

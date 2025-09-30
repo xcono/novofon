@@ -7,7 +7,47 @@ paths:
     /getobj.dimensions_tree:
         post:
             summary: Получение вложенности измерений
-            description: Получение вложенности измерений
+            description: "Получение вложенности измерений\n\n**Request Parameters:** 3\n\n- `report_type` (enum, required): Тип отчета пользователя. В данный момент работает только для типа отчетов call_summary_uis. Для получения списка отчетов пользователей необходимо использовать метод \"get.reports_list\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n**Response Parameters:** 11\n\n- `dimensions_groups` (array): да\n\n- `id` (enum): \n\n- `name` (string): \n\n- `parent_group_id` (number): \n\n- `dimensions` (array): да\n\n- `is_entity_separated` (boolean): да\n\n- `description` (string): \n\n- `sort` (number): \n\n- `group_id` (number): \n\n- `data_type` (enum): да\n\n- `is_custom` (boolean): да"
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: getobj.dimensions_tree
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        report_type:
+                                            type: string
+                                            description: Тип отчета пользователя. В данный момент работает только для типа отчетов call_summary_uis. Для получения списка отчетов пользователей необходимо использовать метод "get.reports_list"
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - access_token
+                                        - report_type
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response
@@ -28,6 +68,41 @@ paths:
                                         properties:
                                             data:
                                                 type: object
+                                                properties:
+                                                    data_type:
+                                                        type: string
+                                                        description: да
+                                                    description:
+                                                        type: string
+                                                        example: example_string
+                                                    dimensions:
+                                                        type: array
+                                                        description: да
+                                                    dimensions_groups:
+                                                        type: array
+                                                        description: да
+                                                    group_id:
+                                                        type: number
+                                                        example: 123
+                                                    id:
+                                                        type: string
+                                                    is_custom:
+                                                        type: boolean
+                                                        description: да
+                                                        example: true
+                                                    is_entity_separated:
+                                                        type: boolean
+                                                        description: да
+                                                        example: true
+                                                    name:
+                                                        type: string
+                                                        example: example_string
+                                                    parent_group_id:
+                                                        type: number
+                                                        example: 123
+                                                    sort:
+                                                        type: number
+                                                        example: 123
                                             metadata:
                                                 type: object
                                                 description: Response metadata

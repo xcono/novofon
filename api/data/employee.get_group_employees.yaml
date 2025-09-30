@@ -7,7 +7,60 @@ paths:
     /get.group_employees:
         get:
             summary: Получение списка групп сотрудников
-            description: Получение списка групп сотрудников
+            description: "Получение списка групп сотрудников\n\n**Request Parameters:** 7\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n**Response Parameters:** 12\n\n- `id` (number): да\n\n- `name` (string): да\n\n- `members` (array): \n\n- `employee_id` (number): \n\n- `phone_numbers` (array): да\n\n- `employee_phone_number_id` (number): \n\n- `available` (boolean): \n\n- `group_phone_number` (string): да\n\n- `employee_full_name` (string): \n\n- `employee_phone_number` (string): \n\n- `queue_enabled` (boolean): да\n\n- `channels_count` (number): да"
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: get.group_employees
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        fields:
+                                            type: array
+                                            description: См. раздел "Представление возвращаемых данных"
+                                        filter:
+                                            type: object
+                                            description: См. раздел "Критерии фильтрации"
+                                        limit:
+                                            type: number
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                        offset:
+                                            type: number
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                        sort:
+                                            type: array
+                                            description: См. раздел "Сортировка данных"
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - access_token
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response
@@ -28,6 +81,47 @@ paths:
                                         properties:
                                             data:
                                                 type: object
+                                                properties:
+                                                    available:
+                                                        type: boolean
+                                                        example: true
+                                                    channels_count:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    employee_full_name:
+                                                        type: string
+                                                        example: example_string
+                                                    employee_id:
+                                                        type: number
+                                                        example: 123
+                                                    employee_phone_number:
+                                                        type: string
+                                                        example: example_string
+                                                    employee_phone_number_id:
+                                                        type: number
+                                                        example: 123
+                                                    group_phone_number:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    members:
+                                                        type: array
+                                                    name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    phone_numbers:
+                                                        type: array
+                                                        description: да
+                                                    queue_enabled:
+                                                        type: boolean
+                                                        description: да
+                                                        example: true
                                             metadata:
                                                 type: object
                                                 description: Response metadata

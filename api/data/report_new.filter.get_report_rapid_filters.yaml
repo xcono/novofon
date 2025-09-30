@@ -7,7 +7,47 @@ paths:
     /get.report_rapid_filters:
         get:
             summary: Получение списка возможных быстрых условий фильтрации для отчета
-            description: Получение списка возможных быстрых условий фильтрации для отчета
+            description: "Получение списка возможных быстрых условий фильтрации для отчета\n\n**Request Parameters:** 3\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `report_type` (enum, required): Тип отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод \"get.reports_list\"\n\n**Response Parameters:** 8\n\n- `is_default` (boolean): \n\n- `values` (array): да\n\n- `id` (enum): \n\n- `name` (string): \n\n- `description` (string): да\n\n- `format` (string): да\n\n- `additional_web_format` (string): да\n\n- `operators` (array): да"
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: get.report_rapid_filters
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        report_type:
+                                            type: string
+                                            description: Тип отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод "get.reports_list"
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - access_token
+                                        - report_type
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response
@@ -28,6 +68,33 @@ paths:
                                         properties:
                                             data:
                                                 type: object
+                                                properties:
+                                                    additional_web_format:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    description:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    format:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    id:
+                                                        type: string
+                                                    is_default:
+                                                        type: boolean
+                                                        example: true
+                                                    name:
+                                                        type: string
+                                                        example: example_string
+                                                    operators:
+                                                        type: array
+                                                        description: да
+                                                    values:
+                                                        type: array
+                                                        description: да
                                             metadata:
                                                 type: object
                                                 description: Response metadata

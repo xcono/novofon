@@ -7,7 +7,184 @@ paths:
     /create.campaigns:
         post:
             summary: Создание рекламной кампании
-            description: Создание рекламной кампании. Можно создать только рекламную кампания с типом 'basic'.
+            description: |-
+                Создание рекламной кампании. Можно создать только рекламную кампания с типом 'basic'.
+
+                **Request Parameters:** 22
+
+                - `site_blocks` (array, optional): Настройки привязки номера к блоку на сайте Если блоки номеров сайта не указаны, то они не настраиваются, т.е. считаются не настроенными Если site_blocks задан одновременно с status = inactive, то будет возвращаться ошибка `invalid_parameters_combination`
+
+                - `dynamic_call_tracking_enabled` (boolean, optional): Активация динамический коллтрекинг. В пул динамического коллтрекинга можно подключить только свободные номера без флага "Использовать в ВАТС" в том же коде, что и номер блока рекламной кампании по умолчанию. При отсутствии необходимого количества номеров они будут автоматически куплены. Звонки на номера из пула динамического коллтрекинга будут обрабатываться по правилам обработки звонков на номер блока рекламной кампании по умолчанию. Может принимать значение "true", если параметр phone_number_id = va | call_tracking. Если это не так, то будет возвращена ошибка с мнемоникой "invalid_parameters_combination" Если Вы используете этот параметр, но у вас не подключен компонент "dynamic_call_tracking", то Вам вернется ошибка с мнемоникой "parameter_component_disabled" Если задан одновременно status = inactive, то будет возвращена ошибка `invalid_parameters_combination` Если параметр dynamic_call_tracking_enabled имеет значение "true", то параметр dynamic_call_tracking обязателен к заполнению. Будет возвращена ошибка "invalid_parameters_combination".
+
+                - `dynamic_call_tracking` (object, optional): Настройка динамический коллтрекинг. Обязателен к заполнению, если параметр dynamic_call_tracking_enabled у хоть одного блока имеет значение "true" иначе будет возвращена ошибка с мнемоникой "invalid_parameters_combination" Если Вы используете этот параметр, но у вас не подключен компонент "dynamic_call_tracking", то Вам вернется ошибка с мнемоникой "parameter_component_disabled"
+
+                - `group_conditions` (array, required): Группа условий рекламной кампании
+
+                - `phone_number_id` (number, required): Уникальный идентификатор виртуального номера. Чтобы получить список доступных виртуальных номеров необходимо использовать метод get.campaign_available_phone_numbers Если указан id который не возвращается методом get.campaign_available_phone_numbers, то будет возвращена ошибка с мнемоникой "entity_not_found". Номер с type = call_tracking может использоваться только в одной рекламной кампании. Если номер уже используется в другой рекламной кампании, то будет возвращена ошибка `already_in_use`
+
+                - `value` (string, required): Значение. Для некоторых campaign_parameter может быть свой список допустимых значений см. в таблице "Список параметров и их операторов"
+
+                - `operator` (enum, required): Оператор в условии. Зависит от используемого параметра campaign_parameter см. в таблице "Список параметров и их операторов" "=" - точно соответствует "sub" - включает "~" - регулярное выражение
+
+                - `campaign_conditions` (object, optional): Условия рекламной кампании.
+
+                - `site_block_id` (number, required): Уникальный идентификатор блока номеров
+
+                - `redirection_phone_number_id` (number, optional): Уникальный идентификатор номера переадресации. Номер переадресации используется только в том случае, если параметр phone_number_id имеет тип `call_tracking`. Список доступных номеров можно получить методом get.campaign_available_redirection_phone_numbers. Обязателен для заполнения, если в параметре phone_number_id указан виртуальный номер с типом "call_tracking". Если это не так, то будет возвращена ошибка с мнемоникой "required_parameter_missed". Если параметр задан и в phone_number_id указан виртуальный номер с типом "va", то будет возвращаться ошибка `invalid_parameters_combination` В параметре могут быть указаны только номера переадресации, которые возвращаются методом get.campaign_available_redirection_phone_numbers. Если это не так, то будет возвращаться ошибка с мнемоникой "invalid_parameter_value" Доступен, если подключен компонент "va". Если параметр будет заполнен и у вас отсутствует компонент "va", то будет возвращена ошибка с мнемоникой "parameter_component_disabled"
+
+                - `reservation_time` (enum, optional): Значение по умолчанию "15m". Период, на который номер закрепляется за посетителем сайта. По истечении указанного времени номер закрепляется за новым посетителем (или остается за текущим в случае наличия свободных номеров коллтрекинга).
+
+                - `count_virtual_numbers` (number, required): Количество номеров необходимое для работы динамического коллтрекинга в одном блоке. Указанное количество номеров будет куплено.
+
+                - `count_visits` (number, required): Количество посещений по рекламной кампании в сутки
+
+                - `conditions` (array, required): Условия рекламной кампании в группе условий
+
+                - `campaign_parameter` (enum, required): Список допустимых значений и возможных операторов см. в таблице "Список параметров и их операторов"
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `name` (string, required): Название рекламной кампании
+
+                - `description` (string, optional): Описание рекламной кампании
+
+                - `type` (enum, required): Условия рекламной кампании в группе условий include - включает exclude - исключает
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `status` (enum, optional): Статус рекламной кампании
+
+                - `site_id` (number, required): Уникальный идентификатор сайта
+
+                **Response Parameters:** 1
+
+                - `id` (number): Уникальный идентификатор рекламной кампании
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: create.campaigns
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        campaign_conditions:
+                                            type: object
+                                            description: Условия рекламной кампании.
+                                        campaign_parameter:
+                                            type: string
+                                            description: Список допустимых значений и возможных операторов см. в таблице "Список параметров и их операторов"
+                                        conditions:
+                                            type: array
+                                            description: Условия рекламной кампании в группе условий
+                                        count_virtual_numbers:
+                                            type: number
+                                            description: Количество номеров необходимое для работы динамического коллтрекинга в одном блоке. Указанное количество номеров будет куплено.
+                                            example: 123
+                                        count_visits:
+                                            type: number
+                                            description: Количество посещений по рекламной кампании в сутки
+                                            example: 123
+                                        description:
+                                            type: string
+                                            description: Описание рекламной кампании
+                                            example: example_string
+                                        dynamic_call_tracking:
+                                            type: object
+                                            description: Настройка динамический коллтрекинг. Обязателен к заполнению, если параметр dynamic_call_tracking_enabled у хоть одного блока имеет значение "true" иначе будет возвращена ошибка с мнемоникой "invalid_parameters_combination" Если Вы используете этот параметр, но у вас не подключен компонент "dynamic_call_tracking", то Вам вернется ошибка с мнемоникой "parameter_component_disabled"
+                                        dynamic_call_tracking_enabled:
+                                            type: boolean
+                                            description: Активация динамический коллтрекинг. В пул динамического коллтрекинга можно подключить только свободные номера без флага "Использовать в ВАТС" в том же коде, что и номер блока рекламной кампании по умолчанию. При отсутствии необходимого количества номеров они будут автоматически куплены. Звонки на номера из пула динамического коллтрекинга будут обрабатываться по правилам обработки звонков на номер блока рекламной кампании по умолчанию. Может принимать значение "true", если параметр phone_number_id = va | call_tracking. Если это не так, то будет возвращена ошибка с мнемоникой "invalid_parameters_combination" Если Вы используете этот параметр, но у вас не подключен компонент "dynamic_call_tracking", то Вам вернется ошибка с мнемоникой "parameter_component_disabled" Если задан одновременно status = inactive, то будет возвращена ошибка `invalid_parameters_combination` Если параметр dynamic_call_tracking_enabled имеет значение "true", то параметр dynamic_call_tracking обязателен к заполнению. Будет возвращена ошибка "invalid_parameters_combination".
+                                            example: "true"
+                                            enum:
+                                                - "true"
+                                                - "false"
+                                        group_conditions:
+                                            type: array
+                                            description: Группа условий рекламной кампании
+                                        name:
+                                            type: string
+                                            description: Название рекламной кампании
+                                            example: example_string
+                                        operator:
+                                            type: string
+                                            description: Оператор в условии. Зависит от используемого параметра campaign_parameter см. в таблице "Список параметров и их операторов" "=" - точно соответствует "sub" - включает "~" - регулярное выражение
+                                            example: =
+                                            enum:
+                                                - =
+                                                - sub
+                                                - "~"
+                                        phone_number_id:
+                                            type: number
+                                            description: Уникальный идентификатор виртуального номера. Чтобы получить список доступных виртуальных номеров необходимо использовать метод get.campaign_available_phone_numbers Если указан id который не возвращается методом get.campaign_available_phone_numbers, то будет возвращена ошибка с мнемоникой "entity_not_found". Номер с type = call_tracking может использоваться только в одной рекламной кампании. Если номер уже используется в другой рекламной кампании, то будет возвращена ошибка `already_in_use`
+                                            example: 123
+                                        redirection_phone_number_id:
+                                            type: number
+                                            description: Уникальный идентификатор номера переадресации. Номер переадресации используется только в том случае, если параметр phone_number_id имеет тип `call_tracking`. Список доступных номеров можно получить методом get.campaign_available_redirection_phone_numbers. Обязателен для заполнения, если в параметре phone_number_id указан виртуальный номер с типом "call_tracking". Если это не так, то будет возвращена ошибка с мнемоникой "required_parameter_missed". Если параметр задан и в phone_number_id указан виртуальный номер с типом "va", то будет возвращаться ошибка `invalid_parameters_combination` В параметре могут быть указаны только номера переадресации, которые возвращаются методом get.campaign_available_redirection_phone_numbers. Если это не так, то будет возвращаться ошибка с мнемоникой "invalid_parameter_value" Доступен, если подключен компонент "va". Если параметр будет заполнен и у вас отсутствует компонент "va", то будет возвращена ошибка с мнемоникой "parameter_component_disabled"
+                                            example: 123
+                                        reservation_time:
+                                            type: string
+                                            description: Значение по умолчанию "15m". Период, на который номер закрепляется за посетителем сайта. По истечении указанного времени номер закрепляется за новым посетителем (или остается за текущим в случае наличия свободных номеров коллтрекинга).
+                                        site_block_id:
+                                            type: number
+                                            description: Уникальный идентификатор блока номеров
+                                            example: 123
+                                        site_blocks:
+                                            type: array
+                                            description: Настройки привязки номера к блоку на сайте Если блоки номеров сайта не указаны, то они не настраиваются, т.е. считаются не настроенными Если site_blocks задан одновременно с status = inactive, то будет возвращаться ошибка `invalid_parameters_combination`
+                                        site_id:
+                                            type: number
+                                            description: Уникальный идентификатор сайта
+                                            example: 123
+                                        status:
+                                            type: string
+                                            description: Статус рекламной кампании
+                                        type:
+                                            type: string
+                                            description: Условия рекламной кампании в группе условий include - включает exclude - исключает
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                        value:
+                                            type: string
+                                            description: Значение. Для некоторых campaign_parameter может быть свой список допустимых значений см. в таблице "Список параметров и их операторов"
+                                            example: example_string
+                                    required:
+                                        - access_token
+                                        - site_id
+                                        - group_conditions
+                                        - phone_number_id
+                                        - value
+                                        - operator
+                                        - site_block_id
+                                        - count_virtual_numbers
+                                        - count_visits
+                                        - conditions
+                                        - campaign_parameter
+                                        - name
+                                        - type
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response
@@ -28,6 +205,13 @@ paths:
                                         properties:
                                             data:
                                                 type: object
+                                                properties:
+                                                    id:
+                                                        type: number
+                                                        description: Уникальный идентификатор рекламной кампании
+                                                        example: 123
+                                                required:
+                                                    - id
                                             metadata:
                                                 type: object
                                                 description: Response metadata

@@ -7,7 +7,45 @@ paths:
     /delete.offline_messages:
         delete:
             summary: Удаление офлайн заявки
-            description: Удаление офлайн заявки
+            description: "Удаление офлайн заявки\n\n**Request Parameters:** 3\n\n- `access_token` (string, required): \n\n- `user_id` (number, optional): \n\n- `id` (number, required): "
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: delete.offline_messages
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            example: example_string
+                                        id:
+                                            type: number
+                                            example: 123
+                                        user_id:
+                                            type: number
+                                            example: 123
+                                    required:
+                                        - access_token
+                                        - id
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response

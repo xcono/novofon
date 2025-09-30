@@ -7,7 +7,60 @@ paths:
     /get.reports_list:
         get:
             summary: Получение всех отчетов пользователя
-            description: Получение всех отчетов пользователя
+            description: "Получение всех отчетов пользователя\n\n**Request Parameters:** 7\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг - определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n**Response Parameters:** 10\n\n- `id` (number): да\n\n- `type` (enum): да\n\n- `name` (string): да\n\n- `description` (string): да\n\n- `sort` (number): \n\n- `is_editable` (boolean): да\n\n- `is_favorite` (boolean): да\n\n- `date_time_added_to_favorite` (iso8601): да\n\n- `group_id` (number): да\n\n- `is_mobile` (boolean): да"
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: get.reports_list
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        fields:
+                                            type: array
+                                            description: См. раздел "Представление возвращаемых данных"
+                                        filter:
+                                            type: object
+                                            description: См. раздел "Критерии фильтрации"
+                                        limit:
+                                            type: number
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                        offset:
+                                            type: number
+                                            description: Сдвиг - определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                        sort:
+                                            type: array
+                                            description: См. раздел "Сортировка данных"
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - access_token
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response
@@ -28,6 +81,43 @@ paths:
                                         properties:
                                             data:
                                                 type: object
+                                                properties:
+                                                    date_time_added_to_favorite:
+                                                        description: да
+                                                    description:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    group_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    is_editable:
+                                                        type: boolean
+                                                        description: да
+                                                        example: true
+                                                    is_favorite:
+                                                        type: boolean
+                                                        description: да
+                                                        example: true
+                                                    is_mobile:
+                                                        type: boolean
+                                                        description: да
+                                                        example: true
+                                                    name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    sort:
+                                                        type: number
+                                                        example: 123
+                                                    type:
+                                                        type: string
+                                                        description: да
                                             metadata:
                                                 type: object
                                                 description: Response metadata

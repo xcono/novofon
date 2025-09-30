@@ -7,7 +7,116 @@ paths:
     /create.schedules:
         post:
             summary: Создание графика активности
-            description: Создание графика активности
+            description: |-
+                Создание графика активности
+
+                **Request Parameters:** 12
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `schedules` (array, required): Расписания работы
+
+                - `activity_time` (array, optional): Время активности графика. Если параметр не задан, то график работает без ограничений
+
+                - `activity_date_till` (string, optional): Дата окончания активности графика
+
+                - `name` (string, required): Название графика активности
+
+                - `activity_days` (object, required): Дни в которые график активен
+
+                - `type` (enum, required): Тип. days_of_week - Календарь по дням недели days_of_month - Календарь по дням месяца business_calendar - Производственный календарь cycle - Циклический календарь
+
+                - `days` (array, required): Дни недели или месяца Пример циклического календаря: [2,2] - в цикле будет два рабочих, а затем два нерабочих дня. В итоге график получается два через два. Пример производственного календаря: [7] - Календарь будет активен по рабочим дням согласно производственного календаря; [8] - Календарь будет активен по выходным дням согласно производственного календаря
+
+                - `time_from` (string, required): Время начала активности графика
+
+                - `time_till` (string, required): Время окончания активности графика. Должно быть обязательно больше чем указано в параметре "time_from"
+
+                - `activity_date_from` (string, optional): Дата начала активности графика
+
+                **Response Parameters:** 1
+
+                - `id` (number): Уникальный идентификатор графика активности
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: create.schedules
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        activity_date_from:
+                                            type: string
+                                            description: Дата начала активности графика
+                                            example: example_string
+                                        activity_date_till:
+                                            type: string
+                                            description: Дата окончания активности графика
+                                            example: example_string
+                                        activity_days:
+                                            type: object
+                                            description: Дни в которые график активен
+                                        activity_time:
+                                            type: array
+                                            description: Время активности графика. Если параметр не задан, то график работает без ограничений
+                                        days:
+                                            type: array
+                                            description: 'Дни недели или месяца Пример циклического календаря: [2,2] - в цикле будет два рабочих, а затем два нерабочих дня. В итоге график получается два через два. Пример производственного календаря: [7] - Календарь будет активен по рабочим дням согласно производственного календаря; [8] - Календарь будет активен по выходным дням согласно производственного календаря'
+                                        name:
+                                            type: string
+                                            description: Название графика активности
+                                            example: example_string
+                                        schedules:
+                                            type: array
+                                            description: Расписания работы
+                                        time_from:
+                                            type: string
+                                            description: Время начала активности графика
+                                            example: example_string
+                                        time_till:
+                                            type: string
+                                            description: Время окончания активности графика. Должно быть обязательно больше чем указано в параметре "time_from"
+                                            example: example_string
+                                        type:
+                                            type: string
+                                            description: Тип. days_of_week - Календарь по дням недели days_of_month - Календарь по дням месяца business_calendar - Производственный календарь cycle - Циклический календарь
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - type
+                                        - days
+                                        - time_from
+                                        - time_till
+                                        - access_token
+                                        - schedules
+                                        - name
+                                        - activity_days
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response
@@ -28,6 +137,13 @@ paths:
                                         properties:
                                             data:
                                                 type: object
+                                                properties:
+                                                    id:
+                                                        type: number
+                                                        description: Уникальный идентификатор графика активности
+                                                        example: 123
+                                                required:
+                                                    - id
                                             metadata:
                                                 type: object
                                                 description: Response metadata

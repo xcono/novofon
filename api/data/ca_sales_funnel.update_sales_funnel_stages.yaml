@@ -7,7 +7,76 @@ paths:
     /update.sales_funnel_stages:
         put:
             summary: Обновление этапа воронки продаж
-            description: Обновление этапа воронки продаж
+            description: |-
+                Обновление этапа воронки продаж
+
+                **Request Parameters:** 6
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `sales_funnel_ext_id` (string, required): Внешний идентификатор воронки продаж
+
+                - `ext_id` (string, required): Внешний идентификатор этапа воронки продаж
+
+                - `name` (string, optional): Название этапа
+
+                - `order` (number, optional): Порядковый номер этапа, максимальное значение 10000 применяется только для этапа in_process
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: update.sales_funnel_stages
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        ext_id:
+                                            type: string
+                                            description: Внешний идентификатор этапа воронки продаж
+                                            example: example_string
+                                        name:
+                                            type: string
+                                            description: Название этапа
+                                            example: example_string
+                                        order:
+                                            type: number
+                                            description: Порядковый номер этапа, максимальное значение 10000 применяется только для этапа in_process
+                                            example: 123
+                                        sales_funnel_ext_id:
+                                            type: string
+                                            description: Внешний идентификатор воронки продаж
+                                            example: example_string
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - access_token
+                                        - sales_funnel_ext_id
+                                        - ext_id
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response

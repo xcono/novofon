@@ -7,7 +7,60 @@ paths:
     /get.campaign_parameter_weights:
         get:
             summary: Получение весов параметров рекламных кампаний
-            description: Получение весов параметров рекламных кампаний. Система весов нужна для того, чтобы определить, какую из рекламных кампаний сопоставить посещению. Если при переходе на сайт одному посещению соответствует несколько рекламных кампаний, то система присвоит рекламную кампанию, содержащую условие, значение которого по шкале весов наивысшее.
+            description: "Получение весов параметров рекламных кампаний. Система весов нужна для того, чтобы определить, какую из рекламных кампаний сопоставить посещению. Если при переходе на сайт одному посещению соответствует несколько рекламных кампаний, то система присвоит рекламную кампанию, содержащую условие, значение которого по шкале весов наивысшее.\n\n**Request Parameters:** 7\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_user\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n**Response Parameters:** 13\n\n- `referrer` (number): \n\n- `utm_tags` (number): \n\n- `os_tags` (number): \n\n- `other_tags` (number): \n\n- `site_domain_name` (string): да\n\n- `referrer_domain` (number): \n\n- `engine` (number): \n\n- `channel` (number): \n\n- `location` (number): \n\n- `site_id` (number): да\n\n- `entrance_page` (number): \n\n- `search_engine` (number): \n\n- `search_query` (number): "
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: get.campaign_parameter_weights
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        fields:
+                                            type: array
+                                            description: См. раздел "Представление возвращаемых данных"
+                                        filter:
+                                            type: object
+                                            description: См. раздел "Критерии фильтрации"
+                                        limit:
+                                            type: number
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                        offset:
+                                            type: number
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                        sort:
+                                            type: array
+                                            description: См. раздел "Сортировка данных"
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_user"
+                                            example: 123
+                                    required:
+                                        - access_token
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response
@@ -28,6 +81,48 @@ paths:
                                         properties:
                                             data:
                                                 type: object
+                                                properties:
+                                                    channel:
+                                                        type: number
+                                                        example: 123
+                                                    engine:
+                                                        type: number
+                                                        example: 123
+                                                    entrance_page:
+                                                        type: number
+                                                        example: 123
+                                                    location:
+                                                        type: number
+                                                        example: 123
+                                                    os_tags:
+                                                        type: number
+                                                        example: 123
+                                                    other_tags:
+                                                        type: number
+                                                        example: 123
+                                                    referrer:
+                                                        type: number
+                                                        example: 123
+                                                    referrer_domain:
+                                                        type: number
+                                                        example: 123
+                                                    search_engine:
+                                                        type: number
+                                                        example: 123
+                                                    search_query:
+                                                        type: number
+                                                        example: 123
+                                                    site_domain_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    site_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    utm_tags:
+                                                        type: number
+                                                        example: 123
                                             metadata:
                                                 type: object
                                                 description: Response metadata

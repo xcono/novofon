@@ -7,7 +7,86 @@ paths:
     /get.notifications:
         get:
             summary: Список отправленных уведомлений
-            description: Список отправленных уведомлений
+            description: "Список отправленных уведомлений\n\n**Request Parameters:** 14\n\n- `value` (string, optional): Значение для оператора фильтрации. Необязательное поле, если оно отсутствует, то считается пустота.\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать `\"limit\"` записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `report_id` (number, required): Уникальный идентификатор отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод \"get.reports_list\"\n\n- `fields` (array, optional): Список идентификаторов пользовательских столбцов, разделенных запятой. Доступный список столбцов см.раздел \"Получение вложенности столбцов\" . Порядок влияет на ответ.\n\n- `field` (string, optional): Поле сущности к которой будет применяться фильтрация (список заранее определён для метода)\n\n- `sort` (array, optional): Сортировка применяемая в отчете. Логика построения аналогична \"Сортировка данных\"\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `date_from` (iso8601, required): Дата начала основной выборки(ограничение 366 дней)\n\n- `date_till` (iso8601, required): Дата окончания основной выборки\n\n- `filter` (object, optional): Фильтры применяемые в отчете. Логика построения аналогична \"Критерии фильтрации\"\n\n- `filters` (array, required): Выражение, может содержать в себе как простые фильтры, так и дерево фильтров. Доступный список фильтров для отчета с их возможными значениями см.раздел \"Получение списка возможных условий фильтрации для отчета\" .\n\n- `operator` (enum, optional): Оператор фильтрации. Список всех операторов можно получить в разделе \"Операторы фильтрации\"\n\n**Response Parameters:** 17\n\n- `value` (string): \n\n- `notification_channel` (object): да\n\n- `notification_send_date_time` (iso8601): да\n\n- `notification_start_date_time` (iso8601): да\n\n- `notification_message` (string): да\n\n- `value_id` (string): \n\n- `notification_error_message` (string): да\n\n- `notification_name` (string): да\n\n- `communication_id` (string): да\n\n- `communication_type` (object): да\n\n- `notification_error_type` (object): да\n\n- `notification_delay` (numeric): да\n\n- `notification_send_to` (string): да\n\n- `event_type` (object): да\n\n- `notification_status` (object): да\n\n- `notification_id` (string): да\n\n- `notification_sms_count` (numeric): да"
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: get.notifications
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        date_from:
+                                            description: Дата начала основной выборки(ограничение 366 дней)
+                                        date_till:
+                                            description: Дата окончания основной выборки
+                                        field:
+                                            type: string
+                                            description: Поле сущности к которой будет применяться фильтрация (список заранее определён для метода)
+                                            example: example_string
+                                        fields:
+                                            type: array
+                                            description: Список идентификаторов пользовательских столбцов, разделенных запятой. Доступный список столбцов см.раздел "Получение вложенности столбцов" . Порядок влияет на ответ.
+                                        filter:
+                                            type: object
+                                            description: Фильтры применяемые в отчете. Логика построения аналогична "Критерии фильтрации"
+                                        filters:
+                                            type: array
+                                            description: Выражение, может содержать в себе как простые фильтры, так и дерево фильтров. Доступный список фильтров для отчета с их возможными значениями см.раздел "Получение списка возможных условий фильтрации для отчета" .
+                                        limit:
+                                            type: number
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                        offset:
+                                            type: number
+                                            description: Сдвиг, определяет с какого номера записи возвращать `"limit"` записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                        operator:
+                                            type: string
+                                            description: Оператор фильтрации. Список всех операторов можно получить в разделе "Операторы фильтрации"
+                                        report_id:
+                                            type: number
+                                            description: Уникальный идентификатор отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод "get.reports_list"
+                                            example: 123
+                                        sort:
+                                            type: array
+                                            description: Сортировка применяемая в отчете. Логика построения аналогична "Сортировка данных"
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                        value:
+                                            type: string
+                                            description: Значение для оператора фильтрации. Необязательное поле, если оно отсутствует, то считается пустота.
+                                            example: example_string
+                                    required:
+                                        - filters
+                                        - access_token
+                                        - report_id
+                                        - date_from
+                                        - date_till
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response
@@ -28,6 +107,60 @@ paths:
                                         properties:
                                             data:
                                                 type: object
+                                                properties:
+                                                    communication_id:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    communication_type:
+                                                        type: object
+                                                        description: да
+                                                    event_type:
+                                                        type: object
+                                                        description: да
+                                                    notification_channel:
+                                                        type: object
+                                                        description: да
+                                                    notification_delay:
+                                                        description: да
+                                                    notification_error_message:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    notification_error_type:
+                                                        type: object
+                                                        description: да
+                                                    notification_id:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    notification_message:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    notification_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    notification_send_date_time:
+                                                        description: да
+                                                    notification_send_to:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    notification_sms_count:
+                                                        description: да
+                                                    notification_start_date_time:
+                                                        description: да
+                                                    notification_status:
+                                                        type: object
+                                                        description: да
+                                                    value:
+                                                        type: string
+                                                        example: example_string
+                                                    value_id:
+                                                        type: string
+                                                        example: example_string
                                             metadata:
                                                 type: object
                                                 description: Response metadata

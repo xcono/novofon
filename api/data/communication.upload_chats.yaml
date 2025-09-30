@@ -7,7 +7,165 @@ paths:
     /upload.chats:
         post:
             summary: Загрузка чатов
-            description: Загрузка чатов
+            description: |-
+                Загрузка чатов
+
+                **Request Parameters:** 19
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `email` (string, optional): Email посетителя
+
+                - `source_id` (number, optional): Уникальный идентификатор источника. Возможно передать только неудаленный источник в разрезе клиента. Если передан visitor_session_id, то определим source_id по параметрам сессии.
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `phone` (string, optional): Телефон посетителя в формате E164
+
+                - `employee_id` (number, optional): Уникальный идентификатор сотрудника, обязательный параметр если source = operator(Оператор)За последним сотрудником, отправившим сообщение, будет закреплен чат
+
+                - `ext_id` (string, optional): Уникальный идентификатор чата в вашей системе
+
+                - `start_date_time` (iso8601, required): Дата и время создания чата Не может быть в будущем. Должна быть позже чем у переданной сессии посетителя.
+
+                - `campaign_id` (number, optional): Уникальный идентификатор рекламной кампании в CoMagic. Для получения campaign_id можно использовать метод Data API "get.campaigns". Нельзя передавать campaign_id = -1.
+
+                - `messages` (array, required): Список сообщений чата
+
+                - `source` (enum, required): Источник сообщения system (Автоприглашение), visitor (Посетитель), operator(Оператор)
+
+                - `chats` (array, required): Список чатов. Максимально 500
+
+                - `name` (string, optional): Имя посетителя
+
+                - `status` (enum, required): Статус чата lost (Потерянный); succeed (Состоявшийся);refused (Отклоненный) Если инициатор visitor и нет сообщений message от оператора или визитора, то переданное значение в status игнорируется и ставится значение lost
+
+                - `initiator` (enum, optional): Инициатор чата autoinvite (Автоприглашение), visitor (Посетитель), operator(Оператор) Если параметр не передан то будет взят первый источник сообщения ("source")
+
+                - `visitor_session_id` (number, optional): Уникальный идентификатор сессии посетителя полученной из CoMagic. Для получения ID необходимо использовать метод JS API Comagic.getSessionId()
+
+                - `site_id` (number, optional): Уникальный идентификатор сайта. Обязательно передавать если хотите чтобы чат попал в Рекламную кампанию "Посетители без РК"
+
+                - `date_time` (iso8601, required): Дата и время отправки сообщения Не может быть в будущем. Должна быть позже чем start_date_time. Если параметр не передан, то проставится время вызова
+
+                - `message` (string, required): Сообщение
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: upload.chats
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        campaign_id:
+                                            type: number
+                                            description: Уникальный идентификатор рекламной кампании в CoMagic. Для получения campaign_id можно использовать метод Data API "get.campaigns". Нельзя передавать campaign_id = -1.
+                                            example: 123
+                                        chats:
+                                            type: array
+                                            description: Список чатов. Максимально 500
+                                        date_time:
+                                            description: Дата и время отправки сообщения Не может быть в будущем. Должна быть позже чем start_date_time. Если параметр не передан, то проставится время вызова
+                                        email:
+                                            type: string
+                                            description: Email посетителя
+                                            example: example_string
+                                        employee_id:
+                                            type: number
+                                            description: Уникальный идентификатор сотрудника, обязательный параметр если source = operator(Оператор)За последним сотрудником, отправившим сообщение, будет закреплен чат
+                                            example: 123
+                                        ext_id:
+                                            type: string
+                                            description: Уникальный идентификатор чата в вашей системе
+                                            example: example_string
+                                        initiator:
+                                            type: string
+                                            description: Инициатор чата autoinvite (Автоприглашение), visitor (Посетитель), operator(Оператор) Если параметр не передан то будет взят первый источник сообщения ("source")
+                                            example: operator
+                                            enum:
+                                                - operator
+                                                - visitor
+                                                - autoinvite
+                                        message:
+                                            type: string
+                                            description: Сообщение
+                                            example: example_string
+                                        messages:
+                                            type: array
+                                            description: Список сообщений чата
+                                        name:
+                                            type: string
+                                            description: Имя посетителя
+                                            example: example_string
+                                        phone:
+                                            type: string
+                                            description: Телефон посетителя в формате E164
+                                            example: example_string
+                                        site_id:
+                                            type: number
+                                            description: Уникальный идентификатор сайта. Обязательно передавать если хотите чтобы чат попал в Рекламную кампанию "Посетители без РК"
+                                            example: 123
+                                        source:
+                                            type: string
+                                            description: Источник сообщения system (Автоприглашение), visitor (Посетитель), operator(Оператор)
+                                            example: operator
+                                            enum:
+                                                - operator
+                                                - visitor
+                                                - system
+                                        source_id:
+                                            type: number
+                                            description: Уникальный идентификатор источника. Возможно передать только неудаленный источник в разрезе клиента. Если передан visitor_session_id, то определим source_id по параметрам сессии.
+                                            example: 123
+                                        start_date_time:
+                                            description: Дата и время создания чата Не может быть в будущем. Должна быть позже чем у переданной сессии посетителя.
+                                        status:
+                                            type: string
+                                            description: Статус чата lost (Потерянный); succeed (Состоявшийся);refused (Отклоненный) Если инициатор visitor и нет сообщений message от оператора или визитора, то переданное значение в status игнорируется и ставится значение lost
+                                            example: lost
+                                            enum:
+                                                - lost
+                                                - succeed
+                                                - refused
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                        visitor_session_id:
+                                            type: number
+                                            description: Уникальный идентификатор сессии посетителя полученной из CoMagic. Для получения ID необходимо использовать метод JS API Comagic.getSessionId()
+                                            example: 123
+                                    required:
+                                        - start_date_time
+                                        - messages
+                                        - source
+                                        - chats
+                                        - status
+                                        - date_time
+                                        - message
+                                        - access_token
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response

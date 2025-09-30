@@ -7,7 +7,64 @@ paths:
     /getobj.report_global_calendar:
         post:
             summary: Получение глобальных календарей пользователя
-            description: Получение глобальных календарей пользователя
+            description: |-
+                Получение глобальных календарей пользователя
+
+                **Request Parameters:** 3
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `id` (number, optional): Уникальный идентификатор глобального календаря
+
+                **Response Parameters:** 3
+
+                - `id` (number): да
+
+                - `user_id` (number): да
+
+                - `params` (object): да
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: getobj.report_global_calendar
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        id:
+                                            type: number
+                                            description: Уникальный идентификатор глобального календаря
+                                            example: 123
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - access_token
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response
@@ -28,6 +85,18 @@ paths:
                                         properties:
                                             data:
                                                 type: object
+                                                properties:
+                                                    id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    params:
+                                                        type: object
+                                                        description: да
+                                                    user_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
                                             metadata:
                                                 type: object
                                                 description: Response metadata

@@ -7,7 +7,75 @@ paths:
     /update.report:
         put:
             summary: Редактирование отчета пользователя
-            description: Редактирование отчета пользователя
+            description: |-
+                Редактирование отчета пользователя
+
+                **Request Parameters:** 6
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `id` (number, required): Уникальный идентификатор пользовательского отчета. Для получения списка отчетов необходимо использовать метод ["get.reports_list"](../get_reports_list)
+
+                - `name` (string, optional): Название отчета
+
+                - `description` (string, optional): Описание отчета
+
+                - `is_favorite` (boolean, optional): Является ли отчет избранным
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: update.report
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        description:
+                                            type: string
+                                            description: Описание отчета
+                                            example: example_string
+                                        id:
+                                            type: number
+                                            description: Уникальный идентификатор пользовательского отчета. Для получения списка отчетов необходимо использовать метод ["get.reports_list"](../get_reports_list)
+                                            example: 123
+                                        is_favorite:
+                                            type: boolean
+                                            description: Является ли отчет избранным
+                                            example: true
+                                        name:
+                                            type: string
+                                            description: Название отчета
+                                            example: example_string
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - access_token
+                                        - id
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
             responses:
                 "200":
                     description: Successful response
