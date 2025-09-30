@@ -12,79 +12,79 @@ paths:
 
                 **Request Parameters:** 37
 
-                - `extension` (object, optional): Внутренний номер сотрудника
-
-                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
-
                 - `last_name` (string, required): Фамилия сотрудника
-
-                - `allowed_in_call_types` (array, optional): Параметр будет удален в ближайшее время. Используйте вместо него параметры: in_external_allowed_call_directions, in_internal_allowed_call_directions Какие типы входящих звонков разрешены сотруднику internal - внутренние звонки от сотрудников компании external - внешние звонки от клиентов
-
-                - `coach_always_enabled` (boolean, optional): По умолчанию "false". При активации опции все входящие звонки сотрудника будут дублироваться его тренеру. Значение "true" возможно установить если задан параметр "coach_id".
-
-                - `phone_number` (string, required): Номер телефона сотрудника. Формат номера может быть с донабором, к примеру "74955140578...2345", поэтому у номера не формат E164 Если указан SIP, то не делаем связки, а просто добавляем как номер типа ТФОП, т.е. как обычный номер
-
-                - `channels_count` (number, optional): Значение по умолчанию "1". Количество линий на телефоне.
-
-                - `dial_time` (number, optional): Значение по умолчанию "60". Время дозвона по телефону. Значение в секундах.
-
-                - `calls_available` (boolean, optional): Параметр будет удален в ближайшее время. Используйте вместо него параметры: in_external_allowed_call_directions, in_internal_allowed_call_directions Значение по умолчанию "true". Доступность для звонков
-
-                - `extension_phone_number` (string, required): Внутренний номер
-
-                - `extension_voice_mail_enabled` (boolean, optional): Значение по умолчанию "false". В случае, если все номера, указанные для этого сотрудника в списке телефонов, заняты, то звонящему абоненту будет предложено оставить голосовое сообщение.
-
-                - `extension_queue_enabled` (boolean, optional): Значение по умолчанию "false". В случае, если все номера, указанные для этого сотрудника в списке телефонов, заняты, то звонящий абонент встанет в очередь на повторный дозвон до телефонов в списке и будет ждать первый освободившийся номер.
-
-                - `operator_login` (string, required): Логин сотрудника для входа в приложение «Рабочее место оператора»
-
-                - `operator_invite_to_chat_enabled` (boolean, optional): Значение по умолчанию "false". Разрешено ли приглашать в чат
-
-                - `access_token` (string, required): Ключ сессии аутентификации
-
-                - `in_internal_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для входящих внутренних звонков in - входящие вызовы out - исходящие вызовы
-
-                - `operator_password` (string, required): Пароль сотрудника для входа в приложение «Рабочее место оператора»
-
-                - `operator_chat_enabled` (boolean, optional): Значение по умолчанию "true". Разрешено ли участвовать в чатах с посетителями
-
-                - `email` (string, optional): Адрес электронной почты сотрудника
-
-                - `patronymic` (string, optional): Отчество сотрудника
-
-                - `status` (enum, optional): Значение по умолчанию "active". Статус номера.
-
-                - `call_recording` (enum, optional): Значение по умолчанию "all". Статус записи разговоров Зависит от компонента "recording"
-
-                - `coach_id` (number, required): Уникальный идентификатор тренера
-
-                - `operator_display_name` (string, required): Имя оператора в чате
 
                 - `out_external_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для исходящих внешних звонков in - входящие вызовы out - исходящие вызовы
 
-                - `out_internal_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для исходящих внутренних звонков in - входящие вызовы out - исходящие вызовы
+                - `phone_numbers` (array, optional): Список телефонов сотрудника Важно понимать, что при создании нового сотрудника номер уже может существовать у другого сотрудника и если номеру переданы новые параметры, то они будут так же обновлены уже существующему номеру
 
-                - `schedule_id` (number, optional): График активности
+                - `dial_time` (number, optional): Значение по умолчанию "60". Время дозвона по телефону. Значение в секундах.
+
+                - `extension_phone_number` (string, required): Внутренний номер
+
+                - `extension` (object, optional): Внутренний номер сотрудника
+
+                - `operator_display_name` (string, required): Имя оператора в чате
+
+                - `operator_position_id` (number, optional): Должность сотрудника в подписи
+
+                - `operator_offline_message_enabled` (boolean, optional): Значение по умолчанию "false". Разрешено ли обрабатывать заявки
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
 
                 - `coach` (object, optional): Тренер для сотрудника Зависит от компонента "trainer"
 
                 - `groups` (array, optional): Список уникальных идентификаторов групп в которых состоит сотрудник.
 
-                - `first_name` (string, optional): Имя сотрудника
-
-                - `in_external_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для входящих внешних звонков in - входящие вызовы out - исходящие вызовы
-
-                - `phone_numbers` (array, optional): Список телефонов сотрудника Важно понимать, что при создании нового сотрудника номер уже может существовать у другого сотрудника и если номеру переданы новые параметры, то они будут так же обновлены уже существующему номеру
-
-                - `operator` (object, optional): Оператор рабочего места Зависит от компонента "consultant"
-
-                - `operator_position_id` (number, optional): Должность сотрудника в подписи
+                - `phone_number` (string, required): Номер телефона сотрудника. Формат номера может быть с донабором, к примеру "74955140578...2345", поэтому у номера не формат E164 Если указан SIP, то не делаем связки, а просто добавляем как номер типа ТФОП, т.е. как обычный номер
 
                 - `operator_sites` (array, optional): Список уникальных идентификаторов сайтов для которых доступен сотрудник.
 
+                - `first_name` (string, optional): Имя сотрудника
+
+                - `calls_available` (boolean, optional): Параметр будет удален в ближайшее время. Используйте вместо него параметры: in_external_allowed_call_directions, in_internal_allowed_call_directions Значение по умолчанию "true". Доступность для звонков
+
+                - `out_internal_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для исходящих внутренних звонков in - входящие вызовы out - исходящие вызовы
+
+                - `operator` (object, optional): Оператор рабочего места Зависит от компонента "consultant"
+
+                - `patronymic` (string, optional): Отчество сотрудника
+
+                - `in_external_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для входящих внешних звонков in - входящие вызовы out - исходящие вызовы
+
+                - `schedule_id` (number, optional): График активности
+
+                - `coach_always_enabled` (boolean, optional): По умолчанию "false". При активации опции все входящие звонки сотрудника будут дублироваться его тренеру. Значение "true" возможно установить если задан параметр "coach_id".
+
+                - `operator_login` (string, required): Логин сотрудника для входа в приложение «Рабочее место оператора»
+
+                - `operator_password` (string, required): Пароль сотрудника для входа в приложение «Рабочее место оператора»
+
+                - `operator_invite_to_chat_enabled` (boolean, optional): Значение по умолчанию "false". Разрешено ли приглашать в чат
+
+                - `operator_chat_enabled` (boolean, optional): Значение по умолчанию "true". Разрешено ли участвовать в чатах с посетителями
+
+                - `status` (enum, optional): Значение по умолчанию "active". Статус номера.
+
+                - `allowed_in_call_types` (array, optional): Параметр будет удален в ближайшее время. Используйте вместо него параметры: in_external_allowed_call_directions, in_internal_allowed_call_directions Какие типы входящих звонков разрешены сотруднику internal - внутренние звонки от сотрудников компании external - внешние звонки от клиентов
+
+                - `in_internal_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для входящих внутренних звонков in - входящие вызовы out - исходящие вызовы
+
+                - `email` (string, optional): Адрес электронной почты сотрудника
+
+                - `call_recording` (enum, optional): Значение по умолчанию "all". Статус записи разговоров Зависит от компонента "recording"
+
+                - `coach_id` (number, required): Уникальный идентификатор тренера
+
                 - `allowed_out_call_types` (array, optional): Параметр будет удален в ближайшее время. Используйте вместо него параметры: out_external_allowed_call_directions, out_internal_allowed_call_directions Какие типы исходящих звонков разрешены сотруднику internal - внутренние звонки на сотрудников компании external - звонки за пределы компании
 
-                - `operator_offline_message_enabled` (boolean, optional): Значение по умолчанию "false". Разрешено ли обрабатывать заявки
+                - `channels_count` (number, optional): Значение по умолчанию "1". Количество линий на телефоне.
+
+                - `extension_voice_mail_enabled` (boolean, optional): Значение по умолчанию "false". В случае, если все номера, указанные для этого сотрудника в списке телефонов, заняты, то звонящему абоненту будет предложено оставить голосовое сообщение.
+
+                - `extension_queue_enabled` (boolean, optional): Значение по умолчанию "false". В случае, если все номера, указанные для этого сотрудника в списке телефонов, заняты, то звонящий абонент встанет в очередь на повторный дозвон до телефонов в списке и будет ждать первый освободившийся номер.
+
+                - `access_token` (string, required): Ключ сессии аутентификации
 
                 **Response Parameters:** 1
 
@@ -270,13 +270,13 @@ paths:
                                             description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
                                             example: 123
                                     required:
-                                        - extension_phone_number
                                         - operator_login
-                                        - access_token
                                         - operator_password
                                         - coach_id
-                                        - operator_display_name
+                                        - access_token
                                         - last_name
+                                        - extension_phone_number
+                                        - operator_display_name
                                         - phone_number
                             required:
                                 - jsonrpc

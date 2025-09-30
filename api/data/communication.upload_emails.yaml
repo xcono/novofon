@@ -12,35 +12,35 @@ paths:
 
                 **Request Parameters:** 15
 
-                - `email_from` (string, required): Отправитель.
-
-                - `email_to_cc` (array, optional): Копия.
-
-                - `access_token` (string, required): Ключ сессии аутентификации
-
-                - `sender_name` (string, optional): Имя отправителя
-
-                - `source_id` (number, optional): Идентификатор источника. Метод получение списка существующих Источников: "get.get_sources"
-
-                - `message_html` (string, required): HTML письма.
-
-                - `email_to_bcc` (array, optional): Скрытая копия.
-
-                - `site_id` (number, optional): Идентификатор сайта. Метод получение списка существующих сайтов: "get.sites"
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
 
                 - `session_id` (number, optional): Идентификатор сессии
 
-                - `message` (string, required): Текст письма.
+                - `site_id` (number, optional): Идентификатор сайта. Метод получение списка существующих сайтов: "get.sites"
 
-                - `email_to` (string, required): Получатель. Обязательно одно из полей: email_to, email_to_cc, email_to_bcc
+                - `sender_name` (string, optional): Имя отправителя
 
-                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                - `email_to_cc` (array, optional): Копия.
 
-                - `emails` (array, optional): Массив писем
+                - `email_to_bcc` (array, optional): Скрытая копия.
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `source_id` (number, optional): Идентификатор источника. Метод получение списка существующих Источников: "get.get_sources"
 
                 - `date_time` (date, required): Дата и время получения письма на почту в таймзоне клиента
 
                 - `subject` (string, optional): Тема письма
+
+                - `email_from` (string, required): Отправитель.
+
+                - `emails` (array, optional): Массив писем
+
+                - `message` (string, required): Текст письма.
+
+                - `message_html` (string, required): HTML письма.
+
+                - `email_to` (string, required): Получатель. Обязательно одно из полей: email_to, email_to_cc, email_to_bcc
 
                 **Response Parameters:** 1
 
@@ -122,12 +122,12 @@ paths:
                                             description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
                                             example: 123
                                     required:
-                                        - message_html
-                                        - message
-                                        - email_to
-                                        - date_time
                                         - email_from
+                                        - message
+                                        - message_html
+                                        - email_to
                                         - access_token
+                                        - date_time
                             required:
                                 - jsonrpc
                                 - id

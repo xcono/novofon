@@ -12,21 +12,17 @@ paths:
 
                 **Request Parameters:** 14
 
-                - `search_query` (number, optional): Поисковый запрос
+                - `site_id` (number, required): Уникальный идентификатор сайта
+
+                - `referrer_domain` (number, optional): Домен реферера
+
+                - `engine` (number, optional): Рекламная система
+
+                - `channel` (number, optional): Канал
 
                 - `utm_tags` (number, optional): Значение веса для параметров utm_source, utm_medium, utm_campaign, utm_term, utm_content
 
                 - `os_tags` (number, optional): Значение веса для параметров openstat_service, openstat_campaign, openstat_source, openstat_ad
-
-                - `site_id` (number, required): Уникальный идентификатор сайта
-
-                - `engine` (number, optional): Рекламная система
-
-                - `referrer` (number, optional): Реферер
-
-                - `channel` (number, optional): Канал
-
-                - `location` (number, optional): Значение веса для параметров city, region, country
 
                 - `other_tags` (number, optional): Значение веса для параметров ef_id, yclid, gclid, ymclid
 
@@ -36,9 +32,13 @@ paths:
 
                 - `entrance_page` (number, optional): Страница входа
 
-                - `referrer_domain` (number, optional): Домен реферера
-
                 - `search_engine` (number, optional): Поисковая система
+
+                - `search_query` (number, optional): Поисковый запрос
+
+                - `referrer` (number, optional): Реферер
+
+                - `location` (number, optional): Значение веса для параметров city, region, country
             requestBody:
                 required: true
                 content:
@@ -117,8 +117,8 @@ paths:
                                             description: Значение веса для параметров utm_source, utm_medium, utm_campaign, utm_term, utm_content
                                             example: 123
                                     required:
-                                        - site_id
                                         - access_token
+                                        - site_id
                             required:
                                 - jsonrpc
                                 - id

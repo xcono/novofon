@@ -12,15 +12,13 @@ paths:
 
                 **Request Parameters:** 3
 
+                - `person_id` (number, required): Уникальный идентификатор персоны
+
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
 
-                - `person_id` (number, required): Уникальный идентификатор персоны
-
                 **Response Parameters:** 7
-
-                - `person_id` (number): да
 
                 - `visitor_id` (number): да
 
@@ -33,6 +31,8 @@ paths:
                 - `company` (string): нет
 
                 - `commentary` (string): нет
+
+                - `person_id` (number): да
             requestBody:
                 required: true
                 content:

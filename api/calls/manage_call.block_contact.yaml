@@ -45,8 +45,8 @@ paths:
                                             description: Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
                                             example: 123
                                     required:
-                                        - access_token
                                         - call_session_id
+                                        - access_token
                             required:
                                 - jsonrpc
                                 - id

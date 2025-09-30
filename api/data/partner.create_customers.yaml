@@ -12,35 +12,35 @@ paths:
 
                 **Request Parameters:** 15
 
-                - `monthly_base_limit` (number, optional): Общий месячный лимит. Значение задаётся в деньгах.
-
-                - `monthly_base_notify_limit` (number, optional): Пороговое значение общего месячного лимита при достижению которого отправляется уведомление на электронный адрес указанный в параметре "monthly_base_notify_email"
-
                 - `daily_calls_limit` (number, optional): Дневной лимит по звонкам. Значение задаётся в количестве звонков.
 
                 - `description` (string, optional): Описание к клиенту
+
+                - `monthly_base_notify_limit` (number, optional): Пороговое значение общего месячного лимита при достижению которого отправляется уведомление на электронный адрес указанный в параметре "monthly_base_notify_email"
 
                 - `email` (string, required): Адрес электронной почты клиента
 
                 - `monthly_base_notify_emails` (array, required): Адреса электронной почты для получения уведомлений о достижении общего месячного лимита
 
-                - `monthly_calls_notify_limit` (number, optional): Пороговое значение месячного лимита по звонкам при достижению которого отправляется уведомление на электронный адрес указанный в параметре "monthly_calls_notify_email"
-
                 - `daily_calls_notify_emails` (array, required): Адреса электронной почты для получения уведомлений о достижении дневного лимита по звонкам
-
-                - `monthly_calls_limit` (number, optional): Месячный лимит по звонкам. Значение задаётся в количестве звонков.
-
-                - `monthly_calls_notify_emails` (array, required): Адреса электронной почты для получения уведомлений о достижении месячного лимита по звонкам
-
-                - `tariff_plan_id` (number, required): Уникальный идентификатор тарифного плана. Список доступных тарифных планов можно получить с помощью метода "get.partner_tariffs"
-
-                - `password` (string, required): Пароль для клиента
-
-                - `daily_calls_notify_limit` (number, optional): Пороговое значение дневного лимита по звонкам при достижению которого отправляется уведомление на электронный адрес указанный в параметре "daily_calls_notify_email"
 
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `name` (string, required): Название клиента
+
+                - `password` (string, required): Пароль для клиента
+
+                - `monthly_base_limit` (number, optional): Общий месячный лимит. Значение задаётся в деньгах.
+
+                - `monthly_calls_notify_limit` (number, optional): Пороговое значение месячного лимита по звонкам при достижению которого отправляется уведомление на электронный адрес указанный в параметре "monthly_calls_notify_email"
+
+                - `daily_calls_notify_limit` (number, optional): Пороговое значение дневного лимита по звонкам при достижению которого отправляется уведомление на электронный адрес указанный в параметре "daily_calls_notify_email"
+
+                - `tariff_plan_id` (number, required): Уникальный идентификатор тарифного плана. Список доступных тарифных планов можно получить с помощью метода "get.partner_tariffs"
+
+                - `monthly_calls_limit` (number, optional): Месячный лимит по звонкам. Значение задаётся в количестве звонков.
+
+                - `monthly_calls_notify_emails` (array, required): Адреса электронной почты для получения уведомлений о достижении месячного лимита по звонкам
 
                 **Response Parameters:** 1
 
@@ -124,14 +124,14 @@ paths:
                                             description: Уникальный идентификатор тарифного плана. Список доступных тарифных планов можно получить с помощью метода "get.partner_tariffs"
                                             example: 123
                                     required:
-                                        - access_token
                                         - name
+                                        - password
+                                        - tariff_plan_id
+                                        - monthly_calls_notify_emails
                                         - email
                                         - monthly_base_notify_emails
                                         - daily_calls_notify_emails
-                                        - monthly_calls_notify_emails
-                                        - tariff_plan_id
-                                        - password
+                                        - access_token
                             required:
                                 - jsonrpc
                                 - id

@@ -12,69 +12,69 @@ paths:
 
                 **Response Parameters:** 32
 
-                - `start_time` (iso8601): да
-
                 - `source_id` (number): да
 
-                - `status` (enum): да
+                - `record_type` (enum): да
+
+                - `tags` (array): нет
 
                 - `employee_name` (string): нет
 
-                - `url` (string): нет
+                - `called_phone_number` (string): да
 
-                - `events` (array): нет
+                - `finish_time` (iso8601): да
 
-                - `record_url` (string): нет
-
-                - `visitor_session_id` (number): да
+                - `wait_duration` (number): да
 
                 - `error_code` (enum): да
 
+                - `record_url` (string): нет
+
+                - `upload_time` (iso8601): нет
+
+                - `visitor_session_id` (number): да
+
+                - `employee_id` (number): нет
+
                 - `ext_id` (string): да
+
+                - `calling_phone_number` (string): да
+
+                - `start_time` (iso8601): да
+
+                - `site_id` (number): да
+
+                - `status` (enum): да
+
+                - `call_session_id` (number): да
+
+                - `callback` (object): нет
 
                 - `ext_request_id` (string): да
 
-                - `called_phone_number` (string): да
+                - `is_transfer` (boolean): да
 
-                - `comment` (string): да
+                - `tag_name` (string): нет
 
                 - `direction` (enum): да
 
                 - `is_lost` (boolean): да
 
-                - `records` (array): нет
-
-                - `employee_id` (number): нет
-
-                - `employee_channel` (enum): нет
-
-                - `finish_time` (iso8601): да
-
-                - `is_transfer` (boolean): да
-
-                - `campaign_id` (number): да
-
-                - `callback` (object): нет
-
-                - `tags` (array): нет
-
-                - `tag_name` (string): нет
-
-                - `upload_time` (iso8601): нет
-
-                - `calling_phone_number` (string): да
-
-                - `talk_duration` (number): да
-
-                - `record_type` (enum): да
+                - `comment` (string): да
 
                 - `tag_id` (number): нет
 
-                - `wait_duration` (number): да
+                - `employee_channel` (enum): нет
 
-                - `site_id` (number): да
+                - `talk_duration` (number): да
 
-                - `call_session_id` (number): да
+                - `url` (string): нет
+
+                - `records` (array): нет
+
+                - `campaign_id` (number): да
+
+                - `events` (array): нет
             responses:
                 "200":
                     description: Successful response

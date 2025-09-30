@@ -12,6 +12,8 @@ paths:
 
                 **Request Parameters:** 7
 
+                - `comment` (string, optional): Комментарий к сделке
+
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
@@ -23,8 +25,6 @@ paths:
                 - `date_time` (iso8601, required): Дата и время сделки Не должна быть раньше даты обращения
 
                 - `transaction_value` (number, required): Стоимость сделки
-
-                - `comment` (string, optional): Комментарий к сделке
 
                 **Response Parameters:** 1
 
@@ -82,11 +82,11 @@ paths:
                                             description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
                                             example: 123
                                     required:
-                                        - access_token
                                         - communication_id
                                         - communication_type
                                         - date_time
                                         - transaction_value
+                                        - access_token
                             required:
                                 - jsonrpc
                                 - id

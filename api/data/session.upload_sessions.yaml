@@ -12,89 +12,89 @@ paths:
 
                 **Request Parameters:** 42
 
-                - `access_token` (string, required): Ключ сессии аутентификации
-
-                - `site_id` (number, required): Уникальный идентификатор сайта
-
-                - `visitor_device` (enum, optional): Устройство посетителя
-
-                - `ua_client_id` (string, optional): Уникальный идентификатор в Universal Analytics
-
-                - `utm_referrer` (string, optional): Источник перехода на сайт
-
-                - `yclid` (string, optional): Yandex Click Identifier
-
-                - `duration` (number, optional): Продолжительность сессии, значение в секундах
-
-                - `visitor_os_name` (string, optional): Название операционной системы посетителя
-
-                - `visitor_os_version` (string, optional): Версия операционной системы посетителя
-
-                - `utm_source` (string, optional): UTM-source
-
-                - `utm_expid` (string, optional): Идентификатор эксперимента в Google Analytics
-
-                - `openstat_ad` (string, optional): Идентификатор рекламного объявления
-
-                - `ymclid` (string, optional): Yandex Market Click Identifier
-
                 - `tag_from` (string, optional): Пользовательская метка
-
-                - `visitor_browser_name` (string, optional): Браузер посетителя
-
-                - `utm_content` (string, optional): UTM-content
-
-                - `openstat_service` (string, optional): Идентификатор сервиса, предоставляющего услуги
 
                 - `entrance_page_title` (string, optional): Название страницы посещения. Если не передано будет null в карточке клиента
 
                 - `is_visitor_new` (boolean, required): Является ли посетитель новым
 
-                - `visitor_browser_version` (string, optional): Версия браузера посетителя
-
-                - `search_engine` (string, optional): Поисковая система
-
-                - `gclid` (string, optional): Google Click Identifier
-
-                - `ef_id` (string, optional): Используется для разметки ссылок в системе управления контекстной рекламой AdLense
+                - `openstat_source` (string, optional): Идентификатор площадки, раздела, страницы, места на странице, на котором было показано соответствующее рекламное объявление
 
                 - `adv_system` (number, optional): Идентификатор рекламной системы
 
-                - `entrance_page_url` (string, optional): URL страницы посещения(Страница входа).
+                - `visitor_os_version` (string, optional): Версия операционной системы посетителя
+
+                - `visitor_language` (string, optional): Локализация устройства посетителя
+
+                - `referrer` (string, optional): Источник перехода
+
+                - `openstat_ad` (string, optional): Идентификатор рекламного объявления
+
+                - `visitor_os_name` (string, optional): Название операционной системы посетителя
 
                 - `ext_id` (string, required): Уникальный идентификатор сессии во внешней системе. Дубликаты отбрасываются в момент загрузки сессий в базу данных. Для сопоставления ext_id и внутреннего id сессии используйте метод "get.visitor_sessions_report"
 
+                - `site_id` (number, required): Уникальный идентификатор сайта
+
                 - `date_time` (iso8601, required): Дата и время сессии.Данные будут скорректированы с учетом указанной таймзоны в личном кабинете. Дата не должна быть больше текущего времени и меньше 2011-01-01 00:00:00
+
+                - `visitor_id` (number, optional): Уникальный идентификатор посетителя
+
+                - `duration` (number, optional): Продолжительность сессии, значение в секундах
+
+                - `utm_term` (string, optional): UTM-term
+
+                - `openstat_campaign` (string, optional): Идентификатор рекламной кампании
 
                 - `campaign_id` (number, optional): Уникальный идентификатор рекламной кампании. Если не указано, то попытаемся определить кампанию по переданным параметрам. Если не смогли определить, то сессия присваивается рекламной кампании c campaign_id = -1 Посетители без рекламной капании
 
+                - `visitor_device` (enum, optional): Устройство посетителя
+
+                - `utm_content` (string, optional): UTM-content
+
+                - `utm_referrer` (string, optional): Источник перехода на сайт
+
+                - `yclid` (string, optional): Yandex Click Identifier
+
+                - `visitor_browser_version` (string, optional): Версия браузера посетителя
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `visitor_screen` (string, optional): Разрешение монитора посетителя
+
                 - `search_query` (string, optional): Поисковый запрос
+
+                - `utm_source` (string, optional): UTM-source
+
+                - `utm_expid` (string, optional): Идентификатор эксперимента в Google Analytics
+
+                - `openstat_service` (string, optional): Идентификатор сервиса, предоставляющего услуги
+
+                - `entrance_page_url` (string, optional): URL страницы посещения(Страница входа).
+
+                - `search_engine` (string, optional): Поисковая система
 
                 - `ym_client_id` (string, optional): Уникальный идентификатор пользователя Яндекс.Метрики
 
                 - `utm_campaign` (string, optional): UTM-campaign
 
+                - `gclid` (string, optional): Google Click Identifier
+
+                - `ymclid` (string, optional): Yandex Market Click Identifier
+
                 - `cm_id` (string, optional): Метка добавляемая в url объявлений внешних рекламных систем при интеграции. Смотрите подробнее компоновку метки cm_id для конкретной рекламной системы.
 
-                - `referrer` (string, optional): Источник перехода
+                - `visitor_browser_name` (string, optional): Браузер посетителя
 
-                - `openstat_campaign` (string, optional): Идентификатор рекламной кампании
+                - `access_token` (string, required): Ключ сессии аутентификации
 
-                - `openstat_source` (string, optional): Идентификатор площадки, раздела, страницы, места на странице, на котором было показано соответствующее рекламное объявление
-
-                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
-
-                - `visitor_id` (number, optional): Уникальный идентификатор посетителя
+                - `ua_client_id` (string, optional): Уникальный идентификатор в Universal Analytics
 
                 - `visitor_ip_address` (string, required): IP-адрес посетителя
 
                 - `utm_medium` (string, optional): UTM-medium
 
-                - `utm_term` (string, optional): UTM-term
-
-                - `visitor_screen` (string, optional): Разрешение монитора посетителя
-
-                - `visitor_language` (string, optional): Локализация устройства посетителя
+                - `ef_id` (string, optional): Используется для разметки ссылок в системе управления контекстной рекламой AdLense
             requestBody:
                 required: true
                 content:
@@ -282,12 +282,12 @@ paths:
                                             description: Yandex Market Click Identifier
                                             example: example_string
                                     required:
-                                        - is_visitor_new
                                         - ext_id
-                                        - date_time
-                                        - visitor_ip_address
-                                        - access_token
                                         - site_id
+                                        - date_time
+                                        - access_token
+                                        - visitor_ip_address
+                                        - is_visitor_new
                             required:
                                 - jsonrpc
                                 - id

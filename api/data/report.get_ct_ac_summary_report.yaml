@@ -7,7 +7,7 @@ paths:
     /get.ct_ac_summary_report:
         get:
             summary: Номера колтрекинга по рекламным кампаниям
-            description: "Номера колтрекинга по рекламным кампаниям\n\n**Request Parameters:** 10\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `date_from` (iso8601, required): Дата начала выборки\n\n- `date_till` (iso8601, required): Дата окончания выборки\n\n- `site_id` (number, required): Уникальный идентификатор сайта\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n**Response Parameters:** 9\n\n- `active_numbers_count` (number): да\n\n- `non_session_calls_count` (number): да\n\n- `calls_count` (number): да\n\n- `ac_id` (number): да\n\n- `ac_name` (string): да\n\n- `dt_ratio` (number): да\n\n- `is_reserve_pool` (boolean): да\n\n- `is_dynamic` (boolean): \n\n- `is_static` (boolean): "
+            description: "Номера колтрекинга по рекламным кампаниям\n\n**Request Parameters:** 10\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `date_from` (iso8601, required): Дата начала выборки\n\n- `site_id` (number, required): Уникальный идентификатор сайта\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `date_till` (iso8601, required): Дата окончания выборки\n\n**Response Parameters:** 9\n\n- `ac_id` (number): да\n\n- `is_reserve_pool` (boolean): да\n\n- `is_dynamic` (boolean): \n\n- `ac_name` (string): да\n\n- `is_static` (boolean): \n\n- `active_numbers_count` (number): да\n\n- `dt_ratio` (number): да\n\n- `non_session_calls_count` (number): да\n\n- `calls_count` (number): да"
             requestBody:
                 required: true
                 content:
@@ -63,10 +63,10 @@ paths:
                                             description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
                                             example: 123
                                     required:
-                                        - site_id
                                         - access_token
-                                        - date_from
                                         - date_till
+                                        - date_from
+                                        - site_id
                             required:
                                 - jsonrpc
                                 - id

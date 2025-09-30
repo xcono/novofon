@@ -12,11 +12,11 @@ paths:
 
                 **Request Parameters:** 3
 
-                - `name` (string, optional): Название блока номеров
-
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `id` (number, required): Уникальный идентификатор блока номеров
+
+                - `name` (string, optional): Название блока номеров
             requestBody:
                 required: true
                 content:

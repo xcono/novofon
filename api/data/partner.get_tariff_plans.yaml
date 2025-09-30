@@ -12,10 +12,6 @@ paths:
 
                 **Request Parameters:** 6
 
-                - `access_token` (string, required): Ключ сессии аутентификации
-
-                - `limit` (number, optional): Количество возвращаемых записей. См. раздел "Постраничный вывод"
-
                 - `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
 
                 - `filter` (object, optional): См. раздел "Критерии фильтрации"
@@ -24,11 +20,15 @@ paths:
 
                 - `sort` (array, optional): См. раздел "Сортировка данных"
 
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `limit` (number, optional): Количество возвращаемых записей. См. раздел "Постраничный вывод"
+
                 **Response Parameters:** 2
 
-                - `id` (number): Уникальный идентификатор тарифного плана
-
                 - `name` (string): Название тарифного плана
+
+                - `id` (number): Уникальный идентификатор тарифного плана
             requestBody:
                 required: true
                 content:
@@ -108,8 +108,8 @@ paths:
                                                         description: Название тарифного плана
                                                         example: example_string
                                                 required:
-                                                    - id
                                                     - name
+                                                    - id
                                             metadata:
                                                 type: object
                                                 description: Response metadata

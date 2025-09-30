@@ -94,9 +94,9 @@ paths:
                                                         description: Timestamp когда выданный токен перестанет быть валидным
                                                         example: 123
                                                 required:
-                                                    - app_id
                                                     - access_token
                                                     - expire_at
+                                                    - app_id
                                             metadata:
                                                 type: object
                                                 description: Response metadata

@@ -12,8 +12,6 @@ paths:
 
                 **Request Parameters:** 8
 
-                - `access_token` (string, required): Ключ сессии аутентификации
-
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
 
                 - `costs` (array, required): Список расходов по рекламным кампаниям. Максимально 500
@@ -27,6 +25,8 @@ paths:
                 - `site_id` (number, required): Уникальный идентификатор сайта.
 
                 - `cost` (number, required): Расходы по рекламной кампании за указанный период date_from и date_till. Если указан 0, то произойдет удаление расходов за указанный период.
+
+                - `access_token` (string, required): Ключ сессии аутентификации
             requestBody:
                 required: true
                 content:
@@ -76,13 +76,13 @@ paths:
                                             description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
                                             example: 123
                                     required:
+                                        - date_till
+                                        - campaign_id
                                         - site_id
                                         - cost
                                         - access_token
                                         - costs
                                         - date_from
-                                        - date_till
-                                        - campaign_id
                             required:
                                 - jsonrpc
                                 - id

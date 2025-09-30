@@ -12,12 +12,6 @@ paths:
 
                 **Request Parameters:** 7
 
-                - `offset` (number, optional): Сдвиг - определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
-
-                - `filter` (object, optional): См. раздел "Критерии фильтрации"
-
-                - `fields` (array, optional): См. раздел "Представление возвращаемых данных"
-
                 - `sort` (array, optional): См. раздел "Сортировка данных"
 
                 - `access_token` (string, required): Ключ сессии аутентификации
@@ -26,15 +20,21 @@ paths:
 
                 - `limit` (number, optional): Количество возвращаемых записей. См. раздел "Постраничный вывод"
 
-                **Response Parameters:** 4
+                - `offset` (number, optional): Сдвиг - определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
 
-                - `id` (string): да
+                - `filter` (object, optional): См. раздел "Критерии фильтрации"
+
+                - `fields` (array, optional): См. раздел "Представление возвращаемых данных"
+
+                **Response Parameters:** 4
 
                 - `name` (string): да
 
                 - `configuration` (enum): да
 
                 - `is_mobile` (boolean): да
+
+                - `id` (string): да
             requestBody:
                 required: true
                 content:

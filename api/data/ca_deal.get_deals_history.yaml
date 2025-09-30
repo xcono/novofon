@@ -7,7 +7,7 @@ paths:
     /get.deals_history:
         get:
             summary: Получение истории сделок
-            description: "Получение истории сделок\n\n**Request Parameters:** 7\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n**Response Parameters:** 14\n\n- `name` (string): \n\n- `closed_date_time` (iso8601): да\n\n- `contact_ext_ids` (array): \n\n- `main_contact_ext_id` (string): да\n\n- `sales_funnel_ext_id` (string): да\n\n- `stage_ext_id` (string): да\n\n- `source` (string): да\n\n- `created_date_time` (iso8601): да\n\n- `modified_stage_date_time` (iso8601): да\n\n- `employee_ext_id` (string): \n\n- `revenue` (number): да\n\n- `comments` (string): \n\n- `is_generated` (boolean): \n\n- `ext_id` (string): да"
+            description: "Получение истории сделок\n\n**Request Parameters:** 7\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n**Response Parameters:** 14\n\n- `sales_funnel_ext_id` (string): да\n\n- `stage_ext_id` (string): да\n\n- `source` (string): да\n\n- `ext_id` (string): да\n\n- `name` (string): \n\n- `created_date_time` (iso8601): да\n\n- `modified_stage_date_time` (iso8601): да\n\n- `comments` (string): \n\n- `is_generated` (boolean): \n\n- `closed_date_time` (iso8601): да\n\n- `contact_ext_ids` (array): \n\n- `main_contact_ext_id` (string): да\n\n- `employee_ext_id` (string): \n\n- `revenue` (number): да"
             requestBody:
                 required: true
                 content:
@@ -127,19 +127,19 @@ paths:
                                                         description: да
                                                         example: example_string
                                                 required:
+                                                    - stage_ext_id
+                                                    - source
+                                                    - ext_id
+                                                    - name
+                                                    - created_date_time
+                                                    - modified_stage_date_time
+                                                    - is_generated
                                                     - closed_date_time
                                                     - contact_ext_ids
                                                     - main_contact_ext_id
-                                                    - sales_funnel_ext_id
-                                                    - stage_ext_id
-                                                    - source
-                                                    - created_date_time
-                                                    - modified_stage_date_time
                                                     - employee_ext_id
                                                     - revenue
-                                                    - is_generated
-                                                    - ext_id
-                                                    - name
+                                                    - sales_funnel_ext_id
                                             metadata:
                                                 type: object
                                                 description: Response metadata

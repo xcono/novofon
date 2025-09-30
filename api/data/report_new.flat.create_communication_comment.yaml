@@ -12,8 +12,6 @@ paths:
 
                 **Request Parameters:** 5
 
-                - `communication_type` (enum, optional): Тип обращения. Пока доступен только call
-
                 - `comment` (string, optional): Комментарий на обращении
 
                 - `access_token` (string, required): Ключ сессии аутентификации
@@ -21,6 +19,8 @@ paths:
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
 
                 - `communication_id` (number, optional): Уникальный идентификатор обращения
+
+                - `communication_type` (enum, optional): Тип обращения. Пока доступен только call
             requestBody:
                 required: true
                 content:

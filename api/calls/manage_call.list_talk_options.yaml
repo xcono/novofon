@@ -16,13 +16,13 @@ paths:
 
                 **Response Parameters:** 4
 
-                - `button_value` (object): Некоторые опции могут содержать название тега, название сценария и т.д. Данный объект содержит дополнительную информацию об опции разговора
-
                 - `button` (string): Клавиша, которая вызывает опцию разговора
 
                 - `mnemonic` (string): Мнемоническое имя опции разговора Возможные значения: finish_conversation - Завершить разговор tag_call - Проставить тег record_talk - Диктофон (запись разговора) transfer_call - Трансфер run_scenario - Выполнить сценарий call_coach - Позвонить тренеру receive_fax - Принять факс save_numa - Сохранить АОН в группу
 
                 - `name` (string): Название опции разговора
+
+                - `button_value` (object): Некоторые опции могут содержать название тега, название сценария и т.д. Данный объект содержит дополнительную информацию об опции разговора
             requestBody:
                 required: true
                 content:
@@ -92,9 +92,9 @@ paths:
                                                         description: Название опции разговора
                                                         example: example_string
                                                 required:
-                                                    - button
                                                     - mnemonic
                                                     - name
+                                                    - button
                                             metadata:
                                                 type: object
                                                 description: Response metadata

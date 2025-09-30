@@ -12,11 +12,13 @@ paths:
 
                 **Request Parameters:** 9
 
-                - `date_till` (iso8601, required): Дата окончания выборки
-
-                - `filter` (object, optional): См. раздел "Критерии фильтрации"
-
                 - `sort` (array, optional): См. раздел "Сортировка данных"
+
+                - `date_from` (iso8601, required): Дата начала выборки
+
+                - `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+
+                - `date_till` (iso8601, required): Дата окончания выборки
 
                 - `access_token` (string, required): Ключ сессии аутентификации
 
@@ -24,17 +26,11 @@ paths:
 
                 - `limit` (number, optional): Количество возвращаемых записей. См. раздел "Постраничный вывод"
 
-                - `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                - `filter` (object, optional): См. раздел "Критерии фильтрации"
 
                 - `fields` (array, optional): См. раздел "Представление возвращаемых данных"
 
-                - `date_from` (iso8601, required): Дата начала выборки
-
                 **Response Parameters:** 7
-
-                - `calls_count` (number): да
-
-                - `site_id` (number): да
 
                 - `site_domain` (string): да
 
@@ -45,6 +41,10 @@ paths:
                 - `dt_ratio` (number): да
 
                 - `non_session_calls_count` (number): да
+
+                - `calls_count` (number): да
+
+                - `site_id` (number): да
             requestBody:
                 required: true
                 content:
@@ -96,9 +96,9 @@ paths:
                                             description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
                                             example: 123
                                     required:
+                                        - access_token
                                         - date_from
                                         - date_till
-                                        - access_token
                             required:
                                 - jsonrpc
                                 - id

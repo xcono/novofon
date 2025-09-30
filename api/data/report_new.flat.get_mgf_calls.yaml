@@ -12,9 +12,25 @@ paths:
 
                 **Request Parameters:** 14
 
-                - `access_token` (string, required): Ключ сессии аутентификации
+                - `filter` (object, optional): Фильтры применяемые в отчете. Логика построения аналогична "Критерии фильтрации"
+
+                - `operator` (enum, optional): Оператор фильтрации. Список всех операторов можно получить в разделе "Операторы фильтрации"
+
+                - `value` (string, optional): Значение для оператора фильтрации. Необязательное поле, если оно отсутствует, то считается пустота.
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать `"limit"` записей. По умолчанию "0". См. раздел "Постраничный вывод"
+
+                - `date_till` (iso8601, required): Дата окончания основной выборки
+
+                - `filters` (array, required): Выражение, может содержать в себе как простые фильтры, так и дерево фильтров. Доступный список фильтров для отчета с их возможными значениями см.раздел "Получение списка возможных условий фильтрации для отчета" .
+
+                - `field` (string, optional): Поле сущности к которой будет применяться фильтрация (список заранее определён для метода)
+
+                - `sort` (array, optional): Сортировка применяемая в отчете. Логика построения аналогична "Сортировка данных"
+
+                - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `limit` (number, optional): Количество возвращаемых записей. См. раздел "Постраничный вывод"
 
@@ -22,35 +38,35 @@ paths:
 
                 - `date_from` (iso8601, required): Дата начала основной выборки(ограничение 366 дней)
 
-                - `date_till` (iso8601, required): Дата окончания основной выборки
-
                 - `fields` (array, optional): Список идентификаторов пользовательских столбцов, разделенных запятой. Доступный список столбцов см.раздел "Получение вложенности столбцов" . Порядок влияет на ответ.
-
-                - `filter` (object, optional): Фильтры применяемые в отчете. Логика построения аналогична "Критерии фильтрации"
-
-                - `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать `"limit"` записей. По умолчанию "0". См. раздел "Постраничный вывод"
-
-                - `filters` (array, required): Выражение, может содержать в себе как простые фильтры, так и дерево фильтров. Доступный список фильтров для отчета с их возможными значениями см.раздел "Получение списка возможных условий фильтрации для отчета" .
-
-                - `field` (string, optional): Поле сущности к которой будет применяться фильтрация (список заранее определён для метода)
-
-                - `operator` (enum, optional): Оператор фильтрации. Список всех операторов можно получить в разделе "Операторы фильтрации"
-
-                - `value` (string, optional): Значение для оператора фильтрации. Необязательное поле, если оно отсутствует, то считается пустота.
-
-                - `sort` (array, optional): Сортировка применяемая в отчете. Логика построения аналогична "Сортировка данных"
 
                 **Response Parameters:** 26
 
-                - `second_employee_for_internal_call` (string): да
+                - `is_coach_handled_call` (object): да
 
-                - `is_blacklisted_phone` (object): да
-
-                - `virtual_phone_number` (string): да
+                - `call_start_date` (iso8601): да
 
                 - `employees` (array): да
 
+                - `call_total_duration` (duration): да
+
+                - `call_await_talk_duration` (duration): да
+
+                - `call_talk_duration` (duration): да
+
                 - `call_finish_reason` (object): да
+
+                - `virtual_number_comment` (string): да
+
+                - `is_blacklisted_phone` (object): да
+
+                - `contact_phone_number` (string): да
+
+                - `call_status` (object): да
+
+                - `virtual_phone_number` (string): да
+
+                - `employee_rating` (numeric): да
 
                 - `call_records` (array): да
 
@@ -58,41 +74,25 @@ paths:
 
                 - `call_finish_date_time` (iso8601): да
 
-                - `call_start_date` (iso8601): да
-
                 - `call_start_time` (iso8601): да
 
-                - `contact_phone_number` (string): да
+                - `call_direction` (object): да
 
                 - `call_type` (object): да
 
-                - `employee_rating` (numeric): да
+                - `call_is_internal` (object): да
 
                 - `communication_comment_author` (string): да
 
                 - `first_employee_for_internal_call` (string): да
 
-                - `is_coach_handled_call` (object): да
-
-                - `communication_id` (string): да
-
-                - `call_status` (object): да
-
-                - `call_total_duration` (duration): да
-
-                - `call_await_talk_duration` (duration): да
-
-                - `call_is_internal` (object): да
-
-                - `received_call` (string): да
+                - `second_employee_for_internal_call` (string): да
 
                 - `coaches` (array): да
 
-                - `virtual_number_comment` (string): да
+                - `communication_id` (string): да
 
-                - `call_direction` (object): да
-
-                - `call_talk_duration` (duration): да
+                - `received_call` (string): да
             requestBody:
                 required: true
                 content:

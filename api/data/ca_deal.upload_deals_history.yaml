@@ -12,43 +12,43 @@ paths:
 
                 **Request Parameters:** 19
 
-                - `value` (string, required): значение пользовательского поля сделки
+                - `user_fields` (array, optional): Пользовательские поля проставленные у сделки. Перед тем как передать, нужно создать пользовательское поле через метод "create.deal_user_field")
 
-                - `revenue` (number, optional): Выручка по сделке
-
-                - `sales_funnel_ext_id` (string, required): Идентификатор воронки продаж
-
-                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `ext_id` (string, required): Внешний идентификатор пользовательского поля сделки
 
                 - `created_date_time` (iso8601, required): Дата и время создания сделки (YYYY-MM-DD hh:mm:ss)
 
-                - `closed_date_time` (iso8601, optional): Дата и время закрытия сделки (YYYY-MM-DD hh:mm:ss)
-
-                - `employee_ext_id` (string, optional): Ответственный сотрудник за сделку
+                - `contact_ext_ids` (array, optional): Контакт привязанный к сделке. Обязательный если указан main_contact_ext_id.
 
                 - `stage_ext_id` (string, required): Идентификатор этапа воронки продаж
 
-                - `access_token` (string, required): Ключ сессии аутентификации
+                - `source` (string, optional): Источник сделки
 
                 - `deals` (array, required): Список сделок. Лимит 1000 сделок
 
                 - `modified_date_time` (iso8601, optional): Дата и время изменения сделки (YYYY-MM-DD hh:mm:ss) Если параметр не передан, будет проставлена дата и время вызова метода
 
-                - `modified_stage_date_time` (iso8601, required): Дата и время перехода сделки в текущий этап (YYYY-MM-DD hh:mm:ss)
+                - `employee_ext_id` (string, optional): Ответственный сотрудник за сделку
 
-                - `contact_ext_ids` (array, optional): Контакт привязанный к сделке. Обязательный если указан main_contact_ext_id.
+                - `value` (string, required): значение пользовательского поля сделки
 
-                - `comments` (string, optional): Комментарий к сделке
-
-                - `source` (string, optional): Источник сделки
-
-                - `user_fields` (array, optional): Пользовательские поля проставленные у сделки. Перед тем как передать, нужно создать пользовательское поле через метод "create.deal_user_field")
+                - `sales_funnel_ext_id` (string, required): Идентификатор воронки продаж
 
                 - `name` (string, required): Имя сделки
 
+                - `modified_stage_date_time` (iso8601, required): Дата и время перехода сделки в текущий этап (YYYY-MM-DD hh:mm:ss)
+
+                - `closed_date_time` (iso8601, optional): Дата и время закрытия сделки (YYYY-MM-DD hh:mm:ss)
+
+                - `revenue` (number, optional): Выручка по сделке
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
                 - `main_contact_ext_id` (string, optional): Главный контакт сделки из списка contact_ext_ids. Обязательный если передается contact_ext_ids.
+
+                - `comments` (string, optional): Комментарий к сделке
             requestBody:
                 required: true
                 content:
@@ -136,15 +136,15 @@ paths:
                                             description: значение пользовательского поля сделки
                                             example: example_string
                                     required:
-                                        - access_token
+                                        - stage_ext_id
                                         - deals
-                                        - modified_stage_date_time
-                                        - name
                                         - value
                                         - sales_funnel_ext_id
+                                        - name
+                                        - modified_stage_date_time
+                                        - access_token
                                         - ext_id
                                         - created_date_time
-                                        - stage_ext_id
                             required:
                                 - jsonrpc
                                 - id

@@ -12,8 +12,6 @@ paths:
 
                 **Request Parameters:** 7
 
-                - `access_token` (string, required): Ключ сессии аутентификации
-
                 - `id` (number, required): Уникальный идентификатор SIP-линии
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
@@ -25,6 +23,8 @@ paths:
                 - `billing_state` (enum, optional): Состояние SIP-линии в биллинге. active - SIP-линия активна;manual_lock - SIP-линия заблокирована вручную.
 
                 - `channels_count` (number, optional): Количество доступных линий на SIP-линии Определяется ограничениями тарифного плана.
+
+                - `access_token` (string, required): Ключ сессии аутентификации
             requestBody:
                 required: true
                 content:

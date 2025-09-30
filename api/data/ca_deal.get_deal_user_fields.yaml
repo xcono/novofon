@@ -12,10 +12,6 @@ paths:
 
                 **Request Parameters:** 7
 
-                - `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
-
-                - `filter` (object, optional): См. раздел "Критерии фильтрации"
-
                 - `fields` (array, optional): См. раздел "Представление возвращаемых данных"
 
                 - `sort` (array, optional): См. раздел "Сортировка данных"
@@ -26,13 +22,17 @@ paths:
 
                 - `limit` (number, optional): Количество возвращаемых записей. См. раздел "Постраничный вывод"
 
-                **Response Parameters:** 3
+                - `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
 
-                - `ext_id` (string): да
+                - `filter` (object, optional): См. раздел "Критерии фильтрации"
+
+                **Response Parameters:** 3
 
                 - `name` (string): да
 
                 - `data_type` (string): да
+
+                - `ext_id` (string): да
             requestBody:
                 required: true
                 content:
