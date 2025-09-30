@@ -7,7 +7,22 @@ paths:
     /list.talk_options:
         post:
             summary: List talk options
-            description: "Получение списка опций разговора настроенных в Личном кабинете виртуальной АТС\n\n**Request Parameters:** 1\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n**Response Parameters:** 4\n\n- `button` (string): Клавиша, которая вызывает опцию разговора\n\n- `mnemonic` (string): Мнемоническое имя опции разговора\n                Возможные значения:\n                \n                    finish_conversation - Завершить разговор\n                    \n                    tag_call - Проставить тег\n                    \n                    record_talk - Диктофон (запись разговора)\n                    \n                    transfer_call - Трансфер\n                    \n                    run_scenario - Выполнить сценарий\n                    \n                    call_coach - Позвонить тренеру\n                    \n                    receive_fax - Принять факс\n                    \n                    save_numa - Сохранить АОН в группу\n\n- `name` (string): Название опции разговора\n\n- `button_value` (object): Некоторые опции могут содержать название тега, название сценария и т.д. Данный объект содержит дополнительную информацию об опции разговора"
+            description: |-
+                Получение списка опций разговора настроенных в Личном кабинете виртуальной АТС
+
+                **Request Parameters:** 1
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                **Response Parameters:** 4
+
+                - `button_value` (object): Некоторые опции могут содержать название тега, название сценария и т.д. Данный объект содержит дополнительную информацию об опции разговора
+
+                - `button` (string): Клавиша, которая вызывает опцию разговора
+
+                - `mnemonic` (string): Мнемоническое имя опции разговора Возможные значения: finish_conversation - Завершить разговор tag_call - Проставить тег record_talk - Диктофон (запись разговора) transfer_call - Трансфер run_scenario - Выполнить сценарий call_coach - Позвонить тренеру receive_fax - Принять факс save_numa - Сохранить АОН в группу
+
+                - `name` (string): Название опции разговора
             requestBody:
                 required: true
                 content:
@@ -70,7 +85,7 @@ paths:
                                                         description: Некоторые опции могут содержать название тега, название сценария и т.д. Данный объект содержит дополнительную информацию об опции разговора
                                                     mnemonic:
                                                         type: string
-                                                        description: "Мнемоническое имя опции разговора\n                Возможные значения:\n                \n                    finish_conversation - Завершить разговор\n                    \n                    tag_call - Проставить тег\n                    \n                    record_talk - Диктофон (запись разговора)\n                    \n                    transfer_call - Трансфер\n                    \n                    run_scenario - Выполнить сценарий\n                    \n                    call_coach - Позвонить тренеру\n                    \n                    receive_fax - Принять факс\n                    \n                    save_numa - Сохранить АОН в группу"
+                                                        description: 'Мнемоническое имя опции разговора Возможные значения: finish_conversation - Завершить разговор tag_call - Проставить тег record_talk - Диктофон (запись разговора) transfer_call - Трансфер run_scenario - Выполнить сценарий call_coach - Позвонить тренеру receive_fax - Принять факс save_numa - Сохранить АОН в группу'
                                                         example: example_string
                                                     name:
                                                         type: string

@@ -3,6 +3,7 @@ info:
     title: Изменение  состояния отчета
     version: 1.0.0
     description: Изменение состояния отчета
+    description: Изменение состояния отчета
 paths:
     /set.report_state:
         post:
