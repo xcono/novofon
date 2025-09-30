@@ -122,8 +122,8 @@ func (p *Parser) ExtractRequestParameters() (map[string]*models.Parameter, error
 	params := make(map[string]*models.Parameter)
 
 	// Find the "Параметры запроса" section
-	requestHeader := p.doc.Find("h4:contains('Параметры запроса')")
-	if requestHeader.Length() == 0 {
+	requestHeader := p.findSectionHeader("Параметры запроса")
+	if requestHeader == nil {
 		return params, nil // No request parameters section found
 	}
 
@@ -156,8 +156,8 @@ func (p *Parser) ExtractResponseParameters() (map[string]*models.Parameter, erro
 	params := make(map[string]*models.Parameter)
 
 	// Find the "Параметры ответа" section
-	responseHeader := p.doc.Find("h4:contains('Параметры ответа')")
-	if responseHeader.Length() == 0 {
+	responseHeader := p.findSectionHeader("Параметры ответа")
+	if responseHeader == nil {
 		return params, nil // No response parameters section found
 	}
 
@@ -189,9 +189,12 @@ func (p *Parser) ExtractResponseParameters() (map[string]*models.Parameter, erro
 func (p *Parser) ExtractJSONExamples() (map[string]interface{}, map[string]interface{}, error) {
 	var requestJSON, responseJSON map[string]interface{}
 
-	// Find JSON request example
-	requestHeader := p.doc.Find("h4:contains('Пример запроса')")
-	if requestHeader.Length() > 0 {
+	// Find JSON request example - try both formats
+	requestHeader := p.findSectionHeader("Пример запроса")
+	if requestHeader == nil {
+		requestHeader = p.findSectionHeader("JSON структура запроса")
+	}
+	if requestHeader != nil {
 		codeBlock := requestHeader.Next()
 		if codeBlock.Is("pre") {
 			code := codeBlock.Find("code")
@@ -206,9 +209,12 @@ func (p *Parser) ExtractJSONExamples() (map[string]interface{}, map[string]inter
 		}
 	}
 
-	// Find JSON response example
-	responseHeader := p.doc.Find("h4:contains('Пример ответа')")
-	if responseHeader.Length() > 0 {
+	// Find JSON response example - try both formats
+	responseHeader := p.findSectionHeader("Пример ответа")
+	if responseHeader == nil {
+		responseHeader = p.findSectionHeader("JSON структура ответа")
+	}
+	if responseHeader != nil {
 		codeBlock := responseHeader.Next()
 		if codeBlock.Is("pre") {
 			code := codeBlock.Find("code")
@@ -233,8 +239,8 @@ func (p *Parser) ExtractErrorInformation() (*models.ErrorInfo, error) {
 	}
 
 	// Find the error section
-	errorHeader := p.doc.Find("h4:contains('Список возвращаемых ошибок')")
-	if errorHeader.Length() == 0 {
+	errorHeader := p.findSectionHeader("Список возвращаемых ошибок")
+	if errorHeader == nil {
 		return errorInfo, nil // No error section found
 	}
 
@@ -315,6 +321,19 @@ func (p *Parser) parseParameterRow(cells *goquery.Selection, isRequest bool) *mo
 	}
 
 	return param
+}
+
+// findSectionHeader finds a section header by text content regardless of header level (h1-h6)
+func (p *Parser) findSectionHeader(text string) *goquery.Selection {
+	// Try all header levels from h1 to h6
+	for i := 1; i <= 6; i++ {
+		selector := fmt.Sprintf("h%d:contains('%s')", i, text)
+		header := p.doc.Find(selector)
+		if header.Length() > 0 {
+			return header
+		}
+	}
+	return nil
 }
 
 // cleanTextContent removes unwanted whitespace and newlines from text content
