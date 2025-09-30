@@ -12,6 +12,8 @@ paths:
 
                 **Request Parameters:** 7
 
+                - `name` (string, optional): Имя контакта
+
                 - `created_date_time` (iso8601, optional): Дата и время создания контакта в CRM (YYYY-MM-DD hh:mm:ss)
 
                 - `phone_numbers` (array, optional): Список номеров контакта в формате E164 Необходимо передавать актуальный список
@@ -23,8 +25,6 @@ paths:
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
 
                 - `ext_id` (string, required): Внешний идентификатор контакта
-
-                - `name` (string, optional): Имя контакта
             requestBody:
                 required: true
                 content:
@@ -71,8 +71,8 @@ paths:
                                             description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
                                             example: 123
                                     required:
-                                        - ext_id
                                         - access_token
+                                        - ext_id
                             required:
                                 - jsonrpc
                                 - id

@@ -12,21 +12,15 @@ paths:
 
                 **Request Parameters:** 14
 
-                - `report_id` (number, required): Уникальный идентификатор отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод "get.reports_list"
-
-                - `date_from` (iso8601, required): Дата начала основной выборки(ограничение 366 дней)
-
-                - `filters` (array, required): Выражение, может содержать в себе как простые фильтры, так и дерево фильтров. Доступный список фильтров для отчета с их возможными значениями см.раздел "Получение списка возможных условий фильтрации для отчета" .
-
-                - `operator` (enum, optional): Оператор фильтрации. Список всех операторов можно получить в разделе "Операторы фильтрации"
-
-                - `sort` (array, optional): Сортировка применяемая в отчете. Логика построения аналогична "Сортировка данных"
-
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
 
-                - `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать `"limit"` записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                - `limit` (number, optional): Количество возвращаемых записей. См. раздел "Постраничный вывод"
+
+                - `report_id` (number, required): Уникальный идентификатор отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод "get.reports_list"
+
+                - `date_from` (iso8601, required): Дата начала основной выборки(ограничение 366 дней)
 
                 - `date_till` (iso8601, required): Дата окончания основной выборки
 
@@ -34,65 +28,71 @@ paths:
 
                 - `filter` (object, optional): Фильтры применяемые в отчете. Логика построения аналогична "Критерии фильтрации"
 
+                - `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать `"limit"` записей. По умолчанию "0". См. раздел "Постраничный вывод"
+
+                - `filters` (array, required): Выражение, может содержать в себе как простые фильтры, так и дерево фильтров. Доступный список фильтров для отчета с их возможными значениями см.раздел "Получение списка возможных условий фильтрации для отчета" .
+
                 - `field` (string, optional): Поле сущности к которой будет применяться фильтрация (список заранее определён для метода)
+
+                - `operator` (enum, optional): Оператор фильтрации. Список всех операторов можно получить в разделе "Операторы фильтрации"
 
                 - `value` (string, optional): Значение для оператора фильтрации. Необязательное поле, если оно отсутствует, то считается пустота.
 
-                - `limit` (number, optional): Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                - `sort` (array, optional): Сортировка применяемая в отчете. Логика построения аналогична "Сортировка данных"
 
                 **Response Parameters:** 26
 
-                - `virtual_phone_number` (string): да
-
-                - `call_total_duration` (duration): да
-
-                - `communication_comment_author` (string): да
-
                 - `second_employee_for_internal_call` (string): да
 
-                - `call_direction` (object): да
+                - `is_blacklisted_phone` (object): да
 
-                - `call_status` (object): да
+                - `virtual_phone_number` (string): да
 
                 - `employees` (array): да
 
                 - `call_finish_reason` (object): да
 
-                - `employee_rating` (numeric): да
-
                 - `call_records` (array): да
 
-                - `first_employee_for_internal_call` (string): да
+                - `communication_comment` (string): да
 
-                - `is_blacklisted_phone` (object): да
+                - `call_finish_date_time` (iso8601): да
+
+                - `call_start_date` (iso8601): да
 
                 - `call_start_time` (iso8601): да
 
+                - `contact_phone_number` (string): да
+
+                - `call_type` (object): да
+
+                - `employee_rating` (numeric): да
+
+                - `communication_comment_author` (string): да
+
+                - `first_employee_for_internal_call` (string): да
+
+                - `is_coach_handled_call` (object): да
+
+                - `communication_id` (string): да
+
+                - `call_status` (object): да
+
+                - `call_total_duration` (duration): да
+
                 - `call_await_talk_duration` (duration): да
 
-                - `call_talk_duration` (duration): да
-
-                - `communication_comment` (string): да
+                - `call_is_internal` (object): да
 
                 - `received_call` (string): да
 
                 - `coaches` (array): да
 
-                - `is_coach_handled_call` (object): да
-
                 - `virtual_number_comment` (string): да
 
-                - `call_type` (object): да
+                - `call_direction` (object): да
 
-                - `call_is_internal` (object): да
-
-                - `call_finish_date_time` (iso8601): да
-
-                - `communication_id` (string): да
-
-                - `call_start_date` (iso8601): да
-
-                - `contact_phone_number` (string): да
+                - `call_talk_duration` (duration): да
             requestBody:
                 required: true
                 content:
@@ -163,9 +163,9 @@ paths:
                                             example: example_string
                                     required:
                                         - access_token
-                                        - date_till
                                         - report_id
                                         - date_from
+                                        - date_till
                                         - filters
                             required:
                                 - jsonrpc

@@ -12,13 +12,13 @@ paths:
 
                 **Request Parameters:** 4
 
-                - `name` (string, required): Название блока номеров
-
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
 
                 - `site_id` (number, required): Уникальный идентификатор сайта
+
+                - `name` (string, required): Название блока номеров
 
                 **Response Parameters:** 1
 

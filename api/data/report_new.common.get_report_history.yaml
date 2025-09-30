@@ -7,7 +7,7 @@ paths:
     /get.report_history:
         get:
             summary: Получение всех изменений состояния отчета
-            description: "Получение всех изменений состояния отчета\n\n**Request Parameters:** 3\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `id` (number, required): Уникальный идентификатор отчета пользователя\n\n**Response Parameters:** 5\n\n- `id` (number): да\n\n- `type` (enum): да\n\n- `name` (string): да\n\n- `state` (object): \n\n- `change_date_time` (iso8601): "
+            description: "Получение всех изменений состояния отчета\n\n**Request Parameters:** 3\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `id` (number, required): Уникальный идентификатор отчета пользователя\n\n**Response Parameters:** 5\n\n- `name` (string): да\n\n- `state` (object): \n\n- `change_date_time` (iso8601): \n\n- `id` (number): да\n\n- `type` (enum): да"
             requestBody:
                 required: true
                 content:

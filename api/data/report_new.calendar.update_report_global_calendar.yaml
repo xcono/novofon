@@ -50,8 +50,8 @@ paths:
                                             type: object
                                             description: Параметры глобального календаря
                                     required:
-                                        - id
                                         - access_token
+                                        - id
                             required:
                                 - jsonrpc
                                 - id

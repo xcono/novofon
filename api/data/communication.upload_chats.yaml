@@ -12,43 +12,43 @@ paths:
 
                 **Request Parameters:** 19
 
-                - `access_token` (string, required): Ключ сессии аутентификации
-
-                - `email` (string, optional): Email посетителя
-
                 - `source_id` (number, optional): Уникальный идентификатор источника. Возможно передать только неудаленный источник в разрезе клиента. Если передан visitor_session_id, то определим source_id по параметрам сессии.
 
-                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                - `site_id` (number, optional): Уникальный идентификатор сайта. Обязательно передавать если хотите чтобы чат попал в Рекламную кампанию "Посетители без РК"
 
-                - `phone` (string, optional): Телефон посетителя в формате E164
-
-                - `employee_id` (number, optional): Уникальный идентификатор сотрудника, обязательный параметр если source = operator(Оператор)За последним сотрудником, отправившим сообщение, будет закреплен чат
-
-                - `ext_id` (string, optional): Уникальный идентификатор чата в вашей системе
-
-                - `start_date_time` (iso8601, required): Дата и время создания чата Не может быть в будущем. Должна быть позже чем у переданной сессии посетителя.
-
-                - `campaign_id` (number, optional): Уникальный идентификатор рекламной кампании в CoMagic. Для получения campaign_id можно использовать метод Data API "get.campaigns". Нельзя передавать campaign_id = -1.
-
-                - `messages` (array, required): Список сообщений чата
-
-                - `source` (enum, required): Источник сообщения system (Автоприглашение), visitor (Посетитель), operator(Оператор)
+                - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `chats` (array, required): Список чатов. Максимально 500
 
-                - `name` (string, optional): Имя посетителя
+                - `message` (string, required): Сообщение
 
-                - `status` (enum, required): Статус чата lost (Потерянный); succeed (Состоявшийся);refused (Отклоненный) Если инициатор visitor и нет сообщений message от оператора или визитора, то переданное значение в status игнорируется и ставится значение lost
+                - `email` (string, optional): Email посетителя
+
+                - `source` (enum, required): Источник сообщения system (Автоприглашение), visitor (Посетитель), operator(Оператор)
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `start_date_time` (iso8601, required): Дата и время создания чата Не может быть в будущем. Должна быть позже чем у переданной сессии посетителя.
+
+                - `name` (string, optional): Имя посетителя
 
                 - `initiator` (enum, optional): Инициатор чата autoinvite (Автоприглашение), visitor (Посетитель), operator(Оператор) Если параметр не передан то будет взят первый источник сообщения ("source")
 
                 - `visitor_session_id` (number, optional): Уникальный идентификатор сессии посетителя полученной из CoMagic. Для получения ID необходимо использовать метод JS API Comagic.getSessionId()
 
-                - `site_id` (number, optional): Уникальный идентификатор сайта. Обязательно передавать если хотите чтобы чат попал в Рекламную кампанию "Посетители без РК"
+                - `campaign_id` (number, optional): Уникальный идентификатор рекламной кампании в CoMagic. Для получения campaign_id можно использовать метод Data API "get.campaigns". Нельзя передавать campaign_id = -1.
 
                 - `date_time` (iso8601, required): Дата и время отправки сообщения Не может быть в будущем. Должна быть позже чем start_date_time. Если параметр не передан, то проставится время вызова
 
-                - `message` (string, required): Сообщение
+                - `phone` (string, optional): Телефон посетителя в формате E164
+
+                - `status` (enum, required): Статус чата lost (Потерянный); succeed (Состоявшийся);refused (Отклоненный) Если инициатор visitor и нет сообщений message от оператора или визитора, то переданное значение в status игнорируется и ставится значение lost
+
+                - `messages` (array, required): Список сообщений чата
+
+                - `employee_id` (number, optional): Уникальный идентификатор сотрудника, обязательный параметр если source = operator(Оператор)За последним сотрудником, отправившим сообщение, будет закреплен чат
+
+                - `ext_id` (string, optional): Уникальный идентификатор чата в вашей системе
             requestBody:
                 required: true
                 content:
@@ -153,14 +153,14 @@ paths:
                                             description: Уникальный идентификатор сессии посетителя полученной из CoMagic. Для получения ID необходимо использовать метод JS API Comagic.getSessionId()
                                             example: 123
                                     required:
-                                        - start_date_time
-                                        - messages
                                         - source
-                                        - chats
-                                        - status
+                                        - start_date_time
                                         - date_time
-                                        - message
+                                        - status
+                                        - messages
                                         - access_token
+                                        - chats
+                                        - message
                             required:
                                 - jsonrpc
                                 - id

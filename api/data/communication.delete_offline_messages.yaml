@@ -39,8 +39,8 @@ paths:
                                             type: number
                                             example: 123
                                     required:
-                                        - access_token
                                         - id
+                                        - access_token
                             required:
                                 - jsonrpc
                                 - id

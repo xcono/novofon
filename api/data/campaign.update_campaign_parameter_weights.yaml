@@ -12,33 +12,33 @@ paths:
 
                 **Request Parameters:** 14
 
-                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
-
-                - `entrance_page` (number, optional): Страница входа
-
-                - `search_engine` (number, optional): Поисковая система
-
-                - `location` (number, optional): Значение веса для параметров city, region, country
+                - `search_query` (number, optional): Поисковый запрос
 
                 - `utm_tags` (number, optional): Значение веса для параметров utm_source, utm_medium, utm_campaign, utm_term, utm_content
 
                 - `os_tags` (number, optional): Значение веса для параметров openstat_service, openstat_campaign, openstat_source, openstat_ad
 
-                - `other_tags` (number, optional): Значение веса для параметров ef_id, yclid, gclid, ymclid
-
-                - `access_token` (string, required): Ключ сессии аутентификации
-
                 - `site_id` (number, required): Уникальный идентификатор сайта
-
-                - `referrer_domain` (number, optional): Домен реферера
-
-                - `search_query` (number, optional): Поисковый запрос
 
                 - `engine` (number, optional): Рекламная система
 
                 - `referrer` (number, optional): Реферер
 
                 - `channel` (number, optional): Канал
+
+                - `location` (number, optional): Значение веса для параметров city, region, country
+
+                - `other_tags` (number, optional): Значение веса для параметров ef_id, yclid, gclid, ymclid
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `entrance_page` (number, optional): Страница входа
+
+                - `referrer_domain` (number, optional): Домен реферера
+
+                - `search_engine` (number, optional): Поисковая система
             requestBody:
                 required: true
                 content:
@@ -117,8 +117,8 @@ paths:
                                             description: Значение веса для параметров utm_source, utm_medium, utm_campaign, utm_term, utm_content
                                             example: 123
                                     required:
-                                        - access_token
                                         - site_id
+                                        - access_token
                             required:
                                 - jsonrpc
                                 - id

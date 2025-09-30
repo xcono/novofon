@@ -12,19 +12,19 @@ paths:
 
                 **Request Parameters:** 3
 
-                - `access_token` (string, required): Ключ сессии аутентификации
-
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
 
                 - `id` (number, optional): Уникальный идентификатор глобального календаря
 
-                **Response Parameters:** 3
+                - `access_token` (string, required): Ключ сессии аутентификации
 
-                - `id` (number): да
+                **Response Parameters:** 3
 
                 - `user_id` (number): да
 
                 - `params` (object): да
+
+                - `id` (number): да
             requestBody:
                 required: true
                 content:

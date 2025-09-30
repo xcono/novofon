@@ -12,13 +12,13 @@ paths:
 
                 **Request Parameters:** 4
 
+                - `phone_number` (string, required): Номер телефона
+
                 - `add_comment` (string, optional): Комментарий, оставленный при добавлении номера телефона в черный список
 
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
-
-                - `phone_number` (string, required): Номер телефона
 
                 **Response Parameters:** 2
 
@@ -63,8 +63,8 @@ paths:
                                             description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
                                             example: 123
                                     required:
-                                        - access_token
                                         - phone_number
+                                        - access_token
                             required:
                                 - jsonrpc
                                 - id
@@ -100,8 +100,8 @@ paths:
                                                         description: Номер телефона который был добавлен в черный список
                                                         example: example_string
                                                 required:
-                                                    - phone_number
                                                     - id
+                                                    - phone_number
                                             metadata:
                                                 type: object
                                                 description: Response metadata

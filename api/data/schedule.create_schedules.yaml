@@ -12,29 +12,29 @@ paths:
 
                 **Request Parameters:** 12
 
+                - `activity_time` (array, optional): Время активности графика. Если параметр не задан, то график работает без ограничений
+
+                - `activity_date_from` (string, optional): Дата начала активности графика
+
+                - `activity_date_till` (string, optional): Дата окончания активности графика
+
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
 
+                - `name` (string, required): Название графика активности
+
                 - `schedules` (array, required): Расписания работы
 
-                - `activity_time` (array, optional): Время активности графика. Если параметр не задан, то график работает без ограничений
+                - `time_from` (string, required): Время начала активности графика
 
-                - `activity_date_till` (string, optional): Дата окончания активности графика
-
-                - `name` (string, required): Название графика активности
+                - `time_till` (string, required): Время окончания активности графика. Должно быть обязательно больше чем указано в параметре "time_from"
 
                 - `activity_days` (object, required): Дни в которые график активен
 
                 - `type` (enum, required): Тип. days_of_week - Календарь по дням недели days_of_month - Календарь по дням месяца business_calendar - Производственный календарь cycle - Циклический календарь
 
                 - `days` (array, required): Дни недели или месяца Пример циклического календаря: [2,2] - в цикле будет два рабочих, а затем два нерабочих дня. В итоге график получается два через два. Пример производственного календаря: [7] - Календарь будет активен по рабочим дням согласно производственного календаря; [8] - Календарь будет активен по выходным дням согласно производственного календаря
-
-                - `time_from` (string, required): Время начала активности графика
-
-                - `time_till` (string, required): Время окончания активности графика. Должно быть обязательно больше чем указано в параметре "time_from"
-
-                - `activity_date_from` (string, optional): Дата начала активности графика
 
                 **Response Parameters:** 1
 
@@ -104,14 +104,14 @@ paths:
                                             description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
                                             example: 123
                                     required:
+                                        - activity_days
                                         - type
                                         - days
+                                        - access_token
+                                        - name
+                                        - schedules
                                         - time_from
                                         - time_till
-                                        - access_token
-                                        - schedules
-                                        - name
-                                        - activity_days
                             required:
                                 - jsonrpc
                                 - id

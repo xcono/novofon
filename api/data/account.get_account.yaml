@@ -7,7 +7,7 @@ paths:
     /get.account:
         get:
             summary: Аккаунт
-            description: "Получение информации об аккаунте\n\n**Request Parameters:** 1\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n**Response Parameters:** 3\n\n- `app_id` (number): \n\n- `name` (string): \n\n- `timezone` (string): "
+            description: "Получение информации об аккаунте\n\n**Request Parameters:** 1\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n**Response Parameters:** 3\n\n- `name` (string): \n\n- `timezone` (string): \n\n- `app_id` (number): "
             requestBody:
                 required: true
                 content:

@@ -12,13 +12,13 @@ paths:
 
                 **Request Parameters:** 4
 
+                - `access_token` (string, required): Ключ сессии аутентификации
+
                 - `id` (number, required): Уникальный идентификатор графика активности
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
 
                 - `name` (string, required): Название графика активности
-
-                - `access_token` (string, required): Ключ сессии аутентификации
             requestBody:
                 required: true
                 content:

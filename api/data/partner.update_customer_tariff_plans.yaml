@@ -51,9 +51,9 @@ paths:
                                             description: Уникальный идентификатор тарифного плана. Список доступных тарифных планов можно получить с помощью метода "get.tariff_plans"
                                             example: 123
                                     required:
-                                        - tariff_plan_id
                                         - access_token
                                         - customer_id
+                                        - tariff_plan_id
                             required:
                                 - jsonrpc
                                 - id

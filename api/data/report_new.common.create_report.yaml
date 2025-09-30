@@ -12,14 +12,6 @@ paths:
 
                 **Request Parameters:** 8
 
-                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
-
-                - `name` (string, required): Название отчета
-
-                - `description` (string, optional): Описание отчета
-
-                - `type` (enum, required): Тип отчета пользователя
-
                 - `group_id` (number, required): Идентификатор группы отчета
 
                 - `report_clone_id` (number, optional): Идентификатор отчета с которого копируются настройки. Настройки отчета можно посмотреть используя метод "getobj.report_state"
@@ -27,6 +19,14 @@ paths:
                 - `shared_report_settings_hash` (string, optional): Хеш отчета с которого копируются настройки. Хеш можно получить используя метод "create.shared_report_settings"
 
                 - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `name` (string, required): Название отчета
+
+                - `description` (string, optional): Описание отчета
+
+                - `type` (enum, required): Тип отчета пользователя
             requestBody:
                 required: true
                 content:
@@ -80,10 +80,10 @@ paths:
                                             description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
                                             example: 123
                                     required:
-                                        - access_token
-                                        - name
                                         - type
                                         - group_id
+                                        - access_token
+                                        - name
                             required:
                                 - jsonrpc
                                 - id

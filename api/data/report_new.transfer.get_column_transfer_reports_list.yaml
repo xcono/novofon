@@ -12,6 +12,10 @@ paths:
 
                 **Request Parameters:** 9
 
+                - `limit` (number, optional): Количество возвращаемых записей. См. раздел "Постраничный вывод"
+
+                - `id` (string, required): Мнемоника столбца по которому осуществляется переход.Список доступных столбцов для перехода определяется по параметру is_transition в методе "getobj.columns_tree"
+
                 - `fields` (array, optional): См. раздел "Представление возвращаемых данных"
 
                 - `sort` (array, optional): См. раздел "Сортировка данных"
@@ -22,15 +26,15 @@ paths:
 
                 - `report_type` (enum, required): Тип отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод "get.reports_list"
 
-                - `limit` (number, optional): Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                - `offset` (number, optional): Сдвиг - определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
 
                 - `filter` (object, optional): См. раздел "Критерии фильтрации"
 
-                - `offset` (number, optional): Сдвиг - определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
-
-                - `id` (string, required): Мнемоника столбца по которому осуществляется переход.Список доступных столбцов для перехода определяется по параметру is_transition в методе "getobj.columns_tree"
-
                 **Response Parameters:** 6
+
+                - `name` (string): да
+
+                - `description` (string): да
 
                 - `group_id` (number): да
 
@@ -39,10 +43,6 @@ paths:
                 - `id` (number): да
 
                 - `type` (enum): да
-
-                - `name` (string): да
-
-                - `description` (string): да
             requestBody:
                 required: true
                 content:

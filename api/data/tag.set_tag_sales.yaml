@@ -82,11 +82,11 @@ paths:
                                             description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
                                             example: 123
                                     required:
+                                        - access_token
+                                        - communication_id
                                         - communication_type
                                         - date_time
                                         - transaction_value
-                                        - access_token
-                                        - communication_id
                             required:
                                 - jsonrpc
                                 - id
