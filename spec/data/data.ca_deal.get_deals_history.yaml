@@ -1,0 +1,186 @@
+openapi: 3.0.0
+info:
+    title: Получение истории сделок
+    version: 1.0.0
+    description: Получение истории сделок
+paths:
+    /get.deals_history:
+        get:
+            summary: Получение истории сделок
+            description: "Получение истории сделок\n\n**Request Parameters:** 7\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n**Response Parameters:** 14\n\n- `created_date_time` (iso8601): да\n\n- `closed_date_time` (iso8601): да\n\n- `main_contact_ext_id` (string): да\n\n- `source` (string): да\n\n- `is_generated` (boolean): \n\n- `name` (string): \n\n- `modified_stage_date_time` (iso8601): да\n\n- `contact_ext_ids` (array): \n\n- `employee_ext_id` (string): \n\n- `revenue` (number): да\n\n- `sales_funnel_ext_id` (string): да\n\n- `stage_ext_id` (string): да\n\n- `comments` (string): \n\n- `ext_id` (string): да"
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: get.deals_history
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        fields:
+                                            type: array
+                                            description: См. раздел "Представление возвращаемых данных"
+                                            example: []
+                                            items:
+                                                type: string
+                                                example: example_string
+                                        filter:
+                                            type: object
+                                            description: См. раздел "Критерии фильтрации"
+                                        limit:
+                                            type: number
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                        offset:
+                                            type: number
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                        sort:
+                                            type: array
+                                            description: См. раздел "Сортировка данных"
+                                            example: []
+                                            items:
+                                                type: string
+                                                example: example_string
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - access_token
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                                properties:
+                                                    closed_date_time:
+                                                        description: да
+                                                    comments:
+                                                        type: string
+                                                        example: example_string
+                                                    contact_ext_ids:
+                                                        type: array
+                                                        example: []
+                                                        items:
+                                                            type: number
+                                                            example: 123
+                                                    created_date_time:
+                                                        description: да
+                                                    employee_ext_id:
+                                                        type: string
+                                                        example: example_string
+                                                    ext_id:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    is_generated:
+                                                        type: boolean
+                                                        example: true
+                                                    main_contact_ext_id:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    modified_stage_date_time:
+                                                        description: да
+                                                    name:
+                                                        type: string
+                                                        example: example_string
+                                                    revenue:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    sales_funnel_ext_id:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    source:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    stage_ext_id:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                required:
+                                                    - revenue
+                                                    - sales_funnel_ext_id
+                                                    - stage_ext_id
+                                                    - ext_id
+                                                    - created_date_time
+                                                    - closed_date_time
+                                                    - main_contact_ext_id
+                                                    - source
+                                                    - is_generated
+                                                    - name
+                                                    - modified_stage_date_time
+                                                    - contact_ext_ids
+                                                    - employee_ext_id
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon

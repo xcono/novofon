@@ -1,0 +1,136 @@
+openapi: 3.0.0
+info:
+    title: Загрузка пользовательских полей заявок
+    version: 1.0.0
+    description: Загрузка пользовательских полей заявок
+paths:
+    /create.offline_message_user_field:
+        post:
+            summary: Загрузка пользовательских полей заявок
+            description: |-
+                Загрузка пользовательских полей заявок
+
+                **Request Parameters:** 5
+
+                - `name` (string, required): Имя пользовательского поля заявки
+
+                - `data_type` (enum, required): Тип данных в поле. Принимает одно из двух значений numeric и string
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `ext_id` (string, required): Внешний идентификатор пользовательского поля заявки
+
+                **Response Parameters:** 1
+
+                - `ext_id` (string): Внешний идентификатор пользовательского поля заявки
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: create.offline_message_user_field
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        data_type:
+                                            type: string
+                                            description: Тип данных в поле. Принимает одно из двух значений numeric и string
+                                        ext_id:
+                                            type: string
+                                            description: Внешний идентификатор пользовательского поля заявки
+                                            example: example_string
+                                        name:
+                                            type: string
+                                            description: Имя пользовательского поля заявки
+                                            example: example_string
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - access_token
+                                        - ext_id
+                                        - name
+                                        - data_type
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                                properties:
+                                                    ext_id:
+                                                        type: string
+                                                        description: Внешний идентификатор пользовательского поля заявки
+                                                        example: example_string
+                                                required:
+                                                    - ext_id
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon

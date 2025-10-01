@@ -1,0 +1,120 @@
+openapi: 3.0.0
+info:
+    title: Add coach
+    version: 1.0.0
+    description: Подключение тренера к разговору
+paths:
+    /add.coach:
+        post:
+            summary: Add coach
+            description: |-
+                Подключение тренера к разговору
+
+                **Request Parameters:** 3
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+
+                - `phone_number` (string, optional): Номер тренера, если не используется тренер указанный в личном кабинете. Если номер тренера не задан, то подключается тренер из настроек сотрудника в личном кабинете
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: add.coach
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        call_session_id:
+                                            type: number
+                                            description: Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+                                            example: 123
+                                        phone_number:
+                                            type: string
+                                            description: Номер тренера, если не используется тренер указанный в личном кабинете. Если номер тренера не задан, то подключается тренер из настроек сотрудника в личном кабинете
+                                            example: example_string
+                                    required:
+                                        - access_token
+                                        - call_session_id
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon
+x-errors:
+    errors:
+        - code: "-32602"
+          mnemonic: coach_not_found
+          description: ""
+        - code: "-32602"
+          mnemonic: no_active_phone_number
+          description: ""

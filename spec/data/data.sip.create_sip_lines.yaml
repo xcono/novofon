@@ -1,0 +1,122 @@
+openapi: 3.0.0
+info:
+    title: Создание SIP-линии
+    version: 1.0.0
+    description: Создание SIP-линии
+paths:
+    /create.sip_lines:
+        post:
+            summary: Создание SIP-линии
+            description: "Создание SIP-линии\n\n**Request Parameters:** 4\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `employee_id` (number, required): Уникальный идентификатор сотрудника, см. метод \"get.employees\"\n\n- `virtual_phone_number` (string, required): Виртуальный номер отображаемый при исходящем вызове . Если виртуальный номер не передан, то тип SIP-линии будет только \"входящая связь\", если передан, то будет \"входящая и исходящая\"\n\n**Response Parameters:** 4\n\n- `server` (string): \n\n- `id` (number): \n\n- `phone_number` (string): \n\n- `password` (string): "
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: create.sip_lines
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        employee_id:
+                                            type: number
+                                            description: Уникальный идентификатор сотрудника, см. метод "get.employees"
+                                            example: 123
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                        virtual_phone_number:
+                                            type: string
+                                            description: Виртуальный номер отображаемый при исходящем вызове . Если виртуальный номер не передан, то тип SIP-линии будет только "входящая связь", если передан, то будет "входящая и исходящая"
+                                            example: example_string
+                                            format: формат E164. Начинается с 7
+                                    required:
+                                        - virtual_phone_number
+                                        - access_token
+                                        - employee_id
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                                properties:
+                                                    id:
+                                                        type: number
+                                                        example: 123
+                                                    password:
+                                                        type: string
+                                                        example: example_string
+                                                    phone_number:
+                                                        type: string
+                                                        example: example_string
+                                                    server:
+                                                        type: string
+                                                        example: example_string
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon

@@ -1,0 +1,158 @@
+openapi: 3.0.0
+info:
+    title: Загрузка офлайн заявок
+    version: 1.0.0
+    description: Загрузка офлайн заявок
+paths:
+    /upload.offline_messages:
+        post:
+            summary: Загрузка офлайн заявок
+            description: "Загрузка офлайн заявок\n\n**Request Parameters:** 15\n\n- `offline_messages` (array, required): Список офлайн заявок. Максимально 500\n\n- `phone` (string, optional): Телефон посетителя в формате E164\n\n- `message` (string, optional): Сообщение посетителя\n\n- `source_id` (number, optional): Уникальный идентификатор источника. Возможно передать только неудаленный источник в разрезе клиента. Если передан visitor_session_id, то определим source_id по параметрам сессии.\n\n- `site_id` (number, optional): Уникальный идентификатор сайта.\n\n- `user_fields` (array, optional): \n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `date_time` (iso8601, required): Дата и время создания заявки. Не может быть в будущем. Должна быть больше чем у переданной сессии посетителя. Если параметр не передан, то проставится время вызова\n\n- `email` (string, optional): Email посетителя\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `name` (string, optional): Имя посетителя\n\n- `visitor_session_id` (number, optional): Уникальный идентификатор сессии посетителя полученной из CoMagic. Для получения ID необходимо использовать метод JS API Comagic.getSessionId()\n\n- `campaign_id` (number, optional): Уникальный идентификатор рекламной кампании в CoMagic. Для получения campaign_id можно использовать метод Data API \"get.campaigns\". Если передается \"campaign_id\": -1, то обязательно указывать site_id.\n\n- `form_name` (string, optional): Имя пользовательской JS Формы.\n\n- `ext_id` (string, optional): Уникальный идентификатор заявки в вашей системе"
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: upload.offline_messages
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        campaign_id:
+                                            type: number
+                                            description: 'Уникальный идентификатор рекламной кампании в CoMagic. Для получения campaign_id можно использовать метод Data API "get.campaigns". Если передается "campaign_id": -1, то обязательно указывать site_id.'
+                                            example: 123
+                                        date_time:
+                                            description: Дата и время создания заявки. Не может быть в будущем. Должна быть больше чем у переданной сессии посетителя. Если параметр не передан, то проставится время вызова
+                                        email:
+                                            type: string
+                                            description: Email посетителя
+                                            example: example_string
+                                        ext_id:
+                                            type: string
+                                            description: Уникальный идентификатор заявки в вашей системе
+                                            example: example_string
+                                        form_name:
+                                            type: string
+                                            description: Имя пользовательской JS Формы.
+                                            example: example_string
+                                        message:
+                                            type: string
+                                            description: Сообщение посетителя
+                                            example: example_string
+                                        name:
+                                            type: string
+                                            description: Имя посетителя
+                                            example: example_string
+                                        offline_messages:
+                                            type: array
+                                            description: Список офлайн заявок. Максимально 500
+                                            example: []
+                                            items:
+                                                type: string
+                                                example: example_string
+                                        phone:
+                                            type: string
+                                            description: Телефон посетителя в формате E164
+                                            example: example_string
+                                        site_id:
+                                            type: number
+                                            description: Уникальный идентификатор сайта.
+                                            example: 123
+                                        source_id:
+                                            type: number
+                                            description: Уникальный идентификатор источника. Возможно передать только неудаленный источник в разрезе клиента. Если передан visitor_session_id, то определим source_id по параметрам сессии.
+                                            example: 123
+                                        user_fields:
+                                            type: array
+                                            example: Пользовательские поля проставленные у заявки. Перед тем как передать
+                                            enum:
+                                                - Пользовательские поля проставленные у заявки. Перед тем как передать
+                                                - нужно создать пользовательское поле через метод  "create.offline_message_user_field")
+                                            items:
+                                                type: string
+                                                example: example_string
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                        visitor_session_id:
+                                            type: number
+                                            description: Уникальный идентификатор сессии посетителя полученной из CoMagic. Для получения ID необходимо использовать метод JS API Comagic.getSessionId()
+                                            example: 123
+                                    required:
+                                        - offline_messages
+                                        - access_token
+                                        - date_time
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon

@@ -1,0 +1,186 @@
+openapi: 3.0.0
+info:
+    title: Получение списка задач на выгрузку отчетов файлом
+    version: 1.0.0
+    description: Получение списка задач на выгрузку отчетов файлом
+paths:
+    /get.report_generator_tasks:
+        get:
+            summary: Получение списка задач на выгрузку отчетов файлом
+            description: |-
+                Получение списка задач на выгрузку отчетов файлом
+
+                **Request Parameters:** 10
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `offset` (number, optional): Сдвиг - определяет с какого номера записи возвращать limit записей. По умолчанию 0.
+
+                - `filter` (object, optional): Фильтры накалдываемые на список задач на выгрузку отчетов. Логика построения аналогична "Критерии фильтрации"
+
+                - `field` (string, optional): Поле сущности к которой будет применяться фильтрация. Фильтрация возможна по полям state и id.
+
+                - `operator` (enum, optional): Оператор фильтрации. Список всех операторов можно получить в разделе "Операторы фильтрации"
+
+                - `sort` (array, optional): Сортировка задач на выгрузку. Логика построения аналогична "Сортировка данных"
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `limit` (number, optional): Количество возвращаемых записей. По умолчанию 50.
+
+                - `filters` (array, required): Выражение, может содержать в себе как простые фильтры, так и дерево фильтров.
+
+                - `value` (string, optional): Значение для оператора фильтрации. Необязательное поле, если оно отсутствует, то считается пустота.
+
+                **Response Parameters:** 4
+
+                - `task_id` (number): да
+
+                - `state` (enum): да
+
+                - `file_name` (string): нет
+
+                - `report_format` (enum): нет
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: get.report_generator_tasks
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        field:
+                                            type: string
+                                            description: Поле сущности к которой будет применяться фильтрация. Фильтрация возможна по полям state и id.
+                                            example: '"id"'
+                                            enum:
+                                                - '"id"'
+                                                - '"state"'
+                                        filter:
+                                            type: object
+                                            description: Фильтры накалдываемые на список задач на выгрузку отчетов. Логика построения аналогична "Критерии фильтрации"
+                                        filters:
+                                            type: array
+                                            description: Выражение, может содержать в себе как простые фильтры, так и дерево фильтров.
+                                            example: []
+                                            items:
+                                                type: string
+                                                example: example_string
+                                        limit:
+                                            type: number
+                                            description: Количество возвращаемых записей. По умолчанию 50.
+                                            example: 123
+                                        offset:
+                                            type: number
+                                            description: Сдвиг - определяет с какого номера записи возвращать limit записей. По умолчанию 0.
+                                            example: 123
+                                        operator:
+                                            type: string
+                                            description: Оператор фильтрации. Список всех операторов можно получить в разделе "Операторы фильтрации"
+                                        sort:
+                                            type: array
+                                            description: Сортировка задач на выгрузку. Логика построения аналогична "Сортировка данных"
+                                            example: []
+                                            items:
+                                                type: string
+                                                example: example_string
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                        value:
+                                            type: string
+                                            description: Значение для оператора фильтрации. Необязательное поле, если оно отсутствует, то считается пустота.
+                                            example: example_string
+                                    required:
+                                        - filters
+                                        - access_token
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                                properties:
+                                                    file_name:
+                                                        type: string
+                                                        description: нет
+                                                        example: example_string
+                                                    report_format:
+                                                        type: string
+                                                        description: нет
+                                                    state:
+                                                        type: string
+                                                        description: да
+                                                    task_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon

@@ -1,0 +1,138 @@
+openapi: 3.0.0
+info:
+    title: Редактирование SIP-линии
+    version: 1.0.0
+    description: Редактирование SIP-линии
+paths:
+    /update.sip_lines:
+        put:
+            summary: Редактирование SIP-линии
+            description: |-
+                Редактирование SIP-линии
+
+                **Request Parameters:** 7
+
+                - `virtual_phone_number` (string, required): Виртуальный номер отображаемый при исходящем вызове . Если виртуальный номер не передан, то тип SIP-линии будет только "входящая связь", если передан, то будет "входящая и исходящая"
+
+                - `billing_state` (enum, optional): Состояние SIP-линии в биллинге. active - SIP-линия активна;manual_lock - SIP-линия заблокирована вручную.
+
+                - `channels_count` (number, optional): Количество доступных линий на SIP-линии Определяется ограничениями тарифного плана.
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `id` (number, required): Уникальный идентификатор SIP-линии
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `employee_id` (number, required): Уникальный идентификатор сотрудника, см. метод "get.employees"
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: update.sip_lines
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        billing_state:
+                                            type: string
+                                            description: Состояние SIP-линии в биллинге. active - SIP-линия активна;manual_lock - SIP-линия заблокирована вручную.
+                                        channels_count:
+                                            type: number
+                                            description: Количество доступных линий на SIP-линии Определяется ограничениями тарифного плана.
+                                            example: 123
+                                        employee_id:
+                                            type: number
+                                            description: Уникальный идентификатор сотрудника, см. метод "get.employees"
+                                            example: 123
+                                        id:
+                                            type: number
+                                            description: Уникальный идентификатор SIP-линии
+                                            example: 123
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                        virtual_phone_number:
+                                            type: string
+                                            description: Виртуальный номер отображаемый при исходящем вызове . Если виртуальный номер не передан, то тип SIP-линии будет только "входящая связь", если передан, то будет "входящая и исходящая"
+                                            example: example_string
+                                            format: формат E164. Начинается с 7
+                                    required:
+                                        - employee_id
+                                        - virtual_phone_number
+                                        - access_token
+                                        - id
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon

@@ -1,0 +1,173 @@
+openapi: 3.0.0
+info:
+    title: Получение данных, агрегированных по времени суммарно
+    version: 1.0.0
+    description: Получение данных, агрегированных по времени суммарно
+paths:
+    /getobj.report_linechart_total:
+        post:
+            summary: Получение данных, агрегированных по времени суммарно
+            description: "Получение данных, агрегированных по времени суммарно\n\n**Request Parameters:** 14\n\n- `additional_column` (string, optional): Идентификатор столбца. Дополнительный столбец. Доступный список столбцов см.раздел \"Получение вложенности столбцов\" .\n\n- `filters` (array, required): Выражение, может содержать в себе как простые фильтры, так и дерево фильтров.\n\n- `operator` (enum, optional): Оператор фильтрации. Список всех операторов можно получить в разделе \"Операторы фильтрации\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `date_from` (iso8601, required): Дата начала основной выборки(ограничение 366 дней)\n\n- `filter` (object, optional): Фильтры применяемые в отчете. Логика построения аналогична \"Критерии фильтрации\"\n\n- `field` (string, optional): Поле сущности к которой будет применяться фильтрация (список заранее определён для метода\n\n- `value` (string, optional): Значение для оператора фильтрации. Необязательное поле, если оно отсутствует, то считается пустота.\n\n- `report_type` (enum, required): Тип отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод \"get.reports_list\"\n\n- `date_till` (iso8601, required): Дата окончания основной выборки\n\n- `perspective_window` (number, optional): Кол-во дней от сессии до обращения в которых происходит атрибутирование обращения к сессии.Является обязательным для `report_type` = `ad_analytics`\n\n- `datetime_dimension` (enum, required): Мнемоника измерения. Выбор по какому временному значению буду строиться данные.\n\n- `main_column` (string, required): Идентификатор столбца. Основой столбец. Обязательное поле. Доступный список столбцов см.раздел \"Получение вложенности столбцов\" .\n\n**Response Parameters:** 8\n\n- `from` (iso8601): \n\n- `till` (string): \n\n- `main_column` (string): да\n\n- `additional_column` (string): да\n\n- `date_from` (iso8601): да\n\n- `date_till` (iso8601): да\n\n- `items` (array): да\n\n- `datetime_dimension_interval` (object): "
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: getobj.report_linechart_total
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        additional_column:
+                                            type: string
+                                            description: Идентификатор столбца. Дополнительный столбец. Доступный список столбцов см.раздел "Получение вложенности столбцов" .
+                                            example: example_string
+                                        date_from:
+                                            description: Дата начала основной выборки(ограничение 366 дней)
+                                        date_till:
+                                            description: Дата окончания основной выборки
+                                        datetime_dimension:
+                                            type: string
+                                            description: Мнемоника измерения. Выбор по какому временному значению буду строиться данные.
+                                        field:
+                                            type: string
+                                            description: Поле сущности к которой будет применяться фильтрация (список заранее определён для метода
+                                            example: example_string
+                                        filter:
+                                            type: object
+                                            description: Фильтры применяемые в отчете. Логика построения аналогична "Критерии фильтрации"
+                                        filters:
+                                            type: array
+                                            description: Выражение, может содержать в себе как простые фильтры, так и дерево фильтров.
+                                            example: []
+                                            items:
+                                                type: string
+                                                example: example_string
+                                        main_column:
+                                            type: string
+                                            description: Идентификатор столбца. Основой столбец. Обязательное поле. Доступный список столбцов см.раздел "Получение вложенности столбцов" .
+                                            example: example_string
+                                        operator:
+                                            type: string
+                                            description: Оператор фильтрации. Список всех операторов можно получить в разделе "Операторы фильтрации"
+                                        perspective_window:
+                                            type: number
+                                            description: Кол-во дней от сессии до обращения в которых происходит атрибутирование обращения к сессии.Является обязательным для `report_type` = `ad_analytics`
+                                            example: 123
+                                        report_type:
+                                            type: string
+                                            description: Тип отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод "get.reports_list"
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                        value:
+                                            type: string
+                                            description: Значение для оператора фильтрации. Необязательное поле, если оно отсутствует, то считается пустота.
+                                            example: example_string
+                                    required:
+                                        - report_type
+                                        - date_till
+                                        - datetime_dimension
+                                        - main_column
+                                        - filters
+                                        - access_token
+                                        - date_from
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                                properties:
+                                                    additional_column:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    date_from:
+                                                        description: да
+                                                    date_till:
+                                                        description: да
+                                                    datetime_dimension_interval:
+                                                        type: object
+                                                    from: {}
+                                                    items:
+                                                        type: array
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            type: string
+                                                            example: example_string
+                                                    main_column:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    till:
+                                                        type: string
+                                                        example: example_string
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon

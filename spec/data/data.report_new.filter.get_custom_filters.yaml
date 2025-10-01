@@ -1,0 +1,152 @@
+openapi: 3.0.0
+info:
+    title: Получение списка пользовательских фильтров
+    version: 1.0.0
+    description: Получение списка пользовательских столбцов
+paths:
+    /get.custom_filters:
+        get:
+            summary: Получение списка пользовательских фильтров
+            description: "Получение списка пользовательских столбцов\n\n**Request Parameters:** 8\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `report_type` (enum, required): Тип отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод \"get.reports_list\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг - определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n**Response Parameters:** 7\n\n- `id` (number): да\n\n- `name` (string): да\n\n- `filter` (object): \n\n- `filters` (array): \n\n- `field` (string): \n\n- `operator` (enum): \n\n- `value` (string): "
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: get.custom_filters
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        fields:
+                                            type: array
+                                            description: См. раздел "Представление возвращаемых данных"
+                                            example: []
+                                            items:
+                                                type: string
+                                                example: example_string
+                                        filter:
+                                            type: object
+                                            description: См. раздел "Критерии фильтрации"
+                                        limit:
+                                            type: number
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                        offset:
+                                            type: number
+                                            description: Сдвиг - определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                        report_type:
+                                            type: string
+                                            description: Тип отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод "get.reports_list"
+                                        sort:
+                                            type: array
+                                            description: См. раздел "Сортировка данных"
+                                            example: []
+                                            items:
+                                                type: string
+                                                example: example_string
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - report_type
+                                        - access_token
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                                properties:
+                                                    field:
+                                                        type: string
+                                                        example: example_string
+                                                    filter:
+                                                        type: object
+                                                    filters:
+                                                        type: array
+                                                        example: []
+                                                        items:
+                                                            type: string
+                                                            example: example_string
+                                                    id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    operator:
+                                                        type: string
+                                                    value:
+                                                        type: string
+                                                        example: example_string
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon

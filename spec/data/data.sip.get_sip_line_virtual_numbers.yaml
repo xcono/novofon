@@ -1,0 +1,149 @@
+openapi: 3.0.0
+info:
+    title: Получение списка виртуальных номеров для SIP-линии
+    version: 1.0.0
+    description: Получение списка виртуальных номеров которые можно использовать при настройке SIP-линии
+paths:
+    /get.sip_line_virtual_numbers:
+        get:
+            summary: Получение списка виртуальных номеров для SIP-линии
+            description: |-
+                Получение списка виртуальных номеров которые можно использовать при настройке SIP-линии
+
+                **Request Parameters:** 7
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `limit` (number, optional): Количество возвращаемых записей. См. раздел "Постраничный вывод"
+
+                - `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+
+                - `filter` (object, optional): См. раздел "Критерии фильтрации"
+
+                - `fields` (array, optional): См. раздел "Представление возвращаемых данных"
+
+                - `sort` (array, optional): См. раздел "Сортировка данных"
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                **Response Parameters:** 1
+
+                - `virtual_phone_number` (string): да
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: get.sip_line_virtual_numbers
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        fields:
+                                            type: array
+                                            description: См. раздел "Представление возвращаемых данных"
+                                            example: []
+                                            items:
+                                                type: string
+                                                example: example_string
+                                        filter:
+                                            type: object
+                                            description: См. раздел "Критерии фильтрации"
+                                        limit:
+                                            type: number
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                        offset:
+                                            type: number
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                        sort:
+                                            type: array
+                                            description: См. раздел "Сортировка данных"
+                                            example: []
+                                            items:
+                                                type: string
+                                                example: example_string
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - access_token
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                                properties:
+                                                    virtual_phone_number:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon

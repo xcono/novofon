@@ -1,0 +1,192 @@
+openapi: 3.0.0
+info:
+    title: Получение клиентов агента
+    version: 1.0.0
+    description: Получение клиентов агента
+paths:
+    /get.customers:
+        get:
+            summary: Получение клиентов агента
+            description: "Получение клиентов агента\n\n**Request Parameters:** 6\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n**Response Parameters:** 20\n\n- `site_domain_name` (string): \n\n- `name` (string): да\n\n- `monthly_base_notify_limit` (number): \n\n- `monthly_calls_notify_emails` (array): \n\n- `daily_calls_limit` (number): \n\n- `daily_calls_notify_limit` (number): \n\n- `tariff_plan_name` (string): да\n\n- `id` (number): да\n\n- `creation_date_time` (iso8601): \n\n- `status` (enum): да\n\n- `monthly_base_limit` (number): \n\n- `monthly_base_notify_emails` (array): \n\n- `monthly_calls_limit` (number): \n\n- `sites` (array): \n\n- `description` (string): \n\n- `daily_calls_notify_emails` (array): \n\n- `site_id` (number): \n\n- `tariff_plan_id` (number): да\n\n- `status_change_date_time` (iso8601): \n\n- `monthly_calls_notify_limit` (number): "
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: get.customers
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        fields:
+                                            type: array
+                                            description: См. раздел "Представление возвращаемых данных"
+                                            example: []
+                                            items:
+                                                type: string
+                                                example: example_string
+                                        filter:
+                                            type: object
+                                            description: См. раздел "Критерии фильтрации"
+                                        limit:
+                                            type: number
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                        offset:
+                                            type: number
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                        sort:
+                                            type: array
+                                            description: См. раздел "Сортировка данных"
+                                            example: []
+                                            items:
+                                                type: string
+                                                example: example_string
+                                    required:
+                                        - access_token
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                                properties:
+                                                    creation_date_time: {}
+                                                    daily_calls_limit:
+                                                        type: number
+                                                        example: 123
+                                                    daily_calls_notify_emails:
+                                                        type: array
+                                                        example: []
+                                                        items:
+                                                            type: string
+                                                            example: example_string
+                                                    daily_calls_notify_limit:
+                                                        type: number
+                                                        example: 123
+                                                    description:
+                                                        type: string
+                                                        example: example_string
+                                                    id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    monthly_base_limit:
+                                                        type: number
+                                                        example: 123
+                                                    monthly_base_notify_emails:
+                                                        type: array
+                                                        example: []
+                                                        items:
+                                                            type: string
+                                                            example: example_string
+                                                    monthly_base_notify_limit:
+                                                        type: number
+                                                        example: 123
+                                                    monthly_calls_limit:
+                                                        type: number
+                                                        example: 123
+                                                    monthly_calls_notify_emails:
+                                                        type: array
+                                                        example: []
+                                                        items:
+                                                            type: string
+                                                            example: example_string
+                                                    monthly_calls_notify_limit:
+                                                        type: number
+                                                        example: 123
+                                                    name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    site_domain_name:
+                                                        type: string
+                                                        example: example_string
+                                                    site_id:
+                                                        type: number
+                                                        example: 123
+                                                    sites:
+                                                        type: array
+                                                        example: []
+                                                        items:
+                                                            type: string
+                                                            example: example_string
+                                                    status:
+                                                        type: string
+                                                        description: да
+                                                    status_change_date_time: {}
+                                                    tariff_plan_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    tariff_plan_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon

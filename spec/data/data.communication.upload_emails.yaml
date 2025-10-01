@@ -1,0 +1,204 @@
+openapi: 3.0.0
+info:
+    title: Загрузка электронных писем
+    version: 1.0.0
+    description: Загрузка электронных писем
+paths:
+    /upload.emails:
+        post:
+            summary: Загрузка электронных писем
+            description: |-
+                Загрузка электронных писем
+
+                **Request Parameters:** 15
+
+                - `email_to_cc` (array, optional): Копия.
+
+                - `sender_name` (string, optional): Имя отправителя
+
+                - `message` (string, required): Текст письма.
+
+                - `source_id` (number, optional): Идентификатор источника. Метод получение списка существующих Источников: "get.get_sources"
+
+                - `email_from` (string, required): Отправитель.
+
+                - `email_to` (string, required): Получатель. Обязательно одно из полей: email_to, email_to_cc, email_to_bcc
+
+                - `message_html` (string, required): HTML письма.
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `emails` (array, optional): Массив писем
+
+                - `site_id` (number, optional): Идентификатор сайта. Метод получение списка существующих сайтов: "get.sites"
+
+                - `session_id` (number, optional): Идентификатор сессии
+
+                - `date_time` (date, required): Дата и время получения письма на почту в таймзоне клиента
+
+                - `subject` (string, optional): Тема письма
+
+                - `email_to_bcc` (array, optional): Скрытая копия.
+
+                **Response Parameters:** 1
+
+                - `id` (number): да
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: upload.emails
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        date_time:
+                                            description: Дата и время получения письма на почту в таймзоне клиента
+                                        email_from:
+                                            type: string
+                                            description: Отправитель.
+                                            example: example_string
+                                        email_to:
+                                            type: string
+                                            description: 'Получатель. Обязательно одно из полей: email_to, email_to_cc, email_to_bcc'
+                                            example: example_string
+                                        email_to_bcc:
+                                            type: array
+                                            description: Скрытая копия.
+                                            example: []
+                                            items:
+                                                type: string
+                                                example: example_string
+                                        email_to_cc:
+                                            type: array
+                                            description: Копия.
+                                            example: []
+                                            items:
+                                                type: string
+                                                example: example_string
+                                        emails:
+                                            type: array
+                                            description: Массив писем
+                                            example: []
+                                            items:
+                                                type: string
+                                                example: example_string
+                                        message:
+                                            type: string
+                                            description: Текст письма.
+                                            example: example_string
+                                        message_html:
+                                            type: string
+                                            description: HTML письма.
+                                            example: example_string
+                                        sender_name:
+                                            type: string
+                                            description: Имя отправителя
+                                            example: example_string
+                                        session_id:
+                                            type: number
+                                            description: Идентификатор сессии
+                                            example: 123
+                                        site_id:
+                                            type: number
+                                            description: 'Идентификатор сайта. Метод получение списка существующих сайтов: "get.sites"'
+                                            example: 123
+                                        source_id:
+                                            type: number
+                                            description: 'Идентификатор источника. Метод получение списка существующих Источников: "get.get_sources"'
+                                            example: 123
+                                        subject:
+                                            type: string
+                                            description: Тема письма
+                                            example: example_string
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - message
+                                        - email_from
+                                        - email_to
+                                        - message_html
+                                        - access_token
+                                        - date_time
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                                properties:
+                                                    id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon

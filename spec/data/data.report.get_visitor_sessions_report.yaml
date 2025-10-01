@@ -1,0 +1,370 @@
+openapi: 3.0.0
+info:
+    title: Получение информации о сессии посетителя
+    version: 1.0.0
+    description: Получение информации о сессии посетителя
+paths:
+    /get.visitor_sessions_report:
+        get:
+            summary: Получение информации о сессии посетителя
+            description: "Получение информации о сессии посетителя\n\n**Request Parameters:** 9\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `date_from` (iso8601, required): Дата начала выборки\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `date_till` (iso8601, required): Дата окончания выборки\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n**Response Parameters:** 68\n\n- `date_time` (iso8601): \n\n- `gclid` (string): \n\n- `visitor_city` (string): да\n\n- `visitor_os_version` (string): \n\n- `visitor_provider` (string): \n\n- `segment_id` (number): \n\n- `ext_id` (string): да\n\n- `id` (number): \n\n- `ym_client_id` (string): \n\n- `yclid` (string): \n\n- `referrer` (string): \n\n- `utm_source` (string): да\n\n- `openstat_service` (string): да\n\n- `communication_id` (number): \n\n- `source_name` (string): да\n\n- `integrated_campaign_data` (object): да\n\n- `referrer_domain` (string): \n\n- `campaign_name` (string): да\n\n- `visitor_os_name` (string): да\n\n- `property_value` (string): \n\n- `ua_client_id` (string): \n\n- `visitor_country` (string): да\n\n- `engine` (enum): \n\n- `cm_id` (string): да\n\n- `visitor_region` (string): да\n\n- `visitor_ip_address` (string): \n\n- `utm_content` (string): да\n\n- `channel` (enum): \n\n- `visitor_id` (number): да\n\n- `visitor_browser_version` (string): да\n\n- `openstat_campaign` (string): да\n\n- `hits_count` (number): \n\n- `exit_page` (): \n\n- `utm_term` (string): да\n\n- `utm_campaign` (string): да\n\n- `hit_url` (string): \n\n- `segments` (array): да\n\n- `communication_date_time` (iso8601): \n\n- `search_engine` (string): \n\n- `duration` (number): \n\n- `site_domain_name` (string): да\n\n- `visitor_language` (string): да\n\n- `property_name` (string): \n\n- `source_id` (number): да\n\n- `channel_new` (string): да\n\n- `visitor_type` (enum): да\n\n- `visitor_screen` (string): да\n\n- `hit_duration` (string): \n\n- `visitor_custom_properties` (array): да\n\n- `utm_medium` (string): да\n\n- `openstat_ad` (string): да\n\n- `hit_time` (string): \n\n- `visitor_device` (enum): да\n\n- `visitor_browser_name` (string): да\n\n- `communication_type` (enum): \n\n- `person_id` (number): да\n\n- `openstat_source` (string): да\n\n- `hits` (array): \n\n- `ef_id` (string): \n\n- `ymclid` (string): \n\n- `search_query` (string): \n\n- `site_id` (number): да\n\n- `communications` (array): да\n\n- `channel_code` (string): да\n\n- `entrance_page` (string): \n\n- `campaign_id` (number): да\n\n- `segment_name` (string): \n\n- `source_new` (string): да"
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: get.visitor_sessions_report
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        date_from:
+                                            description: Дата начала выборки
+                                        date_till:
+                                            description: Дата окончания выборки
+                                        fields:
+                                            type: array
+                                            description: См. раздел "Представление возвращаемых данных"
+                                            example: []
+                                            items:
+                                                type: string
+                                                example: example_string
+                                        filter:
+                                            type: object
+                                            description: См. раздел "Критерии фильтрации"
+                                        limit:
+                                            type: number
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                        offset:
+                                            type: number
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                        sort:
+                                            type: array
+                                            description: См. раздел "Сортировка данных"
+                                            example: []
+                                            items:
+                                                type: string
+                                                example: example_string
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - date_from
+                                        - access_token
+                                        - date_till
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                                properties:
+                                                    campaign_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    campaign_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    channel:
+                                                        type: string
+                                                    channel_code:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    channel_new:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    cm_id:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    communication_date_time: {}
+                                                    communication_id:
+                                                        type: number
+                                                        example: 123
+                                                    communication_type:
+                                                        type: string
+                                                    communications:
+                                                        type: array
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            type: string
+                                                            example: example_string
+                                                    date_time: {}
+                                                    duration:
+                                                        type: number
+                                                        example: 123
+                                                    ef_id:
+                                                        type: string
+                                                        example: example_string
+                                                    engine:
+                                                        type: string
+                                                    entrance_page:
+                                                        type: string
+                                                        example: example_string
+                                                    exit_page: {}
+                                                    ext_id:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    gclid:
+                                                        type: string
+                                                        example: example_string
+                                                    hit_duration:
+                                                        type: string
+                                                        example: example_string
+                                                    hit_time:
+                                                        type: string
+                                                        example: example_string
+                                                    hit_url:
+                                                        type: string
+                                                        example: example_string
+                                                    hits:
+                                                        type: array
+                                                        example: []
+                                                        items:
+                                                            type: string
+                                                            example: example_string
+                                                    hits_count:
+                                                        type: number
+                                                        example: 123
+                                                    id:
+                                                        type: number
+                                                        example: 123
+                                                    integrated_campaign_data:
+                                                        type: object
+                                                        description: да
+                                                    openstat_ad:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    openstat_campaign:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    openstat_service:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    openstat_source:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    person_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    property_name:
+                                                        type: string
+                                                        example: example_string
+                                                    property_value:
+                                                        type: string
+                                                        example: example_string
+                                                    referrer:
+                                                        type: string
+                                                        example: example_string
+                                                    referrer_domain:
+                                                        type: string
+                                                        example: example_string
+                                                    search_engine:
+                                                        type: string
+                                                        example: example_string
+                                                    search_query:
+                                                        type: string
+                                                        example: example_string
+                                                    segment_id:
+                                                        type: number
+                                                        example: 123
+                                                    segment_name:
+                                                        type: string
+                                                        example: example_string
+                                                    segments:
+                                                        type: array
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            type: string
+                                                            example: example_string
+                                                    site_domain_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    site_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    source_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    source_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    source_new:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    ua_client_id:
+                                                        type: string
+                                                        example: example_string
+                                                    utm_campaign:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    utm_content:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    utm_medium:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    utm_source:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    utm_term:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    visitor_browser_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    visitor_browser_version:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    visitor_city:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    visitor_country:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    visitor_custom_properties:
+                                                        type: array
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            type: string
+                                                            example: example_string
+                                                    visitor_device:
+                                                        type: string
+                                                        description: да
+                                                    visitor_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    visitor_ip_address:
+                                                        type: string
+                                                        example: example_string
+                                                    visitor_language:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    visitor_os_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    visitor_os_version:
+                                                        type: string
+                                                        example: example_string
+                                                    visitor_provider:
+                                                        type: string
+                                                        example: example_string
+                                                    visitor_region:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    visitor_screen:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    visitor_type:
+                                                        type: string
+                                                        description: да
+                                                    yclid:
+                                                        type: string
+                                                        example: example_string
+                                                    ym_client_id:
+                                                        type: string
+                                                        example: example_string
+                                                    ymclid:
+                                                        type: string
+                                                        example: example_string
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon

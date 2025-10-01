@@ -1,0 +1,125 @@
+openapi: 3.0.0
+info:
+    title: Создание пользовательского фильтра
+    version: 1.0.0
+    description: Создание пользовательского фильтра
+paths:
+    /create.custom_filter:
+        post:
+            summary: Создание пользовательского фильтра
+            description: |-
+                Создание пользовательского фильтра
+
+                **Request Parameters:** 5
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `report_type` (number, required): Тип отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод "get.reports_list"
+
+                - `name` (string, required): Название пользовательского фильтра
+
+                - `filter` (object, required): Набор фильтров используемых в пользовательском фильтре. См. раздел "Критерии фильтрации".
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: create.custom_filter
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        filter:
+                                            type: object
+                                            description: Набор фильтров используемых в пользовательском фильтре. См. раздел "Критерии фильтрации".
+                                        name:
+                                            type: string
+                                            description: Название пользовательского фильтра
+                                            example: example_string
+                                        report_type:
+                                            type: number
+                                            description: Тип отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод "get.reports_list"
+                                            example: 123
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - filter
+                                        - access_token
+                                        - report_type
+                                        - name
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon

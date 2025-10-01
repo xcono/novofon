@@ -1,0 +1,130 @@
+openapi: 3.0.0
+info:
+    title: Создание сайта
+    version: 1.0.0
+    description: Создание блока номеров для сайта
+paths:
+    /create.site_blocks:
+        post:
+            summary: Создание сайта
+            description: |-
+                Создание блока номеров для сайта
+
+                **Request Parameters:** 4
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `site_id` (number, required): Уникальный идентификатор сайта
+
+                - `name` (string, required): Название блока номеров
+
+                **Response Parameters:** 1
+
+                - `id` (number): Уникальный идентификатор блока номеров
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: create.site_blocks
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        name:
+                                            type: string
+                                            description: Название блока номеров
+                                            example: example_string
+                                        site_id:
+                                            type: number
+                                            description: Уникальный идентификатор сайта
+                                            example: 123
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - access_token
+                                        - site_id
+                                        - name
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                                properties:
+                                                    id:
+                                                        type: number
+                                                        description: Уникальный идентификатор блока номеров
+                                                        example: 123
+                                                required:
+                                                    - id
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon

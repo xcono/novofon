@@ -1,0 +1,111 @@
+openapi: 3.0.0
+info:
+    title: Редактирование глобального календаря
+    version: 1.0.0
+    description: Редактирование глобального календаря
+paths:
+    /update.report_global_calendar:
+        put:
+            summary: Редактирование глобального календаря
+            description: |-
+                Редактирование глобального календаря
+
+                **Request Parameters:** 3
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `id` (number, required): Уникальный идентификатор глобального календаря. Для получения списка источников необходимо использовать метод ["get.report_global_calendars"](../get_report_global_calendars)
+
+                - `params` (object, optional): Параметры глобального календаря
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: update.report_global_calendar
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        id:
+                                            type: number
+                                            description: Уникальный идентификатор глобального календаря. Для получения списка источников необходимо использовать метод ["get.report_global_calendars"](../get_report_global_calendars)
+                                            example: 123
+                                        params:
+                                            type: object
+                                            description: Параметры глобального календаря
+                                    required:
+                                        - access_token
+                                        - id
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon

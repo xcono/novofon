@@ -1,0 +1,169 @@
+openapi: 3.0.0
+info:
+    title: Агрегированная статистика по сотрудникам
+    version: 1.0.0
+    description: Получение агрегированной статистики по сотрудникам Метод доступен при подключенном компоненте "call_center"
+paths:
+    /get.employee_stat:
+        get:
+            summary: Агрегированная статистика по сотрудникам
+            description: "Получение агрегированной статистики по сотрудникам Метод доступен при подключенном компоненте \"call_center\"\n\n**Request Parameters:** 10\n\n- `only_default_statuses_in_stats` (boolean, optional): Признак, позволяющий выбирать вариант статистики по времени нахождения в статусах. По умолчанию \"true\".\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `date_from` (iso8601, required): YYYY-MM-DD hh:mm:ss\n\n- `date_till` (iso8601, required): YYYY-MM-DD hh:mm:ss\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n**Response Parameters:** 9\n\n- `group_id` (number): \n\n- `id` (number): да\n\n- `first_name` (string): да\n\n- `last_name` (string): да\n\n- `groups` (array): да\n\n- `group_name` (string): \n\n- `patronymic` (string): \n\n- `full_name` (string): да\n\n- `status_stats` (object): да"
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: get.employee_stat
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        date_from:
+                                            description: YYYY-MM-DD hh:mm:ss
+                                        date_till:
+                                            description: YYYY-MM-DD hh:mm:ss
+                                        fields:
+                                            type: array
+                                            description: См. раздел "Представление возвращаемых данных"
+                                            example: []
+                                            items:
+                                                type: string
+                                                example: example_string
+                                        filter:
+                                            type: object
+                                            description: См. раздел "Критерии фильтрации"
+                                        limit:
+                                            type: number
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                        offset:
+                                            type: number
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                        only_default_statuses_in_stats:
+                                            type: boolean
+                                            description: Признак, позволяющий выбирать вариант статистики по времени нахождения в статусах. По умолчанию "true".
+                                            example: true
+                                        sort:
+                                            type: array
+                                            description: См. раздел "Сортировка данных"
+                                            example: []
+                                            items:
+                                                type: string
+                                                example: example_string
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - date_from
+                                        - date_till
+                                        - access_token
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                                properties:
+                                                    first_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    full_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    group_id:
+                                                        type: number
+                                                        example: 123
+                                                    group_name:
+                                                        type: string
+                                                        example: example_string
+                                                    groups:
+                                                        type: array
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            type: number
+                                                            example: 123
+                                                    id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    last_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    patronymic:
+                                                        type: string
+                                                        example: example_string
+                                                    status_stats:
+                                                        type: object
+                                                        description: да
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon

@@ -1,0 +1,154 @@
+openapi: 3.0.0
+info:
+    title: Получение списка метрик
+    version: 1.0.0
+    description: Получение списка метрик
+paths:
+    /get.metrics:
+        get:
+            summary: Получение списка метрик
+            description: "Получение списка метрик\n\n**Request Parameters:** 3\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `report_type` (enum, required): Тип отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод \"get.reports_list\"\n\n**Response Parameters:** 13\n\n- `multichannel_models` (object): да\n\n- `group_id` (string): \n\n- `parent_group_id` (number): \n\n- `name` (string): \n\n- `data_type` (enum): да\n\n- `aggregates` (array): да\n\n- `models` (array): да\n\n- `description` (string): \n\n- `sort` (number): \n\n- `models_groups` (array): да\n\n- `id` (string): \n\n- `has_percentage` (boolean): \n\n- `is_default` (boolean): "
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: get.metrics
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        report_type:
+                                            type: string
+                                            description: Тип отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод "get.reports_list"
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - report_type
+                                        - access_token
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                                properties:
+                                                    aggregates:
+                                                        type: array
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            type: string
+                                                            example: example_string
+                                                    data_type:
+                                                        type: string
+                                                        description: да
+                                                    description:
+                                                        type: string
+                                                        example: example_string
+                                                    group_id:
+                                                        type: string
+                                                        example: example_string
+                                                    has_percentage:
+                                                        type: boolean
+                                                        example: true
+                                                    id:
+                                                        type: string
+                                                        example: example_string
+                                                    is_default:
+                                                        type: boolean
+                                                        example: true
+                                                    models:
+                                                        type: array
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            type: string
+                                                            example: example_string
+                                                    models_groups:
+                                                        type: array
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            type: number
+                                                            example: 123
+                                                    multichannel_models:
+                                                        type: object
+                                                        description: да
+                                                    name:
+                                                        type: string
+                                                        example: example_string
+                                                    parent_group_id:
+                                                        type: number
+                                                        example: 123
+                                                    sort:
+                                                        type: number
+                                                        example: 123
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon

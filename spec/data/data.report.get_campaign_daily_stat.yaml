@@ -1,0 +1,261 @@
+openapi: 3.0.0
+info:
+    title: Получения статистики РК по дням
+    version: 1.0.0
+    description: Получение статистики РК по дням
+paths:
+    /get.campaign_daily_stat:
+        get:
+            summary: Получения статистики РК по дням
+            description: "Получение статистики РК по дням\n\n**Request Parameters:** 8\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `date_from` (iso8601, required): Дата начала выборки (ограничение 90 дней, как в стандартных методах отчетов)\n\n- `date_till` (iso8601, required): Дата окончания выборки\n\n- `site_id` (number, required): Идентификатор сайта в системе CoMagic\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n**Response Parameters:** 40\n\n- `current_banner_name` (string): \n\n- `tag_user_id` (number): \n\n- `tag_employee_full_name` (string): \n\n- `banner_group_name` (string): \n\n- `calls_count` (number): \n\n- `tag_change_time` (iso8601): \n\n- `site_domain_name` (string): да\n\n- `campaign_ext_id` (string): да\n\n- `campaign_ext_name` (string): да\n\n- `engine` (enum): \n\n- `shows_count` (number): \n\n- `clicks_count` (number): \n\n- `chats_count` (number): \n\n- `visits_count` (number): \n\n- `campaign_id` (number): да\n\n- `campaign_name` (string): да\n\n- `cost_sum` (string): \n\n- `daily_budget` (number): \n\n- `weekly_budget` (number): \n\n- `communications` (array): \n\n- `communication_type` (string): \n\n- `tag_name` (string): \n\n- `banner_group_id` (string): \n\n- `keyword_id` (string): \n\n- `tag_employee_id` (number): \n\n- `date` (iso8601): да\n\n- `site_id` (number): да\n\n- `goals_count` (number): \n\n- `current_banner_id` (number): \n\n- `currency` (enum): \n\n- `session_ids` (array): \n\n- `attributes` (array): \n\n- `tags` (array): \n\n- `offline_messages_count` (number): \n\n- `communication_id` (number): \n\n- `tag_id` (number): \n\n- `tag_type` (enum): \n\n- `tag_user_login` (string): \n\n- `keyword` (string): \n\n- `old_banner_ids` (array): "
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: get.campaign_daily_stat
+                                params:
+                                    type: object
+                                    properties:
+                                        date_from:
+                                            description: Дата начала выборки (ограничение 90 дней, как в стандартных методах отчетов)
+                                        date_till:
+                                            description: Дата окончания выборки
+                                        fields:
+                                            type: array
+                                            description: См. раздел "Представление возвращаемых данных"
+                                            example: []
+                                            items:
+                                                type: string
+                                                example: example_string
+                                        filter:
+                                            type: object
+                                            description: См. раздел "Критерии фильтрации"
+                                        limit:
+                                            type: number
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                        offset:
+                                            type: number
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                        site_id:
+                                            type: number
+                                            description: Идентификатор сайта в системе CoMagic
+                                            example: 123
+                                        sort:
+                                            type: array
+                                            description: См. раздел "Сортировка данных"
+                                            example: []
+                                            items:
+                                                type: string
+                                                example: example_string
+                                    required:
+                                        - site_id
+                                        - date_from
+                                        - date_till
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                                properties:
+                                                    attributes:
+                                                        type: array
+                                                        example: []
+                                                        items:
+                                                            type: string
+                                                            example: example_string
+                                                    banner_group_id:
+                                                        type: string
+                                                        example: example_string
+                                                    banner_group_name:
+                                                        type: string
+                                                        example: example_string
+                                                    calls_count:
+                                                        type: number
+                                                        example: 123
+                                                    campaign_ext_id:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    campaign_ext_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    campaign_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    campaign_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    chats_count:
+                                                        type: number
+                                                        example: 123
+                                                    clicks_count:
+                                                        type: number
+                                                        example: 123
+                                                    communication_id:
+                                                        type: number
+                                                        example: 123
+                                                    communication_type:
+                                                        type: string
+                                                        example: example_string
+                                                    communications:
+                                                        type: array
+                                                        example: []
+                                                        items:
+                                                            type: string
+                                                            example: example_string
+                                                    cost_sum:
+                                                        type: string
+                                                        example: example_string
+                                                    currency:
+                                                        type: string
+                                                    current_banner_id:
+                                                        type: number
+                                                        example: 123
+                                                    current_banner_name:
+                                                        type: string
+                                                        example: example_string
+                                                    daily_budget:
+                                                        type: number
+                                                        example: 123
+                                                    date:
+                                                        description: да
+                                                    engine:
+                                                        type: string
+                                                    goals_count:
+                                                        type: number
+                                                        example: 123
+                                                    keyword:
+                                                        type: string
+                                                        example: example_string
+                                                    keyword_id:
+                                                        type: string
+                                                        example: example_string
+                                                    offline_messages_count:
+                                                        type: number
+                                                        example: 123
+                                                    old_banner_ids:
+                                                        type: array
+                                                        example: []
+                                                        items:
+                                                            type: string
+                                                            example: example_string
+                                                    session_ids:
+                                                        type: array
+                                                        example: []
+                                                        items:
+                                                            type: string
+                                                            example: example_string
+                                                    shows_count:
+                                                        type: number
+                                                        example: 123
+                                                    site_domain_name:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    site_id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    tag_change_time: {}
+                                                    tag_employee_full_name:
+                                                        type: string
+                                                        example: example_string
+                                                    tag_employee_id:
+                                                        type: number
+                                                        example: 123
+                                                    tag_id:
+                                                        type: number
+                                                        example: 123
+                                                    tag_name:
+                                                        type: string
+                                                        example: example_string
+                                                    tag_type:
+                                                        type: string
+                                                    tag_user_id:
+                                                        type: number
+                                                        example: 123
+                                                    tag_user_login:
+                                                        type: string
+                                                        example: example_string
+                                                    tags:
+                                                        type: array
+                                                        example: []
+                                                        items:
+                                                            type: string
+                                                            example: example_string
+                                                    visits_count:
+                                                        type: number
+                                                        example: 123
+                                                    weekly_budget:
+                                                        type: number
+                                                        example: 123
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon

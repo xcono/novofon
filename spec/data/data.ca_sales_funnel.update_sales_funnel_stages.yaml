@@ -1,0 +1,131 @@
+openapi: 3.0.0
+info:
+    title: Обновление этапа воронки продаж
+    version: 1.0.0
+    description: Обновление этапа воронки продаж
+paths:
+    /update.sales_funnel_stages:
+        put:
+            summary: Обновление этапа воронки продаж
+            description: |-
+                Обновление этапа воронки продаж
+
+                **Request Parameters:** 6
+
+                - `name` (string, optional): Название этапа
+
+                - `order` (number, optional): Порядковый номер этапа, максимальное значение 10000 применяется только для этапа in_process
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `sales_funnel_ext_id` (string, required): Внешний идентификатор воронки продаж
+
+                - `ext_id` (string, required): Внешний идентификатор этапа воронки продаж
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: update.sales_funnel_stages
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        ext_id:
+                                            type: string
+                                            description: Внешний идентификатор этапа воронки продаж
+                                            example: example_string
+                                        name:
+                                            type: string
+                                            description: Название этапа
+                                            example: example_string
+                                        order:
+                                            type: number
+                                            description: Порядковый номер этапа, максимальное значение 10000 применяется только для этапа in_process
+                                            example: 123
+                                        sales_funnel_ext_id:
+                                            type: string
+                                            description: Внешний идентификатор воронки продаж
+                                            example: example_string
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - sales_funnel_ext_id
+                                        - ext_id
+                                        - access_token
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon

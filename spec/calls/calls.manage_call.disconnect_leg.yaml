@@ -1,0 +1,118 @@
+openapi: 3.0.0
+info:
+    title: Disconnect leg
+    version: 1.0.0
+    description: Метод позволяет разъединять отдельных участников разговора. Уникальный идентификатор каждого участника разговора можно получить используя метод list.calls или сервер уведомлений
+paths:
+    /disconnect.leg:
+        post:
+            summary: Disconnect leg
+            description: |-
+                Метод позволяет разъединять отдельных участников разговора. Уникальный идентификатор каждого участника разговора можно получить используя метод list.calls или сервер уведомлений
+
+                **Request Parameters:** 3
+
+                - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+
+                - `leg_id` (number, required): Уникальный идентификатор участника разговора, который может быть получен через сервера уведомлений.
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: disconnect.leg
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        call_session_id:
+                                            type: number
+                                            description: Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+                                            example: 123
+                                        leg_id:
+                                            type: number
+                                            description: Уникальный идентификатор участника разговора, который может быть получен через сервера уведомлений.
+                                            example: 123
+                                    required:
+                                        - access_token
+                                        - call_session_id
+                                        - leg_id
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon
+x-errors:
+    errors:
+        - code: "-32602"
+          mnemonic: leg_not_found
+          description: ""

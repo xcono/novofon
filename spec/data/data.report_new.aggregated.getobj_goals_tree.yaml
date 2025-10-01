@@ -1,0 +1,128 @@
+openapi: 3.0.0
+info:
+    title: Получение вложенности целей
+    version: 1.0.0
+    description: Получение вложенности целей
+paths:
+    /getobj.goals_tree:
+        post:
+            summary: Получение вложенности целей
+            description: "Получение вложенности целей\n\n**Request Parameters:** 2\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n**Response Parameters:** 7\n\n- `sort` (number): \n\n- `goals` (array): да\n\n- `group_id` (number): \n\n- `goals_groups` (array): да\n\n- `id` (string): \n\n- `name` (string): \n\n- `parent_group_id` (number): "
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: getobj.goals_tree
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - access_token
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                                properties:
+                                                    goals:
+                                                        type: array
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            type: string
+                                                            example: example_string
+                                                    goals_groups:
+                                                        type: array
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            type: number
+                                                            example: 123
+                                                    group_id:
+                                                        type: number
+                                                        example: 123
+                                                    id:
+                                                        type: string
+                                                        example: example_string
+                                                    name:
+                                                        type: string
+                                                        example: example_string
+                                                    parent_group_id:
+                                                        type: number
+                                                        example: 123
+                                                    sort:
+                                                        type: number
+                                                        example: 123
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon

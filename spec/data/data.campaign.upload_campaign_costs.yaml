@@ -1,0 +1,146 @@
+openapi: 3.0.0
+info:
+    title: Загрузка расходов по рекламным кампаниям
+    version: 1.0.0
+    description: Загрузка расходов по рекламным кампаниям
+paths:
+    /upload.campaign_costs:
+        post:
+            summary: Загрузка расходов по рекламным кампаниям
+            description: |-
+                Загрузка расходов по рекламным кампаниям
+
+                **Request Parameters:** 8
+
+                - `cost` (number, required): Расходы по рекламной кампании за указанный период date_from и date_till. Если указан 0, то произойдет удаление расходов за указанный период.
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `costs` (array, required): Список расходов по рекламным кампаниям. Максимально 500
+
+                - `date_from` (iso8601, required): Дата и время начала периода загружаемых расходов. На текущий момент время игнорируется.
+
+                - `date_till` (iso8601, required): Дата и время конца периода загружаемых расходов. Не может быть меньше чем date_from. На текущий момент время игнорируется.
+
+                - `campaign_id` (number, required): Уникальный идентификатор рекламной кампании.
+
+                - `site_id` (number, required): Уникальный идентификатор сайта.
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: upload.campaign_costs
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        campaign_id:
+                                            type: number
+                                            description: Уникальный идентификатор рекламной кампании.
+                                            example: 123
+                                        cost:
+                                            type: number
+                                            description: Расходы по рекламной кампании за указанный период date_from и date_till. Если указан 0, то произойдет удаление расходов за указанный период.
+                                            example: 123
+                                        costs:
+                                            type: array
+                                            description: Список расходов по рекламным кампаниям. Максимально 500
+                                            example: []
+                                            items:
+                                                type: string
+                                                example: example_string
+                                        date_from:
+                                            description: Дата и время начала периода загружаемых расходов. На текущий момент время игнорируется.
+                                        date_till:
+                                            description: Дата и время конца периода загружаемых расходов. Не может быть меньше чем date_from. На текущий момент время игнорируется.
+                                        site_id:
+                                            type: number
+                                            description: Уникальный идентификатор сайта.
+                                            example: 123
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - date_till
+                                        - campaign_id
+                                        - site_id
+                                        - cost
+                                        - access_token
+                                        - costs
+                                        - date_from
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon

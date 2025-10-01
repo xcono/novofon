@@ -1,0 +1,162 @@
+openapi: 3.0.0
+info:
+    title: Получение вложенности столбцов
+    version: 1.0.0
+    description: Получение вложенности столбцов
+paths:
+    /getobj.columns_tree:
+        post:
+            summary: Получение вложенности столбцов
+            description: "Получение вложенности столбцов\n\n**Request Parameters:** 3\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `report_type` (enum, required): Тип отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод \"get.reports_list\"\n\n**Response Parameters:** 17\n\n- `data_type` (enum): да\n\n- `is_pie_chart_available` (boolean): \n\n- `parent_group_id` (number): \n\n- `group_id` (number): \n\n- `type` (enum): \n\n- `is_available_interactive_dash_widgets` (boolean): \n\n- `is_transferable` (boolean): да\n\n- `columns_groups` (array): да\n\n- `name` (string): \n\n- `sort` (number): \n\n- `is_custom` (boolean): \n\n- `expression` (string): \n\n- `multichannel_model` (enum): да\n\n- `is_available_dash_widgets` (boolean): \n\n- `id` (string): \n\n- `description` (string): \n\n- `columns` (array): да"
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: getobj.columns_tree
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        report_type:
+                                            type: string
+                                            description: Тип отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод "get.reports_list"
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - access_token
+                                        - report_type
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                                properties:
+                                                    columns:
+                                                        type: array
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            type: string
+                                                            example: example_string
+                                                    columns_groups:
+                                                        type: array
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            type: number
+                                                            example: 123
+                                                    data_type:
+                                                        type: string
+                                                        description: да
+                                                    description:
+                                                        type: string
+                                                        example: example_string
+                                                    expression:
+                                                        type: string
+                                                        example: example_string
+                                                    group_id:
+                                                        type: number
+                                                        example: 123
+                                                    id:
+                                                        type: string
+                                                        example: example_string
+                                                    is_available_dash_widgets:
+                                                        type: boolean
+                                                        example: true
+                                                    is_available_interactive_dash_widgets:
+                                                        type: boolean
+                                                        example: true
+                                                    is_custom:
+                                                        type: boolean
+                                                        example: true
+                                                    is_pie_chart_available:
+                                                        type: boolean
+                                                        example: true
+                                                    is_transferable:
+                                                        type: boolean
+                                                        description: да
+                                                        example: true
+                                                    multichannel_model:
+                                                        type: string
+                                                        description: да
+                                                    name:
+                                                        type: string
+                                                        example: example_string
+                                                    parent_group_id:
+                                                        type: number
+                                                        example: 123
+                                                    sort:
+                                                        type: number
+                                                        example: 123
+                                                    type:
+                                                        type: string
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon

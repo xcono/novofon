@@ -1,0 +1,191 @@
+openapi: 3.0.0
+info:
+    title: Получение списка подключенных виртуальных номеров
+    version: 1.0.0
+    description: Получение списка подключённых виртуальных номеров
+paths:
+    /get.virtual_numbers:
+        get:
+            summary: Получение списка подключенных виртуальных номеров
+            description: "Получение списка подключённых виртуальных номеров\n\n**Request Parameters:** 7\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n**Response Parameters:** 18\n\n- `site_domain_name` (string): \n\n- `id` (number): да\n\n- `redirection_phone_number` (string): да\n\n- `status` (enum): да\n\n- `type` (enum): да\n\n- `site_block_id` (number): \n\n- `scenarios` (array): да\n\n- `scenario_name` (string): \n\n- `activation_date` (iso8601): да\n\n- `category` (enum): да\n\n- `virtual_phone_number` (string): да\n\n- `campaign_id` (number): \n\n- `campaign_name` (string): \n\n- `site_id` (number): \n\n- `site_blocks` (array): \n\n- `site_block_name` (string): \n\n- `scenario_id` (number): \n\n- `campaigns` (array): да"
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: Request identifier
+                                jsonrpc:
+                                    type: string
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                method:
+                                    type: string
+                                    description: Method name
+                                    example: get.virtual_numbers
+                                params:
+                                    type: object
+                                    properties:
+                                        access_token:
+                                            type: string
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                        fields:
+                                            type: array
+                                            description: См. раздел "Представление возвращаемых данных"
+                                            example: []
+                                            items:
+                                                type: string
+                                                example: example_string
+                                        filter:
+                                            type: object
+                                            description: См. раздел "Критерии фильтрации"
+                                        limit:
+                                            type: number
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                        offset:
+                                            type: number
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                        sort:
+                                            type: array
+                                            description: См. раздел "Сортировка данных"
+                                            example: []
+                                            items:
+                                                type: string
+                                                example: example_string
+                                        user_id:
+                                            type: number
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                    required:
+                                        - access_token
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: number
+                                        description: Request identifier
+                                    jsonrpc:
+                                        type: string
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                    result:
+                                        type: object
+                                        properties:
+                                            data:
+                                                type: object
+                                                properties:
+                                                    activation_date:
+                                                        description: да
+                                                    campaign_id:
+                                                        type: number
+                                                        example: 123
+                                                    campaign_name:
+                                                        type: string
+                                                        example: example_string
+                                                    campaigns:
+                                                        type: array
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            type: string
+                                                            example: example_string
+                                                    category:
+                                                        type: string
+                                                        description: да
+                                                    id:
+                                                        type: number
+                                                        description: да
+                                                        example: 123
+                                                    redirection_phone_number:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                                    scenario_id:
+                                                        type: number
+                                                        example: 123
+                                                    scenario_name:
+                                                        type: string
+                                                        example: example_string
+                                                    scenarios:
+                                                        type: array
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            type: string
+                                                            example: example_string
+                                                    site_block_id:
+                                                        type: number
+                                                        example: 123
+                                                    site_block_name:
+                                                        type: string
+                                                        example: example_string
+                                                    site_blocks:
+                                                        type: array
+                                                        example: []
+                                                        items:
+                                                            type: string
+                                                            example: example_string
+                                                    site_domain_name:
+                                                        type: string
+                                                        example: example_string
+                                                    site_id:
+                                                        type: number
+                                                        example: 123
+                                                    status:
+                                                        type: string
+                                                        description: да
+                                                    type:
+                                                        type: string
+                                                        description: да
+                                                    virtual_phone_number:
+                                                        type: string
+                                                        description: да
+                                                        example: example_string
+                                            metadata:
+                                                type: object
+                                                description: Response metadata
+                                        required:
+                                            - data
+                                            - metadata
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                "400":
+                    description: Error response
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+            tags:
+                - novofon
