@@ -1,0 +1,1670 @@
+info:
+    description: Combined Manage_call Calls API specifications
+    title: Novofon Manage_call Calls API
+    version: 1.0.0
+openapi: 3.0.0
+paths:
+    /add.coach:
+        post:
+            description: |-
+                Подключение тренера к разговору
+
+                **Request Parameters:** 3
+
+                - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+
+                - `phone_number` (string, optional): Номер тренера, если не используется тренер указанный в личном кабинете. Если номер тренера не задан, то подключается тренер из настроек сотрудника в личном кабинете
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: add.coach
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        call_session_id:
+                                            description: Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+                                            example: 123
+                                            type: number
+                                        phone_number:
+                                            description: Номер тренера, если не используется тренер указанный в личном кабинете. Если номер тренера не задан, то подключается тренер из настроек сотрудника в личном кабинете
+                                            example: example_string
+                                            type: string
+                                    required:
+                                        - access_token
+                                        - call_session_id
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Add coach
+            tags:
+                - novofon
+    /block.contact:
+        post:
+            description: |-
+                Занести абонента в чёрный список во время разговора
+
+                **Request Parameters:** 2
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: block.contact
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        call_session_id:
+                                            description: Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - call_session_id
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Block contact
+            tags:
+                - novofon
+    /call.talk_option:
+        post:
+            description: |-
+                Вызов опции разговора, которая настроена в Личном кабинете виртуальной АТС
+
+                **Request Parameters:** 3
+
+                - `button` (string, required): Клавиша, вызывающая опцию разговора. Клавиши и действия настраиваются в личном кабинете.
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: call.talk_option
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        button:
+                                            description: Клавиша, вызывающая опцию разговора. Клавиши и действия настраиваются в личном кабинете.
+                                            example: example_string
+                                            type: string
+                                        call_session_id:
+                                            description: Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - call_session_id
+                                        - button
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Call talk option
+            tags:
+                - novofon
+    /disconnect.leg:
+        post:
+            description: |-
+                Метод позволяет разъединять отдельных участников разговора. Уникальный идентификатор каждого участника разговора можно получить используя метод list.calls или сервер уведомлений
+
+                **Request Parameters:** 3
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+
+                - `leg_id` (number, required): Уникальный идентификатор участника разговора, который может быть получен через сервера уведомлений.
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: disconnect.leg
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        call_session_id:
+                                            description: Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+                                            example: 123
+                                            type: number
+                                        leg_id:
+                                            description: Уникальный идентификатор участника разговора, который может быть получен через сервера уведомлений.
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - call_session_id
+                                        - leg_id
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Disconnect leg
+            tags:
+                - novofon
+    /hold.call:
+        post:
+            description: |-
+                Постановка вызова на удержание
+
+                **Request Parameters:** 3
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+
+                - `contact_message` (object, required): Определяет параметры сообщения, которое необходимо проиграть вызывающему абоненту. Вызывающий абонент - это номер, указанный в параметре contact в методах start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call или абонент позвонивший на виртуальную АТС.
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: hold.call
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        call_session_id:
+                                            description: Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+                                            example: 123
+                                            type: number
+                                        contact_message:
+                                            description: Определяет параметры сообщения, которое необходимо проиграть вызывающему абоненту. Вызывающий абонент - это номер, указанный в параметре contact в методах start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call или абонент позвонивший на виртуальную АТС.
+                                            type: object
+                                    required:
+                                        - access_token
+                                        - call_session_id
+                                        - contact_message
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Hold call
+            tags:
+                - novofon
+    /list.calls:
+        post:
+            description: "Получить список активных вызовов и их участников\n\n**Request Parameters:** 3\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `direction` (string, optional): Указывает какие сессии выводить - входящие, исходящие. Если параметр не задан, то выводятся все сессии.\n\n- `virtual_phone_number` (string, optional): Указывает с каким виртуальным номер активные вызовы показывать. Номер должен начинаться с 7\n\n**Response Parameters:** 8\n\n- `external_id` (string): \n\n- `tags` (array): \n\n- `legs` (array): \n\n- `call_session_id` (number): \n\n- `direction` (string): in, out\n\n- `start_time` (string): \n\n- `virtual_phone_number` (string): \n\n- `contact_phone_number` (string): "
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: list.calls
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        direction:
+                                            description: Указывает какие сессии выводить - входящие, исходящие. Если параметр не задан, то выводятся все сессии.
+                                            enum:
+                                                - in
+                                                - out
+                                            example: in
+                                            type: string
+                                        virtual_phone_number:
+                                            description: Указывает с каким виртуальным номер активные вызовы показывать. Номер должен начинаться с 7
+                                            example: example_string
+                                            type: string
+                                    required:
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    call_session_id:
+                                                        example: 123
+                                                        type: number
+                                                    contact_phone_number:
+                                                        example: example_string
+                                                        type: string
+                                                    direction:
+                                                        description: in, out
+                                                        example: example_string
+                                                        type: string
+                                                    external_id:
+                                                        example: example_string
+                                                        type: string
+                                                    legs:
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                    start_time:
+                                                        example: example_string
+                                                        type: string
+                                                    tags:
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                    virtual_phone_number:
+                                                        example: example_string
+                                                        type: string
+                                                required:
+                                                    - direction
+                                                    - start_time
+                                                    - virtual_phone_number
+                                                    - contact_phone_number
+                                                    - external_id
+                                                    - tags
+                                                    - legs
+                                                    - call_session_id
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: List calls
+            tags:
+                - novofon
+    /list.talk_options:
+        post:
+            description: |-
+                Получение списка опций разговора настроенных в Личном кабинете виртуальной АТС
+
+                **Request Parameters:** 1
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                **Response Parameters:** 4
+
+                - `button_value` (object): Некоторые опции могут содержать название тега, название сценария и т.д. Данный объект содержит дополнительную информацию об опции разговора
+
+                - `button` (string): Клавиша, которая вызывает опцию разговора
+
+                - `mnemonic` (string): Мнемоническое имя опции разговора Возможные значения: finish_conversation - Завершить разговор tag_call - Проставить тег record_talk - Диктофон (запись разговора) transfer_call - Трансфер run_scenario - Выполнить сценарий call_coach - Позвонить тренеру receive_fax - Принять факс save_numa - Сохранить АОН в группу
+
+                - `name` (string): Название опции разговора
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: list.talk_options
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                    required:
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    button:
+                                                        description: Клавиша, которая вызывает опцию разговора
+                                                        example: example_string
+                                                        type: string
+                                                    button_value:
+                                                        description: Некоторые опции могут содержать название тега, название сценария и т.д. Данный объект содержит дополнительную информацию об опции разговора
+                                                        type: object
+                                                    mnemonic:
+                                                        description: 'Мнемоническое имя опции разговора Возможные значения: finish_conversation - Завершить разговор tag_call - Проставить тег record_talk - Диктофон (запись разговора) transfer_call - Трансфер run_scenario - Выполнить сценарий call_coach - Позвонить тренеру receive_fax - Принять факс save_numa - Сохранить АОН в группу'
+                                                        example: example_string
+                                                        type: string
+                                                    name:
+                                                        description: Название опции разговора
+                                                        example: example_string
+                                                        type: string
+                                                required:
+                                                    - mnemonic
+                                                    - name
+                                                    - button
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: List talk options
+            tags:
+                - novofon
+    /make.call:
+        post:
+            description: |-
+                Создать звонок для трансфера или консультации
+
+                **Request Parameters:** 4
+
+                - `to_message` (object, optional): Определяет параметры сообщения, которое необходимо проиграть абоненту заданному в параметре to_message. Абонент, который стоит на удержании, будет ожидать ответа, пока не будет прослушано сообщение до конца
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+
+                - `to` (string, required): Номер абонента на который совершаем звонок. Формат номера должен соответствовать международному стандарту E.164 Может быть внутренний номер, внешний номер, номер сотрудника, sip-номер
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: make.call
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        call_session_id:
+                                            description: Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+                                            example: 123
+                                            type: number
+                                        to:
+                                            description: Номер абонента на который совершаем звонок. Формат номера должен соответствовать международному стандарту E.164 Может быть внутренний номер, внешний номер, номер сотрудника, sip-номер
+                                            example: example_string
+                                            type: string
+                                        to_message:
+                                            description: Определяет параметры сообщения, которое необходимо проиграть абоненту заданному в параметре to_message. Абонент, который стоит на удержании, будет ожидать ответа, пока не будет прослушано сообщение до конца
+                                            type: object
+                                    required:
+                                        - access_token
+                                        - call_session_id
+                                        - to
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Make call
+            tags:
+                - novofon
+    /record.call:
+        post:
+            description: |-
+                Управление записью разговора. Отключить запись разговора, настроенную через личный кабинет невозможно.
+
+                **Request Parameters:** 3
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+
+                - `action` (string, required): Действие над записью разговора. on - включение записи разговора, off - выключение записи разговора
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: record.call
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        action:
+                                            description: Действие над записью разговора. on - включение записи разговора, off - выключение записи разговора
+                                            enum:
+                                                - "on"
+                                                - "off"
+                                            example: "on"
+                                            type: string
+                                        call_session_id:
+                                            description: Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - call_session_id
+                                        - action
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Record call
+            tags:
+                - novofon
+    /release.call:
+        post:
+            description: |-
+                Завершение звонка
+
+                **Request Parameters:** 2
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: release.call
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        call_session_id:
+                                            description: Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - call_session_id
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Release call
+            tags:
+                - novofon
+    /restore.talk:
+        post:
+            description: |-
+                Метод позволяет вернуться в разговор с абонентом после получения консультации от другого сотрудника (см. раздел "Диаграмма состояний звонка")
+
+                **Request Parameters:** 2
+
+                - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: restore.talk
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        call_session_id:
+                                            description: Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - call_session_id
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Restore talk
+            tags:
+                - novofon
+    /send.dtmf:
+        post:
+            description: |-
+                Отправка DTMF сотрудником. Метод Используется в случае, если на стороне клиента есть IVR и требуется выбрать в нём пункт меню.
+
+                **Request Parameters:** 3
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+
+                - `dtmf_string` (string, required): Задаёт DTMF, который будет отправлен абоненту, который задан в параметре contact. В случае исходящего вызова с виртуальной АТС в сторону вызываемого абонента. Отправка DTMF возможна только одиночными символами. Так же возможно вызвать настроенные опции разговора. Для исходящих звонков, опции разговора будут доступны спустя 30 секунд.
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: send.dtmf
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        call_session_id:
+                                            description: Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+                                            example: 123
+                                            type: number
+                                        dtmf_string:
+                                            description: Задаёт DTMF, который будет отправлен абоненту, который задан в параметре contact. В случае исходящего вызова с виртуальной АТС в сторону вызываемого абонента. Отправка DTMF возможна только одиночными символами. Так же возможно вызвать настроенные опции разговора. Для исходящих звонков, опции разговора будут доступны спустя 30 секунд.
+                                            enum:
+                                                - 0-9
+                                                - '*'
+                                                - '#'
+                                            example: 0-9
+                                            type: string
+                                    required:
+                                        - access_token
+                                        - call_session_id
+                                        - dtmf_string
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Send dtmf
+            tags:
+                - novofon
+    /tag.call:
+        post:
+            description: |-
+                Простановка тега для активного вызова
+
+                **Request Parameters:** 3
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+
+                - `tag_id` (number, required): Уникальный идентификатор тега, который можно получить с помощью DATA API метода - Получение списка тегов
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: tag.call
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        call_session_id:
+                                            description: Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+                                            example: 123
+                                            type: number
+                                        tag_id:
+                                            description: Уникальный идентификатор тега, который можно получить с помощью DATA API метода - Получение списка тегов
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - call_session_id
+                                        - tag_id
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Tag call
+            tags:
+                - novofon
+    /transfer.talk:
+        post:
+            description: |-
+                Метод позволяет произвести трансфер звонка другому сотруднику или на внешний номер (см. раздел "Диаграмма состояний звонка")
+
+                **Request Parameters:** 2
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: transfer.talk
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        call_session_id:
+                                            description: Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - call_session_id
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Transfer talk
+            tags:
+                - novofon
+    /unhold.call:
+        post:
+            description: |-
+                Снятие вызова с удержания
+
+                **Request Parameters:** 2
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: unhold.call
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        call_session_id:
+                                            description: Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - call_session_id
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Unhold call
+            tags:
+                - novofon
+x-errors:
+    errors:
+        - code: "-32602"
+          description: ""
+          mnemonic: no_active_phone_number
+        - code: "-32602"
+          description: ""
+          mnemonic: duplicate_contact
+        - code: "-32602"
+          description: Клавиша не назначена
+          mnemonic: talk_option_not_found
+        - code: "-32602"
+          description: ""
+          mnemonic: leg_not_found
+        - code: "-32602"
+          description: ""
+          mnemonic: character_encoding_not_allowed
+        - code: "-32602"
+          description: У сотрудника могут отсутствовать активные номера
+          mnemonic: no_active_phone_number
+        - code: "-32602"
+          description: Запись разговора не была включена
+          mnemonic: record_already_stopped
+        - code: "-32004"
+          description: Метод может быть вызван, только после метода make.call и в состоянии dialing или operator_talk (см. Диаграмма состояний звонка)
+          mnemonic: invalid_state
+        - code: "-32602"
+          description: ""
+          mnemonic: duplicate_tag
+        - code: "-32004"
+          description: Метод может быть вызван, только после метода make.call и в состоянии dialing или operator_talk (см. Диаграмма состояний звонка)
+          mnemonic: invalid_state
+        - code: "-32004"
+          description: Метод может быть вызван только в состоянии hold (см. Диаграмма состояний звонка)
+          mnemonic: invalid_state

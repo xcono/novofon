@@ -12,8 +12,6 @@ paths:
 
                 **Request Parameters:** 6
 
-                - `name` (string, optional): Название этапа
-
                 - `order` (number, optional): Порядковый номер этапа, максимальное значение 10000 применяется только для этапа in_process
 
                 - `access_token` (string, required): Ключ сессии аутентификации
@@ -23,6 +21,8 @@ paths:
                 - `sales_funnel_ext_id` (string, required): Внешний идентификатор воронки продаж
 
                 - `ext_id` (string, required): Внешний идентификатор этапа воронки продаж
+
+                - `name` (string, optional): Название этапа
             requestBody:
                 required: true
                 content:

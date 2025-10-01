@@ -69,11 +69,11 @@ paths:
                                             description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
                                             example: example_string
                                     required:
+                                        - order
                                         - access_token
                                         - sales_funnel_ext_id
                                         - ext_id
                                         - name
-                                        - order
                             required:
                                 - jsonrpc
                                 - id

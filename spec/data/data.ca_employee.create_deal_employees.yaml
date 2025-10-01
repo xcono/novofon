@@ -12,13 +12,13 @@ paths:
 
                 **Request Parameters:** 4
 
+                - `ext_id` (string, required): Внешний идентификатор сотрудника
+
                 - `name` (string, required): Имя сотрудника
 
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
-
-                - `ext_id` (string, required): Внешний идентификатор сотрудника
 
                 **Response Parameters:** 1
 
@@ -61,9 +61,9 @@ paths:
                                             description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
                                             example: 123
                                     required:
-                                        - access_token
                                         - ext_id
                                         - name
+                                        - access_token
                             required:
                                 - jsonrpc
                                 - id

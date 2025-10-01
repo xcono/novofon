@@ -14,31 +14,31 @@ paths:
 
                 - `site_id` (number, required): Уникальный идентификатор сайта
 
-                - `referrer` (number, optional): Реферер
-
-                - `os_tags` (number, optional): Значение веса для параметров openstat_service, openstat_campaign, openstat_source, openstat_ad
-
-                - `other_tags` (number, optional): Значение веса для параметров ef_id, yclid, gclid, ymclid
-
                 - `entrance_page` (number, optional): Страница входа
 
                 - `referrer_domain` (number, optional): Домен реферера
-
-                - `search_engine` (number, optional): Поисковая система
 
                 - `search_query` (number, optional): Поисковый запрос
 
                 - `engine` (number, optional): Рекламная система
 
-                - `channel` (number, optional): Канал
+                - `referrer` (number, optional): Реферер
 
                 - `location` (number, optional): Значение веса для параметров city, region, country
 
-                - `utm_tags` (number, optional): Значение веса для параметров utm_source, utm_medium, utm_campaign, utm_term, utm_content
+                - `os_tags` (number, optional): Значение веса для параметров openstat_service, openstat_campaign, openstat_source, openstat_ad
 
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `search_engine` (number, optional): Поисковая система
+
+                - `channel` (number, optional): Канал
+
+                - `utm_tags` (number, optional): Значение веса для параметров utm_source, utm_medium, utm_campaign, utm_term, utm_content
+
+                - `other_tags` (number, optional): Значение веса для параметров ef_id, yclid, gclid, ymclid
             requestBody:
                 required: true
                 content:

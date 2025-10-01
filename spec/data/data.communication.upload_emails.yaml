@@ -12,35 +12,35 @@ paths:
 
                 **Request Parameters:** 15
 
-                - `email_to_cc` (array, optional): Копия.
+                - `email_to` (string, required): Получатель. Обязательно одно из полей: email_to, email_to_cc, email_to_bcc
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `emails` (array, optional): Массив писем
 
                 - `sender_name` (string, optional): Имя отправителя
 
                 - `message` (string, required): Текст письма.
 
-                - `source_id` (number, optional): Идентификатор источника. Метод получение списка существующих Источников: "get.get_sources"
-
-                - `email_from` (string, required): Отправитель.
-
-                - `email_to` (string, required): Получатель. Обязательно одно из полей: email_to, email_to_cc, email_to_bcc
-
-                - `message_html` (string, required): HTML письма.
-
-                - `access_token` (string, required): Ключ сессии аутентификации
+                - `email_to_cc` (array, optional): Копия.
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
-
-                - `emails` (array, optional): Массив писем
 
                 - `site_id` (number, optional): Идентификатор сайта. Метод получение списка существующих сайтов: "get.sites"
 
                 - `session_id` (number, optional): Идентификатор сессии
 
-                - `date_time` (date, required): Дата и время получения письма на почту в таймзоне клиента
+                - `source_id` (number, optional): Идентификатор источника. Метод получение списка существующих Источников: "get.get_sources"
 
                 - `subject` (string, optional): Тема письма
 
+                - `email_from` (string, required): Отправитель.
+
                 - `email_to_bcc` (array, optional): Скрытая копия.
+
+                - `date_time` (date, required): Дата и время получения письма на почту в таймзоне клиента
+
+                - `message_html` (string, required): HTML письма.
 
                 **Response Parameters:** 1
 
@@ -134,12 +134,12 @@ paths:
                                             description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
                                             example: 123
                                     required:
-                                        - message
                                         - email_from
-                                        - email_to
-                                        - message_html
-                                        - access_token
                                         - date_time
+                                        - message_html
+                                        - email_to
+                                        - access_token
+                                        - message
                             required:
                                 - jsonrpc
                                 - id

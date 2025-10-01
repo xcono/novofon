@@ -104,14 +104,14 @@ paths:
                                                         type: string
                                                         example: example_string
                                                 required:
+                                                    - direction
+                                                    - start_time
                                                     - virtual_phone_number
                                                     - contact_phone_number
                                                     - external_id
                                                     - tags
                                                     - legs
                                                     - call_session_id
-                                                    - direction
-                                                    - start_time
                                             metadata:
                                                 type: object
                                                 description: Response metadata

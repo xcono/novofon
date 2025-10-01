@@ -7,7 +7,7 @@ paths:
     /create.sales_funnel:
         post:
             summary: Создание воронки продаж
-            description: "Создание воронки продаж и ее этапов\n\n**Request Parameters:** 9\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `name` (string, required): Название этапа\n\n- `success` (object, required): Успешный этап воронки продаж\n\n- `failed` (object, required): Проваленный этап воронки продаж\n\n- `in_process` (array, required): Список промежуточных этапов Минимум 1, максимум 100 этапов в одной воронке\n\n- `order` (number, required): Порядковый номер этапа максимальное значение 10000\n\n- `ext_id` (string, required): Внешний идентификатор этапа\n\n- `stages` (object, required): \n\n**Response Parameters:** 1\n\n- `ext_id` (string): Уникальный идентификатор воронки"
+            description: "Создание воронки продаж и ее этапов\n\n**Request Parameters:** 9\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `ext_id` (string, required): Внешний идентификатор этапа\n\n- `success` (object, required): Успешный этап воронки продаж\n\n- `in_process` (array, required): Список промежуточных этапов Минимум 1, максимум 100 этапов в одной воронке\n\n- `order` (number, required): Порядковый номер этапа максимальное значение 10000\n\n- `name` (string, required): Название этапа\n\n- `stages` (object, required): \n\n- `failed` (object, required): Проваленный этап воронки продаж\n\n**Response Parameters:** 1\n\n- `ext_id` (string): Уникальный идентификатор воронки"
             requestBody:
                 required: true
                 content:
@@ -65,14 +65,14 @@ paths:
                                             description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
                                             example: 123
                                     required:
-                                        - ext_id
-                                        - stages
                                         - access_token
-                                        - name
+                                        - ext_id
                                         - success
-                                        - failed
                                         - in_process
                                         - order
+                                        - name
+                                        - stages
+                                        - failed
                             required:
                                 - jsonrpc
                                 - id

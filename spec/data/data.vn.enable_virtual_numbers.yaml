@@ -12,11 +12,11 @@ paths:
 
                 **Request Parameters:** 3
 
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента
+
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `virtual_phone_number` (string, required): Виртуальнй номер
-
-                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента
             requestBody:
                 required: true
                 content:
@@ -51,8 +51,8 @@ paths:
                                             description: Виртуальнй номер
                                             example: example_string
                                     required:
-                                        - access_token
                                         - virtual_phone_number
+                                        - access_token
                             required:
                                 - jsonrpc
                                 - id

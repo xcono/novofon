@@ -7,7 +7,7 @@ paths:
     /delete.chats:
         delete:
             summary: Удаление чата
-            description: "Удаление чата\n\n**Request Parameters:** 3\n\n- `id` (number, required): \n\n- `access_token` (string, required): \n\n- `user_id` (number, optional): "
+            description: "Удаление чата\n\n**Request Parameters:** 3\n\n- `access_token` (string, required): \n\n- `user_id` (number, optional): \n\n- `id` (number, required): "
             requestBody:
                 required: true
                 content:

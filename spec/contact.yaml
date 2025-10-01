@@ -1,0 +1,2116 @@
+info:
+    description: Combined Contact API specifications
+    title: Novofon Contact API
+    version: 1.0.0
+openapi: 3.0.0
+paths:
+    /create.contact_organizations:
+        post:
+            description: |-
+                Создание организации контакта
+
+                **Request Parameters:** 3
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `name` (string, required): Название организации
+
+                **Response Parameters:** 1
+
+                - `id` (number): Уникальный идентификатор организации
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: create.contact_organizations
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        name:
+                                            description: Название организации
+                                            example: example_string
+                                            type: string
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - name
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    id:
+                                                        description: Уникальный идентификатор организации
+                                                        example: 123
+                                                        type: number
+                                                required:
+                                                    - id
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Создание организации контакта
+            tags:
+                - novofon
+    /create.contacts:
+        post:
+            description: |-
+                Добавление контакта в адресную книгу
+
+                **Request Parameters:** 10
+
+                - `first_name` (string, optional): Имя контакта
+
+                - `organization_id` (number, optional): Уникальный идентификатор организации. Для получения списка организаций см. метод "get.contact_organizations".
+
+                - `groups` (array, optional): Список уникальных идентификаторов групп в которых состоит контакт, см. метод "get.group_contacts"
+
+                - `last_name` (string, required): Фамилия контакта
+
+                - `patronymic` (string, optional): Отчество контакта
+
+                - `emails` (array, optional): Адрес электронной почты контакта. E-mail должен быть уникальным в списке.
+
+                - `phone_numbers` (array, required): Список номеров контакта в формате E164 Номер должен быть уникальным в списке.
+
+                - `personal_manager_id` (number, optional): Персональный менеджер - это сотрудник, отвечающий за работу с клиентом. При создании сценария "Переадресация на персонального менеджера" звонки клиентов будут поступать персональным менеджерам без дополнительных настроек списка номеров вызывающего абонента и списка телефонов сотрудников. Для получения списка сотрудников используется метод "get.employees"
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                **Response Parameters:** 1
+
+                - `id` (number): Уникальный идентификатор контакта в адресной книге
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: create.contacts
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        emails:
+                                            description: Адрес электронной почты контакта. E-mail должен быть уникальным в списке.
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        first_name:
+                                            description: Имя контакта
+                                            example: example_string
+                                            type: string
+                                        groups:
+                                            description: Список уникальных идентификаторов групп в которых состоит контакт, см. метод "get.group_contacts"
+                                            example: []
+                                            items:
+                                                example: 123
+                                                type: number
+                                            type: array
+                                        last_name:
+                                            description: Фамилия контакта
+                                            example: example_string
+                                            type: string
+                                        organization_id:
+                                            description: Уникальный идентификатор организации. Для получения списка организаций см. метод "get.contact_organizations".
+                                            example: 123
+                                            type: number
+                                        patronymic:
+                                            description: Отчество контакта
+                                            example: example_string
+                                            type: string
+                                        personal_manager_id:
+                                            description: Персональный менеджер - это сотрудник, отвечающий за работу с клиентом. При создании сценария "Переадресация на персонального менеджера" звонки клиентов будут поступать персональным менеджерам без дополнительных настроек списка номеров вызывающего абонента и списка телефонов сотрудников. Для получения списка сотрудников используется метод "get.employees"
+                                            example: 123
+                                            type: number
+                                        phone_numbers:
+                                            description: Список номеров контакта в формате E164 Номер должен быть уникальным в списке.
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - last_name
+                                        - phone_numbers
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    id:
+                                                        description: Уникальный идентификатор контакта в адресной книге
+                                                        example: 123
+                                                        type: number
+                                                required:
+                                                    - id
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Добавление контакта в адресную книгу
+            tags:
+                - novofon
+    /create.deal_contacts:
+        post:
+            description: |-
+                Создание контакта
+
+                **Request Parameters:** 8
+
+                - `created_date_time` (iso8601, optional): Дата и время создания контакта в CRM (YYYY-MM-DD hh:mm:ss). Если параметр не передан, будет проставлена дата и время вызова метода
+
+                - `phone_numbers` (array, optional): Список номеров контакта в формате E164
+
+                - `emails` (array, optional): Адрес электронной почты контакта. E-mail должен быть уникальным в списке.
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `contacts` (array, required): Список контактов. Лимит 1000 контактов
+
+                - `ext_id` (string, required): Внешний идентификатор контакта
+
+                - `name` (string, required): Имя контакта
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: create.deal_contacts
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        contacts:
+                                            description: Список контактов. Лимит 1000 контактов
+                                            example: []
+                                            items:
+                                                example: 123
+                                                type: number
+                                            type: array
+                                        created_date_time:
+                                            description: Дата и время создания контакта в CRM (YYYY-MM-DD hh:mm:ss). Если параметр не передан, будет проставлена дата и время вызова метода
+                                        emails:
+                                            description: Адрес электронной почты контакта. E-mail должен быть уникальным в списке.
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        ext_id:
+                                            description: Внешний идентификатор контакта
+                                            example: example_string
+                                            type: string
+                                        name:
+                                            description: Имя контакта
+                                            example: example_string
+                                            type: string
+                                        phone_numbers:
+                                            description: Список номеров контакта в формате E164
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - contacts
+                                        - ext_id
+                                        - name
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Создание контакта
+            tags:
+                - novofon
+    /create.group_contacts:
+        post:
+            description: |-
+                Создание группы контактов адресной книги
+
+                **Request Parameters:** 4
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `name` (string, required): Название группы контактов
+
+                - `members` (array, optional): Список уникальных идентификаторов контактов, которые входят в группу. Список контактов можно получить с помощью метода "get.contacts"
+
+                **Response Parameters:** 1
+
+                - `id` (number): Уникальный идентификатор группы контактов адресной книги
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: create.group_contacts
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        members:
+                                            description: Список уникальных идентификаторов контактов, которые входят в группу. Список контактов можно получить с помощью метода "get.contacts"
+                                            example: []
+                                            items:
+                                                example: 123
+                                                type: number
+                                            type: array
+                                        name:
+                                            description: Название группы контактов
+                                            example: example_string
+                                            type: string
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - name
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    id:
+                                                        description: Уникальный идентификатор группы контактов адресной книги
+                                                        example: 123
+                                                        type: number
+                                                required:
+                                                    - id
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Создание группы контактов в адресной книге
+            tags:
+                - novofon
+    /delete.contact_organizations:
+        delete:
+            description: |-
+                Удаление организации контакта
+
+                **Request Parameters:** 3
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `id` (number, required): Уникальный идентификатор организации контактов адресной книги
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: delete.contact_organizations
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        id:
+                                            description: Уникальный идентификатор организации контактов адресной книги
+                                            example: 123
+                                            type: number
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - id
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Удаление организации контакта
+            tags:
+                - novofon
+    /delete.contacts:
+        delete:
+            description: |-
+                Удаление контакта из адресной книги
+
+                **Request Parameters:** 3
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `id` (number, required): Уникальный идентификатор контакта в адресной книге
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: delete.contacts
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        id:
+                                            description: Уникальный идентификатор контакта в адресной книге
+                                            example: 123
+                                            type: number
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - id
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Удаление контакта из адресной книги
+            tags:
+                - novofon
+    /delete.deal_contacts:
+        delete:
+            description: |-
+                Удаление контакта
+
+                **Request Parameters:** 3
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `ext_id` (string, required): Внешний идентификатор контакта
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: delete.deal_contacts
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        ext_id:
+                                            description: Внешний идентификатор контакта
+                                            example: example_string
+                                            type: string
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - ext_id
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Удаление контакта
+            tags:
+                - novofon
+    /delete.group_contacts:
+        delete:
+            description: |-
+                Удаление группы контактов адресной книги
+
+                **Request Parameters:** 3
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `id` (number, required): Уникальный идентификатор группы контактов адресной книги
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: delete.group_contacts
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        id:
+                                            description: Уникальный идентификатор группы контактов адресной книги
+                                            example: 123
+                                            type: number
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - id
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Удаление группы контактов в адресной книге
+            tags:
+                - novofon
+    /get.contact_organizations:
+        get:
+            description: "Получение списка организаций контактов\n\n**Request Parameters:** 7\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n**Response Parameters:** 2\n\n- `id` (number): \n\n- `name` (string): да"
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: get.contact_organizations
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        fields:
+                                            description: См. раздел "Представление возвращаемых данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        filter:
+                                            description: См. раздел "Критерии фильтрации"
+                                            type: object
+                                        limit:
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        offset:
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        sort:
+                                            description: См. раздел "Сортировка данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    id:
+                                                        example: 123
+                                                        type: number
+                                                    name:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                required:
+                                                    - id
+                                                    - name
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Получение списка организаций контактов
+            tags:
+                - novofon
+    /get.contacts:
+        get:
+            description: "Получение списка контактов в адресной книге\n\n**Request Parameters:** 7\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n**Response Parameters:** 14\n\n- `last_name` (string): да\n\n- `full_name` (string): да\n\n- `emails` (array): да\n\n- `personal_manager_full_name` (string): да\n\n- `organization_id` (number): да\n\n- `organization_name` (string): да\n\n- `groups` (array): да\n\n- `first_name` (string): да\n\n- `patronymic` (string): \n\n- `phone_numbers` (array): да\n\n- `personal_manager_id` (number): да\n\n- `group_id` (number): \n\n- `group_name` (string): \n\n- `id` (number): да"
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: get.contacts
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        fields:
+                                            description: См. раздел "Представление возвращаемых данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        filter:
+                                            description: См. раздел "Критерии фильтрации"
+                                            type: object
+                                        limit:
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        offset:
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        sort:
+                                            description: См. раздел "Сортировка данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    emails:
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                    first_name:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    full_name:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    group_id:
+                                                        example: 123
+                                                        type: number
+                                                    group_name:
+                                                        example: example_string
+                                                        type: string
+                                                    groups:
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            example: 123
+                                                            type: number
+                                                        type: array
+                                                    id:
+                                                        description: да
+                                                        example: 123
+                                                        type: number
+                                                    last_name:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    organization_id:
+                                                        description: да
+                                                        example: 123
+                                                        type: number
+                                                    organization_name:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    patronymic:
+                                                        example: example_string
+                                                        type: string
+                                                    personal_manager_full_name:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    personal_manager_id:
+                                                        description: да
+                                                        example: 123
+                                                        type: number
+                                                    phone_numbers:
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Получение списка контактов в адресной книге
+            tags:
+                - novofon
+    /get.deal_contacts:
+        get:
+            description: "Получение списка контактов\n\n**Request Parameters:** 7\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n**Response Parameters:** 5\n\n- `created_date_time` (iso8601): \n\n- `phone_numbers` (array): \n\n- `emails` (array): \n\n- `ext_id` (string): да\n\n- `name` (string): да"
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: get.deal_contacts
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        fields:
+                                            description: См. раздел "Представление возвращаемых данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        filter:
+                                            description: См. раздел "Критерии фильтрации"
+                                            type: object
+                                        limit:
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        offset:
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        sort:
+                                            description: См. раздел "Сортировка данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    created_date_time: {}
+                                                    emails:
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                    ext_id:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    name:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    phone_numbers:
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                required:
+                                                    - ext_id
+                                                    - name
+                                                    - phone_numbers
+                                                    - emails
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Получение списка контактов
+            tags:
+                - novofon
+    /get.group_contacts:
+        get:
+            description: "Получение списка групп контактов адресной книги\n\n**Request Parameters:** 7\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n**Response Parameters:** 6\n\n- `contact_id` (number): \n\n- `contact_full_name` (string): \n\n- `id` (number): да\n\n- `name` (string): да\n\n- `is_system` (boolean): да\n\n- `members` (array): да"
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: get.group_contacts
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        fields:
+                                            description: См. раздел "Представление возвращаемых данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        filter:
+                                            description: См. раздел "Критерии фильтрации"
+                                            type: object
+                                        limit:
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        offset:
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        sort:
+                                            description: См. раздел "Сортировка данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    contact_full_name:
+                                                        example: example_string
+                                                        type: string
+                                                    contact_id:
+                                                        example: 123
+                                                        type: number
+                                                    id:
+                                                        description: да
+                                                        example: 123
+                                                        type: number
+                                                    is_system:
+                                                        description: да
+                                                        example: true
+                                                        type: boolean
+                                                    members:
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            example: 123
+                                                            type: number
+                                                        type: array
+                                                    name:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Получение списка групп контактов адресной книги
+            tags:
+                - novofon
+    /update.contact_organizations:
+        put:
+            description: |-
+                Редактирование организации контакта
+
+                **Request Parameters:** 4
+
+                - `name` (string, required): Название организации
+
+                - `id` (number, required): Уникальный идентификатор организации
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: update.contact_organizations
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        id:
+                                            description: Уникальный идентификатор организации
+                                            example: 123
+                                            type: number
+                                        name:
+                                            description: Название организации
+                                            example: example_string
+                                            type: string
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - name
+                                        - id
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Редактирование организации контакта
+            tags:
+                - novofon
+    /update.contacts:
+        put:
+            description: |-
+                Редактирование контакта в адресной книге
+
+                **Request Parameters:** 11
+
+                - `personal_manager_id` (number, optional): Персональный менеджер - это сотрудник, отвечающий за работу с клиентом. При создании сценария "Переадресация на персонального менеджера" звонки клиентов будут поступать персональным менеджерам без дополнительных настроек списка номеров вызывающего абонента и списка телефонов сотрудников. Для получения списка сотрудников используется метод "get.employees"
+
+                - `groups` (array, optional): Список уникальных идентификаторов групп в которых состоит контакт, см. метод "get.group_contacts".
+
+                - `id` (number, required): Уникальный идентификатор контакта в адресной книге
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `last_name` (string, required): Фамилия контакта
+
+                - `emails` (array, optional): Адрес электронной почты контакта. E-mail должен быть уникальным в списке.
+
+                - `phone_numbers` (array, required): Список номеров контакта в формате E164 Номер должен быть уникальным в списке.
+
+                - `organization_id` (number, optional): Уникальный идентификатор организации. Для получения списка организаций см. метод см. метод "get.contact_organizations".
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `first_name` (string, optional): Имя контакта
+
+                - `patronymic` (string, optional): Отчество контакта
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: update.contacts
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        emails:
+                                            description: Адрес электронной почты контакта. E-mail должен быть уникальным в списке.
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        first_name:
+                                            description: Имя контакта
+                                            example: example_string
+                                            type: string
+                                        groups:
+                                            description: Список уникальных идентификаторов групп в которых состоит контакт, см. метод "get.group_contacts".
+                                            example: []
+                                            items:
+                                                example: 123
+                                                type: number
+                                            type: array
+                                        id:
+                                            description: Уникальный идентификатор контакта в адресной книге
+                                            example: 123
+                                            type: number
+                                        last_name:
+                                            description: Фамилия контакта
+                                            example: example_string
+                                            type: string
+                                        organization_id:
+                                            description: Уникальный идентификатор организации. Для получения списка организаций см. метод см. метод "get.contact_organizations".
+                                            example: 123
+                                            type: number
+                                        patronymic:
+                                            description: Отчество контакта
+                                            example: example_string
+                                            type: string
+                                        personal_manager_id:
+                                            description: Персональный менеджер - это сотрудник, отвечающий за работу с клиентом. При создании сценария "Переадресация на персонального менеджера" звонки клиентов будут поступать персональным менеджерам без дополнительных настроек списка номеров вызывающего абонента и списка телефонов сотрудников. Для получения списка сотрудников используется метод "get.employees"
+                                            example: 123
+                                            type: number
+                                        phone_numbers:
+                                            description: Список номеров контакта в формате E164 Номер должен быть уникальным в списке.
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - id
+                                        - last_name
+                                        - phone_numbers
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Редактирование контакта в адресной книге
+            tags:
+                - novofon
+    /update.deal_contacts:
+        put:
+            description: |-
+                Обновление контакта
+
+                **Request Parameters:** 7
+
+                - `created_date_time` (iso8601, optional): Дата и время создания контакта в CRM (YYYY-MM-DD hh:mm:ss)
+
+                - `phone_numbers` (array, optional): Список номеров контакта в формате E164 Необходимо передавать актуальный список
+
+                - `emails` (array, optional): Адрес электронной почты контакта. Необходимо передавать актуальный список
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `ext_id` (string, required): Внешний идентификатор контакта
+
+                - `name` (string, optional): Имя контакта
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: update.deal_contacts
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        created_date_time:
+                                            description: Дата и время создания контакта в CRM (YYYY-MM-DD hh:mm:ss)
+                                        emails:
+                                            description: Адрес электронной почты контакта. Необходимо передавать актуальный список
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        ext_id:
+                                            description: Внешний идентификатор контакта
+                                            example: example_string
+                                            type: string
+                                        name:
+                                            description: Имя контакта
+                                            example: example_string
+                                            type: string
+                                        phone_numbers:
+                                            description: Список номеров контакта в формате E164 Необходимо передавать актуальный список
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - ext_id
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Обновление контакта
+            tags:
+                - novofon
+    /update.group_contacts:
+        put:
+            description: |-
+                Редактирование группы контактов адресной книги
+
+                **Request Parameters:** 5
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `name` (string, required): Название группы контактов
+
+                - `members` (array, optional): Список уникальных идентификаторов контактов, которые входят в группу. Список контактов можно получить с помощью метода "get.contacts".
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `id` (number, required): Уникальный идентификатор группы контактов адресной книги
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: update.group_contacts
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        id:
+                                            description: Уникальный идентификатор группы контактов адресной книги
+                                            example: 123
+                                            type: number
+                                        members:
+                                            description: Список уникальных идентификаторов контактов, которые входят в группу. Список контактов можно получить с помощью метода "get.contacts".
+                                            example: []
+                                            items:
+                                                example: 123
+                                                type: number
+                                            type: array
+                                        name:
+                                            description: Название группы контактов
+                                            example: example_string
+                                            type: string
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - id
+                                        - name
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Редактирование группы контактов адресной книги
+            tags:
+                - novofon

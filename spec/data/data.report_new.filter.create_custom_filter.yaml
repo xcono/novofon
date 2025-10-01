@@ -12,6 +12,8 @@ paths:
 
                 **Request Parameters:** 5
 
+                - `access_token` (string, required): Ключ сессии аутентификации
+
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
 
                 - `report_type` (number, required): Тип отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод "get.reports_list"
@@ -19,8 +21,6 @@ paths:
                 - `name` (string, required): Название пользовательского фильтра
 
                 - `filter` (object, required): Набор фильтров используемых в пользовательском фильтре. См. раздел "Критерии фильтрации".
-
-                - `access_token` (string, required): Ключ сессии аутентификации
             requestBody:
                 required: true
                 content:
@@ -62,10 +62,10 @@ paths:
                                             description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
                                             example: 123
                                     required:
-                                        - filter
-                                        - access_token
                                         - report_type
                                         - name
+                                        - filter
+                                        - access_token
                             required:
                                 - jsonrpc
                                 - id

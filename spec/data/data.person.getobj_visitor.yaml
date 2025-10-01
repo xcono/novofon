@@ -7,7 +7,7 @@ paths:
     /getobj.visitor:
         post:
             summary: Получение данных посетителя
-            description: "Получение данных посетителя\n\n**Request Parameters:** 3\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `id` (number, required): Уникальный идентификатор посетителя на сайте\n\n**Response Parameters:** 6\n\n- `name` (string): \n\n- `phone_numbers` (array): \n\n- `emails` (array): \n\n- `properties` (array): \n\n- `id` (number): \n\n- `value` (string): "
+            description: "Получение данных посетителя\n\n**Request Parameters:** 3\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `id` (number, required): Уникальный идентификатор посетителя на сайте\n\n**Response Parameters:** 6\n\n- `value` (string): \n\n- `name` (string): \n\n- `phone_numbers` (array): \n\n- `emails` (array): \n\n- `properties` (array): \n\n- `id` (number): "
             requestBody:
                 required: true
                 content:
@@ -42,8 +42,8 @@ paths:
                                             description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
                                             example: 123
                                     required:
-                                        - id
                                         - access_token
+                                        - id
                             required:
                                 - jsonrpc
                                 - id

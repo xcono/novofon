@@ -12,6 +12,8 @@ paths:
 
                 **Request Parameters:** 7
 
+                - `fields` (array, optional): См. раздел "Представление возвращаемых данных"
+
                 - `sort` (array, optional): См. раздел "Сортировка данных"
 
                 - `access_token` (string, required): Ключ сессии аутентификации
@@ -24,17 +26,15 @@ paths:
 
                 - `filter` (object, optional): См. раздел "Критерии фильтрации"
 
-                - `fields` (array, optional): См. раздел "Представление возвращаемых данных"
-
                 **Response Parameters:** 4
-
-                - `id` (number): да
-
-                - `name` (string): да
 
                 - `parent_id` (number): да
 
                 - `sort` (number): да
+
+                - `id` (number): да
+
+                - `name` (string): да
             requestBody:
                 required: true
                 content:

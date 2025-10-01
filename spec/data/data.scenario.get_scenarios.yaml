@@ -12,12 +12,6 @@ paths:
 
                 **Request Parameters:** 7
 
-                - `limit` (number, optional): Количество возвращаемых записей. См. раздел Постраничный вывод
-
-                - `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать limit записей. По умолчанию 0. См. раздел Постраничный вывод
-
-                - `filter` (object, optional): См. раздел Критерии фильтрации
-
                 - `fields` (array, optional): См. раздел Представление возвращаемых данных
 
                 - `sort` (array, optional): См. раздел Сортировка данных
@@ -26,7 +20,17 @@ paths:
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
 
+                - `limit` (number, optional): Количество возвращаемых записей. См. раздел Постраничный вывод
+
+                - `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать limit записей. По умолчанию 0. См. раздел Постраничный вывод
+
+                - `filter` (object, optional): См. раздел Критерии фильтрации
+
                 **Response Parameters:** 6
+
+                - `campaigns` (array): Да
+
+                - `operations` (array): Да
 
                 - `id` (number): Да
 
@@ -35,10 +39,6 @@ paths:
                 - `virtual_phone_numbers` (array): Да
 
                 - `sites` (array): Да
-
-                - `campaigns` (array): Да
-
-                - `operations` (array): Да
             requestBody:
                 required: true
                 content:

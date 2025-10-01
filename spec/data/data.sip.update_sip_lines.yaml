@@ -12,6 +12,8 @@ paths:
 
                 **Request Parameters:** 7
 
+                - `employee_id` (number, required): Уникальный идентификатор сотрудника, см. метод "get.employees"
+
                 - `virtual_phone_number` (string, required): Виртуальный номер отображаемый при исходящем вызове . Если виртуальный номер не передан, то тип SIP-линии будет только "входящая связь", если передан, то будет "входящая и исходящая"
 
                 - `billing_state` (enum, optional): Состояние SIP-линии в биллинге. active - SIP-линия активна;manual_lock - SIP-линия заблокирована вручную.
@@ -23,8 +25,6 @@ paths:
                 - `id` (number, required): Уникальный идентификатор SIP-линии
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
-
-                - `employee_id` (number, required): Уникальный идентификатор сотрудника, см. метод "get.employees"
             requestBody:
                 required: true
                 content:
@@ -75,10 +75,10 @@ paths:
                                             example: example_string
                                             format: формат E164. Начинается с 7
                                     required:
-                                        - employee_id
-                                        - virtual_phone_number
                                         - access_token
                                         - id
+                                        - employee_id
+                                        - virtual_phone_number
                             required:
                                 - jsonrpc
                                 - id

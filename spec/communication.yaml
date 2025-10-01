@@ -1,0 +1,1866 @@
+info:
+    description: Combined Communication API specifications
+    title: Novofon Communication API
+    version: 1.0.0
+openapi: 3.0.0
+paths:
+    /create.call_session_recognition_task:
+        post:
+            description: |-
+                Создание задачи на распознавание сеанса звонка
+
+                **Request Parameters:** 3
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `call_session_id` (number, required): Уникальный идентификатор сессии звонка
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: create.call_session_recognition_task
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        call_session_id:
+                                            description: Уникальный идентификатор сессии звонка
+                                            example: 123
+                                            type: number
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - call_session_id
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Создание задачи на распознавание сеанса звонка
+            tags:
+                - novofon
+    /create.offline_message_user_field:
+        post:
+            description: |-
+                Загрузка пользовательских полей заявок
+
+                **Request Parameters:** 5
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `ext_id` (string, required): Внешний идентификатор пользовательского поля заявки
+
+                - `name` (string, required): Имя пользовательского поля заявки
+
+                - `data_type` (enum, required): Тип данных в поле. Принимает одно из двух значений numeric и string
+
+                **Response Parameters:** 1
+
+                - `ext_id` (string): Внешний идентификатор пользовательского поля заявки
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: create.offline_message_user_field
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        data_type:
+                                            description: Тип данных в поле. Принимает одно из двух значений numeric и string
+                                            type: string
+                                        ext_id:
+                                            description: Внешний идентификатор пользовательского поля заявки
+                                            example: example_string
+                                            type: string
+                                        name:
+                                            description: Имя пользовательского поля заявки
+                                            example: example_string
+                                            type: string
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - ext_id
+                                        - name
+                                        - data_type
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    ext_id:
+                                                        description: Внешний идентификатор пользовательского поля заявки
+                                                        example: example_string
+                                                        type: string
+                                                required:
+                                                    - ext_id
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Загрузка пользовательских полей заявок
+            tags:
+                - novofon
+    /delete.chats:
+        delete:
+            description: "Удаление чата\n\n**Request Parameters:** 3\n\n- `access_token` (string, required): \n\n- `user_id` (number, optional): \n\n- `id` (number, required): "
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: delete.chats
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            example: example_string
+                                            type: string
+                                        id:
+                                            example: 123
+                                            type: number
+                                        user_id:
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - id
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Удаление чата
+            tags:
+                - novofon
+    /delete.offline_message_user_field:
+        delete:
+            description: Удаление пользовательских полей заявок
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Удаление пользовательских полей заявок
+            tags:
+                - novofon
+    /delete.offline_messages:
+        delete:
+            description: "Удаление офлайн заявки\n\n**Request Parameters:** 3\n\n- `access_token` (string, required): \n\n- `user_id` (number, optional): \n\n- `id` (number, required): "
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: delete.offline_messages
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            example: example_string
+                                            type: string
+                                        id:
+                                            example: 123
+                                            type: number
+                                        user_id:
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - id
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Удаление офлайн заявки
+            tags:
+                - novofon
+    /get.offline_message_user_fields:
+        get:
+            description: |-
+                Получение пользовательских полей заявок
+
+                **Request Parameters:** 7
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `limit` (number, optional): Количество возвращаемых записей. См. раздел "Постраничный вывод"
+
+                - `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+
+                - `filter` (object, optional): См. раздел "Критерии фильтрации"
+
+                - `fields` (array, optional): См. раздел "Представление возвращаемых данных"
+
+                - `sort` (array, optional): См. раздел "Сортировка данных"
+
+                **Response Parameters:** 3
+
+                - `ext_id` (string): да
+
+                - `name` (string): да
+
+                - `data_type` (string): да
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: get.offline_message_user_fields
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        fields:
+                                            description: См. раздел "Представление возвращаемых данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        filter:
+                                            description: См. раздел "Критерии фильтрации"
+                                            type: object
+                                        limit:
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        offset:
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        sort:
+                                            description: См. раздел "Сортировка данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    data_type:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    ext_id:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    name:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                required:
+                                                    - ext_id
+                                                    - name
+                                                    - data_type
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Получение пользовательских полей заявок
+            tags:
+                - novofon
+    /get.uploaded_calls:
+        get:
+            description: |-
+                Получение информации о загрузке звонков
+
+                **Response Parameters:** 32
+
+                - `direction` (enum): да
+
+                - `is_lost` (boolean): да
+
+                - `talk_duration` (number): да
+
+                - `callback` (object): нет
+
+                - `events` (array): нет
+
+                - `records` (array): нет
+
+                - `ext_request_id` (string): да
+
+                - `upload_time` (iso8601): нет
+
+                - `start_time` (iso8601): да
+
+                - `error_code` (enum): да
+
+                - `call_session_id` (number): да
+
+                - `ext_id` (string): да
+
+                - `calling_phone_number` (string): да
+
+                - `finish_time` (iso8601): да
+
+                - `employee_id` (number): нет
+
+                - `record_url` (string): нет
+
+                - `campaign_id` (number): да
+
+                - `site_id` (number): да
+
+                - `status` (enum): да
+
+                - `is_transfer` (boolean): да
+
+                - `visitor_session_id` (number): да
+
+                - `tags` (array): нет
+
+                - `employee_channel` (enum): нет
+
+                - `called_phone_number` (string): да
+
+                - `wait_duration` (number): да
+
+                - `source_id` (number): да
+
+                - `record_type` (enum): да
+
+                - `url` (string): нет
+
+                - `comment` (string): да
+
+                - `tag_id` (number): нет
+
+                - `tag_name` (string): нет
+
+                - `employee_name` (string): нет
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    call_session_id:
+                                                        description: да
+                                                        example: 123
+                                                        type: number
+                                                    callback:
+                                                        description: нет
+                                                        type: object
+                                                    called_phone_number:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    calling_phone_number:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    campaign_id:
+                                                        description: да
+                                                        example: 123
+                                                        type: number
+                                                    comment:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    direction:
+                                                        description: да
+                                                        type: string
+                                                    employee_channel:
+                                                        description: нет
+                                                        type: string
+                                                    employee_id:
+                                                        description: нет
+                                                        example: 123
+                                                        type: number
+                                                    employee_name:
+                                                        description: нет
+                                                        example: example_string
+                                                        type: string
+                                                    error_code:
+                                                        description: да
+                                                        type: string
+                                                    events:
+                                                        description: нет
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                    ext_id:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    ext_request_id:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    finish_time:
+                                                        description: да
+                                                    is_lost:
+                                                        description: да
+                                                        example: true
+                                                        type: boolean
+                                                    is_transfer:
+                                                        description: да
+                                                        example: true
+                                                        type: boolean
+                                                    record_type:
+                                                        description: да
+                                                        type: string
+                                                    record_url:
+                                                        description: нет
+                                                        example: example_string
+                                                        type: string
+                                                    records:
+                                                        description: нет
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                    site_id:
+                                                        description: да
+                                                        example: 123
+                                                        type: number
+                                                    source_id:
+                                                        description: да
+                                                        example: 123
+                                                        type: number
+                                                    start_time:
+                                                        description: да
+                                                    status:
+                                                        description: да
+                                                        type: string
+                                                    tag_id:
+                                                        description: нет
+                                                        example: 123
+                                                        type: number
+                                                    tag_name:
+                                                        description: нет
+                                                        example: example_string
+                                                        type: string
+                                                    tags:
+                                                        description: нет
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                    talk_duration:
+                                                        description: да
+                                                        example: 123
+                                                        type: number
+                                                    upload_time:
+                                                        description: нет
+                                                    url:
+                                                        description: нет
+                                                        example: example_string
+                                                        type: string
+                                                    visitor_session_id:
+                                                        description: да
+                                                        example: 123
+                                                        type: number
+                                                    wait_duration:
+                                                        description: да
+                                                        example: 123
+                                                        type: number
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Получение информации о загрузке звонков.
+            tags:
+                - novofon
+    /update.offline_message_user_field:
+        put:
+            description: |-
+                Редактирование пользовательских полей заявок
+
+                **Request Parameters:** 4
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `ext_id` (string, required): Внешний идентификатор пользовательского поля заявки
+
+                - `name` (string, required): Имя пользовательского поля заявки
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: update.offline_message_user_field
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        ext_id:
+                                            description: Внешний идентификатор пользовательского поля заявки
+                                            example: example_string
+                                            type: string
+                                        name:
+                                            description: Имя пользовательского поля заявки
+                                            example: example_string
+                                            type: string
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - ext_id
+                                        - name
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Редактирование пользовательских полей заявок
+            tags:
+                - novofon
+    /upload.calls:
+        post:
+            description: |-
+                Загрузка звонков и разговоров для речевой или сквозной аналитики
+
+                **Request Parameters:** 30
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `is_transfer` (boolean, optional): Значение по умолчанию `false`. Признак, был ли трансфер в сессии звонка Порядок разговора сотрудников определяется в параметрах wav_records и mp3_records
+
+                - `employee_channel` (enum, required): Указывает в каком канале находится сотрудник Значения только left или right
+
+                - `record_url` (string, required): Адрес по которому можно скачать файл разговора
+
+                - `mp3_records` (array, optional): Файлы разговора для прослушивания в личном кабинете. Запрещено передавать, если заполнен параметр wav_records
+
+                - `visitor_session_id` (number, optional): Уникальный идентификатор сессии посетителя полученной из CoMagic. Параметр нужен, если требуется аналитика рекламных кампаний.
+
+                - `called_phone_number` (string, required): Номер куда звонили
+
+                - `finish_time` (iso8601, required): Время окончания сессии звонка. Не может быть меньше чем start_time
+
+                - `url` (string, required): http/https адрес на которые будет отправлено уведомление об успешной обработке звонка.
+
+                - `calls` (array, required): Список звонков. Максимально 500
+
+                - `comment` (string, optional): Комментарий к звонку. Можно указывать название сервиса или формы, которые сгенерировали звонок.
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `tag_id` (number, optional): Уникальный идентификатор тега в системе CoMagic
+
+                - `wav_records` (array, optional): Файлы разговора для речевой аналитики Возможно передать только если подключен компонент "Речевая аналитика звонков". Из wav-файлов автоматически создаются mp3-записи для прослушивания в личном кабинете
+
+                - `start_time` (iso8601, required): Дата и время начала сессии звонка
+
+                - `callback` (object, optional): Уведомление об обработке звонка Формат уведомления JSON
+
+                - `tags` (array, optional): Теги звонка
+
+                - `employee_name` (string, optional): Название сотрудника (ФИО)Ищем сотрудника по названию (ФИО) в нашей системе, если не нашли, то создаем и связываем его со звонком. Если нашли, то связываем его со звонком. Поиск не чувствительный к регистру. Игнорируется, если заполнен employee_id
+
+                - `ext_id` (string, required): Уникальный идентификатор звонка в вашей системе. Если в системе уже есть успешно загруженный звонок или уже есть 3 попытки ошибочной загрузки звонка с данным ext_id, то данный звонок будет игнорирован.
+
+                - `direction` (enum, optional): Направление звонка Значение по умолчанию 'in'
+
+                - `calling_phone_number` (string, required): Номер звонящего
+
+                - `talk_duration` (number, optional): Длительность разговора - от момента первого разговора абонента с сотрудником до окончания разговора с последним сотрудником. Значение в секундах
+
+                - `source_id` (number, optional): Уникальный идентификатор источника. Возможно передать только неудаленный источник в разрезе клиента. Если передан visitor_session_id, то определим source_id по параметрам сессии.
+
+                - `wait_duration` (number, optional): Длительность ожидания абонента до первого разговора с сотрудником. Значение в секундах.
+
+                - `site_id` (number, optional): Уникальный идентификатор сайта в CoMagic Параметр игнорируется, если заполнен visitor_session_id или called_phone_number принадлежит другому сайту.
+
+                - `is_lost` (boolean, required): Признак, что звонок потерянный или успешный
+
+                - `campaign_id` (number, optional): Уникальный идентификатор рекламной кампании в CoMagic. Параметр игнорируется, если заполнен visitor_session_id
+
+                - `events` (array, required): Какие уведомления об обработке звонка получать
+
+                - `tag_name` (string, required): Название тега. Ищем по названию тег в нашей системе, если не нашли, то создаем и ставим его на звонок. Если нашли, то ставим найденный тег на звонок. Поиск чувствительный к регистру. Для простановки тега "Продажа" необходимо использовать метод "set.tag_sales"Игнорируется, если заполнен tag_id
+
+                - `employee_id` (number, optional): Уникальный идентификатор сотрудника в системе CoMagic
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: upload.calls
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        callback:
+                                            description: Уведомление об обработке звонка Формат уведомления JSON
+                                            type: object
+                                        called_phone_number:
+                                            description: Номер куда звонили
+                                            example: example_string
+                                            type: string
+                                        calling_phone_number:
+                                            description: Номер звонящего
+                                            example: example_string
+                                            type: string
+                                        calls:
+                                            description: Список звонков. Максимально 500
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        campaign_id:
+                                            description: Уникальный идентификатор рекламной кампании в CoMagic. Параметр игнорируется, если заполнен visitor_session_id
+                                            example: 123
+                                            type: number
+                                        comment:
+                                            description: Комментарий к звонку. Можно указывать название сервиса или формы, которые сгенерировали звонок.
+                                            example: example_string
+                                            type: string
+                                        direction:
+                                            description: Направление звонка Значение по умолчанию 'in'
+                                            type: string
+                                        employee_channel:
+                                            description: Указывает в каком канале находится сотрудник Значения только left или right
+                                            type: string
+                                        employee_id:
+                                            description: Уникальный идентификатор сотрудника в системе CoMagic
+                                            example: 123
+                                            type: number
+                                        employee_name:
+                                            description: Название сотрудника (ФИО)Ищем сотрудника по названию (ФИО) в нашей системе, если не нашли, то создаем и связываем его со звонком. Если нашли, то связываем его со звонком. Поиск не чувствительный к регистру. Игнорируется, если заполнен employee_id
+                                            example: example_string
+                                            type: string
+                                        events:
+                                            description: Какие уведомления об обработке звонка получать
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        ext_id:
+                                            description: Уникальный идентификатор звонка в вашей системе. Если в системе уже есть успешно загруженный звонок или уже есть 3 попытки ошибочной загрузки звонка с данным ext_id, то данный звонок будет игнорирован.
+                                            example: example_string
+                                            type: string
+                                        finish_time:
+                                            description: Время окончания сессии звонка. Не может быть меньше чем start_time
+                                        is_lost:
+                                            description: Признак, что звонок потерянный или успешный
+                                            example: true
+                                            type: boolean
+                                        is_transfer:
+                                            description: Значение по умолчанию `false`. Признак, был ли трансфер в сессии звонка Порядок разговора сотрудников определяется в параметрах wav_records и mp3_records
+                                            example: true
+                                            type: boolean
+                                        mp3_records:
+                                            description: Файлы разговора для прослушивания в личном кабинете. Запрещено передавать, если заполнен параметр wav_records
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        record_url:
+                                            description: Адрес по которому можно скачать файл разговора
+                                            example: example_string
+                                            type: string
+                                        site_id:
+                                            description: Уникальный идентификатор сайта в CoMagic Параметр игнорируется, если заполнен visitor_session_id или called_phone_number принадлежит другому сайту.
+                                            example: 123
+                                            type: number
+                                        source_id:
+                                            description: Уникальный идентификатор источника. Возможно передать только неудаленный источник в разрезе клиента. Если передан visitor_session_id, то определим source_id по параметрам сессии.
+                                            example: 123
+                                            type: number
+                                        start_time:
+                                            description: Дата и время начала сессии звонка
+                                        tag_id:
+                                            description: Уникальный идентификатор тега в системе CoMagic
+                                            example: 123
+                                            type: number
+                                        tag_name:
+                                            description: Название тега. Ищем по названию тег в нашей системе, если не нашли, то создаем и ставим его на звонок. Если нашли, то ставим найденный тег на звонок. Поиск чувствительный к регистру. Для простановки тега "Продажа" необходимо использовать метод "set.tag_sales"Игнорируется, если заполнен tag_id
+                                            example: example_string
+                                            type: string
+                                        tags:
+                                            description: Теги звонка
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        talk_duration:
+                                            description: Длительность разговора - от момента первого разговора абонента с сотрудником до окончания разговора с последним сотрудником. Значение в секундах
+                                            example: 123
+                                            type: number
+                                        url:
+                                            description: http/https адрес на которые будет отправлено уведомление об успешной обработке звонка.
+                                            example: example_string
+                                            type: string
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                        visitor_session_id:
+                                            description: Уникальный идентификатор сессии посетителя полученной из CoMagic. Параметр нужен, если требуется аналитика рекламных кампаний.
+                                            example: 123
+                                            type: number
+                                        wait_duration:
+                                            description: Длительность ожидания абонента до первого разговора с сотрудником. Значение в секундах.
+                                            example: 123
+                                            type: number
+                                        wav_records:
+                                            description: Файлы разговора для речевой аналитики Возможно передать только если подключен компонент "Речевая аналитика звонков". Из wav-файлов автоматически создаются mp3-записи для прослушивания в личном кабинете
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                    required:
+                                        - is_lost
+                                        - events
+                                        - tag_name
+                                        - employee_channel
+                                        - record_url
+                                        - called_phone_number
+                                        - finish_time
+                                        - url
+                                        - calls
+                                        - access_token
+                                        - start_time
+                                        - ext_id
+                                        - calling_phone_number
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Загрузка звонков и разговоров
+            tags:
+                - novofon
+    /upload.chats:
+        post:
+            description: |-
+                Загрузка чатов
+
+                **Request Parameters:** 19
+
+                - `message` (string, required): Сообщение
+
+                - `ext_id` (string, optional): Уникальный идентификатор чата в вашей системе
+
+                - `email` (string, optional): Email посетителя
+
+                - `initiator` (enum, optional): Инициатор чата autoinvite (Автоприглашение), visitor (Посетитель), operator(Оператор) Если параметр не передан то будет взят первый источник сообщения ("source")
+
+                - `site_id` (number, optional): Уникальный идентификатор сайта. Обязательно передавать если хотите чтобы чат попал в Рекламную кампанию "Посетители без РК"
+
+                - `employee_id` (number, optional): Уникальный идентификатор сотрудника, обязательный параметр если source = operator(Оператор)За последним сотрудником, отправившим сообщение, будет закреплен чат
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `name` (string, optional): Имя посетителя
+
+                - `messages` (array, required): Список сообщений чата
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `start_date_time` (iso8601, required): Дата и время создания чата Не может быть в будущем. Должна быть позже чем у переданной сессии посетителя.
+
+                - `visitor_session_id` (number, optional): Уникальный идентификатор сессии посетителя полученной из CoMagic. Для получения ID необходимо использовать метод JS API Comagic.getSessionId()
+
+                - `campaign_id` (number, optional): Уникальный идентификатор рекламной кампании в CoMagic. Для получения campaign_id можно использовать метод Data API "get.campaigns". Нельзя передавать campaign_id = -1.
+
+                - `source_id` (number, optional): Уникальный идентификатор источника. Возможно передать только неудаленный источник в разрезе клиента. Если передан visitor_session_id, то определим source_id по параметрам сессии.
+
+                - `date_time` (iso8601, required): Дата и время отправки сообщения Не может быть в будущем. Должна быть позже чем start_date_time. Если параметр не передан, то проставится время вызова
+
+                - `source` (enum, required): Источник сообщения system (Автоприглашение), visitor (Посетитель), operator(Оператор)
+
+                - `chats` (array, required): Список чатов. Максимально 500
+
+                - `phone` (string, optional): Телефон посетителя в формате E164
+
+                - `status` (enum, required): Статус чата lost (Потерянный); succeed (Состоявшийся);refused (Отклоненный) Если инициатор visitor и нет сообщений message от оператора или визитора, то переданное значение в status игнорируется и ставится значение lost
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: upload.chats
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        campaign_id:
+                                            description: Уникальный идентификатор рекламной кампании в CoMagic. Для получения campaign_id можно использовать метод Data API "get.campaigns". Нельзя передавать campaign_id = -1.
+                                            example: 123
+                                            type: number
+                                        chats:
+                                            description: Список чатов. Максимально 500
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        date_time:
+                                            description: Дата и время отправки сообщения Не может быть в будущем. Должна быть позже чем start_date_time. Если параметр не передан, то проставится время вызова
+                                        email:
+                                            description: Email посетителя
+                                            example: example_string
+                                            type: string
+                                        employee_id:
+                                            description: Уникальный идентификатор сотрудника, обязательный параметр если source = operator(Оператор)За последним сотрудником, отправившим сообщение, будет закреплен чат
+                                            example: 123
+                                            type: number
+                                        ext_id:
+                                            description: Уникальный идентификатор чата в вашей системе
+                                            example: example_string
+                                            type: string
+                                        initiator:
+                                            description: Инициатор чата autoinvite (Автоприглашение), visitor (Посетитель), operator(Оператор) Если параметр не передан то будет взят первый источник сообщения ("source")
+                                            enum:
+                                                - operator
+                                                - visitor
+                                                - autoinvite
+                                            example: operator
+                                            type: string
+                                        message:
+                                            description: Сообщение
+                                            example: example_string
+                                            type: string
+                                        messages:
+                                            description: Список сообщений чата
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        name:
+                                            description: Имя посетителя
+                                            example: example_string
+                                            type: string
+                                        phone:
+                                            description: Телефон посетителя в формате E164
+                                            example: example_string
+                                            type: string
+                                        site_id:
+                                            description: Уникальный идентификатор сайта. Обязательно передавать если хотите чтобы чат попал в Рекламную кампанию "Посетители без РК"
+                                            example: 123
+                                            type: number
+                                        source:
+                                            description: Источник сообщения system (Автоприглашение), visitor (Посетитель), operator(Оператор)
+                                            enum:
+                                                - operator
+                                                - visitor
+                                                - system
+                                            example: operator
+                                            type: string
+                                        source_id:
+                                            description: Уникальный идентификатор источника. Возможно передать только неудаленный источник в разрезе клиента. Если передан visitor_session_id, то определим source_id по параметрам сессии.
+                                            example: 123
+                                            type: number
+                                        start_date_time:
+                                            description: Дата и время создания чата Не может быть в будущем. Должна быть позже чем у переданной сессии посетителя.
+                                        status:
+                                            description: Статус чата lost (Потерянный); succeed (Состоявшийся);refused (Отклоненный) Если инициатор visitor и нет сообщений message от оператора или визитора, то переданное значение в status игнорируется и ставится значение lost
+                                            enum:
+                                                - lost
+                                                - succeed
+                                                - refused
+                                            example: lost
+                                            type: string
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                        visitor_session_id:
+                                            description: Уникальный идентификатор сессии посетителя полученной из CoMagic. Для получения ID необходимо использовать метод JS API Comagic.getSessionId()
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - messages
+                                        - access_token
+                                        - start_date_time
+                                        - date_time
+                                        - source
+                                        - chats
+                                        - status
+                                        - message
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Загрузка чатов
+            tags:
+                - novofon
+    /upload.emails:
+        post:
+            description: |-
+                Загрузка электронных писем
+
+                **Request Parameters:** 15
+
+                - `email_to` (string, required): Получатель. Обязательно одно из полей: email_to, email_to_cc, email_to_bcc
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `emails` (array, optional): Массив писем
+
+                - `sender_name` (string, optional): Имя отправителя
+
+                - `message` (string, required): Текст письма.
+
+                - `email_to_cc` (array, optional): Копия.
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `site_id` (number, optional): Идентификатор сайта. Метод получение списка существующих сайтов: "get.sites"
+
+                - `session_id` (number, optional): Идентификатор сессии
+
+                - `source_id` (number, optional): Идентификатор источника. Метод получение списка существующих Источников: "get.get_sources"
+
+                - `subject` (string, optional): Тема письма
+
+                - `email_from` (string, required): Отправитель.
+
+                - `email_to_bcc` (array, optional): Скрытая копия.
+
+                - `date_time` (date, required): Дата и время получения письма на почту в таймзоне клиента
+
+                - `message_html` (string, required): HTML письма.
+
+                **Response Parameters:** 1
+
+                - `id` (number): да
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: upload.emails
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        date_time:
+                                            description: Дата и время получения письма на почту в таймзоне клиента
+                                        email_from:
+                                            description: Отправитель.
+                                            example: example_string
+                                            type: string
+                                        email_to:
+                                            description: 'Получатель. Обязательно одно из полей: email_to, email_to_cc, email_to_bcc'
+                                            example: example_string
+                                            type: string
+                                        email_to_bcc:
+                                            description: Скрытая копия.
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        email_to_cc:
+                                            description: Копия.
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        emails:
+                                            description: Массив писем
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        message:
+                                            description: Текст письма.
+                                            example: example_string
+                                            type: string
+                                        message_html:
+                                            description: HTML письма.
+                                            example: example_string
+                                            type: string
+                                        sender_name:
+                                            description: Имя отправителя
+                                            example: example_string
+                                            type: string
+                                        session_id:
+                                            description: Идентификатор сессии
+                                            example: 123
+                                            type: number
+                                        site_id:
+                                            description: 'Идентификатор сайта. Метод получение списка существующих сайтов: "get.sites"'
+                                            example: 123
+                                            type: number
+                                        source_id:
+                                            description: 'Идентификатор источника. Метод получение списка существующих Источников: "get.get_sources"'
+                                            example: 123
+                                            type: number
+                                        subject:
+                                            description: Тема письма
+                                            example: example_string
+                                            type: string
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - email_from
+                                        - date_time
+                                        - message_html
+                                        - email_to
+                                        - access_token
+                                        - message
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    id:
+                                                        description: да
+                                                        example: 123
+                                                        type: number
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Загрузка электронных писем
+            tags:
+                - novofon
+    /upload.offline_messages:
+        post:
+            description: "Загрузка офлайн заявок\n\n**Request Parameters:** 15\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `message` (string, optional): Сообщение посетителя\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `date_time` (iso8601, required): Дата и время создания заявки. Не может быть в будущем. Должна быть больше чем у переданной сессии посетителя. Если параметр не передан, то проставится время вызова\n\n- `name` (string, optional): Имя посетителя\n\n- `phone` (string, optional): Телефон посетителя в формате E164\n\n- `email` (string, optional): Email посетителя\n\n- `visitor_session_id` (number, optional): Уникальный идентификатор сессии посетителя полученной из CoMagic. Для получения ID необходимо использовать метод JS API Comagic.getSessionId()\n\n- `source_id` (number, optional): Уникальный идентификатор источника. Возможно передать только неудаленный источник в разрезе клиента. Если передан visitor_session_id, то определим source_id по параметрам сессии.\n\n- `user_fields` (array, optional): \n\n- `form_name` (string, optional): Имя пользовательской JS Формы.\n\n- `ext_id` (string, optional): Уникальный идентификатор заявки в вашей системе\n\n- `offline_messages` (array, required): Список офлайн заявок. Максимально 500\n\n- `campaign_id` (number, optional): Уникальный идентификатор рекламной кампании в CoMagic. Для получения campaign_id можно использовать метод Data API \"get.campaigns\". Если передается \"campaign_id\": -1, то обязательно указывать site_id.\n\n- `site_id` (number, optional): Уникальный идентификатор сайта."
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: upload.offline_messages
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        campaign_id:
+                                            description: 'Уникальный идентификатор рекламной кампании в CoMagic. Для получения campaign_id можно использовать метод Data API "get.campaigns". Если передается "campaign_id": -1, то обязательно указывать site_id.'
+                                            example: 123
+                                            type: number
+                                        date_time:
+                                            description: Дата и время создания заявки. Не может быть в будущем. Должна быть больше чем у переданной сессии посетителя. Если параметр не передан, то проставится время вызова
+                                        email:
+                                            description: Email посетителя
+                                            example: example_string
+                                            type: string
+                                        ext_id:
+                                            description: Уникальный идентификатор заявки в вашей системе
+                                            example: example_string
+                                            type: string
+                                        form_name:
+                                            description: Имя пользовательской JS Формы.
+                                            example: example_string
+                                            type: string
+                                        message:
+                                            description: Сообщение посетителя
+                                            example: example_string
+                                            type: string
+                                        name:
+                                            description: Имя посетителя
+                                            example: example_string
+                                            type: string
+                                        offline_messages:
+                                            description: Список офлайн заявок. Максимально 500
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        phone:
+                                            description: Телефон посетителя в формате E164
+                                            example: example_string
+                                            type: string
+                                        site_id:
+                                            description: Уникальный идентификатор сайта.
+                                            example: 123
+                                            type: number
+                                        source_id:
+                                            description: Уникальный идентификатор источника. Возможно передать только неудаленный источник в разрезе клиента. Если передан visitor_session_id, то определим source_id по параметрам сессии.
+                                            example: 123
+                                            type: number
+                                        user_fields:
+                                            enum:
+                                                - Пользовательские поля проставленные у заявки. Перед тем как передать
+                                                - нужно создать пользовательское поле через метод  "create.offline_message_user_field")
+                                            example: Пользовательские поля проставленные у заявки. Перед тем как передать
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                        visitor_session_id:
+                                            description: Уникальный идентификатор сессии посетителя полученной из CoMagic. Для получения ID необходимо использовать метод JS API Comagic.getSessionId()
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - offline_messages
+                                        - access_token
+                                        - date_time
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Загрузка офлайн заявок
+            tags:
+                - novofon

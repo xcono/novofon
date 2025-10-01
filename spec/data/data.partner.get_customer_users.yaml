@@ -7,7 +7,7 @@ paths:
     /get.customer_users:
         get:
             summary: Получение списка пользователей клиента для API запросов
-            description: "Получение списка пользователей клиентского личного кабинета из под которых можно совершать API запросы. Важно учитывать наличие прав доступа у пользователя.\n\n**Request Parameters:** 6\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n**Response Parameters:** 5\n\n- `customer_id` (number): да\n\n- `id` (number): \n\n- `login` (string): \n\n- `description` (string): \n\n- `name` (string): да"
+            description: "Получение списка пользователей клиентского личного кабинета из под которых можно совершать API запросы. Важно учитывать наличие прав доступа у пользователя.\n\n**Request Parameters:** 6\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n**Response Parameters:** 5\n\n- `id` (number): \n\n- `login` (string): \n\n- `description` (string): \n\n- `name` (string): да\n\n- `customer_id` (number): да"
             requestBody:
                 required: true
                 content:
@@ -104,9 +104,9 @@ paths:
                                                         description: да
                                                         example: example_string
                                                 required:
-                                                    - name
                                                     - customer_id
                                                     - id
+                                                    - name
                                             metadata:
                                                 type: object
                                                 description: Response metadata

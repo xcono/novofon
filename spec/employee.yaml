@@ -1,0 +1,3116 @@
+info:
+    description: Combined Employee API specifications
+    title: Novofon Employee API
+    version: 1.0.0
+openapi: 3.0.0
+paths:
+    /create.deal_employees:
+        post:
+            description: |-
+                Создание сотрудника
+
+                **Request Parameters:** 4
+
+                - `ext_id` (string, required): Внешний идентификатор сотрудника
+
+                - `name` (string, required): Имя сотрудника
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                **Response Parameters:** 1
+
+                - `ext_id` (string): Внешний идентификатор сотрудника
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: create.deal_employees
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        ext_id:
+                                            description: Внешний идентификатор сотрудника
+                                            example: example_string
+                                            type: string
+                                        name:
+                                            description: Имя сотрудника
+                                            example: example_string
+                                            type: string
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - ext_id
+                                        - name
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    ext_id:
+                                                        description: Внешний идентификатор сотрудника
+                                                        example: example_string
+                                                        type: string
+                                                required:
+                                                    - ext_id
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Создание сотрудника
+            tags:
+                - novofon
+    /create.employee_positions:
+        post:
+            description: |-
+                Добавление должности сотрудника
+
+                **Request Parameters:** 3
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `name` (string, required): Название должности
+
+                **Response Parameters:** 1
+
+                - `id` (number): Уникальный идентификатор должности
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: create.employee_positions
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        name:
+                                            description: Название должности
+                                            example: example_string
+                                            type: string
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - name
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    id:
+                                                        description: Уникальный идентификатор должности
+                                                        example: 123
+                                                        type: number
+                                                required:
+                                                    - id
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Добавление должности сотрудника
+            tags:
+                - novofon
+    /create.employees:
+        post:
+            description: |-
+                Создание сотрудника
+
+                **Request Parameters:** 37
+
+                - `calls_available` (boolean, optional): Параметр будет удален в ближайшее время. Используйте вместо него параметры: in_external_allowed_call_directions, in_internal_allowed_call_directions Значение по умолчанию "true". Доступность для звонков
+
+                - `in_internal_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для входящих внутренних звонков in - входящие вызовы out - исходящие вызовы
+
+                - `call_recording` (enum, optional): Значение по умолчанию "all". Статус записи разговоров Зависит от компонента "recording"
+
+                - `extension_phone_number` (string, required): Внутренний номер
+
+                - `operator_invite_to_chat_enabled` (boolean, optional): Значение по умолчанию "false". Разрешено ли приглашать в чат
+
+                - `in_external_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для входящих внешних звонков in - входящие вызовы out - исходящие вызовы
+
+                - `email` (string, optional): Адрес электронной почты сотрудника
+
+                - `phone_numbers` (array, optional): Список телефонов сотрудника Важно понимать, что при создании нового сотрудника номер уже может существовать у другого сотрудника и если номеру переданы новые параметры, то они будут так же обновлены уже существующему номеру
+
+                - `operator_offline_message_enabled` (boolean, optional): Значение по умолчанию "false". Разрешено ли обрабатывать заявки
+
+                - `operator_sites` (array, optional): Список уникальных идентификаторов сайтов для которых доступен сотрудник.
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `coach_always_enabled` (boolean, optional): По умолчанию "false". При активации опции все входящие звонки сотрудника будут дублироваться его тренеру. Значение "true" возможно установить если задан параметр "coach_id".
+
+                - `phone_number` (string, required): Номер телефона сотрудника. Формат номера может быть с донабором, к примеру "74955140578...2345", поэтому у номера не формат E164 Если указан SIP, то не делаем связки, а просто добавляем как номер типа ТФОП, т.е. как обычный номер
+
+                - `extension` (object, optional): Внутренний номер сотрудника
+
+                - `first_name` (string, optional): Имя сотрудника
+
+                - `coach` (object, optional): Тренер для сотрудника Зависит от компонента "trainer"
+
+                - `groups` (array, optional): Список уникальных идентификаторов групп в которых состоит сотрудник.
+
+                - `extension_queue_enabled` (boolean, optional): Значение по умолчанию "false". В случае, если все номера, указанные для этого сотрудника в списке телефонов, заняты, то звонящий абонент встанет в очередь на повторный дозвон до телефонов в списке и будет ждать первый освободившийся номер.
+
+                - `operator_login` (string, required): Логин сотрудника для входа в приложение «Рабочее место оператора»
+
+                - `operator_password` (string, required): Пароль сотрудника для входа в приложение «Рабочее место оператора»
+
+                - `operator_position_id` (number, optional): Должность сотрудника в подписи
+
+                - `status` (enum, optional): Значение по умолчанию "active". Статус номера.
+
+                - `channels_count` (number, optional): Значение по умолчанию "1". Количество линий на телефоне.
+
+                - `dial_time` (number, optional): Значение по умолчанию "60". Время дозвона по телефону. Значение в секундах.
+
+                - `extension_voice_mail_enabled` (boolean, optional): Значение по умолчанию "false". В случае, если все номера, указанные для этого сотрудника в списке телефонов, заняты, то звонящему абоненту будет предложено оставить голосовое сообщение.
+
+                - `operator_chat_enabled` (boolean, optional): Значение по умолчанию "true". Разрешено ли участвовать в чатах с посетителями
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `allowed_in_call_types` (array, optional): Параметр будет удален в ближайшее время. Используйте вместо него параметры: in_external_allowed_call_directions, in_internal_allowed_call_directions Какие типы входящих звонков разрешены сотруднику internal - внутренние звонки от сотрудников компании external - внешние звонки от клиентов
+
+                - `out_internal_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для исходящих внутренних звонков in - входящие вызовы out - исходящие вызовы
+
+                - `coach_id` (number, required): Уникальный идентификатор тренера
+
+                - `operator_display_name` (string, required): Имя оператора в чате
+
+                - `patronymic` (string, optional): Отчество сотрудника
+
+                - `allowed_out_call_types` (array, optional): Параметр будет удален в ближайшее время. Используйте вместо него параметры: out_external_allowed_call_directions, out_internal_allowed_call_directions Какие типы исходящих звонков разрешены сотруднику internal - внутренние звонки на сотрудников компании external - звонки за пределы компании
+
+                - `out_external_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для исходящих внешних звонков in - входящие вызовы out - исходящие вызовы
+
+                - `schedule_id` (number, optional): График активности
+
+                - `operator` (object, optional): Оператор рабочего места Зависит от компонента "consultant"
+
+                - `last_name` (string, required): Фамилия сотрудника
+
+                **Response Parameters:** 1
+
+                - `id` (number): Уникальный идентификатор сотрудника
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: create.employees
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        allowed_in_call_types:
+                                            description: 'Параметр будет удален в ближайшее время. Используйте вместо него параметры: in_external_allowed_call_directions, in_internal_allowed_call_directions Какие типы входящих звонков разрешены сотруднику internal - внутренние звонки от сотрудников компании external - внешние звонки от клиентов'
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        allowed_out_call_types:
+                                            description: 'Параметр будет удален в ближайшее время. Используйте вместо него параметры: out_external_allowed_call_directions, out_internal_allowed_call_directions Какие типы исходящих звонков разрешены сотруднику internal - внутренние звонки на сотрудников компании external - звонки за пределы компании'
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        call_recording:
+                                            description: Значение по умолчанию "all". Статус записи разговоров Зависит от компонента "recording"
+                                            type: string
+                                        calls_available:
+                                            description: 'Параметр будет удален в ближайшее время. Используйте вместо него параметры: in_external_allowed_call_directions, in_internal_allowed_call_directions Значение по умолчанию "true". Доступность для звонков'
+                                            enum:
+                                                - "true"
+                                                - "false"
+                                            example: "true"
+                                            type: boolean
+                                        channels_count:
+                                            description: Значение по умолчанию "1". Количество линий на телефоне.
+                                            example: 123
+                                            type: number
+                                        coach:
+                                            description: Тренер для сотрудника Зависит от компонента "trainer"
+                                            type: object
+                                        coach_always_enabled:
+                                            description: По умолчанию "false". При активации опции все входящие звонки сотрудника будут дублироваться его тренеру. Значение "true" возможно установить если задан параметр "coach_id".
+                                            enum:
+                                                - "true"
+                                                - "false"
+                                            example: "true"
+                                            type: boolean
+                                        coach_id:
+                                            description: Уникальный идентификатор тренера
+                                            example: 123
+                                            type: number
+                                        dial_time:
+                                            description: Значение по умолчанию "60". Время дозвона по телефону. Значение в секундах.
+                                            example: 123
+                                            type: number
+                                        email:
+                                            description: Адрес электронной почты сотрудника
+                                            example: example_string
+                                            type: string
+                                        extension:
+                                            description: Внутренний номер сотрудника
+                                            type: object
+                                        extension_phone_number:
+                                            description: Внутренний номер
+                                            example: example_string
+                                            type: string
+                                        extension_queue_enabled:
+                                            description: Значение по умолчанию "false". В случае, если все номера, указанные для этого сотрудника в списке телефонов, заняты, то звонящий абонент встанет в очередь на повторный дозвон до телефонов в списке и будет ждать первый освободившийся номер.
+                                            enum:
+                                                - "true"
+                                                - "false"
+                                            example: "true"
+                                            type: boolean
+                                        extension_voice_mail_enabled:
+                                            description: Значение по умолчанию "false". В случае, если все номера, указанные для этого сотрудника в списке телефонов, заняты, то звонящему абоненту будет предложено оставить голосовое сообщение.
+                                            enum:
+                                                - "true"
+                                                - "false"
+                                            example: "true"
+                                            type: boolean
+                                        first_name:
+                                            description: Имя сотрудника
+                                            example: example_string
+                                            type: string
+                                        groups:
+                                            description: Список уникальных идентификаторов групп в которых состоит сотрудник.
+                                            example: []
+                                            items:
+                                                example: 123
+                                                type: number
+                                            type: array
+                                        in_external_allowed_call_directions:
+                                            description: Какие направления вызовов разрешены сотруднику для входящих внешних звонков in - входящие вызовы out - исходящие вызовы
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        in_internal_allowed_call_directions:
+                                            description: Какие направления вызовов разрешены сотруднику для входящих внутренних звонков in - входящие вызовы out - исходящие вызовы
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        last_name:
+                                            description: Фамилия сотрудника
+                                            example: example_string
+                                            type: string
+                                        operator:
+                                            description: Оператор рабочего места Зависит от компонента "consultant"
+                                            type: object
+                                        operator_chat_enabled:
+                                            description: Значение по умолчанию "true". Разрешено ли участвовать в чатах с посетителями
+                                            enum:
+                                                - "true"
+                                                - "false"
+                                            example: "true"
+                                            type: boolean
+                                        operator_display_name:
+                                            description: Имя оператора в чате
+                                            example: example_string
+                                            type: string
+                                        operator_invite_to_chat_enabled:
+                                            description: Значение по умолчанию "false". Разрешено ли приглашать в чат
+                                            enum:
+                                                - "true"
+                                                - "false"
+                                            example: "true"
+                                            type: boolean
+                                        operator_login:
+                                            description: Логин сотрудника для входа в приложение «Рабочее место оператора»
+                                            example: example_string
+                                            type: string
+                                        operator_offline_message_enabled:
+                                            description: Значение по умолчанию "false". Разрешено ли обрабатывать заявки
+                                            enum:
+                                                - "true"
+                                                - "false"
+                                            example: "true"
+                                            type: boolean
+                                        operator_password:
+                                            description: Пароль сотрудника для входа в приложение «Рабочее место оператора»
+                                            example: example_string
+                                            type: string
+                                        operator_position_id:
+                                            description: Должность сотрудника в подписи
+                                            example: 123
+                                            type: number
+                                        operator_sites:
+                                            description: Список уникальных идентификаторов сайтов для которых доступен сотрудник.
+                                            example: []
+                                            items:
+                                                example: 123
+                                                type: number
+                                            type: array
+                                        out_external_allowed_call_directions:
+                                            description: Какие направления вызовов разрешены сотруднику для исходящих внешних звонков in - входящие вызовы out - исходящие вызовы
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        out_internal_allowed_call_directions:
+                                            description: Какие направления вызовов разрешены сотруднику для исходящих внутренних звонков in - входящие вызовы out - исходящие вызовы
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        patronymic:
+                                            description: Отчество сотрудника
+                                            example: example_string
+                                            type: string
+                                        phone_number:
+                                            description: Номер телефона сотрудника. Формат номера может быть с донабором, к примеру "74955140578...2345", поэтому у номера не формат E164 Если указан SIP, то не делаем связки, а просто добавляем как номер типа ТФОП, т.е. как обычный номер
+                                            example: example_string
+                                            type: string
+                                        phone_numbers:
+                                            description: Список телефонов сотрудника Важно понимать, что при создании нового сотрудника номер уже может существовать у другого сотрудника и если номеру переданы новые параметры, то они будут так же обновлены уже существующему номеру
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        schedule_id:
+                                            description: График активности
+                                            example: 123
+                                            type: number
+                                        status:
+                                            description: Значение по умолчанию "active". Статус номера.
+                                            enum:
+                                                - active
+                                                - inactive
+                                            example: active
+                                            type: string
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - coach_id
+                                        - operator_display_name
+                                        - last_name
+                                        - extension_phone_number
+                                        - phone_number
+                                        - operator_login
+                                        - operator_password
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    id:
+                                                        description: Уникальный идентификатор сотрудника
+                                                        example: 123
+                                                        type: number
+                                                required:
+                                                    - id
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Создание сотрудника
+            tags:
+                - novofon
+    /create.group_employees:
+        post:
+            description: |-
+                Создание группы сотрудников
+
+                **Request Parameters:** 7
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `name` (string, required): Название группы
+
+                - `members` (array, optional): Список уникальных идентификаторов сотрудников, которые состоят в группе
+
+                - `group_phone_number` (string, optional): Внутренний номер группы Зависит от компонента "va"
+
+                - `queue_enabled` (boolean, optional): Значение по умолчанию "false". В случае, если все номера, указанные для этой группы сотрудников, заняты, то звонящий абонент встанет в очередь на повторный дозвон до телефонов в списке и будет ждать первый освободившийся номер. Зависит от компонента "va"
+
+                - `channels_count` (number, optional): Значение по умолчанию 1. Количество одновременных линий при обзвоне Зависит от компонента "va"
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                **Response Parameters:** 1
+
+                - `id` (number): Уникальный идентификатор группы
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: create.group_employees
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        channels_count:
+                                            description: Значение по умолчанию 1. Количество одновременных линий при обзвоне Зависит от компонента "va"
+                                            example: 123
+                                            type: number
+                                        group_phone_number:
+                                            description: Внутренний номер группы Зависит от компонента "va"
+                                            example: example_string
+                                            type: string
+                                        members:
+                                            description: Список уникальных идентификаторов сотрудников, которые состоят в группе
+                                            example: []
+                                            items:
+                                                example: 123
+                                                type: number
+                                            type: array
+                                        name:
+                                            description: Название группы
+                                            example: example_string
+                                            type: string
+                                        queue_enabled:
+                                            description: Значение по умолчанию "false". В случае, если все номера, указанные для этой группы сотрудников, заняты, то звонящий абонент встанет в очередь на повторный дозвон до телефонов в списке и будет ждать первый освободившийся номер. Зависит от компонента "va"
+                                            example: true
+                                            type: boolean
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - name
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    id:
+                                                        description: Уникальный идентификатор группы
+                                                        example: 123
+                                                        type: number
+                                                required:
+                                                    - id
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Создание группы сотрудников
+            tags:
+                - novofon
+    /delete.deal_employees:
+        delete:
+            description: Удаление сотрудника
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Удаление сотрудника
+            tags:
+                - novofon
+    /delete.employee_positions:
+        delete:
+            description: |-
+                Удаление должности сотрудника
+
+                **Request Parameters:** 3
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `id` (number, required): Уникальный идентификатор должности сотрудника
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: delete.employee_positions
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        id:
+                                            description: Уникальный идентификатор должности сотрудника
+                                            example: 123
+                                            type: number
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - id
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Удаление должности сотрудника
+            tags:
+                - novofon
+    /delete.employees:
+        delete:
+            description: |-
+                Удаление сотрудника
+
+                **Request Parameters:** 3
+
+                - `id` (number, required): Уникальный идентификатор сотрудника
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: delete.employees
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        id:
+                                            description: Уникальный идентификатор сотрудника
+                                            example: 123
+                                            type: number
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - id
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Удаление сотрудника
+            tags:
+                - novofon
+    /delete.group_employees:
+        delete:
+            description: |-
+                Удаление группы сотрудников
+
+                **Request Parameters:** 3
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `id` (number, required): Уникальный идентификатор группы
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: delete.group_employees
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        id:
+                                            description: Уникальный идентификатор группы
+                                            example: 123
+                                            type: number
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - id
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Удаление группы сотрудников
+            tags:
+                - novofon
+    /get.deal_employees:
+        get:
+            description: |-
+                Получение списка сотрудников
+
+                **Request Parameters:** 7
+
+                - `sort` (array, optional): См. раздел "Сортировка данных"
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `limit` (number, optional): Количество возвращаемых записей. См. раздел "Постраничный вывод"
+
+                - `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+
+                - `filter` (object, optional): См. раздел "Критерии фильтрации"
+
+                - `fields` (array, optional): См. раздел "Представление возвращаемых данных"
+
+                **Response Parameters:** 2
+
+                - `ext_id` (string): да
+
+                - `name` (string): да
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: get.deal_employees
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        fields:
+                                            description: См. раздел "Представление возвращаемых данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        filter:
+                                            description: См. раздел "Критерии фильтрации"
+                                            type: object
+                                        limit:
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        offset:
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        sort:
+                                            description: См. раздел "Сортировка данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    ext_id:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    name:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                required:
+                                                    - ext_id
+                                                    - name
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Получение списка сотрудников
+            tags:
+                - novofon
+    /get.employee_positions:
+        get:
+            description: "Получение списка должностей сотрудников\n\n**Request Parameters:** 7\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n**Response Parameters:** 2\n\n- `id` (number): \n\n- `name` (string): да"
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: get.employee_positions
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        fields:
+                                            description: См. раздел "Представление возвращаемых данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        filter:
+                                            description: См. раздел "Критерии фильтрации"
+                                            type: object
+                                        limit:
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        offset:
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        sort:
+                                            description: См. раздел "Сортировка данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    id:
+                                                        example: 123
+                                                        type: number
+                                                    name:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                required:
+                                                    - id
+                                                    - name
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Получение списка должностей сотрудников
+            tags:
+                - novofon
+    /get.employee_stat:
+        get:
+            description: "Получение агрегированной статистики по сотрудникам Метод доступен при подключенном компоненте \"call_center\"\n\n**Request Parameters:** 10\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `date_from` (iso8601, required): YYYY-MM-DD hh:mm:ss\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `date_till` (iso8601, required): YYYY-MM-DD hh:mm:ss\n\n- `only_default_statuses_in_stats` (boolean, optional): Признак, позволяющий выбирать вариант статистики по времени нахождения в статусах. По умолчанию \"true\".\n\n**Response Parameters:** 9\n\n- `groups` (array): да\n\n- `id` (number): да\n\n- `first_name` (string): да\n\n- `patronymic` (string): \n\n- `full_name` (string): да\n\n- `status_stats` (object): да\n\n- `group_id` (number): \n\n- `group_name` (string): \n\n- `last_name` (string): да"
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: get.employee_stat
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        date_from:
+                                            description: YYYY-MM-DD hh:mm:ss
+                                        date_till:
+                                            description: YYYY-MM-DD hh:mm:ss
+                                        fields:
+                                            description: См. раздел "Представление возвращаемых данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        filter:
+                                            description: См. раздел "Критерии фильтрации"
+                                            type: object
+                                        limit:
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        offset:
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        only_default_statuses_in_stats:
+                                            description: Признак, позволяющий выбирать вариант статистики по времени нахождения в статусах. По умолчанию "true".
+                                            example: true
+                                            type: boolean
+                                        sort:
+                                            description: См. раздел "Сортировка данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - date_from
+                                        - access_token
+                                        - date_till
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    first_name:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    full_name:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    group_id:
+                                                        example: 123
+                                                        type: number
+                                                    group_name:
+                                                        example: example_string
+                                                        type: string
+                                                    groups:
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            example: 123
+                                                            type: number
+                                                        type: array
+                                                    id:
+                                                        description: да
+                                                        example: 123
+                                                        type: number
+                                                    last_name:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    patronymic:
+                                                        example: example_string
+                                                        type: string
+                                                    status_stats:
+                                                        description: да
+                                                        type: object
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Агрегированная статистика по сотрудникам
+            tags:
+                - novofon
+    /get.employees:
+        get:
+            description: "Получение списка сотрудников\n\n**Request Parameters:** 7\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n**Response Parameters:** 47\n\n- `first_name` (string): да\n\n- `calls_available` (boolean): да\n\n- `allowed_in_call_types` (array): да\n\n- `groups` (array): да\n\n- `phone_number` (string): \n\n- `extension_phone_number` (string): \n\n- `operator_position_id` (number): \n\n- `operator_chats_available` (boolean): \n\n- `call_recording` (enum): да\n\n- `coach_id` (number): \n\n- `coach_always_enabled` (boolean): \n\n- `schedule_id` (number): да\n\n- `phone_numbers` (array): да\n\n- `operator_login` (string): \n\n- `id` (number): да\n\n- `status` (enum): \n\n- `status_id` (number): да\n\n- `in_internal_allowed_call_directions` (array): да\n\n- `out_internal_allowed_call_directions` (array): да\n\n- `schedule_name` (string): да\n\n- `extension_voice_mail_enabled` (boolean): \n\n- `operator_offline_message_enabled` (boolean): \n\n- `login` (string): да\n\n- `allowed_out_call_types` (array): да\n\n- `out_external_allowed_call_directions` (array): да\n\n- `group_id` (number): \n\n- `channels_count` (number): \n\n- `extension` (object): да\n\n- `operator_chat_enabled` (boolean): \n\n- `operator_sites` (array): \n\n- `last_name` (string): да\n\n- `full_name` (string): да\n\n- `phone_id` (number): \n\n- `extension_queue_enabled` (boolean): \n\n- `operator_display_name` (string): \n\n- `site_domain_name` (string): \n\n- `in_external_allowed_call_directions` (array): да\n\n- `email` (string): да\n\n- `dial_time` (number): \n\n- `operator_invite_to_chat_enabled` (boolean): \n\n- `site_id` (number): \n\n- `patronymic` (string): \n\n- `coach` (object): да\n\n- `coach_full_name` (string): \n\n- `group_name` (string): \n\n- `operator` (object): \n\n- `operator_position_name` (string): "
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: get.employees
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        fields:
+                                            description: См. раздел "Представление возвращаемых данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        filter:
+                                            description: См. раздел "Критерии фильтрации"
+                                            type: object
+                                        limit:
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        offset:
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        sort:
+                                            description: См. раздел "Сортировка данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    allowed_in_call_types:
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                    allowed_out_call_types:
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                    call_recording:
+                                                        description: да
+                                                        type: string
+                                                    calls_available:
+                                                        description: да
+                                                        example: true
+                                                        type: boolean
+                                                    channels_count:
+                                                        example: 123
+                                                        type: number
+                                                    coach:
+                                                        description: да
+                                                        type: object
+                                                    coach_always_enabled:
+                                                        example: true
+                                                        type: boolean
+                                                    coach_full_name:
+                                                        example: example_string
+                                                        type: string
+                                                    coach_id:
+                                                        example: 123
+                                                        type: number
+                                                    dial_time:
+                                                        example: 123
+                                                        type: number
+                                                    email:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    extension:
+                                                        description: да
+                                                        type: object
+                                                    extension_phone_number:
+                                                        example: example_string
+                                                        type: string
+                                                    extension_queue_enabled:
+                                                        example: true
+                                                        type: boolean
+                                                    extension_voice_mail_enabled:
+                                                        example: true
+                                                        type: boolean
+                                                    first_name:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    full_name:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    group_id:
+                                                        example: 123
+                                                        type: number
+                                                    group_name:
+                                                        example: example_string
+                                                        type: string
+                                                    groups:
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            example: 123
+                                                            type: number
+                                                        type: array
+                                                    id:
+                                                        description: да
+                                                        example: 123
+                                                        type: number
+                                                    in_external_allowed_call_directions:
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                    in_internal_allowed_call_directions:
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                    last_name:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    login:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    operator:
+                                                        type: object
+                                                    operator_chat_enabled:
+                                                        example: true
+                                                        type: boolean
+                                                    operator_chats_available:
+                                                        example: true
+                                                        type: boolean
+                                                    operator_display_name:
+                                                        example: example_string
+                                                        type: string
+                                                    operator_invite_to_chat_enabled:
+                                                        example: true
+                                                        type: boolean
+                                                    operator_login:
+                                                        example: example_string
+                                                        type: string
+                                                    operator_offline_message_enabled:
+                                                        example: true
+                                                        type: boolean
+                                                    operator_position_id:
+                                                        example: 123
+                                                        type: number
+                                                    operator_position_name:
+                                                        example: example_string
+                                                        type: string
+                                                    operator_sites:
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                    out_external_allowed_call_directions:
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                    out_internal_allowed_call_directions:
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                    patronymic:
+                                                        example: example_string
+                                                        type: string
+                                                    phone_id:
+                                                        example: 123
+                                                        type: number
+                                                    phone_number:
+                                                        example: example_string
+                                                        type: string
+                                                    phone_numbers:
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                    schedule_id:
+                                                        description: да
+                                                        example: 123
+                                                        type: number
+                                                    schedule_name:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    site_domain_name:
+                                                        example: example_string
+                                                        type: string
+                                                    site_id:
+                                                        example: 123
+                                                        type: number
+                                                    status:
+                                                        type: string
+                                                    status_id:
+                                                        description: да
+                                                        example: 123
+                                                        type: number
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Получение списка сотрудников
+            tags:
+                - novofon
+    /get.group_employees:
+        get:
+            description: "Получение списка групп сотрудников\n\n**Request Parameters:** 7\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n**Response Parameters:** 12\n\n- `id` (number): да\n\n- `employee_id` (number): \n\n- `employee_full_name` (string): \n\n- `employee_phone_number_id` (number): \n\n- `available` (boolean): \n\n- `group_phone_number` (string): да\n\n- `queue_enabled` (boolean): да\n\n- `name` (string): да\n\n- `members` (array): \n\n- `phone_numbers` (array): да\n\n- `employee_phone_number` (string): \n\n- `channels_count` (number): да"
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: get.group_employees
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        fields:
+                                            description: См. раздел "Представление возвращаемых данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        filter:
+                                            description: См. раздел "Критерии фильтрации"
+                                            type: object
+                                        limit:
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        offset:
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        sort:
+                                            description: См. раздел "Сортировка данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    available:
+                                                        example: true
+                                                        type: boolean
+                                                    channels_count:
+                                                        description: да
+                                                        example: 123
+                                                        type: number
+                                                    employee_full_name:
+                                                        example: example_string
+                                                        type: string
+                                                    employee_id:
+                                                        example: 123
+                                                        type: number
+                                                    employee_phone_number:
+                                                        example: example_string
+                                                        type: string
+                                                    employee_phone_number_id:
+                                                        example: 123
+                                                        type: number
+                                                    group_phone_number:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    id:
+                                                        description: да
+                                                        example: 123
+                                                        type: number
+                                                    members:
+                                                        example: []
+                                                        items:
+                                                            example: 123
+                                                            type: number
+                                                        type: array
+                                                    name:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    phone_numbers:
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                    queue_enabled:
+                                                        description: да
+                                                        example: true
+                                                        type: boolean
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Получение списка групп сотрудников
+            tags:
+                - novofon
+    /get.statuses:
+        get:
+            description: "Получение списка статусов\n\n**Request Parameters:** 8\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `is_deleted` (boolean, optional): Признак удаления статуса. По умолчанию \"false\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n**Response Parameters:** 14\n\n- `out_internal_allowed_call_directions` (array): \n\n- `allowed_phone_protocols` (array): \n\n- `name` (string): да\n\n- `is_deleted` (boolean): \n\n- `in_internal_allowed_call_directions` (array): \n\n- `is_select_allowed` (boolean): \n\n- `is_worktime` (boolean): \n\n- `is_auto_out_calls_ready` (boolean): \n\n- `id` (number): да\n\n- `mnemonic` (enum): да\n\n- `description` (string): \n\n- `color` (string): \n\n- `in_external_allowed_call_directions` (array): \n\n- `out_external_allowed_call_directions` (array): "
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: get.statuses
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        fields:
+                                            description: См. раздел "Представление возвращаемых данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        filter:
+                                            description: См. раздел "Критерии фильтрации"
+                                            type: object
+                                        is_deleted:
+                                            description: Признак удаления статуса. По умолчанию "false"
+                                            example: true
+                                            type: boolean
+                                        limit:
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        offset:
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        sort:
+                                            description: См. раздел "Сортировка данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    allowed_phone_protocols:
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                    color:
+                                                        example: example_string
+                                                        type: string
+                                                    description:
+                                                        example: example_string
+                                                        type: string
+                                                    id:
+                                                        description: да
+                                                        example: 123
+                                                        type: number
+                                                    in_external_allowed_call_directions:
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                    in_internal_allowed_call_directions:
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                    is_auto_out_calls_ready:
+                                                        example: true
+                                                        type: boolean
+                                                    is_deleted:
+                                                        example: true
+                                                        type: boolean
+                                                    is_select_allowed:
+                                                        example: true
+                                                        type: boolean
+                                                    is_worktime:
+                                                        example: true
+                                                        type: boolean
+                                                    mnemonic:
+                                                        description: да
+                                                        type: string
+                                                    name:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    out_external_allowed_call_directions:
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                    out_internal_allowed_call_directions:
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Получение списка статусов
+            tags:
+                - novofon
+    /update.deal_employees:
+        put:
+            description: |-
+                Обновление сотрудника
+
+                **Request Parameters:** 4
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `ext_id` (string, required): Внешний идентификатор сотрудника
+
+                - `name` (string, optional): Имя сотрудника
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: update.deal_employees
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        ext_id:
+                                            description: Внешний идентификатор сотрудника
+                                            example: example_string
+                                            type: string
+                                        name:
+                                            description: Имя сотрудника
+                                            example: example_string
+                                            type: string
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - ext_id
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Обновление сотрудника
+            tags:
+                - novofon
+    /update.employee_positions:
+        put:
+            description: |-
+                Редактирование должности сотрудника
+
+                **Request Parameters:** 4
+
+                - `name` (string, required): Название должности
+
+                - `id` (number, required): Уникальный идентификатор должности
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: update.employee_positions
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        id:
+                                            description: Уникальный идентификатор должности
+                                            example: 123
+                                            type: number
+                                        name:
+                                            description: Название должности
+                                            example: example_string
+                                            type: string
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - name
+                                        - id
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Редактирование должности сотрудника
+            tags:
+                - novofon
+    /update.employees:
+        put:
+            description: |-
+                Создание сотрудника
+
+                **Request Parameters:** 40
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `out_external_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для исходящих внешних звонков in - входящие вызовы out - исходящие вызовы
+
+                - `schedule_id` (number, optional): График активности
+
+                - `groups` (array, optional): Список уникальных идентификаторов групп в которых состоит сотрудник
+
+                - `phone_number` (string, required): Номер телефона сотрудника Логика обновления: - телефона уже привязан к этому сотруднику - обновляем параметры - телефона не привязан к этому сотруднику - добавляем его - телефона нет в аккаунте - создаем новый и привязываем к сотруднику
+
+                - `id` (number, required): Уникальный идентификатор сотрудника
+
+                - `status_id` (number, optional): Уникальный идентификатор статуса. Для получения полного списка статусов необходимо использовать метод "get.statuses"
+
+                - `calls_available` (boolean, optional): Параметр будет удален в ближайшее время. Используйте вместо него параметры: in_external_allowed_call_directions, in_internal_allowed_call_directions Доступность для звонков
+
+                - `in_internal_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для входящих внутренних звонков in - входящие вызовы out - исходящие вызовы
+
+                - `phone_id` (number, optional): Уникальный идентификатор телефона сотрудника из "get.employees#phone_id" Указываем в случаи если хотим изменить существующий номер. Если не указываем, то поиск производится по номеру телефона (phone_number):
+
+                - `channels_count` (number, optional): Количество линий на телефоне
+
+                - `patronymic` (string, optional): Отчество сотрудника
+
+                - `out_internal_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для исходящих внутренних звонков in - входящие вызовы out - исходящие вызовы
+
+                - `coach` (object, optional): Тренер для сотрудника Зависит от компонента "trainer"
+
+                - `operator_offline_message_enabled` (boolean, optional): Разрешено ли обрабатывать заявки
+
+                - `first_name` (string, optional): Имя сотрудника
+
+                - `last_name` (string, required): Фамилия сотрудника
+
+                - `status` (enum, optional): Статус номера.
+
+                - `allowed_out_call_types` (array, optional): Параметр будет удален в ближайшее время. Используйте вместо него параметры: out_external_allowed_call_directions, out_internal_allowed_call_directions Какие типы исходящих звонков разрешены сотруднику internal - внутренние звонки на сотрудников компании external - звонки за пределы компании
+
+                - `email` (string, optional): Адрес электронной почты сотрудника
+
+                - `coach_always_enabled` (boolean, optional): При активации опции все входящие звонки сотрудника будут дублироваться его тренеру. Значение "true" возможно установить если задан параметр "coach_id".
+
+                - `coach_id` (number, optional): Уникальный идентификатор тренера
+
+                - `phone_numbers` (array, required): Список телефонов сотрудника Важно понимать, что при создании нового сотрудника номер уже может существовать у другого сотрудника и если номеру переданы новые параметры, то они будут так же обновлены уже существующему номеру.
+
+                - `operator` (object, optional): Оператор рабочего места Зависит от компонента "consultant"
+
+                - `operator_login` (string, required): Логин сотрудника для входа в приложение «Рабочее место оператора»
+
+                - `operator_password` (string, required): Пароль сотрудника для входа в приложение «Рабочее место оператора»
+
+                - `operator_position_id` (number, optional): Должность сотрудника в подписи
+
+                - `operator_chat_enabled` (boolean, optional): Разрешено ли участвовать в чатах с посетителями
+
+                - `operator_sites` (array, optional): Список уникальных идентификаторов сайтов для которых доступен сотрудник.
+
+                - `allowed_in_call_types` (array, optional): Параметр будет удален в ближайшее время. Используйте вместо него параметры: in_external_allowed_call_directions, in_internal_allowed_call_directions Какие типы входящих звонков разрешены сотруднику internal - внутренние звонки от сотрудников компании external - внешние звонки от клиентов
+
+                - `call_recording` (enum, optional): Статус записи разговоров Зависит от компонента "recording"
+
+                - `dial_time` (number, optional): Время дозвона по телефону
+
+                - `extension_voice_mail_enabled` (boolean, required): В случае, если все номера, указанные для этого сотрудника в списке телефонов, заняты, то звонящему абоненту будет предложено оставить голосовое сообщение.
+
+                - `operator_display_name` (string, optional): Имя оператора в чате
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `in_external_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для входящих внешних звонков in - входящие вызовы out - исходящие вызовы
+
+                - `extension` (object, optional): Внутренний номер сотрудника
+
+                - `extension_phone_number` (string, required): Внутренний номер
+
+                - `extension_queue_enabled` (boolean, required): В случае, если все номера, указанные для этого сотрудника в списке телефонов, заняты, то звонящий абонент встанет в очередь на повторный дозвон до телефонов в списке и будет ждать первый освободившийся номер.
+
+                - `operator_invite_to_chat_enabled` (boolean, optional): Разрешено ли приглашать в чат
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: update.employees
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        allowed_in_call_types:
+                                            description: 'Параметр будет удален в ближайшее время. Используйте вместо него параметры: in_external_allowed_call_directions, in_internal_allowed_call_directions Какие типы входящих звонков разрешены сотруднику internal - внутренние звонки от сотрудников компании external - внешние звонки от клиентов'
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        allowed_out_call_types:
+                                            description: 'Параметр будет удален в ближайшее время. Используйте вместо него параметры: out_external_allowed_call_directions, out_internal_allowed_call_directions Какие типы исходящих звонков разрешены сотруднику internal - внутренние звонки на сотрудников компании external - звонки за пределы компании'
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        call_recording:
+                                            description: Статус записи разговоров Зависит от компонента "recording"
+                                            type: string
+                                        calls_available:
+                                            description: 'Параметр будет удален в ближайшее время. Используйте вместо него параметры: in_external_allowed_call_directions, in_internal_allowed_call_directions Доступность для звонков'
+                                            enum:
+                                                - "true"
+                                                - "false"
+                                            example: "true"
+                                            type: boolean
+                                        channels_count:
+                                            description: Количество линий на телефоне
+                                            example: 123
+                                            type: number
+                                        coach:
+                                            description: Тренер для сотрудника Зависит от компонента "trainer"
+                                            type: object
+                                        coach_always_enabled:
+                                            description: При активации опции все входящие звонки сотрудника будут дублироваться его тренеру. Значение "true" возможно установить если задан параметр "coach_id".
+                                            enum:
+                                                - "true"
+                                                - "false"
+                                            example: "true"
+                                            type: boolean
+                                        coach_id:
+                                            description: Уникальный идентификатор тренера
+                                            example: 123
+                                            type: number
+                                        dial_time:
+                                            description: Время дозвона по телефону
+                                            example: 123
+                                            type: number
+                                        email:
+                                            description: Адрес электронной почты сотрудника
+                                            example: example_string
+                                            type: string
+                                        extension:
+                                            description: Внутренний номер сотрудника
+                                            type: object
+                                        extension_phone_number:
+                                            description: Внутренний номер
+                                            example: example_string
+                                            type: string
+                                        extension_queue_enabled:
+                                            description: В случае, если все номера, указанные для этого сотрудника в списке телефонов, заняты, то звонящий абонент встанет в очередь на повторный дозвон до телефонов в списке и будет ждать первый освободившийся номер.
+                                            enum:
+                                                - "true"
+                                                - "false"
+                                            example: "true"
+                                            type: boolean
+                                        extension_voice_mail_enabled:
+                                            description: В случае, если все номера, указанные для этого сотрудника в списке телефонов, заняты, то звонящему абоненту будет предложено оставить голосовое сообщение.
+                                            enum:
+                                                - "true"
+                                                - "false"
+                                            example: "true"
+                                            type: boolean
+                                        first_name:
+                                            description: Имя сотрудника
+                                            example: example_string
+                                            type: string
+                                        groups:
+                                            description: Список уникальных идентификаторов групп в которых состоит сотрудник
+                                            example: []
+                                            items:
+                                                example: 123
+                                                type: number
+                                            type: array
+                                        id:
+                                            description: Уникальный идентификатор сотрудника
+                                            example: 123
+                                            type: number
+                                        in_external_allowed_call_directions:
+                                            description: Какие направления вызовов разрешены сотруднику для входящих внешних звонков in - входящие вызовы out - исходящие вызовы
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        in_internal_allowed_call_directions:
+                                            description: Какие направления вызовов разрешены сотруднику для входящих внутренних звонков in - входящие вызовы out - исходящие вызовы
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        last_name:
+                                            description: Фамилия сотрудника
+                                            example: example_string
+                                            type: string
+                                        operator:
+                                            description: Оператор рабочего места Зависит от компонента "consultant"
+                                            type: object
+                                        operator_chat_enabled:
+                                            description: Разрешено ли участвовать в чатах с посетителями
+                                            enum:
+                                                - "true"
+                                                - "false"
+                                            example: "true"
+                                            type: boolean
+                                        operator_display_name:
+                                            description: Имя оператора в чате
+                                            example: example_string
+                                            type: string
+                                        operator_invite_to_chat_enabled:
+                                            description: Разрешено ли приглашать в чат
+                                            enum:
+                                                - "true"
+                                                - "false"
+                                            example: "true"
+                                            type: boolean
+                                        operator_login:
+                                            description: Логин сотрудника для входа в приложение «Рабочее место оператора»
+                                            example: example_string
+                                            type: string
+                                        operator_offline_message_enabled:
+                                            description: Разрешено ли обрабатывать заявки
+                                            enum:
+                                                - "true"
+                                                - "false"
+                                            example: "true"
+                                            type: boolean
+                                        operator_password:
+                                            description: Пароль сотрудника для входа в приложение «Рабочее место оператора»
+                                            example: example_string
+                                            type: string
+                                        operator_position_id:
+                                            description: Должность сотрудника в подписи
+                                            example: 123
+                                            type: number
+                                        operator_sites:
+                                            description: Список уникальных идентификаторов сайтов для которых доступен сотрудник.
+                                            example: []
+                                            items:
+                                                example: 123
+                                                type: number
+                                            type: array
+                                        out_external_allowed_call_directions:
+                                            description: Какие направления вызовов разрешены сотруднику для исходящих внешних звонков in - входящие вызовы out - исходящие вызовы
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        out_internal_allowed_call_directions:
+                                            description: Какие направления вызовов разрешены сотруднику для исходящих внутренних звонков in - входящие вызовы out - исходящие вызовы
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        patronymic:
+                                            description: Отчество сотрудника
+                                            example: example_string
+                                            type: string
+                                        phone_id:
+                                            description: 'Уникальный идентификатор телефона сотрудника из "get.employees#phone_id" Указываем в случаи если хотим изменить существующий номер. Если не указываем, то поиск производится по номеру телефона (phone_number):'
+                                            example: 123
+                                            type: number
+                                        phone_number:
+                                            description: 'Номер телефона сотрудника Логика обновления: - телефона уже привязан к этому сотруднику - обновляем параметры - телефона не привязан к этому сотруднику - добавляем его - телефона нет в аккаунте - создаем новый и привязываем к сотруднику'
+                                            example: example_string
+                                            type: string
+                                        phone_numbers:
+                                            description: Список телефонов сотрудника Важно понимать, что при создании нового сотрудника номер уже может существовать у другого сотрудника и если номеру переданы новые параметры, то они будут так же обновлены уже существующему номеру.
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        schedule_id:
+                                            description: График активности
+                                            example: 123
+                                            type: number
+                                        status:
+                                            description: Статус номера.
+                                            enum:
+                                                - active
+                                                - inactive
+                                            example: active
+                                            type: string
+                                        status_id:
+                                            description: Уникальный идентификатор статуса. Для получения полного списка статусов необходимо использовать метод "get.statuses"
+                                            example: 123
+                                            type: number
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - extension_voice_mail_enabled
+                                        - extension_phone_number
+                                        - extension_queue_enabled
+                                        - access_token
+                                        - phone_number
+                                        - id
+                                        - last_name
+                                        - phone_numbers
+                                        - operator_login
+                                        - operator_password
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Редактирование сотрудника
+            tags:
+                - novofon
+    /update.group_employees:
+        put:
+            description: |-
+                Редактирование группы сотрудников
+
+                **Request Parameters:** 8
+
+                - `queue_enabled` (boolean, optional): Значение по умолчанию "false". В случае, если все номера, указанные для этой группы сотрудников, заняты, то звонящий абонент встанет в очередь на повторный дозвон до телефонов в списке и будет ждать первый освободившийся номер. Зависит от компонента "va"
+
+                - `channels_count` (number, required): Количество одновременных линий при обзвоне Зависит от компонента "va"
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `id` (number, required): Уникальный идентификатор группы
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `name` (string, required): Название группы
+
+                - `members` (array, optional): Список уникальных идентификаторов сотрудников, которые состоят в группе
+
+                - `group_phone_number` (string, optional): Внутренний номер группы Зависит от компонента "va"
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: update.group_employees
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        channels_count:
+                                            description: Количество одновременных линий при обзвоне Зависит от компонента "va"
+                                            example: 123
+                                            type: number
+                                        group_phone_number:
+                                            description: Внутренний номер группы Зависит от компонента "va"
+                                            example: example_string
+                                            type: string
+                                        id:
+                                            description: Уникальный идентификатор группы
+                                            example: 123
+                                            type: number
+                                        members:
+                                            description: Список уникальных идентификаторов сотрудников, которые состоят в группе
+                                            example: []
+                                            items:
+                                                example: 123
+                                                type: number
+                                            type: array
+                                        name:
+                                            description: Название группы
+                                            example: example_string
+                                            type: string
+                                        queue_enabled:
+                                            description: Значение по умолчанию "false". В случае, если все номера, указанные для этой группы сотрудников, заняты, то звонящий абонент встанет в очередь на повторный дозвон до телефонов в списке и будет ждать первый освободившийся номер. Зависит от компонента "va"
+                                            example: true
+                                            type: boolean
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - channels_count
+                                        - access_token
+                                        - id
+                                        - name
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Редактирование группы сотрудников
+            tags:
+                - novofon
+    /update.group_employees_numbers:
+        put:
+            description: |-
+                Изменение приоритета и доступности номера сотрудника в группе сотрудников
+
+                **Request Parameters:** 6
+
+                - `id` (number, required): Уникальный идентификатор группы
+
+                - `user_id` (number, required): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `phone_numbers` (array, required): Список городских, мобильных и sip номеров сотрудников, которые входят в группу, с указанием их доступности и приоритетом обзвона. Приоритет обзвона номеров определяется положением номера в списке. Обзвон указанного списка номеров в группе возможен по внутреннему номеру группы (см. параметр "group_phone_number"). Нужно передавать все номера
+
+                - `employee_phone_number_id` (number, required): Уникальный идентификатор номера сотрудника в группе
+
+                - `available` (boolean, required): Доступность номера в группе
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: update.group_employees_numbers
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        available:
+                                            description: Доступность номера в группе
+                                            example: true
+                                            type: boolean
+                                        employee_phone_number_id:
+                                            description: Уникальный идентификатор номера сотрудника в группе
+                                            example: 123
+                                            type: number
+                                        id:
+                                            description: Уникальный идентификатор группы
+                                            example: 123
+                                            type: number
+                                        phone_numbers:
+                                            description: Список городских, мобильных и sip номеров сотрудников, которые входят в группу, с указанием их доступности и приоритетом обзвона. Приоритет обзвона номеров определяется положением номера в списке. Обзвон указанного списка номеров в группе возможен по внутреннему номеру группы (см. параметр "group_phone_number"). Нужно передавать все номера
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - id
+                                        - user_id
+                                        - phone_numbers
+                                        - employee_phone_number_id
+                                        - available
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Изменение приоритета и доступности номера сотрудника в группе сотрудников
+            tags:
+                - novofon
+x-errors:
+    errors:
+        - code: invalid_parameter_value
+          description: Если переданы не все номера в массиве phone_numbers
+          mnemonic: "-32602"

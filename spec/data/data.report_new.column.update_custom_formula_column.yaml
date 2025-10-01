@@ -12,23 +12,23 @@ paths:
 
                 **Request Parameters:** 9
 
+                - `access_token` (string, required): Ключ сессии аутентификации
+
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод ["get.customer_users"](../Partners.md#get_customer_user)
+
+                - `id` (string, required): Уникальный идентификатор пользовательского столбца. Для получения списка пользовательских столбцов необходимо использовать метод ["getobj.columns_tree"](../getobj_columns_tree)
 
                 - `name` (string, required): Название столбца
 
+                - `data_type` (enum, required): Формат данных
+
                 - `description` (string, optional): Описание столбца
 
-                - `data_type` (enum, required): Формат данных
+                - `formula` (array, required): Формула для вычисления столбца. Важен порядок
 
                 - `element_type` (enum, required): Тип элементов которые будут использоваться в формуле
 
                 - `value` (string, required): Идентификатор столбца, значение, арифметическая операция, приоритет который будет участвовать в формуле
-
-                - `access_token` (string, required): Ключ сессии аутентификации
-
-                - `id` (string, required): Уникальный идентификатор пользовательского столбца. Для получения списка пользовательских столбцов необходимо использовать метод ["getobj.columns_tree"](../getobj_columns_tree)
-
-                - `formula` (array, required): Формула для вычисления столбца. Важен порядок
             requestBody:
                 required: true
                 content:
@@ -109,13 +109,13 @@ paths:
                                                 - "/ \n        Если element_type = priority - можнот указать значения value = ("
                                                 - )
                                     required:
-                                        - name
-                                        - data_type
-                                        - element_type
-                                        - value
                                         - access_token
                                         - id
+                                        - name
+                                        - data_type
                                         - formula
+                                        - element_type
+                                        - value
                             required:
                                 - jsonrpc
                                 - id

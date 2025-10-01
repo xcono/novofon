@@ -1,0 +1,570 @@
+info:
+    description: Combined Schedule API specifications
+    title: Novofon Schedule API
+    version: 1.0.0
+openapi: 3.0.0
+paths:
+    /create.schedules:
+        post:
+            description: |-
+                Создание графика активности
+
+                **Request Parameters:** 12
+
+                - `days` (array, required): Дни недели или месяца Пример циклического календаря: [2,2] - в цикле будет два рабочих, а затем два нерабочих дня. В итоге график получается два через два. Пример производственного календаря: [7] - Календарь будет активен по рабочим дням согласно производственного календаря; [8] - Календарь будет активен по выходным дням согласно производственного календаря
+
+                - `activity_date_till` (string, optional): Дата окончания активности графика
+
+                - `type` (enum, required): Тип. days_of_week - Календарь по дням недели days_of_month - Календарь по дням месяца business_calendar - Производственный календарь cycle - Циклический календарь
+
+                - `activity_time` (array, optional): Время активности графика. Если параметр не задан, то график работает без ограничений
+
+                - `time_from` (string, required): Время начала активности графика
+
+                - `time_till` (string, required): Время окончания активности графика. Должно быть обязательно больше чем указано в параметре "time_from"
+
+                - `activity_date_from` (string, optional): Дата начала активности графика
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `name` (string, required): Название графика активности
+
+                - `schedules` (array, required): Расписания работы
+
+                - `activity_days` (object, required): Дни в которые график активен
+
+                **Response Parameters:** 1
+
+                - `id` (number): Уникальный идентификатор графика активности
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: create.schedules
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        activity_date_from:
+                                            description: Дата начала активности графика
+                                            example: example_string
+                                            type: string
+                                        activity_date_till:
+                                            description: Дата окончания активности графика
+                                            example: example_string
+                                            type: string
+                                        activity_days:
+                                            description: Дни в которые график активен
+                                            type: object
+                                        activity_time:
+                                            description: Время активности графика. Если параметр не задан, то график работает без ограничений
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        days:
+                                            description: 'Дни недели или месяца Пример циклического календаря: [2,2] - в цикле будет два рабочих, а затем два нерабочих дня. В итоге график получается два через два. Пример производственного календаря: [7] - Календарь будет активен по рабочим дням согласно производственного календаря; [8] - Календарь будет активен по выходным дням согласно производственного календаря'
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        name:
+                                            description: Название графика активности
+                                            example: example_string
+                                            type: string
+                                        schedules:
+                                            description: Расписания работы
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        time_from:
+                                            description: Время начала активности графика
+                                            example: example_string
+                                            type: string
+                                        time_till:
+                                            description: Время окончания активности графика. Должно быть обязательно больше чем указано в параметре "time_from"
+                                            example: example_string
+                                            type: string
+                                        type:
+                                            description: Тип. days_of_week - Календарь по дням недели days_of_month - Календарь по дням месяца business_calendar - Производственный календарь cycle - Циклический календарь
+                                            type: string
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - name
+                                        - schedules
+                                        - activity_days
+                                        - days
+                                        - type
+                                        - time_from
+                                        - time_till
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    id:
+                                                        description: Уникальный идентификатор графика активности
+                                                        example: 123
+                                                        type: number
+                                                required:
+                                                    - id
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Создание графика активности
+            tags:
+                - novofon
+    /delete.schedules:
+        delete:
+            description: |-
+                Удаление графика активности
+
+                **Request Parameters:** 3
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `id` (number, required): Уникальный идентификатор графика активности
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: delete.schedules
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        id:
+                                            description: Уникальный идентификатор графика активности
+                                            example: 123
+                                            type: number
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - id
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Удаление графика активности
+            tags:
+                - novofon
+    /get.schedules:
+        get:
+            description: "Получение списка графиков активности\n\n**Request Parameters:** 7\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n**Response Parameters:** 11\n\n- `id` (number): да\n\n- `schedules` (array): да\n\n- `time_from` (string): \n\n- `time_till` (string): \n\n- `activity_date_from` (string): \n\n- `activity_date_till` (string): \n\n- `name` (string): да\n\n- `activity_days` (object): \n\n- `type` (enum): \n\n- `days` (array): \n\n- `activity_time` (array): "
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: get.schedules
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        fields:
+                                            description: См. раздел "Представление возвращаемых данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        filter:
+                                            description: См. раздел "Критерии фильтрации"
+                                            type: object
+                                        limit:
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        offset:
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        sort:
+                                            description: См. раздел "Сортировка данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    activity_date_from:
+                                                        example: example_string
+                                                        type: string
+                                                    activity_date_till:
+                                                        example: example_string
+                                                        type: string
+                                                    activity_days:
+                                                        type: object
+                                                    activity_time:
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                    days:
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                    id:
+                                                        description: да
+                                                        example: 123
+                                                        type: number
+                                                    name:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    schedules:
+                                                        description: да
+                                                        example: []
+                                                        items:
+                                                            example: example_string
+                                                            type: string
+                                                        type: array
+                                                    time_from:
+                                                        example: example_string
+                                                        type: string
+                                                    time_till:
+                                                        example: example_string
+                                                        type: string
+                                                    type:
+                                                        type: string
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Получение списка графиков активности
+            tags:
+                - novofon
+    /update.schedules:
+        put:
+            description: |-
+                Редактирование графика активности
+
+                **Request Parameters:** 4
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `id` (number, required): Уникальный идентификатор графика активности
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `name` (string, required): Название графика активности
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: update.schedules
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        id:
+                                            description: Уникальный идентификатор графика активности
+                                            example: 123
+                                            type: number
+                                        name:
+                                            description: Название графика активности
+                                            example: example_string
+                                            type: string
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - id
+                                        - name
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Редактирование графика активности
+            tags:
+                - novofon

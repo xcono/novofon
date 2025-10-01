@@ -1,0 +1,1059 @@
+info:
+    description: Combined Deal API specifications
+    title: Novofon Deal API
+    version: 1.0.0
+openapi: 3.0.0
+paths:
+    /create.deal_user_field:
+        post:
+            description: |-
+                Загрузка пользовательских полей сделок
+
+                **Request Parameters:** 5
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `ext_id` (string, required): Внешний идентификатор пользовательского поля сделки
+
+                - `name` (string, required): Имя пользовательского поля сделки
+
+                - `data_type` (enum, required): Тип данных в поле. Принимает одно из двух значений numeric и string
+
+                **Response Parameters:** 1
+
+                - `ext_id` (string): Внешний идентификатор пользовательского поля сделки
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: create.deal_user_field
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        data_type:
+                                            description: Тип данных в поле. Принимает одно из двух значений numeric и string
+                                            type: string
+                                        ext_id:
+                                            description: Внешний идентификатор пользовательского поля сделки
+                                            example: example_string
+                                            type: string
+                                        name:
+                                            description: Имя пользовательского поля сделки
+                                            example: example_string
+                                            type: string
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - ext_id
+                                        - name
+                                        - data_type
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    ext_id:
+                                                        description: Внешний идентификатор пользовательского поля сделки
+                                                        example: example_string
+                                                        type: string
+                                                required:
+                                                    - ext_id
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Загрузка пользовательских полей сделок
+            tags:
+                - novofon
+    /delete.deal_user_field:
+        delete:
+            description: Удаление пользовательских полей сделок
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Удаление пользовательских полей сделок
+            tags:
+                - novofon
+    /delete.deals:
+        delete:
+            description: |-
+                Удаление сделки
+
+                **Request Parameters:** 3
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `ext_id` (string, required): Внешний идентификатор сделки
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: delete.deals
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        ext_id:
+                                            description: Внешний идентификатор сделки
+                                            example: example_string
+                                            type: string
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - ext_id
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Удаление сделки
+            tags:
+                - novofon
+    /get.deal_user_fields:
+        get:
+            description: |-
+                Получение пользовательских полей сделок
+
+                **Request Parameters:** 7
+
+                - `sort` (array, optional): См. раздел "Сортировка данных"
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `limit` (number, optional): Количество возвращаемых записей. См. раздел "Постраничный вывод"
+
+                - `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+
+                - `filter` (object, optional): См. раздел "Критерии фильтрации"
+
+                - `fields` (array, optional): См. раздел "Представление возвращаемых данных"
+
+                **Response Parameters:** 3
+
+                - `ext_id` (string): да
+
+                - `name` (string): да
+
+                - `data_type` (string): да
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: get.deal_user_fields
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        fields:
+                                            description: См. раздел "Представление возвращаемых данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        filter:
+                                            description: См. раздел "Критерии фильтрации"
+                                            type: object
+                                        limit:
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        offset:
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        sort:
+                                            description: См. раздел "Сортировка данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    data_type:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    ext_id:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    name:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                required:
+                                                    - data_type
+                                                    - ext_id
+                                                    - name
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Получение пользовательских полей сделок
+            tags:
+                - novofon
+    /get.deals_history:
+        get:
+            description: "Получение истории сделок\n\n**Request Parameters:** 7\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n**Response Parameters:** 14\n\n- `closed_date_time` (iso8601): да\n\n- `modified_stage_date_time` (iso8601): да\n\n- `contact_ext_ids` (array): \n\n- `main_contact_ext_id` (string): да\n\n- `employee_ext_id` (string): \n\n- `revenue` (number): да\n\n- `sales_funnel_ext_id` (string): да\n\n- `stage_ext_id` (string): да\n\n- `ext_id` (string): да\n\n- `name` (string): \n\n- `created_date_time` (iso8601): да\n\n- `comments` (string): \n\n- `source` (string): да\n\n- `is_generated` (boolean): "
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: get.deals_history
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        fields:
+                                            description: См. раздел "Представление возвращаемых данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        filter:
+                                            description: См. раздел "Критерии фильтрации"
+                                            type: object
+                                        limit:
+                                            description: Количество возвращаемых записей. См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        offset:
+                                            description: Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+                                            example: 123
+                                            type: number
+                                        sort:
+                                            description: См. раздел "Сортировка данных"
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                properties:
+                                                    closed_date_time:
+                                                        description: да
+                                                    comments:
+                                                        example: example_string
+                                                        type: string
+                                                    contact_ext_ids:
+                                                        example: []
+                                                        items:
+                                                            example: 123
+                                                            type: number
+                                                        type: array
+                                                    created_date_time:
+                                                        description: да
+                                                    employee_ext_id:
+                                                        example: example_string
+                                                        type: string
+                                                    ext_id:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    is_generated:
+                                                        example: true
+                                                        type: boolean
+                                                    main_contact_ext_id:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    modified_stage_date_time:
+                                                        description: да
+                                                    name:
+                                                        example: example_string
+                                                        type: string
+                                                    revenue:
+                                                        description: да
+                                                        example: 123
+                                                        type: number
+                                                    sales_funnel_ext_id:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    source:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                    stage_ext_id:
+                                                        description: да
+                                                        example: example_string
+                                                        type: string
+                                                required:
+                                                    - closed_date_time
+                                                    - modified_stage_date_time
+                                                    - contact_ext_ids
+                                                    - main_contact_ext_id
+                                                    - employee_ext_id
+                                                    - revenue
+                                                    - sales_funnel_ext_id
+                                                    - stage_ext_id
+                                                    - ext_id
+                                                    - name
+                                                    - created_date_time
+                                                    - source
+                                                    - is_generated
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Получение истории сделок
+            tags:
+                - novofon
+    /get.deals_in_processing:
+        get:
+            description: |-
+                Получение количества сделок находящихся в обработке
+
+                **Request Parameters:** 2
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: get.deals_in_processing
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Получение количества сделок находящихся в обработке
+            tags:
+                - novofon
+    /update.deal_user_field:
+        put:
+            description: |-
+                Редактирование пользовательских полей сделок
+
+                **Request Parameters:** 4
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `ext_id` (string, required): Внешний идентификатор пользовательского поля сделки
+
+                - `name` (string, required): Имя пользовательского поля сделки
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: update.deal_user_field
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        ext_id:
+                                            description: Внешний идентификатор пользовательского поля сделки
+                                            example: example_string
+                                            type: string
+                                        name:
+                                            description: Имя пользовательского поля сделки
+                                            example: example_string
+                                            type: string
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                    required:
+                                        - access_token
+                                        - ext_id
+                                        - name
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Редактирование пользовательских полей сделок
+            tags:
+                - novofon
+    /upload.deals_history:
+        post:
+            description: |-
+                Загрузка сделок
+
+                **Request Parameters:** 19
+
+                - `modified_date_time` (iso8601, optional): Дата и время изменения сделки (YYYY-MM-DD hh:mm:ss) Если параметр не передан, будет проставлена дата и время вызова метода
+
+                - `closed_date_time` (iso8601, optional): Дата и время закрытия сделки (YYYY-MM-DD hh:mm:ss)
+
+                - `employee_ext_id` (string, optional): Ответственный сотрудник за сделку
+
+                - `sales_funnel_ext_id` (string, required): Идентификатор воронки продаж
+
+                - `source` (string, optional): Источник сделки
+
+                - `user_fields` (array, optional): Пользовательские поля проставленные у сделки. Перед тем как передать, нужно создать пользовательское поле через метод "create.deal_user_field")
+
+                - `contact_ext_ids` (array, optional): Контакт привязанный к сделке. Обязательный если указан main_contact_ext_id.
+
+                - `value` (string, required): значение пользовательского поля сделки
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `ext_id` (string, required): Внешний идентификатор пользовательского поля сделки
+
+                - `name` (string, required): Имя сделки
+
+                - `revenue` (number, optional): Выручка по сделке
+
+                - `stage_ext_id` (string, required): Идентификатор этапа воронки продаж
+
+                - `deals` (array, required): Список сделок. Лимит 1000 сделок
+
+                - `created_date_time` (iso8601, required): Дата и время создания сделки (YYYY-MM-DD hh:mm:ss)
+
+                - `modified_stage_date_time` (iso8601, required): Дата и время перехода сделки в текущий этап (YYYY-MM-DD hh:mm:ss)
+
+                - `main_contact_ext_id` (string, optional): Главный контакт сделки из списка contact_ext_ids. Обязательный если передается contact_ext_ids.
+
+                - `comments` (string, optional): Комментарий к сделке
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            properties:
+                                id:
+                                    description: Request identifier
+                                    type: number
+                                jsonrpc:
+                                    description: JSON-RPC version
+                                    example: "2.0"
+                                    type: string
+                                method:
+                                    description: Method name
+                                    example: upload.deals_history
+                                    type: string
+                                params:
+                                    properties:
+                                        access_token:
+                                            description: Ключ сессии аутентификации
+                                            example: example_string
+                                            type: string
+                                        closed_date_time:
+                                            description: Дата и время закрытия сделки (YYYY-MM-DD hh:mm:ss)
+                                        comments:
+                                            description: Комментарий к сделке
+                                            example: example_string
+                                            type: string
+                                        contact_ext_ids:
+                                            description: Контакт привязанный к сделке. Обязательный если указан main_contact_ext_id.
+                                            example: []
+                                            items:
+                                                example: 123
+                                                type: number
+                                            type: array
+                                        created_date_time:
+                                            description: Дата и время создания сделки (YYYY-MM-DD hh:mm:ss)
+                                        deals:
+                                            description: Список сделок. Лимит 1000 сделок
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        employee_ext_id:
+                                            description: Ответственный сотрудник за сделку
+                                            example: example_string
+                                            type: string
+                                        ext_id:
+                                            description: Внешний идентификатор пользовательского поля сделки
+                                            example: example_string
+                                            type: string
+                                        main_contact_ext_id:
+                                            description: Главный контакт сделки из списка contact_ext_ids. Обязательный если передается contact_ext_ids.
+                                            example: example_string
+                                            type: string
+                                        modified_date_time:
+                                            description: Дата и время изменения сделки (YYYY-MM-DD hh:mm:ss) Если параметр не передан, будет проставлена дата и время вызова метода
+                                        modified_stage_date_time:
+                                            description: Дата и время перехода сделки в текущий этап (YYYY-MM-DD hh:mm:ss)
+                                        name:
+                                            description: Имя сделки
+                                            example: example_string
+                                            type: string
+                                        revenue:
+                                            description: Выручка по сделке
+                                            example: 123
+                                            type: number
+                                        sales_funnel_ext_id:
+                                            description: Идентификатор воронки продаж
+                                            example: example_string
+                                            type: string
+                                        source:
+                                            description: Источник сделки
+                                            example: example_string
+                                            type: string
+                                        stage_ext_id:
+                                            description: Идентификатор этапа воронки продаж
+                                            example: example_string
+                                            type: string
+                                        user_fields:
+                                            description: Пользовательские поля проставленные у сделки. Перед тем как передать, нужно создать пользовательское поле через метод "create.deal_user_field")
+                                            example: []
+                                            items:
+                                                example: example_string
+                                                type: string
+                                            type: array
+                                        user_id:
+                                            description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                                            example: 123
+                                            type: number
+                                        value:
+                                            description: значение пользовательского поля сделки
+                                            example: example_string
+                                            type: string
+                                    required:
+                                        - stage_ext_id
+                                        - deals
+                                        - created_date_time
+                                        - modified_stage_date_time
+                                        - sales_funnel_ext_id
+                                        - value
+                                        - access_token
+                                        - ext_id
+                                        - name
+                                    type: object
+                            required:
+                                - jsonrpc
+                                - id
+                                - method
+                                - params
+                            type: object
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    id:
+                                        description: Request identifier
+                                        type: number
+                                    jsonrpc:
+                                        description: JSON-RPC version
+                                        example: "2.0"
+                                        type: string
+                                    result:
+                                        properties:
+                                            data:
+                                                type: object
+                                            metadata:
+                                                description: Response metadata
+                                                type: object
+                                        required:
+                                            - data
+                                            - metadata
+                                        type: object
+                                required:
+                                    - jsonrpc
+                                    - id
+                                    - result
+                                type: object
+                    description: Successful response
+                "400":
+                    content:
+                        application/json:
+                            schema:
+                                properties:
+                                    error:
+                                        properties:
+                                            code:
+                                                type: number
+                                            data:
+                                                type: object
+                                            message:
+                                                type: string
+                                        type: object
+                                    id:
+                                        type: number
+                                    jsonrpc:
+                                        type: string
+                                type: object
+                    description: Error response
+            summary: Загрузка сделок
+            tags:
+                - novofon

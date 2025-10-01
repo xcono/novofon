@@ -12,6 +12,8 @@ paths:
 
                 **Request Parameters:** 6
 
+                - `tag_id` (number, required): Уникальный идентификатор тега, см. метод "get.tags"
+
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
@@ -21,8 +23,6 @@ paths:
                 - `communication_ext_id` (string, optional): Уникальный идентификатор обращения. По данному идентификатору можно получить детализированную информацию используя следующие методы "get.chats_report ", "get.offline_messages_report ", "get.calls_report". Обязательный если не указан communication_id. Игнорируется, если заполнен communication_id
 
                 - `communication_type` (enum, required): Тип обращения.
-
-                - `tag_id` (number, required): Уникальный идентификатор тега, см. метод "get.tags"
             requestBody:
                 required: true
                 content:

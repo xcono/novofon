@@ -12,17 +12,17 @@ paths:
 
                 **Request Parameters:** 2
 
-                - `password` (string, required): Пароль пользователя
-
                 - `login` (string, required): Логин пользователя
 
+                - `password` (string, required): Пароль пользователя
+
                 **Response Parameters:** 3
+
+                - `access_token` (string): Ключ сессии аутентификации
 
                 - `expire_at` (number): Timestamp когда выданный токен перестанет быть валидным
 
                 - `app_id` (number): Уникальный идентификатор клиента
-
-                - `access_token` (string): Ключ сессии аутентификации
             requestBody:
                 required: true
                 content:

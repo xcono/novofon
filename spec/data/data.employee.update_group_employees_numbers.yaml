@@ -12,8 +12,6 @@ paths:
 
                 **Request Parameters:** 6
 
-                - `access_token` (string, required): Ключ сессии аутентификации
-
                 - `id` (number, required): Уникальный идентификатор группы
 
                 - `user_id` (number, required): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
@@ -23,6 +21,8 @@ paths:
                 - `employee_phone_number_id` (number, required): Уникальный идентификатор номера сотрудника в группе
 
                 - `available` (boolean, required): Доступность номера в группе
+
+                - `access_token` (string, required): Ключ сессии аутентификации
             requestBody:
                 required: true
                 content:
@@ -72,12 +72,12 @@ paths:
                                             description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
                                             example: 123
                                     required:
+                                        - id
+                                        - user_id
                                         - phone_numbers
                                         - employee_phone_number_id
                                         - available
                                         - access_token
-                                        - id
-                                        - user_id
                             required:
                                 - jsonrpc
                                 - id

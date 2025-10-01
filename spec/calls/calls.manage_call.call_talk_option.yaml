@@ -12,11 +12,11 @@ paths:
 
                 **Request Parameters:** 3
 
+                - `button` (string, required): Клавиша, вызывающая опцию разговора. Клавиши и действия настраиваются в личном кабинете.
+
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
-
-                - `button` (string, required): Клавиша, вызывающая опцию разговора. Клавиши и действия настраиваются в личном кабинете.
             requestBody:
                 required: true
                 content:

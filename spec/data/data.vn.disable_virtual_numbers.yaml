@@ -51,8 +51,8 @@ paths:
                                             description: Виртуальнй номер
                                             example: example_string
                                     required:
-                                        - access_token
                                         - virtual_phone_number
+                                        - access_token
                             required:
                                 - jsonrpc
                                 - id

@@ -12,6 +12,12 @@ paths:
 
                 **Request Parameters:** 8
 
+                - `created_date_time` (iso8601, optional): Дата и время создания контакта в CRM (YYYY-MM-DD hh:mm:ss). Если параметр не передан, будет проставлена дата и время вызова метода
+
+                - `phone_numbers` (array, optional): Список номеров контакта в формате E164
+
+                - `emails` (array, optional): Адрес электронной почты контакта. E-mail должен быть уникальным в списке.
+
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
@@ -21,12 +27,6 @@ paths:
                 - `ext_id` (string, required): Внешний идентификатор контакта
 
                 - `name` (string, required): Имя контакта
-
-                - `created_date_time` (iso8601, optional): Дата и время создания контакта в CRM (YYYY-MM-DD hh:mm:ss). Если параметр не передан, будет проставлена дата и время вызова метода
-
-                - `phone_numbers` (array, optional): Список номеров контакта в формате E164
-
-                - `emails` (array, optional): Адрес электронной почты контакта. E-mail должен быть уникальным в списке.
             requestBody:
                 required: true
                 content:

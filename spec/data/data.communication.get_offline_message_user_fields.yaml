@@ -28,11 +28,11 @@ paths:
 
                 **Response Parameters:** 3
 
-                - `data_type` (string): да
-
                 - `ext_id` (string): да
 
                 - `name` (string): да
+
+                - `data_type` (string): да
             requestBody:
                 required: true
                 content:

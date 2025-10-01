@@ -116,8 +116,7 @@ func main() {
 	// Place bundled files in ./api folder from project root
 	// Get the project root by going up from bin/api to the project root
 	currentDir, _ := os.Getwd()
-	projectRoot := filepath.Join(currentDir, "..", "..")
-	apiDir := filepath.Join(projectRoot, "api")
+	apiDir := filepath.Join(currentDir, "spec")
 
 	// Ensure the api directory exists
 	if err := os.MkdirAll(apiDir, 0755); err != nil {
