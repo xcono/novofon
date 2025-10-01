@@ -1,0 +1,56 @@
+name: Spec Generator
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21'
+        cache-dependency-path: 'go.sum'
+        
+        
+    - name: Checkout Novofon documentation repository
+      run: |
+        rm -rf temp-html
+        git clone https://github.com/novofon/novofon.github.io.git temp-html
+        
+    - name: Generate OpenAPI specs for Data API
+      run: |
+        rm -rf spec
+        mkdir -p spec/calls
+        mkdir -p spec/data
+        go run main.go temp-html/data_api spec/data
+        go run main.go temp-html/call_api spec/calls
+
+    - name: Check for changes
+      id: verify-changed-files
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then
+          echo "changed=true" >> $GITHUB_OUTPUT
+          git status --porcelain
+        else
+          echo "changed=false" >> $GITHUB_OUTPUT
+          echo "No files changed"
+        fi
+        
+    - name: Commit and push changes
+      if: steps.verify-changed-files.outputs.changed == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add spec/
+        git commit -m "Auto-generate Novofon OpenAPI specifications"
+        git push
