@@ -19,8 +19,6 @@ paths:
 
                 **Response Parameters:** 7
 
-                - `visitor_id` (number): да
-
                 - `name` (string): нет
 
                 - `phones` (array): нет
@@ -32,6 +30,8 @@ paths:
                 - `commentary` (string): нет
 
                 - `person_id` (number): да
+
+                - `visitor_id` (number): да
             requestBody:
                 content:
                     application/json:
@@ -168,11 +168,11 @@ paths:
 
                 **Request Parameters:** 3
 
+                - `access_token` (string, required): Ключ сессии аутентификации
+
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
 
                 - `visitor_id` (number, required): Уникальный идентификатор посетителя на сайте
-
-                - `access_token` (string, required): Ключ сессии аутентификации
 
                 **Response Parameters:** 1
 
@@ -278,7 +278,7 @@ paths:
                 - novofon
     /getobj.visitor:
         post:
-            description: "Получение данных посетителя\n\n**Request Parameters:** 3\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `id` (number, required): Уникальный идентификатор посетителя на сайте\n\n**Response Parameters:** 6\n\n- `value` (string): \n\n- `name` (string): \n\n- `phone_numbers` (array): \n\n- `emails` (array): \n\n- `properties` (array): \n\n- `id` (number): "
+            description: "Получение данных посетителя\n\n**Request Parameters:** 3\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `id` (number, required): Уникальный идентификатор посетителя на сайте\n\n**Response Parameters:** 6\n\n- `properties` (array): \n\n- `id` (number): \n\n- `value` (string): \n\n- `name` (string): \n\n- `phone_numbers` (array): \n\n- `emails` (array): "
             requestBody:
                 content:
                     application/json:

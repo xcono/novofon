@@ -27,10 +27,6 @@ paths:
 
                 **Response Parameters:** 6
 
-                - `campaigns` (array): Да
-
-                - `operations` (array): Да
-
                 - `id` (number): Да
 
                 - `name` (string): Да
@@ -38,6 +34,10 @@ paths:
                 - `virtual_phone_numbers` (array): Да
 
                 - `sites` (array): Да
+
+                - `campaigns` (array): Да
+
+                - `operations` (array): Да
             requestBody:
                 content:
                     application/json:

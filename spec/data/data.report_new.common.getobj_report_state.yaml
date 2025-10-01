@@ -7,7 +7,7 @@ paths:
     /getobj.report_state:
         post:
             summary: Получение текущего состояния
-            description: "Получение текущего состояния отчета\n\n**Request Parameters:** 3\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `report_id` (number, required): Уникальный идентификатор отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод \"get.reports_list\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n**Response Parameters:** 18\n\n- `limit` (number): да\n\n- `date_from` (iso8601): \n\n- `compared_date_from` (iso8601): \n\n- `column_params` (object): \n\n- `widths` (number): \n\n- `offset` (number): да\n\n- `operator` (enum): \n\n- `compared_date_till` (iso8601): \n\n- `dimensions` (array): \n\n- `columns` (array): \n\n- `filter` (object): \n\n- `field` (object): \n\n- `value` (string): \n\n- `rapid_filter` (object): \n\n- `date_till` (iso8601): \n\n- `perspective_window` (number): Можно задать период от 1 до 180 дней от сессии до обращения\n\n- `filters` (array): \n\n- `sort` (array): "
+            description: "Получение текущего состояния отчета\n\n**Request Parameters:** 3\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `report_id` (number, required): Уникальный идентификатор отчета пользователя. Для получения списка отчетов пользователей необходимо использовать метод \"get.reports_list\"\n\n**Response Parameters:** 18\n\n- `limit` (number): да\n\n- `date_till` (iso8601): \n\n- `columns` (array): \n\n- `filters` (array): \n\n- `field` (object): \n\n- `value` (string): \n\n- `compared_date_from` (iso8601): \n\n- `filter` (object): \n\n- `operator` (enum): \n\n- `sort` (array): \n\n- `offset` (number): да\n\n- `compared_date_till` (iso8601): \n\n- `perspective_window` (number): Можно задать период от 1 до 180 дней от сессии до обращения\n\n- `dimensions` (array): \n\n- `rapid_filter` (object): \n\n- `date_from` (iso8601): \n\n- `column_params` (object): \n\n- `widths` (number): "
             requestBody:
                 required: true
                 content:
@@ -127,9 +127,9 @@ paths:
                                                         type: number
                                                         example: 123
                                                 required:
-                                                    - widths
                                                     - field
                                                     - perspective_window
+                                                    - widths
                                             metadata:
                                                 type: object
                                                 description: Response metadata

@@ -11,11 +11,11 @@ paths:
 
                 **Request Parameters:** 3
 
+                - `access_token` (string, required): Ключ сессии аутентификации
+
                 - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
 
                 - `phone_number` (string, optional): Номер тренера, если не используется тренер указанный в личном кабинете. Если номер тренера не задан, то подключается тренер из настроек сотрудника в личном кабинете
-
-                - `access_token` (string, required): Ключ сессии аутентификации
             requestBody:
                 content:
                     application/json:
@@ -217,11 +217,11 @@ paths:
 
                 **Request Parameters:** 3
 
-                - `button` (string, required): Клавиша, вызывающая опцию разговора. Клавиши и действия настраиваются в личном кабинете.
-
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+
+                - `button` (string, required): Клавиша, вызывающая опцию разговора. Клавиши и действия настраиваются в личном кабинете.
             requestBody:
                 content:
                     application/json:
@@ -253,9 +253,9 @@ paths:
                                             example: 123
                                             type: number
                                     required:
-                                        - access_token
                                         - call_session_id
                                         - button
+                                        - access_token
                                     type: object
                             required:
                                 - jsonrpc
@@ -324,11 +324,11 @@ paths:
 
                 **Request Parameters:** 3
 
-                - `access_token` (string, required): Ключ сессии аутентификации
-
                 - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
 
                 - `leg_id` (number, required): Уникальный идентификатор участника разговора, который может быть получен через сервера уведомлений.
+
+                - `access_token` (string, required): Ключ сессии аутентификации
             requestBody:
                 content:
                     application/json:
@@ -360,9 +360,9 @@ paths:
                                             example: 123
                                             type: number
                                     required:
+                                        - access_token
                                         - call_session_id
                                         - leg_id
-                                        - access_token
                                     type: object
                             required:
                                 - jsonrpc
@@ -431,11 +431,11 @@ paths:
 
                 **Request Parameters:** 3
 
+                - `contact_message` (object, required): Определяет параметры сообщения, которое необходимо проиграть вызывающему абоненту. Вызывающий абонент - это номер, указанный в параметре contact в методах start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call или абонент позвонивший на виртуальную АТС.
+
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
-
-                - `contact_message` (object, required): Определяет параметры сообщения, которое необходимо проиграть вызывающему абоненту. Вызывающий абонент - это номер, указанный в параметре contact в методах start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call или абонент позвонивший на виртуальную АТС.
             requestBody:
                 content:
                     application/json:
@@ -466,9 +466,9 @@ paths:
                                             description: Определяет параметры сообщения, которое необходимо проиграть вызывающему абоненту. Вызывающий абонент - это номер, указанный в параметре contact в методах start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call или абонент позвонивший на виртуальную АТС.
                                             type: object
                                     required:
-                                        - access_token
                                         - call_session_id
                                         - contact_message
+                                        - access_token
                                     type: object
                             required:
                                 - jsonrpc
@@ -532,7 +532,7 @@ paths:
                 - novofon
     /list.calls:
         post:
-            description: "Получить список активных вызовов и их участников\n\n**Request Parameters:** 3\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `direction` (string, optional): Указывает какие сессии выводить - входящие, исходящие. Если параметр не задан, то выводятся все сессии.\n\n- `virtual_phone_number` (string, optional): Указывает с каким виртуальным номер активные вызовы показывать. Номер должен начинаться с 7\n\n**Response Parameters:** 8\n\n- `external_id` (string): \n\n- `tags` (array): \n\n- `legs` (array): \n\n- `call_session_id` (number): \n\n- `direction` (string): in, out\n\n- `start_time` (string): \n\n- `virtual_phone_number` (string): \n\n- `contact_phone_number` (string): "
+            description: "Получить список активных вызовов и их участников\n\n**Request Parameters:** 3\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `direction` (string, optional): Указывает какие сессии выводить - входящие, исходящие. Если параметр не задан, то выводятся все сессии.\n\n- `virtual_phone_number` (string, optional): Указывает с каким виртуальным номер активные вызовы показывать. Номер должен начинаться с 7\n\n**Response Parameters:** 8\n\n- `call_session_id` (number): \n\n- `direction` (string): in, out\n\n- `start_time` (string): \n\n- `virtual_phone_number` (string): \n\n- `contact_phone_number` (string): \n\n- `external_id` (string): \n\n- `tags` (array): \n\n- `legs` (array): "
             requestBody:
                 content:
                     application/json:
@@ -625,14 +625,14 @@ paths:
                                                         example: example_string
                                                         type: string
                                                 required:
+                                                    - legs
+                                                    - call_session_id
                                                     - direction
                                                     - start_time
                                                     - virtual_phone_number
                                                     - contact_phone_number
                                                     - external_id
                                                     - tags
-                                                    - legs
-                                                    - call_session_id
                                                 type: object
                                             metadata:
                                                 description: Response metadata
@@ -681,13 +681,13 @@ paths:
 
                 **Response Parameters:** 4
 
-                - `button_value` (object): Некоторые опции могут содержать название тега, название сценария и т.д. Данный объект содержит дополнительную информацию об опции разговора
-
                 - `button` (string): Клавиша, которая вызывает опцию разговора
 
                 - `mnemonic` (string): Мнемоническое имя опции разговора Возможные значения: finish_conversation - Завершить разговор tag_call - Проставить тег record_talk - Диктофон (запись разговора) transfer_call - Трансфер run_scenario - Выполнить сценарий call_coach - Позвонить тренеру receive_fax - Принять факс save_numa - Сохранить АОН в группу
 
                 - `name` (string): Название опции разговора
+
+                - `button_value` (object): Некоторые опции могут содержать название тега, название сценария и т.д. Данный объект содержит дополнительную информацию об опции разговора
             requestBody:
                 content:
                     application/json:
@@ -753,9 +753,9 @@ paths:
                                                         example: example_string
                                                         type: string
                                                 required:
+                                                    - button
                                                     - mnemonic
                                                     - name
-                                                    - button
                                                 type: object
                                             metadata:
                                                 description: Response metadata
@@ -800,13 +800,13 @@ paths:
 
                 **Request Parameters:** 4
 
-                - `to_message` (object, optional): Определяет параметры сообщения, которое необходимо проиграть абоненту заданному в параметре to_message. Абонент, который стоит на удержании, будет ожидать ответа, пока не будет прослушано сообщение до конца
-
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
 
                 - `to` (string, required): Номер абонента на который совершаем звонок. Формат номера должен соответствовать международному стандарту E.164 Может быть внутренний номер, внешний номер, номер сотрудника, sip-номер
+
+                - `to_message` (object, optional): Определяет параметры сообщения, которое необходимо проиграть абоненту заданному в параметре to_message. Абонент, который стоит на удержании, будет ожидать ответа, пока не будет прослушано сообщение до конца
             requestBody:
                 content:
                     application/json:
@@ -841,9 +841,9 @@ paths:
                                             description: Определяет параметры сообщения, которое необходимо проиграть абоненту заданному в параметре to_message. Абонент, который стоит на удержании, будет ожидать ответа, пока не будет прослушано сообщение до конца
                                             type: object
                                     required:
-                                        - access_token
                                         - call_session_id
                                         - to
+                                        - access_token
                                     type: object
                             required:
                                 - jsonrpc
@@ -912,11 +912,11 @@ paths:
 
                 **Request Parameters:** 3
 
+                - `action` (string, required): Действие над записью разговора. on - включение записи разговора, off - выключение записи разговора
+
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
-
-                - `action` (string, required): Действие над записью разговора. on - включение записи разговора, off - выключение записи разговора
             requestBody:
                 content:
                     application/json:
@@ -1122,9 +1122,9 @@ paths:
 
                 **Request Parameters:** 2
 
-                - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
-
                 - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
             requestBody:
                 content:
                     application/json:
@@ -1222,11 +1222,11 @@ paths:
 
                 **Request Parameters:** 3
 
-                - `access_token` (string, required): Ключ сессии аутентификации
-
                 - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
 
                 - `dtmf_string` (string, required): Задаёт DTMF, который будет отправлен абоненту, который задан в параметре contact. В случае исходящего вызова с виртуальной АТС в сторону вызываемого абонента. Отправка DTMF возможна только одиночными символами. Так же возможно вызвать настроенные опции разговора. Для исходящих звонков, опции разговора будут доступны спустя 30 секунд.
+
+                - `access_token` (string, required): Ключ сессии аутентификации
             requestBody:
                 content:
                     application/json:
@@ -1470,8 +1470,8 @@ paths:
                                             example: 123
                                             type: number
                                     required:
-                                        - access_token
                                         - call_session_id
+                                        - access_token
                                     type: object
                             required:
                                 - jsonrpc
@@ -1540,9 +1540,9 @@ paths:
 
                 **Request Parameters:** 2
 
-                - `access_token` (string, required): Ключ сессии аутентификации
-
                 - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
+
+                - `access_token` (string, required): Ключ сессии аутентификации
             requestBody:
                 content:
                     application/json:

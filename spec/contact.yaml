@@ -51,8 +51,8 @@ paths:
                                             example: 123
                                             type: number
                                     required:
-                                        - name
                                         - access_token
+                                        - name
                                     type: object
                             required:
                                 - jsonrpc
@@ -130,19 +130,19 @@ paths:
 
                 - `first_name` (string, optional): Имя контакта
 
-                - `organization_id` (number, optional): Уникальный идентификатор организации. Для получения списка организаций см. метод "get.contact_organizations".
-
-                - `groups` (array, optional): Список уникальных идентификаторов групп в которых состоит контакт, см. метод "get.group_contacts"
-
                 - `last_name` (string, required): Фамилия контакта
+
+                - `phone_numbers` (array, required): Список номеров контакта в формате E164 Номер должен быть уникальным в списке.
+
+                - `personal_manager_id` (number, optional): Персональный менеджер - это сотрудник, отвечающий за работу с клиентом. При создании сценария "Переадресация на персонального менеджера" звонки клиентов будут поступать персональным менеджерам без дополнительных настроек списка номеров вызывающего абонента и списка телефонов сотрудников. Для получения списка сотрудников используется метод "get.employees"
+
+                - `organization_id` (number, optional): Уникальный идентификатор организации. Для получения списка организаций см. метод "get.contact_organizations".
 
                 - `patronymic` (string, optional): Отчество контакта
 
                 - `emails` (array, optional): Адрес электронной почты контакта. E-mail должен быть уникальным в списке.
 
-                - `phone_numbers` (array, required): Список номеров контакта в формате E164 Номер должен быть уникальным в списке.
-
-                - `personal_manager_id` (number, optional): Персональный менеджер - это сотрудник, отвечающий за работу с клиентом. При создании сценария "Переадресация на персонального менеджера" звонки клиентов будут поступать персональным менеджерам без дополнительных настроек списка номеров вызывающего абонента и списка телефонов сотрудников. Для получения списка сотрудников используется метод "get.employees"
+                - `groups` (array, optional): Список уникальных идентификаторов групп в которых состоит контакт, см. метод "get.group_contacts"
 
                 - `access_token` (string, required): Ключ сессии аутентификации
 
@@ -297,12 +297,6 @@ paths:
 
                 **Request Parameters:** 8
 
-                - `created_date_time` (iso8601, optional): Дата и время создания контакта в CRM (YYYY-MM-DD hh:mm:ss). Если параметр не передан, будет проставлена дата и время вызова метода
-
-                - `phone_numbers` (array, optional): Список номеров контакта в формате E164
-
-                - `emails` (array, optional): Адрес электронной почты контакта. E-mail должен быть уникальным в списке.
-
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
@@ -312,6 +306,12 @@ paths:
                 - `ext_id` (string, required): Внешний идентификатор контакта
 
                 - `name` (string, required): Имя контакта
+
+                - `created_date_time` (iso8601, optional): Дата и время создания контакта в CRM (YYYY-MM-DD hh:mm:ss). Если параметр не передан, будет проставлена дата и время вызова метода
+
+                - `phone_numbers` (array, optional): Список номеров контакта в формате E164
+
+                - `emails` (array, optional): Адрес электронной почты контакта. E-mail должен быть уникальным в списке.
             requestBody:
                 content:
                     application/json:
@@ -491,8 +491,8 @@ paths:
                                             example: 123
                                             type: number
                                     required:
-                                        - name
                                         - access_token
+                                        - name
                                     type: object
                             required:
                                 - jsonrpc
@@ -568,11 +568,11 @@ paths:
 
                 **Request Parameters:** 3
 
-                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
-
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `id` (number, required): Уникальный идентификатор организации контактов адресной книги
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
             requestBody:
                 content:
                     application/json:
@@ -780,11 +780,11 @@ paths:
 
                 **Request Parameters:** 3
 
+                - `ext_id` (string, required): Внешний идентификатор контакта
+
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
-
-                - `ext_id` (string, required): Внешний идентификатор контакта
             requestBody:
                 content:
                     application/json:
@@ -816,8 +816,8 @@ paths:
                                             example: 123
                                             type: number
                                     required:
-                                        - access_token
                                         - ext_id
+                                        - access_token
                                     type: object
                             required:
                                 - jsonrpc
@@ -987,7 +987,7 @@ paths:
                 - novofon
     /get.contact_organizations:
         get:
-            description: "Получение списка организаций контактов\n\n**Request Parameters:** 7\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n**Response Parameters:** 2\n\n- `id` (number): \n\n- `name` (string): да"
+            description: "Получение списка организаций контактов\n\n**Request Parameters:** 7\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n**Response Parameters:** 2\n\n- `id` (number): \n\n- `name` (string): да"
             requestBody:
                 content:
                     application/json:
@@ -1115,7 +1115,7 @@ paths:
                 - novofon
     /get.contacts:
         get:
-            description: "Получение списка контактов в адресной книге\n\n**Request Parameters:** 7\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n**Response Parameters:** 14\n\n- `last_name` (string): да\n\n- `full_name` (string): да\n\n- `emails` (array): да\n\n- `personal_manager_full_name` (string): да\n\n- `organization_id` (number): да\n\n- `organization_name` (string): да\n\n- `groups` (array): да\n\n- `first_name` (string): да\n\n- `patronymic` (string): \n\n- `phone_numbers` (array): да\n\n- `personal_manager_id` (number): да\n\n- `group_id` (number): \n\n- `group_name` (string): \n\n- `id` (number): да"
+            description: "Получение списка контактов в адресной книге\n\n**Request Parameters:** 7\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n**Response Parameters:** 14\n\n- `emails` (array): да\n\n- `personal_manager_id` (number): да\n\n- `personal_manager_full_name` (string): да\n\n- `organization_id` (number): да\n\n- `organization_name` (string): да\n\n- `id` (number): да\n\n- `patronymic` (string): \n\n- `phone_numbers` (array): да\n\n- `groups` (array): да\n\n- `group_id` (number): \n\n- `group_name` (string): \n\n- `first_name` (string): да\n\n- `last_name` (string): да\n\n- `full_name` (string): да"
             requestBody:
                 content:
                     application/json:
@@ -1295,7 +1295,7 @@ paths:
                 - novofon
     /get.deal_contacts:
         get:
-            description: "Получение списка контактов\n\n**Request Parameters:** 7\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n**Response Parameters:** 5\n\n- `created_date_time` (iso8601): \n\n- `phone_numbers` (array): \n\n- `emails` (array): \n\n- `ext_id` (string): да\n\n- `name` (string): да"
+            description: "Получение списка контактов\n\n**Request Parameters:** 7\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n**Response Parameters:** 5\n\n- `emails` (array): \n\n- `ext_id` (string): да\n\n- `name` (string): да\n\n- `created_date_time` (iso8601): \n\n- `phone_numbers` (array): "
             requestBody:
                 content:
                     application/json:
@@ -1439,7 +1439,7 @@ paths:
                 - novofon
     /get.group_contacts:
         get:
-            description: "Получение списка групп контактов адресной книги\n\n**Request Parameters:** 7\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n**Response Parameters:** 6\n\n- `contact_id` (number): \n\n- `contact_full_name` (string): \n\n- `id` (number): да\n\n- `name` (string): да\n\n- `is_system` (boolean): да\n\n- `members` (array): да"
+            description: "Получение списка групп контактов адресной книги\n\n**Request Parameters:** 7\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n**Response Parameters:** 6\n\n- `id` (number): да\n\n- `name` (string): да\n\n- `is_system` (boolean): да\n\n- `members` (array): да\n\n- `contact_id` (number): \n\n- `contact_full_name` (string): "
             requestBody:
                 content:
                     application/json:
@@ -1587,13 +1587,13 @@ paths:
 
                 **Request Parameters:** 4
 
-                - `name` (string, required): Название организации
-
-                - `id` (number, required): Уникальный идентификатор организации
-
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `name` (string, required): Название организации
+
+                - `id` (number, required): Уникальный идентификатор организации
             requestBody:
                 content:
                     application/json:
@@ -1700,27 +1700,27 @@ paths:
 
                 **Request Parameters:** 11
 
-                - `personal_manager_id` (number, optional): Персональный менеджер - это сотрудник, отвечающий за работу с клиентом. При создании сценария "Переадресация на персонального менеджера" звонки клиентов будут поступать персональным менеджерам без дополнительных настроек списка номеров вызывающего абонента и списка телефонов сотрудников. Для получения списка сотрудников используется метод "get.employees"
-
-                - `groups` (array, optional): Список уникальных идентификаторов групп в которых состоит контакт, см. метод "get.group_contacts".
-
-                - `id` (number, required): Уникальный идентификатор контакта в адресной книге
+                - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
 
                 - `last_name` (string, required): Фамилия контакта
 
+                - `patronymic` (string, optional): Отчество контакта
+
                 - `emails` (array, optional): Адрес электронной почты контакта. E-mail должен быть уникальным в списке.
 
                 - `phone_numbers` (array, required): Список номеров контакта в формате E164 Номер должен быть уникальным в списке.
 
+                - `personal_manager_id` (number, optional): Персональный менеджер - это сотрудник, отвечающий за работу с клиентом. При создании сценария "Переадресация на персонального менеджера" звонки клиентов будут поступать персональным менеджерам без дополнительных настроек списка номеров вызывающего абонента и списка телефонов сотрудников. Для получения списка сотрудников используется метод "get.employees"
+
                 - `organization_id` (number, optional): Уникальный идентификатор организации. Для получения списка организаций см. метод см. метод "get.contact_organizations".
 
-                - `access_token` (string, required): Ключ сессии аутентификации
+                - `id` (number, required): Уникальный идентификатор контакта в адресной книге
 
                 - `first_name` (string, optional): Имя контакта
 
-                - `patronymic` (string, optional): Отчество контакта
+                - `groups` (array, optional): Список уникальных идентификаторов групп в которых состоит контакт, см. метод "get.group_contacts".
             requestBody:
                 content:
                     application/json:
@@ -1794,9 +1794,9 @@ paths:
                                             type: number
                                     required:
                                         - access_token
-                                        - id
                                         - last_name
                                         - phone_numbers
+                                        - id
                                     type: object
                             required:
                                 - jsonrpc
@@ -1865,12 +1865,6 @@ paths:
 
                 **Request Parameters:** 7
 
-                - `created_date_time` (iso8601, optional): Дата и время создания контакта в CRM (YYYY-MM-DD hh:mm:ss)
-
-                - `phone_numbers` (array, optional): Список номеров контакта в формате E164 Необходимо передавать актуальный список
-
-                - `emails` (array, optional): Адрес электронной почты контакта. Необходимо передавать актуальный список
-
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
@@ -1878,6 +1872,12 @@ paths:
                 - `ext_id` (string, required): Внешний идентификатор контакта
 
                 - `name` (string, optional): Имя контакта
+
+                - `created_date_time` (iso8601, optional): Дата и время создания контакта в CRM (YYYY-MM-DD hh:mm:ss)
+
+                - `phone_numbers` (array, optional): Список номеров контакта в формате E164 Необходимо передавать актуальный список
+
+                - `emails` (array, optional): Адрес электронной почты контакта. Необходимо передавать актуальный список
             requestBody:
                 content:
                     application/json:
@@ -1999,15 +1999,15 @@ paths:
 
                 **Request Parameters:** 5
 
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `id` (number, required): Уникальный идентификатор группы контактов адресной книги
+
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
 
                 - `name` (string, required): Название группы контактов
 
                 - `members` (array, optional): Список уникальных идентификаторов контактов, которые входят в группу. Список контактов можно получить с помощью метода "get.contacts".
-
-                - `access_token` (string, required): Ключ сессии аутентификации
-
-                - `id` (number, required): Уникальный идентификатор группы контактов адресной книги
             requestBody:
                 content:
                     application/json:

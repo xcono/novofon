@@ -6,7 +6,7 @@ openapi: 3.0.0
 paths:
     /create.sales_funnel:
         post:
-            description: "Создание воронки продаж и ее этапов\n\n**Request Parameters:** 9\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `ext_id` (string, required): Внешний идентификатор этапа\n\n- `success` (object, required): Успешный этап воронки продаж\n\n- `in_process` (array, required): Список промежуточных этапов Минимум 1, максимум 100 этапов в одной воронке\n\n- `order` (number, required): Порядковый номер этапа максимальное значение 10000\n\n- `name` (string, required): Название этапа\n\n- `stages` (object, required): \n\n- `failed` (object, required): Проваленный этап воронки продаж\n\n**Response Parameters:** 1\n\n- `ext_id` (string): Уникальный идентификатор воронки"
+            description: "Создание воронки продаж и ее этапов\n\n**Request Parameters:** 9\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `stages` (object, required): \n\n- `success` (object, required): Успешный этап воронки продаж\n\n- `order` (number, required): Порядковый номер этапа максимальное значение 10000\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `ext_id` (string, required): Внешний идентификатор этапа\n\n- `name` (string, required): Название этапа\n\n- `failed` (object, required): Проваленный этап воронки продаж\n\n- `in_process` (array, required): Список промежуточных этапов Минимум 1, максимум 100 этапов в одной воронке\n\n**Response Parameters:** 1\n\n- `ext_id` (string): Уникальный идентификатор воронки"
             requestBody:
                 content:
                     application/json:
@@ -61,14 +61,14 @@ paths:
                                             example: 123
                                             type: number
                                     required:
+                                        - success
+                                        - order
                                         - access_token
                                         - ext_id
-                                        - success
-                                        - in_process
-                                        - order
                                         - name
-                                        - stages
                                         - failed
+                                        - in_process
+                                        - stages
                                     type: object
                             required:
                                 - jsonrpc
@@ -144,6 +144,10 @@ paths:
 
                 **Request Parameters:** 6
 
+                - `name` (string, required): Название этапа
+
+                - `order` (number, required): Порядковый номер этапа максимальное значение 10000
+
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `user_id` (string, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
@@ -151,10 +155,6 @@ paths:
                 - `sales_funnel_ext_id` (string, required): Внешний идентификатор воронки продаж
 
                 - `ext_id` (string, required): Внешний идентификатор этапа
-
-                - `name` (string, required): Название этапа
-
-                - `order` (number, required): Порядковый номер этапа максимальное значение 10000
             requestBody:
                 content:
                     application/json:
@@ -198,11 +198,11 @@ paths:
                                             example: example_string
                                             type: string
                                     required:
+                                        - ext_id
+                                        - name
                                         - order
                                         - access_token
                                         - sales_funnel_ext_id
-                                        - ext_id
-                                        - name
                                     type: object
                             required:
                                 - jsonrpc
@@ -378,7 +378,7 @@ paths:
                 - novofon
     /get.sales_funnel:
         get:
-            description: "Получение списка воронок продаж\n\n**Request Parameters:** 7\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n**Response Parameters:** 7\n\n- `name` (string): да\n\n- `stages` (array): \n\n- `stage_ext_id` (string): \n\n- `stage_name` (string): \n\n- `stage_status` (enum): \n\n- `stage_order` (number): \n\n- `ext_id` (string): да"
+            description: "Получение списка воронок продаж\n\n**Request Parameters:** 7\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n**Response Parameters:** 7\n\n- `stage_status` (enum): \n\n- `stage_order` (number): \n\n- `ext_id` (string): да\n\n- `name` (string): да\n\n- `stages` (array): \n\n- `stage_ext_id` (string): \n\n- `stage_name` (string): "
             requestBody:
                 content:
                     application/json:
@@ -571,9 +571,9 @@ paths:
                                             example: 123
                                             type: number
                                     required:
+                                        - name
                                         - access_token
                                         - ext_id
-                                        - name
                                     type: object
                             required:
                                 - jsonrpc
@@ -642,8 +642,6 @@ paths:
 
                 **Request Parameters:** 6
 
-                - `order` (number, optional): Порядковый номер этапа, максимальное значение 10000 применяется только для этапа in_process
-
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
@@ -653,6 +651,8 @@ paths:
                 - `ext_id` (string, required): Внешний идентификатор этапа воронки продаж
 
                 - `name` (string, optional): Название этапа
+
+                - `order` (number, optional): Порядковый номер этапа, максимальное значение 10000 применяется только для этапа in_process
             requestBody:
                 content:
                     application/json:
@@ -696,9 +696,9 @@ paths:
                                             example: 123
                                             type: number
                                     required:
+                                        - access_token
                                         - sales_funnel_ext_id
                                         - ext_id
-                                        - access_token
                                     type: object
                             required:
                                 - jsonrpc

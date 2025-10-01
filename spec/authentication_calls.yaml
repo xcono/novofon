@@ -81,8 +81,8 @@ paths:
                                                         example: 123
                                                         type: number
                                                 required:
-                                                    - expire_at
                                                     - access_token
+                                                    - expire_at
                                                 type: object
                                             metadata:
                                                 description: Response metadata

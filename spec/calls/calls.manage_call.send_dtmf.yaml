@@ -12,11 +12,11 @@ paths:
 
                 **Request Parameters:** 3
 
-                - `access_token` (string, required): Ключ сессии аутентификации
-
                 - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.informer_call, start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
 
                 - `dtmf_string` (string, required): Задаёт DTMF, который будет отправлен абоненту, который задан в параметре contact. В случае исходящего вызова с виртуальной АТС в сторону вызываемого абонента. Отправка DTMF возможна только одиночными символами. Так же возможно вызвать настроенные опции разговора. Для исходящих звонков, опции разговора будут доступны спустя 30 секунд.
+
+                - `access_token` (string, required): Ключ сессии аутентификации
             requestBody:
                 required: true
                 content:

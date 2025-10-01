@@ -12,35 +12,35 @@ paths:
 
                 **Request Parameters:** 15
 
-                - `name` (string, required): Название клиента
+                - `monthly_base_notify_limit` (number, optional): Пороговое значение общего месячного лимита при достижению которого отправляется уведомление на электронный адрес указанный в параметре "monthly_base_notify_email"
+
+                - `daily_calls_limit` (number, optional): Дневной лимит по звонкам. Значение задаётся в количестве звонков.
+
+                - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `description` (string, optional): Описание к клиенту
 
                 - `tariff_plan_id` (number, required): Уникальный идентификатор тарифного плана. Список доступных тарифных планов можно получить с помощью метода "get.partner_tariffs"
 
-                - `monthly_calls_notify_emails` (array, required): Адреса электронной почты для получения уведомлений о достижении месячного лимита по звонкам
-
-                - `monthly_base_notify_limit` (number, optional): Пороговое значение общего месячного лимита при достижению которого отправляется уведомление на электронный адрес указанный в параметре "monthly_base_notify_email"
+                - `monthly_base_limit` (number, optional): Общий месячный лимит. Значение задаётся в деньгах.
 
                 - `monthly_calls_limit` (number, optional): Месячный лимит по звонкам. Значение задаётся в количестве звонков.
 
-                - `email` (string, required): Адрес электронной почты клиента
-
-                - `password` (string, required): Пароль для клиента
-
-                - `monthly_base_limit` (number, optional): Общий месячный лимит. Значение задаётся в деньгах.
+                - `monthly_calls_notify_emails` (array, required): Адреса электронной почты для получения уведомлений о достижении месячного лимита по звонкам
 
                 - `daily_calls_notify_limit` (number, optional): Пороговое значение дневного лимита по звонкам при достижению которого отправляется уведомление на электронный адрес указанный в параметре "daily_calls_notify_email"
 
-                - `access_token` (string, required): Ключ сессии аутентификации
+                - `password` (string, required): Пароль для клиента
 
                 - `monthly_base_notify_emails` (array, required): Адреса электронной почты для получения уведомлений о достижении общего месячного лимита
 
                 - `monthly_calls_notify_limit` (number, optional): Пороговое значение месячного лимита по звонкам при достижению которого отправляется уведомление на электронный адрес указанный в параметре "monthly_calls_notify_email"
 
-                - `daily_calls_limit` (number, optional): Дневной лимит по звонкам. Значение задаётся в количестве звонков.
-
                 - `daily_calls_notify_emails` (array, required): Адреса электронной почты для получения уведомлений о достижении дневного лимита по звонкам
+
+                - `name` (string, required): Название клиента
+
+                - `email` (string, required): Адрес электронной почты клиента
 
                 **Response Parameters:** 1
 
@@ -136,14 +136,14 @@ paths:
                                             description: Уникальный идентификатор тарифного плана. Список доступных тарифных планов можно получить с помощью метода "get.partner_tariffs"
                                             example: 123
                                     required:
+                                        - email
+                                        - access_token
+                                        - tariff_plan_id
+                                        - monthly_calls_notify_emails
+                                        - password
                                         - monthly_base_notify_emails
                                         - daily_calls_notify_emails
                                         - name
-                                        - tariff_plan_id
-                                        - monthly_calls_notify_emails
-                                        - email
-                                        - password
-                                        - access_token
                             required:
                                 - jsonrpc
                                 - id

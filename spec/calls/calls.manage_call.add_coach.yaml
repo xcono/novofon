@@ -12,11 +12,11 @@ paths:
 
                 **Request Parameters:** 3
 
+                - `access_token` (string, required): Ключ сессии аутентификации
+
                 - `call_session_id` (number, required): Уникальный идентификатор сессии звонка, который может быть получен в ответном сообщении при вызове методов start.vnumber_call, start.scenario_call, start.employee_call, с помощью сервера уведомлений или DATA API.
 
                 - `phone_number` (string, optional): Номер тренера, если не используется тренер указанный в личном кабинете. Если номер тренера не задан, то подключается тренер из настроек сотрудника в личном кабинете
-
-                - `access_token` (string, required): Ключ сессии аутентификации
             requestBody:
                 required: true
                 content:

@@ -12,35 +12,35 @@ paths:
 
                 **Request Parameters:** 15
 
-                - `email_to` (string, required): Получатель. Обязательно одно из полей: email_to, email_to_cc, email_to_bcc
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `source_id` (number, optional): Идентификатор источника. Метод получение списка существующих Источников: "get.get_sources"
+
+                - `email_from` (string, required): Отправитель.
+
+                - `email_to_cc` (array, optional): Копия.
+
+                - `email_to_bcc` (array, optional): Скрытая копия.
 
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `emails` (array, optional): Массив писем
 
-                - `sender_name` (string, optional): Имя отправителя
+                - `site_id` (number, optional): Идентификатор сайта. Метод получение списка существующих сайтов: "get.sites"
 
                 - `message` (string, required): Текст письма.
 
-                - `email_to_cc` (array, optional): Копия.
+                - `message_html` (string, required): HTML письма.
 
-                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
-
-                - `site_id` (number, optional): Идентификатор сайта. Метод получение списка существующих сайтов: "get.sites"
-
-                - `session_id` (number, optional): Идентификатор сессии
-
-                - `source_id` (number, optional): Идентификатор источника. Метод получение списка существующих Источников: "get.get_sources"
-
-                - `subject` (string, optional): Тема письма
-
-                - `email_from` (string, required): Отправитель.
-
-                - `email_to_bcc` (array, optional): Скрытая копия.
+                - `email_to` (string, required): Получатель. Обязательно одно из полей: email_to, email_to_cc, email_to_bcc
 
                 - `date_time` (date, required): Дата и время получения письма на почту в таймзоне клиента
 
-                - `message_html` (string, required): HTML письма.
+                - `sender_name` (string, optional): Имя отправителя
+
+                - `subject` (string, optional): Тема письма
+
+                - `session_id` (number, optional): Идентификатор сессии
 
                 **Response Parameters:** 1
 
@@ -135,11 +135,11 @@ paths:
                                             example: 123
                                     required:
                                         - email_from
-                                        - date_time
-                                        - message_html
-                                        - email_to
                                         - access_token
                                         - message
+                                        - message_html
+                                        - email_to
+                                        - date_time
                             required:
                                 - jsonrpc
                                 - id

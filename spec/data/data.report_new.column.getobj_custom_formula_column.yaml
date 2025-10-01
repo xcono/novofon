@@ -95,9 +95,9 @@ paths:
                                                         description: Если element_type = column - возможно передать только идентификаторы столбцов с type = metric. Список столбцов можно получить используя метод "getobj.columns_tree" Если element_type = constant - то можно передать только число с плавающей запятой или целое число. Может быть как положительным, так и отрицательным Если element_type = operator - можно указать только арифметические операции для вычисляемого выражения. Может принимать значения +,-,\*,/ Если element_type = priority - можнот указать значения value = (,)
                                                         example: example_string
                                                 required:
-                                                    - formula
                                                     - element_type
                                                     - value
+                                                    - formula
                                             metadata:
                                                 type: object
                                                 description: Response metadata

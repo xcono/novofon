@@ -12,15 +12,23 @@ paths:
 
                 **Request Parameters:** 13
 
-                - `daily_calls_notify_emails` (array, required): Адреса электронной почты для получения уведомлений о достижении дневного лимита по звонкам
-
                 - `id` (number, required): Уникальный идентификатор клиента
+
+                - `description` (string, optional): Описание к клиенту
+
+                - `monthly_base_notify_limit` (number, optional): Пороговое значение общего месячного лимита при достижению которого отправляется уведомление на электронный адрес указанный в параметре "monthly_base_notify_email"
+
+                - `monthly_base_notify_emails` (array, required): Адреса электронной почты для получения уведомлений о достижении общего месячного лимита
+
+                - `monthly_calls_notify_emails` (array, required): Адреса электронной почты для получения уведомлений о достижении месячного лимита по звонкам
+
+                - `daily_calls_notify_limit` (number, optional): Пороговое значение дневного лимита по звонкам при достижению которого отправляется уведомление на электронный адрес указанный в параметре "daily_calls_notify_email"
+
+                - `daily_calls_notify_emails` (array, required): Адреса электронной почты для получения уведомлений о достижении дневного лимита по звонкам
 
                 - `name` (string, required): Название клиента
 
                 - `monthly_base_limit` (number, optional): Общий месячный лимит. Значение задаётся в деньгах.
-
-                - `monthly_base_notify_emails` (array, required): Адреса электронной почты для получения уведомлений о достижении общего месячного лимита
 
                 - `monthly_calls_limit` (number, optional): Месячный лимит по звонкам. Значение задаётся в количестве звонков.
 
@@ -28,15 +36,7 @@ paths:
 
                 - `daily_calls_limit` (number, optional): Дневной лимит по звонкам. Значение задаётся в количестве звонков.
 
-                - `daily_calls_notify_limit` (number, optional): Пороговое значение дневного лимита по звонкам при достижению которого отправляется уведомление на электронный адрес указанный в параметре "daily_calls_notify_email"
-
                 - `access_token` (string, required): Ключ сессии аутентификации
-
-                - `description` (string, optional): Описание к клиенту
-
-                - `monthly_base_notify_limit` (number, optional): Пороговое значение общего месячного лимита при достижению которого отправляется уведомление на электронный адрес указанный в параметре "monthly_base_notify_email"
-
-                - `monthly_calls_notify_emails` (array, required): Адреса электронной почты для получения уведомлений о достижении месячного лимита по звонкам
             requestBody:
                 required: true
                 content:
@@ -120,11 +120,11 @@ paths:
                                             description: Название клиента
                                             example: example_string
                                     required:
-                                        - name
                                         - monthly_base_notify_emails
-                                        - access_token
                                         - monthly_calls_notify_emails
                                         - daily_calls_notify_emails
+                                        - name
+                                        - access_token
                                         - id
                             required:
                                 - jsonrpc

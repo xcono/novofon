@@ -17,11 +17,11 @@ paths:
 
                 **Response Parameters:** 3
 
-                - `access_token` (string): Ключ сессии аутентификации
-
                 - `expire_at` (number): Timestamp когда выданный токен перестанет быть валидным
 
                 - `app_id` (number): Уникальный идентификатор клиента
+
+                - `access_token` (string): Ключ сессии аутентификации
             requestBody:
                 content:
                     application/json:
@@ -89,9 +89,9 @@ paths:
                                                         example: 123
                                                         type: number
                                                 required:
+                                                    - app_id
                                                     - access_token
                                                     - expire_at
-                                                    - app_id
                                                 type: object
                                             metadata:
                                                 description: Response metadata

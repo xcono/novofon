@@ -7,7 +7,7 @@ paths:
     /getobj.goals_tree:
         post:
             summary: Получение вложенности целей
-            description: "Получение вложенности целей\n\n**Request Parameters:** 2\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n**Response Parameters:** 7\n\n- `parent_group_id` (number): \n\n- `sort` (number): \n\n- `goals` (array): да\n\n- `group_id` (number): \n\n- `goals_groups` (array): да\n\n- `id` (string): \n\n- `name` (string): "
+            description: "Получение вложенности целей\n\n**Request Parameters:** 2\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n**Response Parameters:** 7\n\n- `sort` (number): \n\n- `goals` (array): да\n\n- `group_id` (number): \n\n- `goals_groups` (array): да\n\n- `id` (string): \n\n- `name` (string): \n\n- `parent_group_id` (number): "
             requestBody:
                 required: true
                 content:

@@ -12,69 +12,69 @@ paths:
 
                 **Response Parameters:** 32
 
+                - `finish_time` (iso8601): да
+
+                - `comment` (string): да
+
+                - `record_type` (enum): да
+
+                - `calling_phone_number` (string): да
+
+                - `called_phone_number` (string): да
+
+                - `tag_id` (number): нет
+
                 - `direction` (enum): да
 
-                - `is_lost` (boolean): да
-
-                - `talk_duration` (number): да
-
-                - `callback` (object): нет
-
-                - `events` (array): нет
-
-                - `records` (array): нет
+                - `employee_id` (number): нет
 
                 - `ext_request_id` (string): да
 
                 - `upload_time` (iso8601): нет
 
-                - `start_time` (iso8601): да
-
-                - `error_code` (enum): да
-
-                - `call_session_id` (number): да
-
-                - `ext_id` (string): да
-
-                - `calling_phone_number` (string): да
-
-                - `finish_time` (iso8601): да
-
-                - `employee_id` (number): нет
-
-                - `record_url` (string): нет
-
-                - `campaign_id` (number): да
-
-                - `site_id` (number): да
-
                 - `status` (enum): да
 
-                - `is_transfer` (boolean): да
+                - `callback` (object): нет
 
-                - `visitor_session_id` (number): да
+                - `events` (array): нет
 
-                - `tags` (array): нет
-
-                - `employee_channel` (enum): нет
-
-                - `called_phone_number` (string): да
+                - `employee_name` (string): нет
 
                 - `wait_duration` (number): да
 
-                - `source_id` (number): да
+                - `talk_duration` (number): да
 
-                - `record_type` (enum): да
+                - `site_id` (number): да
 
                 - `url` (string): нет
 
-                - `comment` (string): да
+                - `employee_channel` (enum): нет
 
-                - `tag_id` (number): нет
+                - `records` (array): нет
+
+                - `campaign_id` (number): да
+
+                - `start_time` (iso8601): да
+
+                - `is_lost` (boolean): да
+
+                - `visitor_session_id` (number): да
+
+                - `call_session_id` (number): да
+
+                - `tags` (array): нет
 
                 - `tag_name` (string): нет
 
-                - `employee_name` (string): нет
+                - `record_url` (string): нет
+
+                - `is_transfer` (boolean): да
+
+                - `source_id` (number): да
+
+                - `error_code` (enum): да
+
+                - `ext_id` (string): да
             responses:
                 "200":
                     description: Successful response

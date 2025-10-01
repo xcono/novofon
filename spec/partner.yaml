@@ -11,35 +11,35 @@ paths:
 
                 **Request Parameters:** 15
 
-                - `name` (string, required): Название клиента
+                - `monthly_base_notify_limit` (number, optional): Пороговое значение общего месячного лимита при достижению которого отправляется уведомление на электронный адрес указанный в параметре "monthly_base_notify_email"
+
+                - `daily_calls_limit` (number, optional): Дневной лимит по звонкам. Значение задаётся в количестве звонков.
+
+                - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `description` (string, optional): Описание к клиенту
 
                 - `tariff_plan_id` (number, required): Уникальный идентификатор тарифного плана. Список доступных тарифных планов можно получить с помощью метода "get.partner_tariffs"
 
-                - `monthly_calls_notify_emails` (array, required): Адреса электронной почты для получения уведомлений о достижении месячного лимита по звонкам
-
-                - `monthly_base_notify_limit` (number, optional): Пороговое значение общего месячного лимита при достижению которого отправляется уведомление на электронный адрес указанный в параметре "monthly_base_notify_email"
+                - `monthly_base_limit` (number, optional): Общий месячный лимит. Значение задаётся в деньгах.
 
                 - `monthly_calls_limit` (number, optional): Месячный лимит по звонкам. Значение задаётся в количестве звонков.
 
-                - `email` (string, required): Адрес электронной почты клиента
-
-                - `password` (string, required): Пароль для клиента
-
-                - `monthly_base_limit` (number, optional): Общий месячный лимит. Значение задаётся в деньгах.
+                - `monthly_calls_notify_emails` (array, required): Адреса электронной почты для получения уведомлений о достижении месячного лимита по звонкам
 
                 - `daily_calls_notify_limit` (number, optional): Пороговое значение дневного лимита по звонкам при достижению которого отправляется уведомление на электронный адрес указанный в параметре "daily_calls_notify_email"
 
-                - `access_token` (string, required): Ключ сессии аутентификации
+                - `password` (string, required): Пароль для клиента
 
                 - `monthly_base_notify_emails` (array, required): Адреса электронной почты для получения уведомлений о достижении общего месячного лимита
 
                 - `monthly_calls_notify_limit` (number, optional): Пороговое значение месячного лимита по звонкам при достижению которого отправляется уведомление на электронный адрес указанный в параметре "monthly_calls_notify_email"
 
-                - `daily_calls_limit` (number, optional): Дневной лимит по звонкам. Значение задаётся в количестве звонков.
-
                 - `daily_calls_notify_emails` (array, required): Адреса электронной почты для получения уведомлений о достижении дневного лимита по звонкам
+
+                - `name` (string, required): Название клиента
+
+                - `email` (string, required): Адрес электронной почты клиента
 
                 **Response Parameters:** 1
 
@@ -132,14 +132,14 @@ paths:
                                             example: 123
                                             type: number
                                     required:
+                                        - email
+                                        - access_token
+                                        - tariff_plan_id
+                                        - monthly_calls_notify_emails
+                                        - password
                                         - monthly_base_notify_emails
                                         - daily_calls_notify_emails
                                         - name
-                                        - tariff_plan_id
-                                        - monthly_calls_notify_emails
-                                        - email
-                                        - password
-                                        - access_token
                                     type: object
                             required:
                                 - jsonrpc
@@ -210,7 +210,7 @@ paths:
                 - novofon
     /get.customer_users:
         get:
-            description: "Получение списка пользователей клиентского личного кабинета из под которых можно совершать API запросы. Важно учитывать наличие прав доступа у пользователя.\n\n**Request Parameters:** 6\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n**Response Parameters:** 5\n\n- `id` (number): \n\n- `login` (string): \n\n- `description` (string): \n\n- `name` (string): да\n\n- `customer_id` (number): да"
+            description: "Получение списка пользователей клиентского личного кабинета из под которых можно совершать API запросы. Важно учитывать наличие прав доступа у пользователя.\n\n**Request Parameters:** 6\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n**Response Parameters:** 5\n\n- `description` (string): \n\n- `name` (string): да\n\n- `customer_id` (number): да\n\n- `id` (number): \n\n- `login` (string): "
             requestBody:
                 content:
                     application/json:
@@ -303,9 +303,9 @@ paths:
                                                         example: example_string
                                                         type: string
                                                 required:
+                                                    - name
                                                     - customer_id
                                                     - id
-                                                    - name
                                                 type: object
                                             metadata:
                                                 description: Response metadata
@@ -345,7 +345,7 @@ paths:
                 - novofon
     /get.customers:
         get:
-            description: "Получение клиентов агента\n\n**Request Parameters:** 6\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n**Response Parameters:** 20\n\n- `monthly_base_notify_emails` (array): \n\n- `monthly_calls_limit` (number): \n\n- `tariff_plan_name` (string): да\n\n- `id` (number): да\n\n- `creation_date_time` (iso8601): \n\n- `monthly_base_limit` (number): \n\n- `monthly_calls_notify_limit` (number): \n\n- `status_change_date_time` (iso8601): \n\n- `monthly_base_notify_limit` (number): \n\n- `monthly_calls_notify_emails` (array): \n\n- `daily_calls_notify_limit` (number): \n\n- `daily_calls_notify_emails` (array): \n\n- `status` (enum): да\n\n- `daily_calls_limit` (number): \n\n- `sites` (array): \n\n- `site_id` (number): \n\n- `site_domain_name` (string): \n\n- `tariff_plan_id` (number): да\n\n- `name` (string): да\n\n- `description` (string): "
+            description: "Получение клиентов агента\n\n**Request Parameters:** 6\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n**Response Parameters:** 20\n\n- `sites` (array): \n\n- `monthly_calls_limit` (number): \n\n- `daily_calls_notify_limit` (number): \n\n- `site_id` (number): \n\n- `site_domain_name` (string): \n\n- `name` (string): да\n\n- `description` (string): \n\n- `status` (enum): да\n\n- `tariff_plan_id` (number): да\n\n- `tariff_plan_name` (string): да\n\n- `id` (number): да\n\n- `creation_date_time` (iso8601): \n\n- `monthly_base_limit` (number): \n\n- `monthly_calls_notify_limit` (number): \n\n- `monthly_calls_notify_emails` (array): \n\n- `daily_calls_limit` (number): \n\n- `daily_calls_notify_emails` (array): \n\n- `status_change_date_time` (iso8601): \n\n- `monthly_base_notify_limit` (number): \n\n- `monthly_base_notify_emails` (array): "
             requestBody:
                 content:
                     application/json:
@@ -550,9 +550,9 @@ paths:
 
                 **Response Parameters:** 2
 
-                - `id` (number): Уникальный идентификатор тарифного плана
-
                 - `name` (string): Название тарифного плана
+
+                - `id` (number): Уникальный идентификатор тарифного плана
             requestBody:
                 content:
                     application/json:
@@ -722,9 +722,9 @@ paths:
                                             example: active
                                             type: string
                                     required:
-                                        - status
                                         - access_token
                                         - customer_id
+                                        - status
                                     type: object
                             required:
                                 - jsonrpc
@@ -793,11 +793,11 @@ paths:
 
                 **Request Parameters:** 3
 
+                - `access_token` (string, required): Ключ сессии аутентификации
+
                 - `customer_id` (number, required): Уникальный идентификатор клиента
 
                 - `tariff_plan_id` (number, required): Уникальный идентификатор тарифного плана. Список доступных тарифных планов можно получить с помощью метода "get.tariff_plans"
-
-                - `access_token` (string, required): Ключ сессии аутентификации
             requestBody:
                 content:
                     application/json:
@@ -900,15 +900,23 @@ paths:
 
                 **Request Parameters:** 13
 
-                - `daily_calls_notify_emails` (array, required): Адреса электронной почты для получения уведомлений о достижении дневного лимита по звонкам
-
                 - `id` (number, required): Уникальный идентификатор клиента
+
+                - `description` (string, optional): Описание к клиенту
+
+                - `monthly_base_notify_limit` (number, optional): Пороговое значение общего месячного лимита при достижению которого отправляется уведомление на электронный адрес указанный в параметре "monthly_base_notify_email"
+
+                - `monthly_base_notify_emails` (array, required): Адреса электронной почты для получения уведомлений о достижении общего месячного лимита
+
+                - `monthly_calls_notify_emails` (array, required): Адреса электронной почты для получения уведомлений о достижении месячного лимита по звонкам
+
+                - `daily_calls_notify_limit` (number, optional): Пороговое значение дневного лимита по звонкам при достижению которого отправляется уведомление на электронный адрес указанный в параметре "daily_calls_notify_email"
+
+                - `daily_calls_notify_emails` (array, required): Адреса электронной почты для получения уведомлений о достижении дневного лимита по звонкам
 
                 - `name` (string, required): Название клиента
 
                 - `monthly_base_limit` (number, optional): Общий месячный лимит. Значение задаётся в деньгах.
-
-                - `monthly_base_notify_emails` (array, required): Адреса электронной почты для получения уведомлений о достижении общего месячного лимита
 
                 - `monthly_calls_limit` (number, optional): Месячный лимит по звонкам. Значение задаётся в количестве звонков.
 
@@ -916,15 +924,7 @@ paths:
 
                 - `daily_calls_limit` (number, optional): Дневной лимит по звонкам. Значение задаётся в количестве звонков.
 
-                - `daily_calls_notify_limit` (number, optional): Пороговое значение дневного лимита по звонкам при достижению которого отправляется уведомление на электронный адрес указанный в параметре "daily_calls_notify_email"
-
                 - `access_token` (string, required): Ключ сессии аутентификации
-
-                - `description` (string, optional): Описание к клиенту
-
-                - `monthly_base_notify_limit` (number, optional): Пороговое значение общего месячного лимита при достижению которого отправляется уведомление на электронный адрес указанный в параметре "monthly_base_notify_email"
-
-                - `monthly_calls_notify_emails` (array, required): Адреса электронной почты для получения уведомлений о достижении месячного лимита по звонкам
             requestBody:
                 content:
                     application/json:
@@ -1005,11 +1005,11 @@ paths:
                                             example: example_string
                                             type: string
                                     required:
-                                        - name
                                         - monthly_base_notify_emails
-                                        - access_token
                                         - monthly_calls_notify_emails
                                         - daily_calls_notify_emails
+                                        - name
+                                        - access_token
                                         - id
                                     type: object
                             required:

@@ -12,6 +12,10 @@ paths:
 
                 **Request Parameters:** 7
 
+                - `filter` (object, optional): См. раздел "Критерии фильтрации"
+
+                - `fields` (array, optional): См. раздел "Представление возвращаемых данных"
+
                 - `sort` (array, optional): См. раздел "Сортировка данных"
 
                 - `access_token` (string, required): Ключ сессии аутентификации
@@ -21,10 +25,6 @@ paths:
                 - `limit` (number, optional): Количество возвращаемых записей. См. раздел "Постраничный вывод"
 
                 - `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
-
-                - `filter` (object, optional): См. раздел "Критерии фильтрации"
-
-                - `fields` (array, optional): См. раздел "Представление возвращаемых данных"
 
                 **Response Parameters:** 3
 
@@ -128,9 +128,9 @@ paths:
                                                         description: да
                                                         example: example_string
                                                 required:
-                                                    - data_type
                                                     - ext_id
                                                     - name
+                                                    - data_type
                                             metadata:
                                                 type: object
                                                 description: Response metadata

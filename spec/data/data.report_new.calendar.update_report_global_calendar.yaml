@@ -12,11 +12,11 @@ paths:
 
                 **Request Parameters:** 3
 
-                - `access_token` (string, required): Ключ сессии аутентификации
-
                 - `id` (number, required): Уникальный идентификатор глобального календаря. Для получения списка источников необходимо использовать метод ["get.report_global_calendars"](../get_report_global_calendars)
 
                 - `params` (object, optional): Параметры глобального календаря
+
+                - `access_token` (string, required): Ключ сессии аутентификации
             requestBody:
                 required: true
                 content:

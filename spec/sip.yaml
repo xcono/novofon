@@ -6,7 +6,7 @@ openapi: 3.0.0
 paths:
     /create.sip_lines:
         post:
-            description: "Создание SIP-линии\n\n**Request Parameters:** 4\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `employee_id` (number, required): Уникальный идентификатор сотрудника, см. метод \"get.employees\"\n\n- `virtual_phone_number` (string, required): Виртуальный номер отображаемый при исходящем вызове . Если виртуальный номер не передан, то тип SIP-линии будет только \"входящая связь\", если передан, то будет \"входящая и исходящая\"\n\n**Response Parameters:** 4\n\n- `phone_number` (string): \n\n- `password` (string): \n\n- `server` (string): \n\n- `id` (number): "
+            description: "Создание SIP-линии\n\n**Request Parameters:** 4\n\n- `virtual_phone_number` (string, required): Виртуальный номер отображаемый при исходящем вызове . Если виртуальный номер не передан, то тип SIP-линии будет только \"входящая связь\", если передан, то будет \"входящая и исходящая\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `employee_id` (number, required): Уникальный идентификатор сотрудника, см. метод \"get.employees\"\n\n**Response Parameters:** 4\n\n- `phone_number` (string): \n\n- `password` (string): \n\n- `server` (string): \n\n- `id` (number): "
             requestBody:
                 content:
                     application/json:
@@ -43,9 +43,9 @@ paths:
                                             format: формат E164. Начинается с 7
                                             type: string
                                     required:
+                                        - access_token
                                         - employee_id
                                         - virtual_phone_number
-                                        - access_token
                                     type: object
                             required:
                                 - jsonrpc
@@ -163,8 +163,8 @@ paths:
                                             example: 123
                                             type: number
                                     required:
-                                        - access_token
                                         - id
+                                        - access_token
                                     type: object
                             required:
                                 - jsonrpc
@@ -233,6 +233,8 @@ paths:
 
                 **Request Parameters:** 7
 
+                - `filter` (object, optional): См. раздел "Критерии фильтрации"
+
                 - `fields` (array, optional): См. раздел "Представление возвращаемых данных"
 
                 - `sort` (array, optional): См. раздел "Сортировка данных"
@@ -244,8 +246,6 @@ paths:
                 - `limit` (number, optional): Количество возвращаемых записей. См. раздел "Постраничный вывод"
 
                 - `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
-
-                - `filter` (object, optional): См. раздел "Критерии фильтрации"
 
                 **Response Parameters:** 1
 
@@ -371,7 +371,7 @@ paths:
                 - novofon
     /get.sip_lines:
         get:
-            description: "Получение списка SIP-линий\n\n**Request Parameters:** 7\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n**Response Parameters:** 15\n\n- `dial_time` (number): \n\n- `physical_state` (enum): да\n\n- `ip_addresses` (array): да\n\n- `id` (number): да\n\n- `type` (enum): да\n\n- `channels_count` (number): \n\n- `employee_id` (number): да\n\n- `phone_number` (string): да\n\n- `IP-адреса` (): \n\n- `date_time` (iso8601): \n\n- `billing_state` (enum): да\n\n- `virtual_phone_number` (string): да\n\n- `status` (enum): да\n\n- `employee_full_name` (string): да\n\n- `ip` (string): "
+            description: "Получение списка SIP-линий\n\n**Request Parameters:** 7\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n**Response Parameters:** 15\n\n- `channels_count` (number): \n\n- `physical_state` (enum): да\n\n- `virtual_phone_number` (string): да\n\n- `date_time` (iso8601): \n\n- `ip` (string): \n\n- `phone_number` (string): да\n\n- `billing_state` (enum): да\n\n- `status` (enum): да\n\n- `employee_full_name` (string): да\n\n- `IP-адреса` (): \n\n- `dial_time` (number): \n\n- `employee_id` (number): да\n\n- `id` (number): да\n\n- `type` (enum): да\n\n- `ip_addresses` (array): да"
             requestBody:
                 content:
                     application/json:
@@ -645,6 +645,12 @@ paths:
 
                 **Request Parameters:** 7
 
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `id` (number, required): Уникальный идентификатор SIP-линии
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
                 - `employee_id` (number, required): Уникальный идентификатор сотрудника, см. метод "get.employees"
 
                 - `virtual_phone_number` (string, required): Виртуальный номер отображаемый при исходящем вызове . Если виртуальный номер не передан, то тип SIP-линии будет только "входящая связь", если передан, то будет "входящая и исходящая"
@@ -652,12 +658,6 @@ paths:
                 - `billing_state` (enum, optional): Состояние SIP-линии в биллинге. active - SIP-линия активна;manual_lock - SIP-линия заблокирована вручную.
 
                 - `channels_count` (number, optional): Количество доступных линий на SIP-линии Определяется ограничениями тарифного плана.
-
-                - `access_token` (string, required): Ключ сессии аутентификации
-
-                - `id` (number, required): Уникальный идентификатор SIP-линии
-
-                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
             requestBody:
                 content:
                     application/json:
@@ -705,10 +705,10 @@ paths:
                                             format: формат E164. Начинается с 7
                                             type: string
                                     required:
-                                        - access_token
                                         - id
                                         - employee_id
                                         - virtual_phone_number
+                                        - access_token
                                     type: object
                             required:
                                 - jsonrpc

@@ -11,13 +11,13 @@ paths:
 
                 **Request Parameters:** 4
 
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
                 - `ext_id` (string, required): Внешний идентификатор сотрудника
 
                 - `name` (string, required): Имя сотрудника
 
                 - `access_token` (string, required): Ключ сессии аутентификации
-
-                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
 
                 **Response Parameters:** 1
 
@@ -57,9 +57,9 @@ paths:
                                             example: 123
                                             type: number
                                     required:
-                                        - ext_id
                                         - name
                                         - access_token
+                                        - ext_id
                                     type: object
                             required:
                                 - jsonrpc
@@ -252,79 +252,79 @@ paths:
 
                 **Request Parameters:** 37
 
-                - `calls_available` (boolean, optional): Параметр будет удален в ближайшее время. Используйте вместо него параметры: in_external_allowed_call_directions, in_internal_allowed_call_directions Значение по умолчанию "true". Доступность для звонков
-
-                - `in_internal_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для входящих внутренних звонков in - входящие вызовы out - исходящие вызовы
-
-                - `call_recording` (enum, optional): Значение по умолчанию "all". Статус записи разговоров Зависит от компонента "recording"
-
-                - `extension_phone_number` (string, required): Внутренний номер
-
-                - `operator_invite_to_chat_enabled` (boolean, optional): Значение по умолчанию "false". Разрешено ли приглашать в чат
-
-                - `in_external_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для входящих внешних звонков in - входящие вызовы out - исходящие вызовы
+                - `out_external_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для исходящих внешних звонков in - входящие вызовы out - исходящие вызовы
 
                 - `email` (string, optional): Адрес электронной почты сотрудника
 
-                - `phone_numbers` (array, optional): Список телефонов сотрудника Важно понимать, что при создании нового сотрудника номер уже может существовать у другого сотрудника и если номеру переданы новые параметры, то они будут так же обновлены уже существующему номеру
-
-                - `operator_offline_message_enabled` (boolean, optional): Значение по умолчанию "false". Разрешено ли обрабатывать заявки
-
-                - `operator_sites` (array, optional): Список уникальных идентификаторов сайтов для которых доступен сотрудник.
-
-                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
-
-                - `coach_always_enabled` (boolean, optional): По умолчанию "false". При активации опции все входящие звонки сотрудника будут дублироваться его тренеру. Значение "true" возможно установить если задан параметр "coach_id".
-
-                - `phone_number` (string, required): Номер телефона сотрудника. Формат номера может быть с донабором, к примеру "74955140578...2345", поэтому у номера не формат E164 Если указан SIP, то не делаем связки, а просто добавляем как номер типа ТФОП, т.е. как обычный номер
-
-                - `extension` (object, optional): Внутренний номер сотрудника
-
-                - `first_name` (string, optional): Имя сотрудника
-
-                - `coach` (object, optional): Тренер для сотрудника Зависит от компонента "trainer"
+                - `coach_id` (number, required): Уникальный идентификатор тренера
 
                 - `groups` (array, optional): Список уникальных идентификаторов групп в которых состоит сотрудник.
 
-                - `extension_queue_enabled` (boolean, optional): Значение по умолчанию "false". В случае, если все номера, указанные для этого сотрудника в списке телефонов, заняты, то звонящий абонент встанет в очередь на повторный дозвон до телефонов в списке и будет ждать первый освободившийся номер.
-
-                - `operator_login` (string, required): Логин сотрудника для входа в приложение «Рабочее место оператора»
-
-                - `operator_password` (string, required): Пароль сотрудника для входа в приложение «Рабочее место оператора»
-
-                - `operator_position_id` (number, optional): Должность сотрудника в подписи
-
-                - `status` (enum, optional): Значение по умолчанию "active". Статус номера.
-
-                - `channels_count` (number, optional): Значение по умолчанию "1". Количество линий на телефоне.
-
-                - `dial_time` (number, optional): Значение по умолчанию "60". Время дозвона по телефону. Значение в секундах.
+                - `extension_phone_number` (string, required): Внутренний номер
 
                 - `extension_voice_mail_enabled` (boolean, optional): Значение по умолчанию "false". В случае, если все номера, указанные для этого сотрудника в списке телефонов, заняты, то звонящему абоненту будет предложено оставить голосовое сообщение.
 
-                - `operator_chat_enabled` (boolean, optional): Значение по умолчанию "true". Разрешено ли участвовать в чатах с посетителями
-
-                - `access_token` (string, required): Ключ сессии аутентификации
-
-                - `allowed_in_call_types` (array, optional): Параметр будет удален в ближайшее время. Используйте вместо него параметры: in_external_allowed_call_directions, in_internal_allowed_call_directions Какие типы входящих звонков разрешены сотруднику internal - внутренние звонки от сотрудников компании external - внешние звонки от клиентов
-
-                - `out_internal_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для исходящих внутренних звонков in - входящие вызовы out - исходящие вызовы
-
-                - `coach_id` (number, required): Уникальный идентификатор тренера
+                - `operator` (object, optional): Оператор рабочего места Зависит от компонента "consultant"
 
                 - `operator_display_name` (string, required): Имя оператора в чате
 
+                - `operator_password` (string, required): Пароль сотрудника для входа в приложение «Рабочее место оператора»
+
+                - `operator_offline_message_enabled` (boolean, optional): Значение по умолчанию "false". Разрешено ли обрабатывать заявки
+
                 - `patronymic` (string, optional): Отчество сотрудника
+
+                - `first_name` (string, optional): Имя сотрудника
+
+                - `out_internal_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для исходящих внутренних звонков in - входящие вызовы out - исходящие вызовы
+
+                - `coach` (object, optional): Тренер для сотрудника Зависит от компонента "trainer"
+
+                - `phone_numbers` (array, optional): Список телефонов сотрудника Важно понимать, что при создании нового сотрудника номер уже может существовать у другого сотрудника и если номеру переданы новые параметры, то они будут так же обновлены уже существующему номеру
 
                 - `allowed_out_call_types` (array, optional): Параметр будет удален в ближайшее время. Используйте вместо него параметры: out_external_allowed_call_directions, out_internal_allowed_call_directions Какие типы исходящих звонков разрешены сотруднику internal - внутренние звонки на сотрудников компании external - звонки за пределы компании
 
-                - `out_external_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для исходящих внешних звонков in - входящие вызовы out - исходящие вызовы
+                - `call_recording` (enum, optional): Значение по умолчанию "all". Статус записи разговоров Зависит от компонента "recording"
+
+                - `phone_number` (string, required): Номер телефона сотрудника. Формат номера может быть с донабором, к примеру "74955140578...2345", поэтому у номера не формат E164 Если указан SIP, то не делаем связки, а просто добавляем как номер типа ТФОП, т.е. как обычный номер
+
+                - `extension_queue_enabled` (boolean, optional): Значение по умолчанию "false". В случае, если все номера, указанные для этого сотрудника в списке телефонов, заняты, то звонящий абонент встанет в очередь на повторный дозвон до телефонов в списке и будет ждать первый освободившийся номер.
+
+                - `last_name` (string, required): Фамилия сотрудника
+
+                - `dial_time` (number, optional): Значение по умолчанию "60". Время дозвона по телефону. Значение в секундах.
+
+                - `extension` (object, optional): Внутренний номер сотрудника
+
+                - `operator_login` (string, required): Логин сотрудника для входа в приложение «Рабочее место оператора»
+
+                - `operator_position_id` (number, optional): Должность сотрудника в подписи
+
+                - `operator_invite_to_chat_enabled` (boolean, optional): Значение по умолчанию "false". Разрешено ли приглашать в чат
+
+                - `calls_available` (boolean, optional): Параметр будет удален в ближайшее время. Используйте вместо него параметры: in_external_allowed_call_directions, in_internal_allowed_call_directions Значение по умолчанию "true". Доступность для звонков
+
+                - `allowed_in_call_types` (array, optional): Параметр будет удален в ближайшее время. Используйте вместо него параметры: in_external_allowed_call_directions, in_internal_allowed_call_directions Какие типы входящих звонков разрешены сотруднику internal - внутренние звонки от сотрудников компании external - внешние звонки от клиентов
 
                 - `schedule_id` (number, optional): График активности
 
-                - `operator` (object, optional): Оператор рабочего места Зависит от компонента "consultant"
+                - `operator_chat_enabled` (boolean, optional): Значение по умолчанию "true". Разрешено ли участвовать в чатах с посетителями
 
-                - `last_name` (string, required): Фамилия сотрудника
+                - `in_internal_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для входящих внутренних звонков in - входящие вызовы out - исходящие вызовы
+
+                - `coach_always_enabled` (boolean, optional): По умолчанию "false". При активации опции все входящие звонки сотрудника будут дублироваться его тренеру. Значение "true" возможно установить если задан параметр "coach_id".
+
+                - `channels_count` (number, optional): Значение по умолчанию "1". Количество линий на телефоне.
+
+                - `operator_sites` (array, optional): Список уникальных идентификаторов сайтов для которых доступен сотрудник.
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `status` (enum, optional): Значение по умолчанию "active". Статус номера.
+
+                - `in_external_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для входящих внешних звонков in - входящие вызовы out - исходящие вызовы
 
                 **Response Parameters:** 1
 
@@ -543,13 +543,13 @@ paths:
                                             example: 123
                                             type: number
                                     required:
+                                        - phone_number
+                                        - last_name
+                                        - operator_login
                                         - access_token
                                         - coach_id
-                                        - operator_display_name
-                                        - last_name
                                         - extension_phone_number
-                                        - phone_number
-                                        - operator_login
+                                        - operator_display_name
                                         - operator_password
                                     type: object
                             required:
@@ -626,6 +626,8 @@ paths:
 
                 **Request Parameters:** 7
 
+                - `access_token` (string, required): Ключ сессии аутентификации
+
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
 
                 - `name` (string, required): Название группы
@@ -637,8 +639,6 @@ paths:
                 - `queue_enabled` (boolean, optional): Значение по умолчанию "false". В случае, если все номера, указанные для этой группы сотрудников, заняты, то звонящий абонент встанет в очередь на повторный дозвон до телефонов в списке и будет ждать первый освободившийся номер. Зависит от компонента "va"
 
                 - `channels_count` (number, optional): Значение по умолчанию 1. Количество одновременных линий при обзвоне Зависит от компонента "va"
-
-                - `access_token` (string, required): Ключ сессии аутентификации
 
                 **Response Parameters:** 1
 
@@ -693,8 +693,8 @@ paths:
                                             example: 123
                                             type: number
                                     required:
-                                        - name
                                         - access_token
+                                        - name
                                     type: object
                             required:
                                 - jsonrpc
@@ -826,11 +826,11 @@ paths:
 
                 **Request Parameters:** 3
 
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `id` (number, required): Уникальный идентификатор должности сотрудника
-
-                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
             requestBody:
                 content:
                     application/json:
@@ -932,11 +932,11 @@ paths:
 
                 **Request Parameters:** 3
 
+                - `access_token` (string, required): Ключ сессии аутентификации
+
                 - `id` (number, required): Уникальный идентификатор сотрудника
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
-
-                - `access_token` (string, required): Ключ сессии аутентификации
             requestBody:
                 content:
                     application/json:
@@ -1144,10 +1144,6 @@ paths:
 
                 **Request Parameters:** 7
 
-                - `sort` (array, optional): См. раздел "Сортировка данных"
-
-                - `access_token` (string, required): Ключ сессии аутентификации
-
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
 
                 - `limit` (number, optional): Количество возвращаемых записей. См. раздел "Постраничный вывод"
@@ -1157,6 +1153,10 @@ paths:
                 - `filter` (object, optional): См. раздел "Критерии фильтрации"
 
                 - `fields` (array, optional): См. раздел "Представление возвращаемых данных"
+
+                - `sort` (array, optional): См. раздел "Сортировка данных"
+
+                - `access_token` (string, required): Ключ сессии аутентификации
 
                 **Response Parameters:** 2
 
@@ -1419,7 +1419,7 @@ paths:
                 - novofon
     /get.employee_stat:
         get:
-            description: "Получение агрегированной статистики по сотрудникам Метод доступен при подключенном компоненте \"call_center\"\n\n**Request Parameters:** 10\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `date_from` (iso8601, required): YYYY-MM-DD hh:mm:ss\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `date_till` (iso8601, required): YYYY-MM-DD hh:mm:ss\n\n- `only_default_statuses_in_stats` (boolean, optional): Признак, позволяющий выбирать вариант статистики по времени нахождения в статусах. По умолчанию \"true\".\n\n**Response Parameters:** 9\n\n- `groups` (array): да\n\n- `id` (number): да\n\n- `first_name` (string): да\n\n- `patronymic` (string): \n\n- `full_name` (string): да\n\n- `status_stats` (object): да\n\n- `group_id` (number): \n\n- `group_name` (string): \n\n- `last_name` (string): да"
+            description: "Получение агрегированной статистики по сотрудникам Метод доступен при подключенном компоненте \"call_center\"\n\n**Request Parameters:** 10\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `date_from` (iso8601, required): YYYY-MM-DD hh:mm:ss\n\n- `only_default_statuses_in_stats` (boolean, optional): Признак, позволяющий выбирать вариант статистики по времени нахождения в статусах. По умолчанию \"true\".\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `date_till` (iso8601, required): YYYY-MM-DD hh:mm:ss\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n**Response Parameters:** 9\n\n- `id` (number): да\n\n- `first_name` (string): да\n\n- `last_name` (string): да\n\n- `group_id` (number): \n\n- `group_name` (string): \n\n- `patronymic` (string): \n\n- `full_name` (string): да\n\n- `status_stats` (object): да\n\n- `groups` (array): да"
             requestBody:
                 content:
                     application/json:
@@ -1582,7 +1582,7 @@ paths:
                 - novofon
     /get.employees:
         get:
-            description: "Получение списка сотрудников\n\n**Request Parameters:** 7\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n**Response Parameters:** 47\n\n- `first_name` (string): да\n\n- `calls_available` (boolean): да\n\n- `allowed_in_call_types` (array): да\n\n- `groups` (array): да\n\n- `phone_number` (string): \n\n- `extension_phone_number` (string): \n\n- `operator_position_id` (number): \n\n- `operator_chats_available` (boolean): \n\n- `call_recording` (enum): да\n\n- `coach_id` (number): \n\n- `coach_always_enabled` (boolean): \n\n- `schedule_id` (number): да\n\n- `phone_numbers` (array): да\n\n- `operator_login` (string): \n\n- `id` (number): да\n\n- `status` (enum): \n\n- `status_id` (number): да\n\n- `in_internal_allowed_call_directions` (array): да\n\n- `out_internal_allowed_call_directions` (array): да\n\n- `schedule_name` (string): да\n\n- `extension_voice_mail_enabled` (boolean): \n\n- `operator_offline_message_enabled` (boolean): \n\n- `login` (string): да\n\n- `allowed_out_call_types` (array): да\n\n- `out_external_allowed_call_directions` (array): да\n\n- `group_id` (number): \n\n- `channels_count` (number): \n\n- `extension` (object): да\n\n- `operator_chat_enabled` (boolean): \n\n- `operator_sites` (array): \n\n- `last_name` (string): да\n\n- `full_name` (string): да\n\n- `phone_id` (number): \n\n- `extension_queue_enabled` (boolean): \n\n- `operator_display_name` (string): \n\n- `site_domain_name` (string): \n\n- `in_external_allowed_call_directions` (array): да\n\n- `email` (string): да\n\n- `dial_time` (number): \n\n- `operator_invite_to_chat_enabled` (boolean): \n\n- `site_id` (number): \n\n- `patronymic` (string): \n\n- `coach` (object): да\n\n- `coach_full_name` (string): \n\n- `group_name` (string): \n\n- `operator` (object): \n\n- `operator_position_name` (string): "
+            description: "Получение списка сотрудников\n\n**Request Parameters:** 7\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n**Response Parameters:** 47\n\n- `login` (string): да\n\n- `first_name` (string): да\n\n- `last_name` (string): да\n\n- `status_id` (number): да\n\n- `allowed_in_call_types` (array): да\n\n- `schedule_id` (number): да\n\n- `group_name` (string): \n\n- `full_name` (string): да\n\n- `status` (enum): \n\n- `calls_available` (boolean): да\n\n- `coach_always_enabled` (boolean): \n\n- `operator_position_name` (string): \n\n- `operator_offline_message_enabled` (boolean): \n\n- `site_id` (number): \n\n- `coach_id` (number): \n\n- `group_id` (number): \n\n- `operator_chat_enabled` (boolean): \n\n- `patronymic` (string): \n\n- `out_internal_allowed_call_directions` (array): да\n\n- `coach` (object): да\n\n- `extension_phone_number` (string): \n\n- `extension_voice_mail_enabled` (boolean): \n\n- `operator` (object): \n\n- `in_external_allowed_call_directions` (array): да\n\n- `out_external_allowed_call_directions` (array): да\n\n- `call_recording` (enum): да\n\n- `phone_id` (number): \n\n- `dial_time` (number): \n\n- `operator_display_name` (string): \n\n- `operator_login` (string): \n\n- `operator_invite_to_chat_enabled` (boolean): \n\n- `id` (number): да\n\n- `phone_numbers` (array): да\n\n- `extension_queue_enabled` (boolean): \n\n- `operator_chats_available` (boolean): \n\n- `site_domain_name` (string): \n\n- `in_internal_allowed_call_directions` (array): да\n\n- `allowed_out_call_types` (array): да\n\n- `email` (string): да\n\n- `schedule_name` (string): да\n\n- `coach_full_name` (string): \n\n- `groups` (array): да\n\n- `channels_count` (number): \n\n- `phone_number` (string): \n\n- `extension` (object): да\n\n- `operator_position_id` (number): \n\n- `operator_sites` (array): "
             requestBody:
                 content:
                     application/json:
@@ -1884,7 +1884,7 @@ paths:
                 - novofon
     /get.group_employees:
         get:
-            description: "Получение списка групп сотрудников\n\n**Request Parameters:** 7\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n**Response Parameters:** 12\n\n- `id` (number): да\n\n- `employee_id` (number): \n\n- `employee_full_name` (string): \n\n- `employee_phone_number_id` (number): \n\n- `available` (boolean): \n\n- `group_phone_number` (string): да\n\n- `queue_enabled` (boolean): да\n\n- `name` (string): да\n\n- `members` (array): \n\n- `phone_numbers` (array): да\n\n- `employee_phone_number` (string): \n\n- `channels_count` (number): да"
+            description: "Получение списка групп сотрудников\n\n**Request Parameters:** 7\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n**Response Parameters:** 12\n\n- `employee_phone_number_id` (number): \n\n- `available` (boolean): \n\n- `queue_enabled` (boolean): да\n\n- `channels_count` (number): да\n\n- `name` (string): да\n\n- `members` (array): \n\n- `employee_id` (number): \n\n- `employee_full_name` (string): \n\n- `group_phone_number` (string): да\n\n- `id` (number): да\n\n- `phone_numbers` (array): да\n\n- `employee_phone_number` (string): "
             requestBody:
                 content:
                     application/json:
@@ -2050,7 +2050,7 @@ paths:
                 - novofon
     /get.statuses:
         get:
-            description: "Получение списка статусов\n\n**Request Parameters:** 8\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `is_deleted` (boolean, optional): Признак удаления статуса. По умолчанию \"false\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n**Response Parameters:** 14\n\n- `out_internal_allowed_call_directions` (array): \n\n- `allowed_phone_protocols` (array): \n\n- `name` (string): да\n\n- `is_deleted` (boolean): \n\n- `in_internal_allowed_call_directions` (array): \n\n- `is_select_allowed` (boolean): \n\n- `is_worktime` (boolean): \n\n- `is_auto_out_calls_ready` (boolean): \n\n- `id` (number): да\n\n- `mnemonic` (enum): да\n\n- `description` (string): \n\n- `color` (string): \n\n- `in_external_allowed_call_directions` (array): \n\n- `out_external_allowed_call_directions` (array): "
+            description: "Получение списка статусов\n\n**Request Parameters:** 8\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `is_deleted` (boolean, optional): Признак удаления статуса. По умолчанию \"false\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n**Response Parameters:** 14\n\n- `in_external_allowed_call_directions` (array): \n\n- `out_external_allowed_call_directions` (array): \n\n- `mnemonic` (enum): да\n\n- `color` (string): \n\n- `in_internal_allowed_call_directions` (array): \n\n- `out_internal_allowed_call_directions` (array): \n\n- `allowed_phone_protocols` (array): \n\n- `is_select_allowed` (boolean): \n\n- `is_worktime` (boolean): \n\n- `is_auto_out_calls_ready` (boolean): \n\n- `id` (number): да\n\n- `name` (string): да\n\n- `description` (string): \n\n- `is_deleted` (boolean): "
             requestBody:
                 content:
                     application/json:
@@ -2348,13 +2348,13 @@ paths:
 
                 **Request Parameters:** 4
 
-                - `name` (string, required): Название должности
-
-                - `id` (number, required): Уникальный идентификатор должности
-
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `name` (string, required): Название должности
+
+                - `id` (number, required): Уникальный идентификатор должности
             requestBody:
                 content:
                     application/json:
@@ -2390,9 +2390,9 @@ paths:
                                             example: 123
                                             type: number
                                     required:
+                                        - id
                                         - access_token
                                         - name
-                                        - id
                                     type: object
                             required:
                                 - jsonrpc
@@ -2461,83 +2461,83 @@ paths:
 
                 **Request Parameters:** 40
 
-                - `access_token` (string, required): Ключ сессии аутентификации
-
-                - `out_external_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для исходящих внешних звонков in - входящие вызовы out - исходящие вызовы
-
-                - `schedule_id` (number, optional): График активности
-
-                - `groups` (array, optional): Список уникальных идентификаторов групп в которых состоит сотрудник
-
-                - `phone_number` (string, required): Номер телефона сотрудника Логика обновления: - телефона уже привязан к этому сотруднику - обновляем параметры - телефона не привязан к этому сотруднику - добавляем его - телефона нет в аккаунте - создаем новый и привязываем к сотруднику
-
                 - `id` (number, required): Уникальный идентификатор сотрудника
-
-                - `status_id` (number, optional): Уникальный идентификатор статуса. Для получения полного списка статусов необходимо использовать метод "get.statuses"
 
                 - `calls_available` (boolean, optional): Параметр будет удален в ближайшее время. Используйте вместо него параметры: in_external_allowed_call_directions, in_internal_allowed_call_directions Доступность для звонков
 
-                - `in_internal_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для входящих внутренних звонков in - входящие вызовы out - исходящие вызовы
-
-                - `phone_id` (number, optional): Уникальный идентификатор телефона сотрудника из "get.employees#phone_id" Указываем в случаи если хотим изменить существующий номер. Если не указываем, то поиск производится по номеру телефона (phone_number):
+                - `in_external_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для входящих внешних звонков in - входящие вызовы out - исходящие вызовы
 
                 - `channels_count` (number, optional): Количество линий на телефоне
 
-                - `patronymic` (string, optional): Отчество сотрудника
-
-                - `out_internal_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для исходящих внутренних звонков in - входящие вызовы out - исходящие вызовы
-
-                - `coach` (object, optional): Тренер для сотрудника Зависит от компонента "trainer"
-
-                - `operator_offline_message_enabled` (boolean, optional): Разрешено ли обрабатывать заявки
-
-                - `first_name` (string, optional): Имя сотрудника
-
-                - `last_name` (string, required): Фамилия сотрудника
+                - `extension` (object, optional): Внутренний номер сотрудника
 
                 - `status` (enum, optional): Статус номера.
 
-                - `allowed_out_call_types` (array, optional): Параметр будет удален в ближайшее время. Используйте вместо него параметры: out_external_allowed_call_directions, out_internal_allowed_call_directions Какие типы исходящих звонков разрешены сотруднику internal - внутренние звонки на сотрудников компании external - звонки за пределы компании
+                - `out_internal_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для исходящих внутренних звонков in - входящие вызовы out - исходящие вызовы
 
-                - `email` (string, optional): Адрес электронной почты сотрудника
+                - `schedule_id` (number, optional): График активности
 
-                - `coach_always_enabled` (boolean, optional): При активации опции все входящие звонки сотрудника будут дублироваться его тренеру. Значение "true" возможно установить если задан параметр "coach_id".
+                - `first_name` (string, optional): Имя сотрудника
+
+                - `allowed_in_call_types` (array, optional): Параметр будет удален в ближайшее время. Используйте вместо него параметры: in_external_allowed_call_directions, in_internal_allowed_call_directions Какие типы входящих звонков разрешены сотруднику internal - внутренние звонки от сотрудников компании external - внешние звонки от клиентов
+
+                - `out_external_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для исходящих внешних звонков in - входящие вызовы out - исходящие вызовы
 
                 - `coach_id` (number, optional): Уникальный идентификатор тренера
 
-                - `phone_numbers` (array, required): Список телефонов сотрудника Важно понимать, что при создании нового сотрудника номер уже может существовать у другого сотрудника и если номеру переданы новые параметры, то они будут так же обновлены уже существующему номеру.
+                - `groups` (array, optional): Список уникальных идентификаторов групп в которых состоит сотрудник
+
+                - `extension_voice_mail_enabled` (boolean, required): В случае, если все номера, указанные для этого сотрудника в списке телефонов, заняты, то звонящему абоненту будет предложено оставить голосовое сообщение.
 
                 - `operator` (object, optional): Оператор рабочего места Зависит от компонента "consultant"
 
                 - `operator_login` (string, required): Логин сотрудника для входа в приложение «Рабочее место оператора»
 
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `phone_numbers` (array, required): Список телефонов сотрудника Важно понимать, что при создании нового сотрудника номер уже может существовать у другого сотрудника и если номеру переданы новые параметры, то они будут так же обновлены уже существующему номеру.
+
+                - `phone_id` (number, optional): Уникальный идентификатор телефона сотрудника из "get.employees#phone_id" Указываем в случаи если хотим изменить существующий номер. Если не указываем, то поиск производится по номеру телефона (phone_number):
+
+                - `phone_number` (string, required): Номер телефона сотрудника Логика обновления: - телефона уже привязан к этому сотруднику - обновляем параметры - телефона не привязан к этому сотруднику - добавляем его - телефона нет в аккаунте - создаем новый и привязываем к сотруднику
+
                 - `operator_password` (string, required): Пароль сотрудника для входа в приложение «Рабочее место оператора»
 
-                - `operator_position_id` (number, optional): Должность сотрудника в подписи
+                - `operator_offline_message_enabled` (boolean, optional): Разрешено ли обрабатывать заявки
 
                 - `operator_chat_enabled` (boolean, optional): Разрешено ли участвовать в чатах с посетителями
 
                 - `operator_sites` (array, optional): Список уникальных идентификаторов сайтов для которых доступен сотрудник.
 
-                - `allowed_in_call_types` (array, optional): Параметр будет удален в ближайшее время. Используйте вместо него параметры: in_external_allowed_call_directions, in_internal_allowed_call_directions Какие типы входящих звонков разрешены сотруднику internal - внутренние звонки от сотрудников компании external - внешние звонки от клиентов
+                - `last_name` (string, required): Фамилия сотрудника
 
-                - `call_recording` (enum, optional): Статус записи разговоров Зависит от компонента "recording"
-
-                - `dial_time` (number, optional): Время дозвона по телефону
-
-                - `extension_voice_mail_enabled` (boolean, required): В случае, если все номера, указанные для этого сотрудника в списке телефонов, заняты, то звонящему абоненту будет предложено оставить голосовое сообщение.
+                - `allowed_out_call_types` (array, optional): Параметр будет удален в ближайшее время. Используйте вместо него параметры: out_external_allowed_call_directions, out_internal_allowed_call_directions Какие типы исходящих звонков разрешены сотруднику internal - внутренние звонки на сотрудников компании external - звонки за пределы компании
 
                 - `operator_display_name` (string, optional): Имя оператора в чате
 
-                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+                - `access_token` (string, required): Ключ сессии аутентификации
 
-                - `in_external_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для входящих внешних звонков in - входящие вызовы out - исходящие вызовы
+                - `patronymic` (string, optional): Отчество сотрудника
 
-                - `extension` (object, optional): Внутренний номер сотрудника
+                - `status_id` (number, optional): Уникальный идентификатор статуса. Для получения полного списка статусов необходимо использовать метод "get.statuses"
+
+                - `in_internal_allowed_call_directions` (array, optional): Какие направления вызовов разрешены сотруднику для входящих внутренних звонков in - входящие вызовы out - исходящие вызовы
+
+                - `call_recording` (enum, optional): Статус записи разговоров Зависит от компонента "recording"
+
+                - `coach` (object, optional): Тренер для сотрудника Зависит от компонента "trainer"
+
+                - `coach_always_enabled` (boolean, optional): При активации опции все входящие звонки сотрудника будут дублироваться его тренеру. Значение "true" возможно установить если задан параметр "coach_id".
+
+                - `extension_queue_enabled` (boolean, required): В случае, если все номера, указанные для этого сотрудника в списке телефонов, заняты, то звонящий абонент встанет в очередь на повторный дозвон до телефонов в списке и будет ждать первый освободившийся номер.
+
+                - `email` (string, optional): Адрес электронной почты сотрудника
+
+                - `dial_time` (number, optional): Время дозвона по телефону
 
                 - `extension_phone_number` (string, required): Внутренний номер
 
-                - `extension_queue_enabled` (boolean, required): В случае, если все номера, указанные для этого сотрудника в списке телефонов, заняты, то звонящий абонент встанет в очередь на повторный дозвон до телефонов в списке и будет ждать первый освободившийся номер.
+                - `operator_position_id` (number, optional): Должность сотрудника в подписи
 
                 - `operator_invite_to_chat_enabled` (boolean, optional): Разрешено ли приглашать в чат
             requestBody:
@@ -2767,15 +2767,15 @@ paths:
                                             type: number
                                     required:
                                         - extension_voice_mail_enabled
-                                        - extension_phone_number
-                                        - extension_queue_enabled
-                                        - access_token
-                                        - phone_number
-                                        - id
-                                        - last_name
-                                        - phone_numbers
                                         - operator_login
+                                        - phone_numbers
+                                        - phone_number
                                         - operator_password
+                                        - last_name
+                                        - access_token
+                                        - extension_queue_enabled
+                                        - extension_phone_number
+                                        - id
                                     type: object
                             required:
                                 - jsonrpc
@@ -2913,10 +2913,10 @@ paths:
                                             example: 123
                                             type: number
                                     required:
+                                        - name
                                         - channels_count
                                         - access_token
                                         - id
-                                        - name
                                     type: object
                             required:
                                 - jsonrpc
@@ -2985,10 +2985,6 @@ paths:
 
                 **Request Parameters:** 6
 
-                - `id` (number, required): Уникальный идентификатор группы
-
-                - `user_id` (number, required): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
-
                 - `phone_numbers` (array, required): Список городских, мобильных и sip номеров сотрудников, которые входят в группу, с указанием их доступности и приоритетом обзвона. Приоритет обзвона номеров определяется положением номера в списке. Обзвон указанного списка номеров в группе возможен по внутреннему номеру группы (см. параметр "group_phone_number"). Нужно передавать все номера
 
                 - `employee_phone_number_id` (number, required): Уникальный идентификатор номера сотрудника в группе
@@ -2996,6 +2992,10 @@ paths:
                 - `available` (boolean, required): Доступность номера в группе
 
                 - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `id` (number, required): Уникальный идентификатор группы
+
+                - `user_id` (number, required): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
             requestBody:
                 content:
                     application/json:
@@ -3042,12 +3042,12 @@ paths:
                                             example: 123
                                             type: number
                                     required:
+                                        - access_token
                                         - id
                                         - user_id
                                         - phone_numbers
                                         - employee_phone_number_id
                                         - available
-                                        - access_token
                                     type: object
                             required:
                                 - jsonrpc

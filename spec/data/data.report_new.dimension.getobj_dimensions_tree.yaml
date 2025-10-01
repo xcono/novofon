@@ -7,7 +7,7 @@ paths:
     /getobj.dimensions_tree:
         post:
             summary: Получение вложенности измерений
-            description: "Получение вложенности измерений\n\n**Request Parameters:** 3\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `report_type` (enum, required): Тип отчета пользователя. В данный момент работает только для типа отчетов call_summary_uis. Для получения списка отчетов пользователей необходимо использовать метод \"get.reports_list\"\n\n**Response Parameters:** 11\n\n- `data_type` (enum): да\n\n- `is_custom` (boolean): да\n\n- `is_entity_separated` (boolean): да\n\n- `dimensions_groups` (array): да\n\n- `id` (enum): \n\n- `name` (string): \n\n- `parent_group_id` (number): \n\n- `sort` (number): \n\n- `dimensions` (array): да\n\n- `description` (string): \n\n- `group_id` (number): "
+            description: "Получение вложенности измерений\n\n**Request Parameters:** 3\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `report_type` (enum, required): Тип отчета пользователя. В данный момент работает только для типа отчетов call_summary_uis. Для получения списка отчетов пользователей необходимо использовать метод \"get.reports_list\"\n\n**Response Parameters:** 11\n\n- `description` (string): \n\n- `parent_group_id` (number): \n\n- `sort` (number): \n\n- `group_id` (number): \n\n- `data_type` (enum): да\n\n- `dimensions_groups` (array): да\n\n- `id` (enum): \n\n- `name` (string): \n\n- `dimensions` (array): да\n\n- `is_custom` (boolean): да\n\n- `is_entity_separated` (boolean): да"
             requestBody:
                 required: true
                 content:
@@ -41,8 +41,8 @@ paths:
                                             description: Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
                                             example: 123
                                     required:
-                                        - report_type
                                         - access_token
+                                        - report_type
                             required:
                                 - jsonrpc
                                 - id

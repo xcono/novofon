@@ -11,19 +11,19 @@ paths:
 
                 **Request Parameters:** 4
 
-                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
-
                 - `phone_number` (string, required): Номер телефона
 
                 - `add_comment` (string, optional): Комментарий, оставленный при добавлении номера телефона в черный список
 
                 - `access_token` (string, required): Ключ сессии аутентификации
 
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
                 **Response Parameters:** 2
 
-                - `phone_number` (string): Номер телефона который был добавлен в черный список
-
                 - `id` (number): Уникальный идентификатор номера телефона в черном списке
+
+                - `phone_number` (string): Номер телефона который был добавлен в черный список
             requestBody:
                 content:
                     application/json:
@@ -59,8 +59,8 @@ paths:
                                             example: 123
                                             type: number
                                     required:
-                                        - phone_number
                                         - access_token
+                                        - phone_number
                                     type: object
                             required:
                                 - jsonrpc
@@ -247,8 +247,6 @@ paths:
 
                 **Request Parameters:** 7
 
-                - `filter` (object, optional): См. раздел "Критерии фильтрации"
-
                 - `fields` (array, optional): См. раздел "Представление возвращаемых данных"
 
                 - `sort` (array, optional): См. раздел "Сортировка данных"
@@ -260,6 +258,8 @@ paths:
                 - `limit` (number, optional): Количество возвращаемых записей. См. раздел "Постраничный вывод"
 
                 - `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
+
+                - `filter` (object, optional): См. раздел "Критерии фильтрации"
 
                 **Response Parameters:** 5
 

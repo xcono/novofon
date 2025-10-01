@@ -12,43 +12,43 @@ paths:
 
                 **Request Parameters:** 19
 
-                - `message` (string, required): Сообщение
-
-                - `ext_id` (string, optional): Уникальный идентификатор чата в вашей системе
-
-                - `email` (string, optional): Email посетителя
-
-                - `initiator` (enum, optional): Инициатор чата autoinvite (Автоприглашение), visitor (Посетитель), operator(Оператор) Если параметр не передан то будет взят первый источник сообщения ("source")
-
-                - `site_id` (number, optional): Уникальный идентификатор сайта. Обязательно передавать если хотите чтобы чат попал в Рекламную кампанию "Посетители без РК"
-
-                - `employee_id` (number, optional): Уникальный идентификатор сотрудника, обязательный параметр если source = operator(Оператор)За последним сотрудником, отправившим сообщение, будет закреплен чат
-
-                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
-
-                - `name` (string, optional): Имя посетителя
-
-                - `messages` (array, required): Список сообщений чата
-
                 - `access_token` (string, required): Ключ сессии аутентификации
 
-                - `start_date_time` (iso8601, required): Дата и время создания чата Не может быть в будущем. Должна быть позже чем у переданной сессии посетителя.
-
-                - `visitor_session_id` (number, optional): Уникальный идентификатор сессии посетителя полученной из CoMagic. Для получения ID необходимо использовать метод JS API Comagic.getSessionId()
-
-                - `campaign_id` (number, optional): Уникальный идентификатор рекламной кампании в CoMagic. Для получения campaign_id можно использовать метод Data API "get.campaigns". Нельзя передавать campaign_id = -1.
-
-                - `source_id` (number, optional): Уникальный идентификатор источника. Возможно передать только неудаленный источник в разрезе клиента. Если передан visitor_session_id, то определим source_id по параметрам сессии.
-
-                - `date_time` (iso8601, required): Дата и время отправки сообщения Не может быть в будущем. Должна быть позже чем start_date_time. Если параметр не передан, то проставится время вызова
-
-                - `source` (enum, required): Источник сообщения system (Автоприглашение), visitor (Посетитель), operator(Оператор)
-
-                - `chats` (array, required): Список чатов. Максимально 500
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
 
                 - `phone` (string, optional): Телефон посетителя в формате E164
 
                 - `status` (enum, required): Статус чата lost (Потерянный); succeed (Состоявшийся);refused (Отклоненный) Если инициатор visitor и нет сообщений message от оператора или визитора, то переданное значение в status игнорируется и ставится значение lost
+
+                - `initiator` (enum, optional): Инициатор чата autoinvite (Автоприглашение), visitor (Посетитель), operator(Оператор) Если параметр не передан то будет взят первый источник сообщения ("source")
+
+                - `visitor_session_id` (number, optional): Уникальный идентификатор сессии посетителя полученной из CoMagic. Для получения ID необходимо использовать метод JS API Comagic.getSessionId()
+
+                - `source` (enum, required): Источник сообщения system (Автоприглашение), visitor (Посетитель), operator(Оператор)
+
+                - `name` (string, optional): Имя посетителя
+
+                - `email` (string, optional): Email посетителя
+
+                - `employee_id` (number, optional): Уникальный идентификатор сотрудника, обязательный параметр если source = operator(Оператор)За последним сотрудником, отправившим сообщение, будет закреплен чат
+
+                - `message` (string, required): Сообщение
+
+                - `chats` (array, required): Список чатов. Максимально 500
+
+                - `source_id` (number, optional): Уникальный идентификатор источника. Возможно передать только неудаленный источник в разрезе клиента. Если передан visitor_session_id, то определим source_id по параметрам сессии.
+
+                - `site_id` (number, optional): Уникальный идентификатор сайта. Обязательно передавать если хотите чтобы чат попал в Рекламную кампанию "Посетители без РК"
+
+                - `date_time` (iso8601, required): Дата и время отправки сообщения Не может быть в будущем. Должна быть позже чем start_date_time. Если параметр не передан, то проставится время вызова
+
+                - `start_date_time` (iso8601, required): Дата и время создания чата Не может быть в будущем. Должна быть позже чем у переданной сессии посетителя.
+
+                - `campaign_id` (number, optional): Уникальный идентификатор рекламной кампании в CoMagic. Для получения campaign_id можно использовать метод Data API "get.campaigns". Нельзя передавать campaign_id = -1.
+
+                - `messages` (array, required): Список сообщений чата
+
+                - `ext_id` (string, optional): Уникальный идентификатор чата в вашей системе
             requestBody:
                 required: true
                 content:
@@ -161,14 +161,14 @@ paths:
                                             description: Уникальный идентификатор сессии посетителя полученной из CoMagic. Для получения ID необходимо использовать метод JS API Comagic.getSessionId()
                                             example: 123
                                     required:
+                                        - source
+                                        - message
+                                        - chats
+                                        - date_time
+                                        - start_date_time
                                         - messages
                                         - access_token
-                                        - start_date_time
-                                        - date_time
-                                        - source
-                                        - chats
                                         - status
-                                        - message
                             required:
                                 - jsonrpc
                                 - id

@@ -55,9 +55,9 @@ paths:
                                                 - archive
                                                 - manual_lock
                                     required:
-                                        - status
                                         - access_token
                                         - customer_id
+                                        - status
                             required:
                                 - jsonrpc
                                 - id

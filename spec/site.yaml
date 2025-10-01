@@ -135,35 +135,15 @@ paths:
 
                 **Request Parameters:** 23
 
-                - `default_scenario_id` (number, optional): ID сценария Все звонки на этот номер будут обработаны по логике выбранного сценария по умолчанию
-
-                - `industry_id` (number, required): Отрасль к которой относится сайт. 1 Автомобили и трансп. средства 2 Бизнес и услуги 3 Еда и напитки 4 Животные 5 Закон и правительство 6 Интернет и связь 7 Компьютеры и электроника 8 Красота и фитнес 9 Медицина 10 Недвижимость 11 Проживание и отели 12 Промышленность 13 Путешествия и туризм 14 Спорт 15 Строительство, ремонт 16 Учеба и образование 17 Финансы 18 Хобби и развлечения 19 Электронная коммерция и покупки
-
-                - `second_communication_period` (number, optional): По умолчанию "1". Период повторного обращения. Задаётся в днях.
-
-                - `replacement_dynamical_block_enabled` (boolean, optional): Подменять номера в динамически подгружаемых блоках. (По умолчанию False)
-
-                - `enabled` (boolean, required): По умолчанию "false".
-
-                - `message` (string, optional): Задаёт текст, который будет выводиться перед с номером посетителя на сайте.
-
-                - `length_visitor_id` (number, optional): По умолчанию 6. Количество цифр идентификатора посетителя.
-
-                - `cookie_lifetime` (number, optional): По умолчанию "90". Время жизни "cookie". Время задаётся в днях.
-
-                - `services_enabled` (boolean, optional): По умолчанию "true". Возможность деактивировать сервис для одного конкретного сайта. В деактивированном состоянии производится только сбор статистики сайта, все сервисы (колл-трекинг, онлайн-консультант) отключены и не работают.
-
                 - `widget_link` (object, optional): При активации опции, на формах заявок, чата и запроса анкетных данных появится ссылка, по клику на которую посетитель сайта будет перенаправлен на заданный URL.
 
-                - `name` (string, optional): Имя сайта для отображения в фильтре сайтов ЛК, обзорном отчете и списке сайтов.
+                - `text` (string, required): Текст ссылки (Не более 100 символов)
 
-                - `default_phone_number` (string, required): Номер телефона по умолчанию, на который будут переадресованы звонки. Создаётся сценарий с заданным номером. Название сценария соответствует шаблону "Перенаправление на phone_number".
-
-                - `target_call_min_duration` (number, optional): По умолчанию "30". Минимальное время звонка после которого он считается целевым. Значение задаётся в секундах.
+                - `show_visitor_id` (object, optional): Отобразив идентификатор посетителя на сайте и узнав его у посетителя при звонке, вы сможете связать данные о посещении со звонком и тем самым узнать полные данные о звонящих (например, по каким конкретно поисковым запросам приходят посетители, которые вам звонят).
 
                 - `campaign_lifetime` (number, optional): По умолчанию "90". Время жизни рекламной компании. Время задаётся в днях.
 
-                - `show_visitor_id` (object, optional): Отобразив идентификатор посетителя на сайте и узнав его у посетителя при звонке, вы сможете связать данные о посещении со звонком и тем самым узнать полные данные о звонящих (например, по каким конкретно поисковым запросам приходят посетители, которые вам звонят).
+                - `enabled` (boolean, required): По умолчанию "false".
 
                 - `element_id_value` (string, required): Для того чтобы на сайте появился идентификатор посетителя, в этом поле необходимо указать идентификатор (id) HTML-элемента сайта. На месте размещения идентификатора посетителя на страницах сайта необходимо добавить контейнер с данным id (например, <div id="comagicID"></div> . )
 
@@ -171,15 +151,35 @@ paths:
 
                 - `domain_name` (string, required): Адрес сайта в интернете. Без указания протокола - "http://" или "https://".
 
-                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
-
-                - `track_subdomains_enabled` (boolean, optional): По умолчанию "true". Отслеживать поддомены сайта.
+                - `industry_id` (number, required): Отрасль к которой относится сайт. 1 Автомобили и трансп. средства 2 Бизнес и услуги 3 Еда и напитки 4 Животные 5 Закон и правительство 6 Интернет и связь 7 Компьютеры и электроника 8 Красота и фитнес 9 Медицина 10 Недвижимость 11 Проживание и отели 12 Промышленность 13 Путешествия и туризм 14 Спорт 15 Строительство, ремонт 16 Учеба и образование 17 Финансы 18 Хобби и развлечения 19 Электронная коммерция и покупки
 
                 - `sales_enabled` (boolean, optional): По умолчанию "false". Учитывать ли продажи.
 
-                - `text` (string, required): Текст ссылки (Не более 100 символов)
+                - `second_communication_period` (number, optional): По умолчанию "1". Период повторного обращения. Задаётся в днях.
+
+                - `services_enabled` (boolean, optional): По умолчанию "true". Возможность деактивировать сервис для одного конкретного сайта. В деактивированном состоянии производится только сбор статистики сайта, все сервисы (колл-трекинг, онлайн-консультант) отключены и не работают.
+
+                - `replacement_dynamical_block_enabled` (boolean, optional): Подменять номера в динамически подгружаемых блоках. (По умолчанию False)
 
                 - `url` (string, required): URL
+
+                - `default_phone_number` (string, required): Номер телефона по умолчанию, на который будут переадресованы звонки. Создаётся сценарий с заданным номером. Название сценария соответствует шаблону "Перенаправление на phone_number".
+
+                - `default_scenario_id` (number, optional): ID сценария Все звонки на этот номер будут обработаны по логике выбранного сценария по умолчанию
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `target_call_min_duration` (number, optional): По умолчанию "30". Минимальное время звонка после которого он считается целевым. Значение задаётся в секундах.
+
+                - `cookie_lifetime` (number, optional): По умолчанию "90". Время жизни "cookie". Время задаётся в днях.
+
+                - `message` (string, optional): Задаёт текст, который будет выводиться перед с номером посетителя на сайте.
+
+                - `length_visitor_id` (number, optional): По умолчанию 6. Количество цифр идентификатора посетителя.
+
+                - `name` (string, optional): Имя сайта для отображения в фильтре сайтов ЛК, обзорном отчете и списке сайтов.
+
+                - `track_subdomains_enabled` (boolean, optional): По умолчанию "true". Отслеживать поддомены сайта.
 
                 **Response Parameters:** 1
 
@@ -308,14 +308,14 @@ paths:
                                             description: При активации опции, на формах заявок, чата и запроса анкетных данных появится ссылка, по клику на которую посетитель сайта будет перенаправлен на заданный URL.
                                             type: object
                                     required:
+                                        - url
                                         - default_phone_number
+                                        - text
+                                        - enabled
                                         - element_id_value
                                         - access_token
                                         - domain_name
-                                        - text
-                                        - url
                                         - industry_id
-                                        - enabled
                                     type: object
                             required:
                                 - jsonrpc
@@ -497,11 +497,11 @@ paths:
 
                 **Request Parameters:** 3
 
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `id` (number, required): Уникальный идентификатор сайт
-
-                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
             requestBody:
                 content:
                     application/json:
@@ -598,7 +598,7 @@ paths:
                 - novofon
     /get.site_blocks:
         get:
-            description: "Получение списка блоков номеров сайта\n\n**Request Parameters:** 7\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n**Response Parameters:** 17\n\n- `site_domain_name` (string): да\n\n- `template_id` (number): \n\n- `template_type` (enum): \n\n- `element_attribute_value` (string): \n\n- `phone_number_template` (string): \n\n- `phone_numbers` (array): да\n\n- `campaign_id` (number): \n\n- `image_url` (string): \n\n- `id` (number): да\n\n- `site_id` (number): да\n\n- `phone_number` (string): \n\n- `name` (string): да\n\n- `templates` (array): \n\n- `campaign_name` (string): \n\n- `element_attribute` (enum): \n\n- `phone_number_mask` (string): \n\n- `phone_number_id` (number): "
+            description: "Получение списка блоков номеров сайта\n\n**Request Parameters:** 7\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n**Response Parameters:** 17\n\n- `campaign_name` (string): \n\n- `phone_number` (string): \n\n- `site_domain_name` (string): да\n\n- `element_attribute_value` (string): \n\n- `site_id` (number): да\n\n- `template_id` (number): \n\n- `phone_number_mask` (string): \n\n- `phone_number_id` (number): \n\n- `id` (number): да\n\n- `templates` (array): \n\n- `template_type` (enum): \n\n- `element_attribute` (enum): \n\n- `phone_number_template` (string): \n\n- `phone_numbers` (array): да\n\n- `image_url` (string): \n\n- `name` (string): да\n\n- `campaign_id` (number): "
             requestBody:
                 content:
                     application/json:
@@ -776,7 +776,7 @@ paths:
                 - novofon
     /get.sites:
         get:
-            description: "Получение списка сайтов\n\n**Request Parameters:** 7\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n**Response Parameters:** 31\n\n- `show_visitor_id` (object): \n\n- `connected_integrations` (array): \n\n- `default_phone_number` (string): да\n\n- `sales_enabled` (boolean): да\n\n- `second_communication_period` (number): да\n\n- `widget_link` (object): \n\n- `length_visitor_id` (string): \n\n- `domain_name` (string): да\n\n- `scenario_name` (string): да\n\n- `track_subdomains` (boolean): да\n\n- `url` (string): \n\n- `industry_id` (number): \n\n- `site_blocks` (array): да\n\n- `campaign_lifetime` (number): да\n\n- `services_enabled` (boolean): да\n\n- `enabled` (boolean): \n\n- `text` (string): \n\n- `element_id_value` (string): \n\n- `id` (number): да\n\n- `default_scenario` (object): \n\n- `replacement_dynamical_block_enabled` (boolean): false, true\n\n- `site_block_name` (string): \n\n- `name` (string): да\n\n- `site_key` (string): \n\n- `cookie_lifetime` (number): да\n\n- `scenario_id` (number): \n\n- `target_call_min_duration` (number): да\n\n- `industry_name` (string): \n\n- `message` (string): \n\n- `site_block_id` (number): \n\n- `creation_date` (iso8601): да"
+            description: "Получение списка сайтов\n\n**Request Parameters:** 7\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n**Response Parameters:** 31\n\n- `site_key` (string): \n\n- `track_subdomains` (boolean): да\n\n- `cookie_lifetime` (number): да\n\n- `default_phone_number` (string): да\n\n- `target_call_min_duration` (number): да\n\n- `services_enabled` (boolean): да\n\n- `url` (string): \n\n- `industry_id` (number): \n\n- `scenario_id` (number): \n\n- `replacement_dynamical_block_enabled` (boolean): false, true\n\n- `domain_name` (string): да\n\n- `second_communication_period` (number): да\n\n- `length_visitor_id` (string): \n\n- `name` (string): да\n\n- `campaign_lifetime` (number): да\n\n- `text` (string): \n\n- `industry_name` (string): \n\n- `element_id_value` (string): \n\n- `default_scenario` (object): \n\n- `show_visitor_id` (object): \n\n- `message` (string): \n\n- `site_block_id` (number): \n\n- `id` (number): да\n\n- `creation_date` (iso8601): да\n\n- `widget_link` (object): \n\n- `scenario_name` (string): да\n\n- `sales_enabled` (boolean): да\n\n- `enabled` (boolean): \n\n- `site_block_name` (string): \n\n- `connected_integrations` (array): \n\n- `site_blocks` (array): да"
             requestBody:
                 content:
                     application/json:
@@ -1008,11 +1008,11 @@ paths:
 
                 **Request Parameters:** 3
 
+                - `name` (string, optional): Название блока номеров
+
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `id` (number, required): Уникальный идентификатор блока номеров
-
-                - `name` (string, optional): Название блока номеров
             requestBody:
                 content:
                     application/json:
@@ -1114,53 +1114,53 @@ paths:
 
                 **Request Parameters:** 24
 
-                - `campaign_lifetime` (number, optional): По умолчанию "90". Время жизни рекламной компании. Время задаётся в днях.
-
-                - `access_token` (string, required): Ключ сессии аутентификации
-
-                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
-
-                - `track_subdomains_enabled` (boolean, optional): По умолчанию "true". Отслеживать поддомены сайта.
-
-                - `text` (string, required): Текст ссылки (Не более 100 символов)
-
-                - `show_visitor_id` (object, optional): Отобразив идентификатор посетителя на сайте и узнав его у посетителя при звонке, вы сможете связать данные о посещении со звонком и тем самым узнать полные данные о звонящих (например, по каким конкретно поисковым запросам приходят посетители, которые вам звонят).
-
-                - `length_visitor_id` (number, optional): По умолчанию 6. Количество цифр идентификатора посетителя.
-
-                - `name` (string, optional): Имя сайта для отображения в фильтре сайтов ЛК, обзорном отчете и списке сайтов.
-
-                - `target_call_min_duration` (number, optional): По умолчанию "30". Минимальное время звонка после которого он считается целевым. Значение задаётся в секундах.
+                - `second_communication_period` (number, optional): По умолчанию "1". Период повторного обращения. Задаётся в днях.
 
                 - `services_enabled` (boolean, optional): По умолчанию "true". Возможность деактивировать сервис для одного конкретного сайта. В деактивированном состоянии производится только сбор статистики сайта, все сервисы (колл-трекинг, онлайн-консультант) отключены и не работают.
 
                 - `replacement_dynamical_block_enabled` (boolean, optional): Подменять номера в динамически подгружаемых блоках.
 
-                - `widget_link` (object, optional): При активации опции, на формах заявок, чата и запроса анкетных данных появится ссылка, по клику на которую посетитель сайта будет перенаправлен на заданный URL.
-
                 - `element_id_value` (string, required): Для того чтобы на сайте появился идентификатор посетителя, в этом поле необходимо указать идентификатор (id) HTML-элемента сайта. На месте размещения идентификатора посетителя на страницах сайта необходимо добавить контейнер с данным id (например, <div id="comagicID"></div> . )
 
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `industry_id` (number, required): Отрасль к которой относится сайт. 1 Автомобили и трансп. средства 2 Бизнес и услуги 3 Еда и напитки 4 Животные 5 Закон и правительство 6 Интернет и связь 7 Компьютеры и электроника 8 Красота и фитнес 9 Медицина 10 Недвижимость 11 Проживание и отели 12 Промышленность 13 Путешествия и туризм 14 Спорт 15 Строительство, ремонт 16 Учеба и образование 17 Финансы 18 Хобби и развлечения 19 Электронная коммерция и покупки
+
                 - `sales_enabled` (boolean, optional): По умолчанию "false". Учитывать ли продажи.
+
+                - `enabled` (boolean, required): По умолчанию "false".
+
+                - `url` (string, required): URL
+
+                - `show_visitor_id` (object, optional): Отобразив идентификатор посетителя на сайте и узнав его у посетителя при звонке, вы сможете связать данные о посещении со звонком и тем самым узнать полные данные о звонящих (например, по каким конкретно поисковым запросам приходят посетители, которые вам звонят).
+
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `default_scenario_id` (number, optional): ID сценария Все звонки на этот номер будут обработаны по логике выбранного сценария по умолчанию
+
+                - `target_call_min_duration` (number, optional): По умолчанию "30". Минимальное время звонка после которого он считается целевым. Значение задаётся в секундах.
+
+                - `length_visitor_id` (number, optional): По умолчанию 6. Количество цифр идентификатора посетителя.
+
+                - `name` (string, optional): Имя сайта для отображения в фильтре сайтов ЛК, обзорном отчете и списке сайтов.
+
+                - `default_phone_number` (string, required): Номер телефона по умолчанию, на который будут переадресованы звонки. Создаётся сценарий с заданным номером. Название сценария соответствует шаблону "Перенаправление на phone_number".
+
+                - `cookie_lifetime` (number, optional): По умолчанию "90". Время жизни "cookie". Время задаётся в днях.
+
+                - `campaign_lifetime` (number, optional): По умолчанию "90". Время жизни рекламной компании. Время задаётся в днях.
+
+                - `widget_link` (object, optional): При активации опции, на формах заявок, чата и запроса анкетных данных появится ссылка, по клику на которую посетитель сайта будет перенаправлен на заданный URL.
+
+                - `text` (string, required): Текст ссылки (Не более 100 символов)
+
+                - `message` (string, optional): Задаёт текст, который будет выводиться перед с номером посетителя на сайте.
 
                 - `id` (number, required): Уникальный идентификатор сайта
 
                 - `domain_name` (string, optional): Адрес сайта в интернете. Без указания протокола - "http://" или "https://".
 
-                - `default_phone_number` (string, required): Номер телефона по умолчанию, на который будут переадресованы звонки. Создаётся сценарий с заданным номером. Название сценария соответствует шаблону "Перенаправление на phone_number".
-
-                - `default_scenario_id` (number, optional): ID сценария Все звонки на этот номер будут обработаны по логике выбранного сценария по умолчанию
-
-                - `industry_id` (number, required): Отрасль к которой относится сайт. 1 Автомобили и трансп. средства 2 Бизнес и услуги 3 Еда и напитки 4 Животные 5 Закон и правительство 6 Интернет и связь 7 Компьютеры и электроника 8 Красота и фитнес 9 Медицина 10 Недвижимость 11 Проживание и отели 12 Промышленность 13 Путешествия и туризм 14 Спорт 15 Строительство, ремонт 16 Учеба и образование 17 Финансы 18 Хобби и развлечения 19 Электронная коммерция и покупки
-
-                - `url` (string, required): URL
-
-                - `message` (string, optional): Задаёт текст, который будет выводиться перед с номером посетителя на сайте.
-
-                - `cookie_lifetime` (number, optional): По умолчанию "90". Время жизни "cookie". Время задаётся в днях.
-
-                - `second_communication_period` (number, optional): По умолчанию "1". Период повторного обращения. Задаётся в днях.
-
-                - `enabled` (boolean, required): По умолчанию "false".
+                - `track_subdomains_enabled` (boolean, optional): По умолчанию "true". Отслеживать поддомены сайта.
             requestBody:
                 content:
                     application/json:
@@ -1289,14 +1289,14 @@ paths:
                                             description: При активации опции, на формах заявок, чата и запроса анкетных данных появится ссылка, по клику на которую посетитель сайта будет перенаправлен на заданный URL.
                                             type: object
                                     required:
-                                        - access_token
-                                        - text
                                         - element_id_value
-                                        - id
-                                        - default_phone_number
                                         - industry_id
-                                        - url
                                         - enabled
+                                        - url
+                                        - access_token
+                                        - default_phone_number
+                                        - text
+                                        - id
                                     type: object
                             required:
                                 - jsonrpc

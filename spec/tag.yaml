@@ -51,8 +51,8 @@ paths:
                                             example: 123
                                             type: number
                                     required:
-                                        - access_token
                                         - name
+                                        - access_token
                                     type: object
                             required:
                                 - jsonrpc
@@ -128,11 +128,11 @@ paths:
 
                 **Request Parameters:** 3
 
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `id` (number, required): Уникальный идентификатор тега
-
-                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
             requestBody:
                 content:
                     application/json:
@@ -319,8 +319,8 @@ paths:
                                                         example: example_string
                                                         type: string
                                                 required:
-                                                    - name
                                                     - id
+                                                    - name
                                                 type: object
                                             metadata:
                                                 description: Response metadata
@@ -495,12 +495,6 @@ paths:
 
                 **Request Parameters:** 7
 
-                - `date_time` (iso8601, required): Дата и время сделки Не должна быть раньше даты обращения
-
-                - `transaction_value` (number, required): Стоимость сделки
-
-                - `comment` (string, optional): Комментарий к сделке
-
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
@@ -508,6 +502,12 @@ paths:
                 - `communication_id` (number, required): Уникальный идентификатор обращения. По данному идентификатору можно получить детализированную информацию используя следующие методы "get.communications_report", "get.chats_report ", "get.goals_report", "get.offline_messages_report ", "get.calls_report"
 
                 - `communication_type` (enum, required): Тип обращения.
+
+                - `date_time` (iso8601, required): Дата и время сделки Не должна быть раньше даты обращения
+
+                - `transaction_value` (number, required): Стоимость сделки
+
+                - `comment` (string, optional): Комментарий к сделке
 
                 **Response Parameters:** 1
 
@@ -642,10 +642,6 @@ paths:
 
                 **Request Parameters:** 6
 
-                - `communication_ext_id` (string, optional): Уникальный идентификатор обращения. По данному идентификатору можно получить детализированную информацию используя следующие методы "get.chats_report ", "get.offline_messages_report ", "get.calls_report". Обязательный если не указан communication_id. Игнорируется, если заполнен communication_id
-
-                - `communication_type` (enum, required): Тип обращения.
-
                 - `tag_id` (number, required): Уникальный идентификатор тега, см. метод "get.tags"
 
                 - `access_token` (string, required): Ключ сессии аутентификации
@@ -653,6 +649,10 @@ paths:
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
 
                 - `communication_id` (number, optional): Уникальный идентификатор обращения. По данному идентификатору можно получить детализированную информацию используя следующие методы "get.communications_report", "get.chats_report ", "get.goals_report", "get.offline_messages_report ", "get.calls_report" Обязательный если не указан communication_ext_id
+
+                - `communication_ext_id` (string, optional): Уникальный идентификатор обращения. По данному идентификатору можно получить детализированную информацию используя следующие методы "get.chats_report ", "get.offline_messages_report ", "get.calls_report". Обязательный если не указан communication_id. Игнорируется, если заполнен communication_id
+
+                - `communication_type` (enum, required): Тип обращения.
             requestBody:
                 content:
                     application/json:
@@ -701,9 +701,9 @@ paths:
                                             example: 123
                                             type: number
                                     required:
+                                        - tag_id
                                         - access_token
                                         - communication_type
-                                        - tag_id
                                     type: object
                             required:
                                 - jsonrpc

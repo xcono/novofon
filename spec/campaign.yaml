@@ -11,49 +11,49 @@ paths:
 
                 **Request Parameters:** 22
 
-                - `status` (enum, optional): Статус рекламной кампании
-
-                - `reservation_time` (enum, optional): Значение по умолчанию "15m". Период, на который номер закрепляется за посетителем сайта. По истечении указанного времени номер закрепляется за новым посетителем (или остается за текущим в случае наличия свободных номеров коллтрекинга).
-
-                - `count_virtual_numbers` (number, required): Количество номеров необходимое для работы динамического коллтрекинга в одном блоке. Указанное количество номеров будет куплено.
-
-                - `group_conditions` (array, required): Группа условий рекламной кампании
-
                 - `conditions` (array, required): Условия рекламной кампании в группе условий
-
-                - `type` (enum, required): Условия рекламной кампании в группе условий include - включает exclude - исключает
-
-                - `value` (string, required): Значение. Для некоторых campaign_parameter может быть свой список допустимых значений см. в таблице "Список параметров и их операторов"
-
-                - `dynamic_call_tracking_enabled` (boolean, optional): Активация динамический коллтрекинг. В пул динамического коллтрекинга можно подключить только свободные номера без флага "Использовать в ВАТС" в том же коде, что и номер блока рекламной кампании по умолчанию. При отсутствии необходимого количества номеров они будут автоматически куплены. Звонки на номера из пула динамического коллтрекинга будут обрабатываться по правилам обработки звонков на номер блока рекламной кампании по умолчанию. Может принимать значение "true", если параметр phone_number_id = va | call_tracking. Если это не так, то будет возвращена ошибка с мнемоникой "invalid_parameters_combination" Если Вы используете этот параметр, но у вас не подключен компонент "dynamic_call_tracking", то Вам вернется ошибка с мнемоникой "parameter_component_disabled" Если задан одновременно status = inactive, то будет возвращена ошибка `invalid_parameters_combination` Если параметр dynamic_call_tracking_enabled имеет значение "true", то параметр dynamic_call_tracking обязателен к заполнению. Будет возвращена ошибка "invalid_parameters_combination".
-
-                - `access_token` (string, required): Ключ сессии аутентификации
-
-                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
-
-                - `phone_number_id` (number, required): Уникальный идентификатор виртуального номера. Чтобы получить список доступных виртуальных номеров необходимо использовать метод get.campaign_available_phone_numbers Если указан id который не возвращается методом get.campaign_available_phone_numbers, то будет возвращена ошибка с мнемоникой "entity_not_found". Номер с type = call_tracking может использоваться только в одной рекламной кампании. Если номер уже используется в другой рекламной кампании, то будет возвращена ошибка `already_in_use`
-
-                - `redirection_phone_number_id` (number, optional): Уникальный идентификатор номера переадресации. Номер переадресации используется только в том случае, если параметр phone_number_id имеет тип `call_tracking`. Список доступных номеров можно получить методом get.campaign_available_redirection_phone_numbers. Обязателен для заполнения, если в параметре phone_number_id указан виртуальный номер с типом "call_tracking". Если это не так, то будет возвращена ошибка с мнемоникой "required_parameter_missed". Если параметр задан и в phone_number_id указан виртуальный номер с типом "va", то будет возвращаться ошибка `invalid_parameters_combination` В параметре могут быть указаны только номера переадресации, которые возвращаются методом get.campaign_available_redirection_phone_numbers. Если это не так, то будет возвращаться ошибка с мнемоникой "invalid_parameter_value" Доступен, если подключен компонент "va". Если параметр будет заполнен и у вас отсутствует компонент "va", то будет возвращена ошибка с мнемоникой "parameter_component_disabled"
 
                 - `campaign_parameter` (enum, required): Список допустимых значений и возможных операторов см. в таблице "Список параметров и их операторов"
 
-                - `operator` (enum, required): Оператор в условии. Зависит от используемого параметра campaign_parameter см. в таблице "Список параметров и их операторов" "=" - точно соответствует "sub" - включает "~" - регулярное выражение
-
-                - `name` (string, required): Название рекламной кампании
-
-                - `description` (string, optional): Описание рекламной кампании
+                - `value` (string, required): Значение. Для некоторых campaign_parameter может быть свой список допустимых значений см. в таблице "Список параметров и их операторов"
 
                 - `dynamic_call_tracking` (object, optional): Настройка динамический коллтрекинг. Обязателен к заполнению, если параметр dynamic_call_tracking_enabled у хоть одного блока имеет значение "true" иначе будет возвращена ошибка с мнемоникой "invalid_parameters_combination" Если Вы используете этот параметр, но у вас не подключен компонент "dynamic_call_tracking", то Вам вернется ошибка с мнемоникой "parameter_component_disabled"
 
-                - `site_id` (number, required): Уникальный идентификатор сайта
+                - `reservation_time` (enum, optional): Значение по умолчанию "15m". Период, на который номер закрепляется за посетителем сайта. По истечении указанного времени номер закрепляется за новым посетителем (или остается за текущим в случае наличия свободных номеров коллтрекинга).
 
-                - `campaign_conditions` (object, optional): Условия рекламной кампании.
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `name` (string, required): Название рекламной кампании
+
+                - `status` (enum, optional): Статус рекламной кампании
 
                 - `site_blocks` (array, optional): Настройки привязки номера к блоку на сайте Если блоки номеров сайта не указаны, то они не настраиваются, т.е. считаются не настроенными Если site_blocks задан одновременно с status = inactive, то будет возвращаться ошибка `invalid_parameters_combination`
 
-                - `site_block_id` (number, required): Уникальный идентификатор блока номеров
+                - `dynamic_call_tracking_enabled` (boolean, optional): Активация динамический коллтрекинг. В пул динамического коллтрекинга можно подключить только свободные номера без флага "Использовать в ВАТС" в том же коде, что и номер блока рекламной кампании по умолчанию. При отсутствии необходимого количества номеров они будут автоматически куплены. Звонки на номера из пула динамического коллтрекинга будут обрабатываться по правилам обработки звонков на номер блока рекламной кампании по умолчанию. Может принимать значение "true", если параметр phone_number_id = va | call_tracking. Если это не так, то будет возвращена ошибка с мнемоникой "invalid_parameters_combination" Если Вы используете этот параметр, но у вас не подключен компонент "dynamic_call_tracking", то Вам вернется ошибка с мнемоникой "parameter_component_disabled" Если задан одновременно status = inactive, то будет возвращена ошибка `invalid_parameters_combination` Если параметр dynamic_call_tracking_enabled имеет значение "true", то параметр dynamic_call_tracking обязателен к заполнению. Будет возвращена ошибка "invalid_parameters_combination".
 
                 - `count_visits` (number, required): Количество посещений по рекламной кампании в сутки
+
+                - `site_id` (number, required): Уникальный идентификатор сайта
+
+                - `redirection_phone_number_id` (number, optional): Уникальный идентификатор номера переадресации. Номер переадресации используется только в том случае, если параметр phone_number_id имеет тип `call_tracking`. Список доступных номеров можно получить методом get.campaign_available_redirection_phone_numbers. Обязателен для заполнения, если в параметре phone_number_id указан виртуальный номер с типом "call_tracking". Если это не так, то будет возвращена ошибка с мнемоникой "required_parameter_missed". Если параметр задан и в phone_number_id указан виртуальный номер с типом "va", то будет возвращаться ошибка `invalid_parameters_combination` В параметре могут быть указаны только номера переадресации, которые возвращаются методом get.campaign_available_redirection_phone_numbers. Если это не так, то будет возвращаться ошибка с мнемоникой "invalid_parameter_value" Доступен, если подключен компонент "va". Если параметр будет заполнен и у вас отсутствует компонент "va", то будет возвращена ошибка с мнемоникой "parameter_component_disabled"
+
+                - `group_conditions` (array, required): Группа условий рекламной кампании
+
+                - `type` (enum, required): Условия рекламной кампании в группе условий include - включает exclude - исключает
+
+                - `operator` (enum, required): Оператор в условии. Зависит от используемого параметра campaign_parameter см. в таблице "Список параметров и их операторов" "=" - точно соответствует "sub" - включает "~" - регулярное выражение
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `campaign_conditions` (object, optional): Условия рекламной кампании.
+
+                - `site_block_id` (number, required): Уникальный идентификатор блока номеров
+
+                - `count_virtual_numbers` (number, required): Количество номеров необходимое для работы динамического коллтрекинга в одном блоке. Указанное количество номеров будет куплено.
+
+                - `description` (string, optional): Описание рекламной кампании
+
+                - `phone_number_id` (number, required): Уникальный идентификатор виртуального номера. Чтобы получить список доступных виртуальных номеров необходимо использовать метод get.campaign_available_phone_numbers Если указан id который не возвращается методом get.campaign_available_phone_numbers, то будет возвращена ошибка с мнемоникой "entity_not_found". Номер с type = call_tracking может использоваться только в одной рекламной кампании. Если номер уже используется в другой рекламной кампании, то будет возвращена ошибка `already_in_use`
 
                 **Response Parameters:** 1
 
@@ -175,19 +175,19 @@ paths:
                                             example: example_string
                                             type: string
                                     required:
-                                        - site_id
-                                        - site_block_id
-                                        - count_visits
-                                        - count_virtual_numbers
-                                        - group_conditions
-                                        - conditions
-                                        - type
                                         - value
                                         - access_token
-                                        - phone_number_id
-                                        - campaign_parameter
-                                        - operator
                                         - name
+                                        - count_visits
+                                        - site_id
+                                        - group_conditions
+                                        - type
+                                        - operator
+                                        - site_block_id
+                                        - count_virtual_numbers
+                                        - phone_number_id
+                                        - conditions
+                                        - campaign_parameter
                                     type: object
                             required:
                                 - jsonrpc
@@ -263,11 +263,11 @@ paths:
 
                 **Request Parameters:** 3
 
-                - `access_token` (string, required): Ключ сессии аутентификации
-
                 - `id` (number, required): Уникальный идентификатор рекламной кампании
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `access_token` (string, required): Ключ сессии аутентификации
             requestBody:
                 content:
                     application/json:
@@ -369,8 +369,6 @@ paths:
 
                 **Request Parameters:** 7
 
-                - `access_token` (string, required): Ключ сессии аутентификации
-
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
 
                 - `limit` (number, optional): Количество возвращаемых записей. См. раздел "Постраничный вывод"
@@ -382,6 +380,8 @@ paths:
                 - `fields` (array, optional): См. раздел "Представление возвращаемых данных"
 
                 - `sort` (array, optional): См. раздел "Сортировка данных"
+
+                - `access_token` (string, required): Ключ сессии аутентификации
 
                 **Response Parameters:** 3
 
@@ -523,6 +523,12 @@ paths:
 
                 **Request Parameters:** 7
 
+                - `filter` (object, optional): См. раздел "Критерии фильтрации"
+
+                - `fields` (array, optional): См. раздел "Представление возвращаемых данных"
+
+                - `sort` (array, optional): См. раздел "Сортировка данных"
+
                 - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
@@ -530,12 +536,6 @@ paths:
                 - `limit` (number, optional): Количество возвращаемых записей. См. раздел "Постраничный вывод"
 
                 - `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать "limit" записей. По умолчанию "0". См. раздел "Постраничный вывод"
-
-                - `filter` (object, optional): См. раздел "Критерии фильтрации"
-
-                - `fields` (array, optional): См. раздел "Представление возвращаемых данных"
-
-                - `sort` (array, optional): См. раздел "Сортировка данных"
 
                 **Response Parameters:** 2
 
@@ -667,7 +667,7 @@ paths:
                 - novofon
     /get.campaign_parameter_weights:
         get:
-            description: "Получение весов параметров рекламных кампаний. Система весов нужна для того, чтобы определить, какую из рекламных кампаний сопоставить посещению. Если при переходе на сайт одному посещению соответствует несколько рекламных кампаний, то система присвоит рекламную кампанию, содержащую условие, значение которого по шкале весов наивысшее.\n\n**Request Parameters:** 7\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_user\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n**Response Parameters:** 13\n\n- `entrance_page` (number): \n\n- `referrer_domain` (number): \n\n- `search_engine` (number): \n\n- `engine` (number): \n\n- `referrer` (number): \n\n- `other_tags` (number): \n\n- `site_id` (number): да\n\n- `site_domain_name` (string): да\n\n- `search_query` (number): \n\n- `channel` (number): \n\n- `location` (number): \n\n- `utm_tags` (number): \n\n- `os_tags` (number): "
+            description: "Получение весов параметров рекламных кампаний. Система весов нужна для того, чтобы определить, какую из рекламных кампаний сопоставить посещению. Если при переходе на сайт одному посещению соответствует несколько рекламных кампаний, то система присвоит рекламную кампанию, содержащую условие, значение которого по шкале весов наивысшее.\n\n**Request Parameters:** 7\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_user\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n**Response Parameters:** 13\n\n- `referrer` (number): \n\n- `location` (number): \n\n- `os_tags` (number): \n\n- `site_id` (number): да\n\n- `site_domain_name` (string): да\n\n- `entrance_page` (number): \n\n- `search_query` (number): \n\n- `engine` (number): \n\n- `channel` (number): \n\n- `utm_tags` (number): \n\n- `other_tags` (number): \n\n- `referrer_domain` (number): \n\n- `search_engine` (number): "
             requestBody:
                 content:
                     application/json:
@@ -826,7 +826,7 @@ paths:
                 - novofon
     /get.campaigns:
         get:
-            description: "Получение списка всех рекламных кампаний - интегрированных, обычных и системных\n\n**Request Parameters:** 7\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n**Response Parameters:** 39\n\n- `dynamic_call_tracking_enabled` (boolean): \n\n- `description` (string): \n\n- `site_block_name` (string): \n\n- `static_utm_source` (string): да\n\n- `campaign_parameter` (enum): \n\n- `creation_time` (iso8601): да\n\n- `phone_number_type` (enum): \n\n- `static_utm_content` (string): да\n\n- `operator` (enum): \n\n- `status` (enum): да\n\n- `cost_ratio` (number): \n\n- `site_domain_name` (string): да\n\n- `phone_number_id` (number): \n\n- `static_utm_term` (string): да\n\n- `dynamic_call_tracking` (object): да\n\n- `count_visits` (number): минимальное значение 1\n\n- `conditions` (array): \n\n- `id` (number): да\n\n- `name` (string): да\n\n- `campaign_conditions` (object): нет\n\n- `costs` (number): да\n\n- `site_blocks` (array): да\n\n- `phone_number` (string): \n\n- `reservation_time` (enum): \n\n- `cost_ratio_operator` (enum): \n\n- `site_block_id` (number): \n\n- `redirection_phone_number` (string): \n\n- `static_utm_campaign` (string): да\n\n- `coverage_visitors` (number): \n\n- `group_conditions` (array): \n\n- `redirection_phone_number_id` (number): \n\n- `static_utm_medium` (string): да\n\n- `static_utm_expid` (string): да\n\n- `count_virtual_numbers` (number): минимальное значение 1\n\n- `value` (string): \n\n- `engine` (enum): да\n\n- `type` (enum): \n\n- `site_id` (number): да\n\n- `static_utm_referrer` (string): да"
+            description: "Получение списка всех рекламных кампаний - интегрированных, обычных и системных\n\n**Request Parameters:** 7\n\n- `fields` (array, optional): См. раздел \"Представление возвращаемых данных\"\n\n- `sort` (array, optional): См. раздел \"Сортировка данных\"\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод \"get.customer_users\"\n\n- `limit` (number, optional): Количество возвращаемых записей. См. раздел \"Постраничный вывод\"\n\n- `offset` (number, optional): Сдвиг, определяет с какого номера записи возвращать \"limit\" записей. По умолчанию \"0\". См. раздел \"Постраничный вывод\"\n\n- `filter` (object, optional): См. раздел \"Критерии фильтрации\"\n\n**Response Parameters:** 39\n\n- `status` (enum): да\n\n- `phone_number` (string): \n\n- `count_visits` (number): минимальное значение 1\n\n- `name` (string): да\n\n- `costs` (number): да\n\n- `site_id` (number): да\n\n- `site_blocks` (array): да\n\n- `site_block_name` (string): \n\n- `count_virtual_numbers` (number): минимальное значение 1\n\n- `group_conditions` (array): \n\n- `conditions` (array): \n\n- `engine` (enum): да\n\n- `cost_ratio_operator` (enum): \n\n- `phone_number_type` (enum): \n\n- `static_utm_campaign` (string): да\n\n- `static_utm_term` (string): да\n\n- `static_utm_referrer` (string): да\n\n- `campaign_parameter` (enum): \n\n- `site_domain_name` (string): да\n\n- `redirection_phone_number` (string): \n\n- `coverage_visitors` (number): \n\n- `creation_time` (iso8601): да\n\n- `static_utm_medium` (string): да\n\n- `static_utm_content` (string): да\n\n- `static_utm_expid` (string): да\n\n- `dynamic_call_tracking_enabled` (boolean): \n\n- `redirection_phone_number_id` (number): \n\n- `reservation_time` (enum): \n\n- `id` (number): да\n\n- `description` (string): \n\n- `campaign_conditions` (object): нет\n\n- `site_block_id` (number): \n\n- `phone_number_id` (number): \n\n- `static_utm_source` (string): да\n\n- `dynamic_call_tracking` (object): да\n\n- `value` (string): \n\n- `type` (enum): \n\n- `cost_ratio` (number): \n\n- `operator` (enum): "
             requestBody:
                 content:
                     application/json:
@@ -1083,6 +1083,22 @@ paths:
 
                 **Request Parameters:** 14
 
+                - `access_token` (string, required): Ключ сессии аутентификации
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `search_engine` (number, optional): Поисковая система
+
+                - `engine` (number, optional): Рекламная система
+
+                - `referrer` (number, optional): Реферер
+
+                - `channel` (number, optional): Канал
+
+                - `location` (number, optional): Значение веса для параметров city, region, country
+
+                - `utm_tags` (number, optional): Значение веса для параметров utm_source, utm_medium, utm_campaign, utm_term, utm_content
+
                 - `site_id` (number, required): Уникальный идентификатор сайта
 
                 - `entrance_page` (number, optional): Страница входа
@@ -1091,23 +1107,7 @@ paths:
 
                 - `search_query` (number, optional): Поисковый запрос
 
-                - `engine` (number, optional): Рекламная система
-
-                - `referrer` (number, optional): Реферер
-
-                - `location` (number, optional): Значение веса для параметров city, region, country
-
                 - `os_tags` (number, optional): Значение веса для параметров openstat_service, openstat_campaign, openstat_source, openstat_ad
-
-                - `access_token` (string, required): Ключ сессии аутентификации
-
-                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
-
-                - `search_engine` (number, optional): Поисковая система
-
-                - `channel` (number, optional): Канал
-
-                - `utm_tags` (number, optional): Значение веса для параметров utm_source, utm_medium, utm_campaign, utm_term, utm_content
 
                 - `other_tags` (number, optional): Значение веса для параметров ef_id, yclid, gclid, ymclid
             requestBody:
@@ -1185,8 +1185,8 @@ paths:
                                             example: 123
                                             type: number
                                     required:
-                                        - access_token
                                         - site_id
+                                        - access_token
                                     type: object
                             required:
                                 - jsonrpc
@@ -1255,47 +1255,13 @@ paths:
 
                 **Request Parameters:** 25
 
-                - `site_blocks` (array, optional): Настройки привязки номера к блоку на сайте Если в списке отсутствует настроенный блок, то в случае обновления рекламной кампании, его настройки сбрасываются Если рекламная кампания отключена (status = inactive), то этот параметр изменять нельзя. Будет возвращаться ошибка `invalid_parameters_combination`
-
-                - `site_block_id` (number, required): Уникальный идентификатор блока номеров
-
-                - `dynamic_call_tracking_enabled` (boolean, optional): Активация динамического коллтрекинг. В пул динамического коллтрекинга можно подключить только свободные номера без флага "Использовать в ВАТС" в том же коде, что и номер блока рекламной кампании по умолчанию. При отсутствии необходимого количества номеров они будут автоматически куплены. Звонки на номера из пула динамического коллтрекинга будут обрабатываться по правилам обработки звонков на номер блока рекламной кампании по умолчанию. Может принимать значение "true", если параметр phone_number_id = va | call_tracking. Если это не так, то будет возвращена ошибка с мнемоникой "invalid_parameters_combination" Если Вы используете этот параметр, но у вас не подключен компонент "dynamic_call_tracking", то вам вернется ошибка с мнемоникой "parameter_component_disabled" Если задан одновременно status = inactive, то будет возвращена ошибка `invalid_parameters_combination` Если параметр dynamic_call_tracking_enabled имеет значение "true", то параметр dynamic_call_tracking обязателен к заполнению. Будет возвращена ошибка "invalid_parameters_combination".
-
-                - `count_virtual_numbers` (number, required): Количество номеров необходимое для работы динамического коллтрекинга в одном блоке. Указанное количество номеров будет куплено.
-
-                - `type` (enum, required): Условия рекламной кампании в группе условий include - включает exclude - исключает
-
-                - `site_id` (number, required): Уникальный идентификатор сайта Обновить site_id для существующей рекламной кампании невозможно.
-
-                - `reservation_time` (enum, optional): Период, на который номер закрепляется за посетителем сайта. По истечении указанного времени номер закрепляется за новым посетителем (или остается за текущим в случае наличия свободных номеров коллтрекинга).
-
-                - `group_conditions` (array, required): Группа условий рекламной кампании
-
-                - `value` (string, required): Значение. Для некоторых campaign_parameter может быть свой список допустимых значений см. в таблице "Список параметров и их операторов"
-
-                - `operator` (enum, required): Оператор в условии. Зависит от используемого параметра campaign_parameter см. в таблице "Список параметров и их операторов" "=" - точно соответствует "sub" - включает "~" - регулярное выражение
-
-                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
-
-                - `id` (number, required): Уникальный идентификатор рекламной кампании
-
-                - `redirection_phone_number_id` (number, optional): Уникальный идентификатор номера переадресации. Номер переадресации используется только в том случае, если параметр phone_number_id имеет тип `call_tracking`. Список доступных номеров можно получить методом get.campaign_available_redirection_phone_numbers. Обязателен для заполнения, если в параметре phone_number_id указан виртуальный номер с типом "call_tracking". Если это не так, то будет возвращена ошибка с мнемоникой "required_parameter_missed". Если параметр задан и в phone_number_id указан виртуальный номер с типом "va", то будет возвращаться ошибка `invalid_parameters_combination` В параметре могут быть указаны только номера переадресации, которые возвращаются методом get.campaign_available_redirection_phone_numbers. Если это не так, то будет возвращаться ошибка с мнемоникой "invalid_parameter_value" Доступен, если подключен компонент "va". Если параметр будет заполнен и у вас отсутствует компонент "va", то будет возвращена ошибка с мнемоникой "parameter_component_disabled"
-
-                - `cost_ratio` (number, optional): Коэфициент, который влияет на значение параметра `costs`
-
-                - `cost_ratio_operator` (enum, optional): Оператор, который используется при расчете `costs` с учетом `cost_ratio`
-
-                - `count_visits` (number, required): Количество посещений по рекламной кампании в сутки
+                - `access_token` (string, required): Ключ сессии аутентификации
 
                 - `name` (string, optional): Название рекламной кампании
 
-                - `description` (string, optional): Описание рекламной кампании
+                - `site_id` (number, required): Уникальный идентификатор сайта Обновить site_id для существующей рекламной кампании невозможно.
 
-                - `status` (enum, optional): Статус рекламной кампании Если рекламную кампанияю с настроенными блоками перевели в статус "inactive", то все настройки блоков сбрасываются.
-
-                - `campaign_conditions` (object, optional): Условия рекламной кампании.
-
-                - `phone_number_id` (number, required): Уникальный идентификатор виртуального номера. Чтобы получить список доступных виртуальных номеров необходимо использовать метод get.campaign_available_phone_numbers Если указан id который не возвращается методом get.campaign_available_phone_numbers, то будет возвращена ошибка с мнемоникой "entity_not_found". Номер с type = call_tracking может использоваться только в одной рекламной кампании. Если номер уже используется в другой рекламной кампании, то будет возвращена ошибка `already_in_use`
+                - `site_blocks` (array, optional): Настройки привязки номера к блоку на сайте Если в списке отсутствует настроенный блок, то в случае обновления рекламной кампании, его настройки сбрасываются Если рекламная кампания отключена (status = inactive), то этот параметр изменять нельзя. Будет возвращаться ошибка `invalid_parameters_combination`
 
                 - `dynamic_call_tracking` (object, optional): Настройка динамический коллтрекинг. Обязателен к заполнению, если параметр dynamic_call_tracking_enabled у хоть одного блока имеет значение "true" иначе будет возвращена ошибка с мнемоникой "invalid_parameters_combination" Если Вы используете этот параметр, но у вас не подключен компонент "dynamic_call_tracking", то вам вернется ошибка с мнемоникой "parameter_component_disabled"
 
@@ -1303,7 +1269,41 @@ paths:
 
                 - `campaign_parameter` (enum, required): Список допустимых значений и возможных операторов см. в таблице "Список параметров и их операторов"
 
-                - `access_token` (string, required): Ключ сессии аутентификации
+                - `operator` (enum, required): Оператор в условии. Зависит от используемого параметра campaign_parameter см. в таблице "Список параметров и их операторов" "=" - точно соответствует "sub" - включает "~" - регулярное выражение
+
+                - `redirection_phone_number_id` (number, optional): Уникальный идентификатор номера переадресации. Номер переадресации используется только в том случае, если параметр phone_number_id имеет тип `call_tracking`. Список доступных номеров можно получить методом get.campaign_available_redirection_phone_numbers. Обязателен для заполнения, если в параметре phone_number_id указан виртуальный номер с типом "call_tracking". Если это не так, то будет возвращена ошибка с мнемоникой "required_parameter_missed". Если параметр задан и в phone_number_id указан виртуальный номер с типом "va", то будет возвращаться ошибка `invalid_parameters_combination` В параметре могут быть указаны только номера переадресации, которые возвращаются методом get.campaign_available_redirection_phone_numbers. Если это не так, то будет возвращаться ошибка с мнемоникой "invalid_parameter_value" Доступен, если подключен компонент "va". Если параметр будет заполнен и у вас отсутствует компонент "va", то будет возвращена ошибка с мнемоникой "parameter_component_disabled"
+
+                - `dynamic_call_tracking_enabled` (boolean, optional): Активация динамического коллтрекинг. В пул динамического коллтрекинга можно подключить только свободные номера без флага "Использовать в ВАТС" в том же коде, что и номер блока рекламной кампании по умолчанию. При отсутствии необходимого количества номеров они будут автоматически куплены. Звонки на номера из пула динамического коллтрекинга будут обрабатываться по правилам обработки звонков на номер блока рекламной кампании по умолчанию. Может принимать значение "true", если параметр phone_number_id = va | call_tracking. Если это не так, то будет возвращена ошибка с мнемоникой "invalid_parameters_combination" Если Вы используете этот параметр, но у вас не подключен компонент "dynamic_call_tracking", то вам вернется ошибка с мнемоникой "parameter_component_disabled" Если задан одновременно status = inactive, то будет возвращена ошибка `invalid_parameters_combination` Если параметр dynamic_call_tracking_enabled имеет значение "true", то параметр dynamic_call_tracking обязателен к заполнению. Будет возвращена ошибка "invalid_parameters_combination".
+
+                - `cost_ratio_operator` (enum, optional): Оператор, который используется при расчете `costs` с учетом `cost_ratio`
+
+                - `reservation_time` (enum, optional): Период, на который номер закрепляется за посетителем сайта. По истечении указанного времени номер закрепляется за новым посетителем (или остается за текущим в случае наличия свободных номеров коллтрекинга).
+
+                - `count_virtual_numbers` (number, required): Количество номеров необходимое для работы динамического коллтрекинга в одном блоке. Указанное количество номеров будет куплено.
+
+                - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
+
+                - `description` (string, optional): Описание рекламной кампании
+
+                - `status` (enum, optional): Статус рекламной кампании Если рекламную кампанияю с настроенными блоками перевели в статус "inactive", то все настройки блоков сбрасываются.
+
+                - `phone_number_id` (number, required): Уникальный идентификатор виртуального номера. Чтобы получить список доступных виртуальных номеров необходимо использовать метод get.campaign_available_phone_numbers Если указан id который не возвращается методом get.campaign_available_phone_numbers, то будет возвращена ошибка с мнемоникой "entity_not_found". Номер с type = call_tracking может использоваться только в одной рекламной кампании. Если номер уже используется в другой рекламной кампании, то будет возвращена ошибка `already_in_use`
+
+                - `cost_ratio` (number, optional): Коэфициент, который влияет на значение параметра `costs`
+
+                - `group_conditions` (array, required): Группа условий рекламной кампании
+
+                - `id` (number, required): Уникальный идентификатор рекламной кампании
+
+                - `campaign_conditions` (object, optional): Условия рекламной кампании.
+
+                - `site_block_id` (number, required): Уникальный идентификатор блока номеров
+
+                - `count_visits` (number, required): Количество посещений по рекламной кампании в сутки
+
+                - `type` (enum, required): Условия рекламной кампании в группе условий include - включает exclude - исключает
+
+                - `value` (string, required): Значение. Для некоторых campaign_parameter может быть свой список допустимых значений см. в таблице "Список параметров и их операторов"
             requestBody:
                 content:
                     application/json:
@@ -1432,19 +1432,19 @@ paths:
                                             example: example_string
                                             type: string
                                     required:
-                                        - campaign_parameter
-                                        - access_token
-                                        - site_block_id
-                                        - count_virtual_numbers
-                                        - type
-                                        - site_id
-                                        - group_conditions
-                                        - value
-                                        - operator
-                                        - id
-                                        - count_visits
                                         - phone_number_id
+                                        - group_conditions
+                                        - id
+                                        - site_block_id
+                                        - count_visits
+                                        - type
+                                        - value
+                                        - access_token
+                                        - site_id
                                         - conditions
+                                        - campaign_parameter
+                                        - operator
+                                        - count_virtual_numbers
                                     type: object
                             required:
                                 - jsonrpc
@@ -1513,6 +1513,8 @@ paths:
 
                 **Request Parameters:** 8
 
+                - `access_token` (string, required): Ключ сессии аутентификации
+
                 - `user_id` (number, optional): Уникальный идентификатор пользователя клиента агента от имени которого делается запрос Является обязательным для агента Для получения списка пользователей клиента необходимо использовать метод "get.customer_users"
 
                 - `costs` (array, required): Список расходов по рекламным кампаниям. Максимально 500
@@ -1526,8 +1528,6 @@ paths:
                 - `site_id` (number, required): Уникальный идентификатор сайта.
 
                 - `cost` (number, required): Расходы по рекламной кампании за указанный период date_from и date_till. Если указан 0, то произойдет удаление расходов за указанный период.
-
-                - `access_token` (string, required): Ключ сессии аутентификации
             requestBody:
                 content:
                     application/json:

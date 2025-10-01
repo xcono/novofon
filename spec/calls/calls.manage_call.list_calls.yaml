@@ -7,7 +7,7 @@ paths:
     /list.calls:
         post:
             summary: List calls
-            description: "Получить список активных вызовов и их участников\n\n**Request Parameters:** 3\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `direction` (string, optional): Указывает какие сессии выводить - входящие, исходящие. Если параметр не задан, то выводятся все сессии.\n\n- `virtual_phone_number` (string, optional): Указывает с каким виртуальным номер активные вызовы показывать. Номер должен начинаться с 7\n\n**Response Parameters:** 8\n\n- `external_id` (string): \n\n- `tags` (array): \n\n- `legs` (array): \n\n- `call_session_id` (number): \n\n- `direction` (string): in, out\n\n- `start_time` (string): \n\n- `virtual_phone_number` (string): \n\n- `contact_phone_number` (string): "
+            description: "Получить список активных вызовов и их участников\n\n**Request Parameters:** 3\n\n- `access_token` (string, required): Ключ сессии аутентификации\n\n- `direction` (string, optional): Указывает какие сессии выводить - входящие, исходящие. Если параметр не задан, то выводятся все сессии.\n\n- `virtual_phone_number` (string, optional): Указывает с каким виртуальным номер активные вызовы показывать. Номер должен начинаться с 7\n\n**Response Parameters:** 8\n\n- `call_session_id` (number): \n\n- `direction` (string): in, out\n\n- `start_time` (string): \n\n- `virtual_phone_number` (string): \n\n- `contact_phone_number` (string): \n\n- `external_id` (string): \n\n- `tags` (array): \n\n- `legs` (array): "
             requestBody:
                 required: true
                 content:
@@ -104,14 +104,14 @@ paths:
                                                         type: string
                                                         example: example_string
                                                 required:
+                                                    - legs
+                                                    - call_session_id
                                                     - direction
                                                     - start_time
                                                     - virtual_phone_number
                                                     - contact_phone_number
                                                     - external_id
                                                     - tags
-                                                    - legs
-                                                    - call_session_id
                                             metadata:
                                                 type: object
                                                 description: Response metadata

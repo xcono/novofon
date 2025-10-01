@@ -26,9 +26,9 @@ paths:
 
                 **Response Parameters:** 2
 
-                - `id` (number): Уникальный идентификатор тарифного плана
-
                 - `name` (string): Название тарифного плана
+
+                - `id` (number): Уникальный идентификатор тарифного плана
             requestBody:
                 required: true
                 content:

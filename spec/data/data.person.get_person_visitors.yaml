@@ -20,8 +20,6 @@ paths:
 
                 **Response Parameters:** 7
 
-                - `visitor_id` (number): да
-
                 - `name` (string): нет
 
                 - `phones` (array): нет
@@ -33,6 +31,8 @@ paths:
                 - `commentary` (string): нет
 
                 - `person_id` (number): да
+
+                - `visitor_id` (number): да
             requestBody:
                 required: true
                 content:
